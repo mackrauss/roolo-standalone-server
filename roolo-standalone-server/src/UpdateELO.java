@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import roolo.elo.JDomBasicELOFactory;
-import roolo.elo.MetadataTypeManagerForTesting;
+import roolo.elo.MetadataTypeManager;
 import roolo.elo.RepositoryJcrImpl;
 import roolo.elo.api.IELO;
 import roolo.elo.api.IELOFactory;
@@ -46,7 +46,7 @@ import roolo.elo.api.IMetadataTypeManager;
 		PrintWriter writer = response.getWriter();
 		String eloXMLReceived = request.getParameter("eloXML");
 		
-		IMetadataTypeManager<IMetadataKey> typeManager = new MetadataTypeManagerForTesting<IMetadataKey>();
+		IMetadataTypeManager<IMetadataKey> typeManager = new MetadataTypeManager<IMetadataKey>();
 		IELOFactory<IMetadataKey> eloFactory = new JDomBasicELOFactory<IMetadataKey>(typeManager);
 		IELO<IMetadataKey> elo = eloFactory.createELOFromXml(eloXMLReceived);
 		
