@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * Singleton class that holds all the messages posted to the server
  * @author cfislotta
- *
  */
 public class MessageRepository {
 	
@@ -28,46 +27,44 @@ public class MessageRepository {
 	}
 	
 	/**
-	 * Adds a new message to the repository.
-	 * If a message with the same from & to fields exist, it will be replaced with msg
+	 * Adds a new message to the repository. All duplicates are allowed
 	 * @param msg
 	 */
 	public void addMessage(Message msg){
-		int msgIndex = this.getMessageIndex(msg);
+		// append to the end of the list
 		
-		if (msgIndex == -1){
-			this.messages.add(msg);
-		}else{
-			this.messages.remove(msgIndex);
-			this.messages.add(msg);
-		}
+		this.messages.add(msg);
 	}
 	
-	/**
-	 * Get a message for given from & to
-	 * @param from
-	 * @param to
-	 * @return the message found, or null if no such message exists
-	 */
-	public Message getMessage(String from, String to){
-		
-		Message msg = new Message (from, to, "", "");
-		
-		synchronized (this) {
-			int msgIndex = this.getMessageIndex(msg);
-			
-			if (msgIndex == -1){
-				return null;
-			}else{
-				Message msgToReturn = messages.get(msgIndex).clone();
-				this.messages.remove(msgIndex);
-				return msgToReturn;
-			}
-		}
-	}
+//	/**
+//	 * Get a message for given from & to
+//	 * @param from
+//	 * @param to
+//	 * @return the message found, or null if no such message exists
+//	 */
+//	public Message getMessage(String from, String to){
+//		
+//		Message msg = new Message (from, to, "", "");
+//		
+//		synchronized (this) {
+//			int msgIndex = this.getMessageIndex(msg);
+//			
+//			if (msgIndex == -1){
+//				return null;
+//			}else{
+//				Message msgToReturn = messages.get(msgIndex).clone();
+//				this.messages.remove(msgIndex);
+//				return msgToReturn;
+//			}
+//		}
+//	}
 	
 	/**
 	 * Return a list of messages that are sent to "to"
+	 * 
+	 * @param to the to paramter to whom these messages should belong to
+	 * 
+	 * @return all messages directed at "to" user
 	 */
 	public List getMessages(String to){
 		List messagesToReturn = new ArrayList<Message>();
@@ -99,6 +96,32 @@ public class MessageRepository {
 		}
 		
 		return messagesToReturn;
+	}
+	
+	/**
+	 * returns the next message directed at user "to". If found, returns the 
+	 * message and deletes it from queue. If not found, returns null
+	 * @param to
+	 * @return
+	 */
+	public Message getNextMessage(String to){
+		int numMessages = this.messages.size();
+		Message curMessage = null;
+		synchronized (this) {
+			/*
+			 * Find all the right messages and store their clones in messagesToReturn
+			 */
+			for(int i=0;i<numMessages;i++){
+				curMessage = this.messages.get(i);
+				if (curMessage.getTo().equals(to)){
+					Message messageFound = curMessage.clone();
+					this.messages.remove(i);
+					return messageFound;
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 	/**

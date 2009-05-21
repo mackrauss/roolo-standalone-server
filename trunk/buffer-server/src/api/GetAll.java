@@ -22,14 +22,14 @@ import xml.XmlUtil;
  * Servlet implementation class for Servlet: Get
  *
  */
- public class Get extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+ public class GetAll extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
    static final long serialVersionUID = 1L;
    private Map<String, Class> typeToGeneratorMap;
    
     /* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
 	 */
-	public Get() {
+	public GetAll() {
 		super();
 	}   	
 	
@@ -84,26 +84,7 @@ import xml.XmlUtil;
 		
 		while(messagesIter.hasNext()){
 			curMessage = messagesIter.next();
-			curMessageType = curMessage.getType();
-			
-			
-			//if there type is empty, simply return the XML repres. of the message
-			if (curMessageType.equals("")){
-				output += curMessage.toXml();
-				System.out.println("type was empty");
-			}
-			//if no generator is associated with this type, return XML repres. of the message
-			else if (this.typeToGeneratorMap.get(curMessageType) == null){
-				output += curMessage.toXml();
-				System.out.println("no generator associated");
-			}
-			//if generator exists, utilize it
-			else {
-				Class generatorClass = this.typeToGeneratorMap.get(curMessageType);
-				Constructor generatorConstructor = generatorClass.getConstructor(new Class[] {});
-				IUiGenerator generator = (IUiGenerator)generatorConstructor.newInstance(new Object[] {});
-				output += generator.generate(curMessage);
-			}
+			output += curMessage.toXml();
 		}
 		
 		return "<messages>"+output+"</messages>";
