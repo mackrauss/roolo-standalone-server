@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -68,7 +69,8 @@ import roolo.elo.metadata.keys.LongMetadataKey;
 		
 		String query = request.getParameter("query");
 		
-		List<IELO> elosFound = repositoryJcrImpl.search("TITLE:ELO");
+		//TITLE:ELO
+		List<IELO> elosFound = repositoryJcrImpl.search(query);
 		
 		String elosXml = XmlUtil.generateEloList(elosFound);
 		
