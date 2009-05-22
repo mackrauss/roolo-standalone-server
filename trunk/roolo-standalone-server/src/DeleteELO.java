@@ -32,6 +32,10 @@ import roolo.elo.RepositoryJcrImpl;
 		response.setContentType("text/xml; charset=UTF-8");
 		
 		String eloURIString = request.getParameter("uri");
+		if (eloURIString == null){
+			XmlUtil.generateError("Must provide parameter called: uri", writer);
+			return;
+		}
 		
 		try{
 			repositoryJcrImpl.deleteELO(new URI(eloURIString));

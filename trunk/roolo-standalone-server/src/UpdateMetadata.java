@@ -1,6 +1,8 @@
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +27,9 @@ import javax.servlet.http.HttpServletResponse;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO waiting for a way to be able to objectify a metadata XML into an actual IMetadata object
 		//      Currently that's not possible because the ELO factory doesn't expose the method for objectifying metadata
+		PrintWriter writer = response.getWriter();
+		
+		XmlUtil.generateError("The UpdateMetadata API has not been implemented yet", writer);
 	}  	
 	
 	/* (non-Java-doc)

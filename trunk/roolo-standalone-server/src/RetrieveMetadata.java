@@ -35,12 +35,17 @@ import roolo.elo.api.IMetadata;
 		response.setContentType("text/xml; charset=UTF-8");
 		
 		String eloURIString = request.getParameter("uri");
+		if (eloURIString == null){
+			XmlUtil.generateError("Must provide parameter called: uri", writer);
+			return;
+		}
 		
 		try{
 			IMetadata retrievedMetadata = repositoryJcrImpl.retrieveMetadata(new URI(eloURIString));
 			writer.write(retrievedMetadata.getXml());
 		}catch(URISyntaxException e){
-			e.printStackTrace(writer);
+			XmlUtil.generateError(e, writer);
+			return;
 		}
 	}  	
 	

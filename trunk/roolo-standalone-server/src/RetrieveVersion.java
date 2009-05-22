@@ -37,11 +37,22 @@ import roolo.elo.api.IELO;
 		String eloURIString = request.getParameter("uri");
 		String eloVersionString = request.getParameter("version");
 		
+		if (eloURIString == null){
+			XmlUtil.generateError("Must provide parameter called: uri", writer);
+			return;
+		}
+		
+		if (eloVersionString == null){
+			XmlUtil.generateError("Must provide parameter called: version", writer);
+			return;
+		}
+		
 		try{
 			IELO retrievedELO = repositoryJcrImpl.retrieveVersion(new URI(eloURIString), eloVersionString);
 			writer.write(retrievedELO.getXml());
 		}catch(URISyntaxException e){
-			e.printStackTrace(writer);
+			XmlUtil.generateError(e, writer);
+			return;
 		}
 		
 		
