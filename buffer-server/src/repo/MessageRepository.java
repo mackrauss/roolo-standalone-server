@@ -124,6 +124,26 @@ public class MessageRepository {
 		return null;
 	}
 	
+	public void replaceMessage (Message message){
+		int numMessages = this.messages.size();
+		Message curMessage = null;
+		String from = message.getFrom();
+		String to = message.getTo();
+		synchronized (this) {
+			/*
+			 * Find all the messages with the same from & to, and delete them
+			 */
+			for(int i=numMessages-1;i>-1;i--){
+				curMessage = this.messages.get(i);
+				if (curMessage.getFrom().equals(from) && curMessage.getTo().equals(to)){
+					this.messages.remove(i);
+				}
+			}
+			
+			this.messages.add(message);
+		}
+	}
+	
 	/**
 	 * Returns the index (in this.messages) of the first message that has the same
 	 * from & to elements has the msg.

@@ -11,20 +11,21 @@ import org.jdom.Element;
 
 import repo.Message;
 import repo.MessageRepository;
+
 import xml.JDomStringConversion;
 import xml.XmlUtil;
 
 /**
- * Servlet implementation class for Servlet: Post
+ * Servlet implementation class for Servlet: Replace
  *
  */
- public class Post extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+ public class Replace extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
    static final long serialVersionUID = 1L;
    
     /* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
 	 */
-	public Post() {
+	public Replace() {
 		super();
 	}   	
 	
@@ -89,7 +90,7 @@ import xml.XmlUtil;
 		
 		Message msgObj = new Message(from, to, type, content);
 		MessageRepository repo = MessageRepository.getInstance();
-		repo.addMessage(msgObj);
+		repo.replaceMessage(msgObj);
 		
 		XmlUtil.generateSuccess("The message was successfully posted", writer);
 	}  	
@@ -99,5 +100,6 @@ import xml.XmlUtil;
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.doGet(request, response);
+		
 	}   	  	    
 }
