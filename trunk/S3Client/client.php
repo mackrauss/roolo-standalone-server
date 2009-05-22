@@ -10,7 +10,7 @@
 			 * CHANGE DURING THE ACTUAL RUN, TO THE IP OF THE SERVER
 			 *
 			*/
-			bufferServerUrl = "http://localhost:8080/buffer-server/";
+			serviceUrl = "http://localhost:8080/buffer-server/";
 			
 			function Post (type, content){
 				xml = "<message><from>"+username+"</from><to>agents</to>";
@@ -32,7 +32,7 @@
 //				alert(url);
 //				alert(xml);
 				
-				$.get("generator.php", {},
+				$.get("proxy.php", { serviceUrl:serviceUrl, action:"Post", paramName: "message", paramValue: xml},
 						  function(data){
 						    alert("Data Loaded: " + data);
 						  });
