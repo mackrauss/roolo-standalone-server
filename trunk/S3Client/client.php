@@ -28,17 +28,14 @@
 //					 	}
 //			 	);
 
-				url = bufferServerUrl+"Post";
-				alert(url);
-				alert(xml);
+//				url = bufferServerUrl+"Post";
+//				alert(url);
+//				alert(xml);
 				
 				$.get("generator.php", {},
 						  function(data){
 						    alert("Data Loaded: " + data);
 						  });
-									 	
-
-				
 			}
 		</script>
 	</head>
