@@ -15,18 +15,31 @@
 		<description>
 		</description>
 		<display-name>
-		Get</display-name>
-		<servlet-name>Get</servlet-name>
+		GetNext</display-name>
+		<servlet-name>GetNext</servlet-name>
 		<servlet-class>
-		api.Get</servlet-class>
+		api.GetNext</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		GetAll</display-name>
+		<servlet-name>GetAll</servlet-name>
+		<servlet-class>
+		api.GetAll</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Post</servlet-name>
 		<url-pattern>/Post</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>Get</servlet-name>
-		<url-pattern>/Get</url-pattern>
+		<servlet-name>GetNext</servlet-name>
+		<url-pattern>/GetNext</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetAll</servlet-name>
+		<url-pattern>/GetAll</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
