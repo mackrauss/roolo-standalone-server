@@ -51,8 +51,7 @@ import xml.XmlUtil;
 		}
 		
 		JDomStringConversion jdomConverter = new JDomStringConversion();
-		Element msgElem = null;
-		msgElem = msgElem = jdomConverter.stringToXml(msg);
+		Element msgElem = jdomConverter.stringToXml(msg);
 		if (msgElem == null){
 			XmlUtil.generateError("Malformed XML. Cannot complete the parse.", writer);
 			return;
@@ -85,7 +84,8 @@ import xml.XmlUtil;
 			XmlUtil.generateError("Malformed XML. No 'content' tag exists under 'message'", writer);
 			return;
 		}
-		content = contentElem.getText();
+//		content = contentElem.toString();
+		System.out.println(jdomConverter.xmlToString(contentElem));
 		
 		Message msgObj = new Message(from, to, type, content);
 		MessageRepository repo = MessageRepository.getInstance();

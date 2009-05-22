@@ -39,7 +39,15 @@ import xml.XmlUtil;
 		super.init();
 		
 		this.typeToGeneratorMap = new HashMap<String, Class>();
-		this.typeToGeneratorMap.put("question", uigenerator.QuestionGenerator.class);
+		this.typeToGeneratorMap.put("showMessage", uigenerator.ShowMessage.class);
+//		this.typeToGeneratorMap.put("listGroupMembers", uigenerator.ListGroupMembers.class);
+//		this.typeToGeneratorMap.put("showGroupCategory", uigenerator.ShowGroupCategory.class);
+//		this.typeToGeneratorMap.put("showProblemToTag", uigenerator.ShowQuestion.class);
+//		this.typeToGeneratorMap.put("showProblemToSolve", uigenerator.ShowQuestion.class);
+//		this.typeToGeneratorMap.put("askForConfirmation", uigenerator.AskForConfirmation.class);
+//		this.typeToGeneratorMap.put("askForComment", uigenerator.AskForComment.class);
+//		this.typeToGeneratorMap.put("postVisualization", uigenerator..class);
+
 	}
 	
 	/* (non-Java-doc)
@@ -48,7 +56,7 @@ import xml.XmlUtil;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		PrintWriter writer = response.getWriter();
-		response.setContentType("text/xml; charset=UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		
 		
 		String to   = request.getParameter("to");
