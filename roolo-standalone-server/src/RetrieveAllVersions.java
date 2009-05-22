@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import roolo.elo.BasicELO;
 import roolo.elo.RepositoryJcrImpl;
 import roolo.elo.api.IELO;
 
@@ -39,6 +38,7 @@ import roolo.elo.api.IELO;
 		String eloURIString = request.getParameter("uri");
 		if (eloURIString == null){
 			XmlUtil.generateError("Must provide a paramater: uri", writer);
+			return;
 		}
 		
 		String finalXml = "";
@@ -49,6 +49,7 @@ import roolo.elo.api.IELO;
 			finalXml += retrieveELOsXML;
 		}catch(URISyntaxException e){
 			XmlUtil.generateError(e, writer);
+			return;
 		}
 		
 		writer.write(finalXml);

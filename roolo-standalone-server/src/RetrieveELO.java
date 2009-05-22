@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import roolo.elo.RepositoryJcrImpl;
 import roolo.elo.api.IELO;
-import roolo.elo.api.IMetadataKey;
 
 /**
  * Servlet implementation class for Servlet: RetrieveELO
@@ -36,12 +35,17 @@ import roolo.elo.api.IMetadataKey;
 		response.setContentType("text/xml; charset=UTF-8");
 		
 		String eloURIString = request.getParameter("uri");
+		if (eloURIString == null){
+			XmlUtil.generateError("Must provide parameter called: uri", writer);
+			return;
+		}
 		
 		try{
 			IELO retrievedELO = repositoryJcrImpl.retrieveELO(new URI(eloURIString));
 			writer.write(retrievedELO.getXml());
 		}catch(URISyntaxException e){
-			e.printStackTrace(writer);
+			XmlUtil.generateError(e, writer);
+			return;
 		}
 		
 		

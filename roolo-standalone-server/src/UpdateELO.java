@@ -45,12 +45,21 @@ import roolo.elo.api.IMetadataTypeManager;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
 		String eloXMLReceived = request.getParameter("eloXML");
+		if (eloXMLReceived == null){
+			XmlUtil.generateError("Must provide parameter called: eloXML", writer);
+			return;
+		}
 		
-		IMetadataTypeManager<IMetadataKey> typeManager = new MetadataTypeManager<IMetadataKey>();
-		IELOFactory<IMetadataKey> eloFactory = new JDomBasicELOFactory<IMetadataKey>(typeManager);
-		IELO<IMetadataKey> elo = eloFactory.createELOFromXml(eloXMLReceived);
-		
-		repositoryJcrImpl.updateELO(elo);
+		try{
+			IMetadataTypeManager<IMetadataKey> typeManager = new MetadataTypeManager<IMetadataKey>();
+			IELOFactory<IMetadataKey> eloFactory = new JDomBasicELOFactory<IMetadataKey>(typeManager);
+			IELO<IMetadataKey> elo = eloFactory.createELOFromXml(eloXMLReceived);
+			
+			repositoryJcrImpl.updateELO(elo);
+		}catch(Exception e){
+			XmlUtil.generateError(e, writer);
+			return;
+		}
 		
 		writer.write("Successfully updated ELO");
 	}

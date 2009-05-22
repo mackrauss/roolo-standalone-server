@@ -1,6 +1,8 @@
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Must come up with a format for passing multiple versions that are to be retrieved
+		PrintWriter writer = response.getWriter();
+		
+		XmlUtil.generateError("The RetrieveVersions API has not been implemented yet", writer);
 	}  	
 	
 	/* (non-Java-doc)

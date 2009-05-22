@@ -68,11 +68,22 @@ import roolo.elo.metadata.keys.LongMetadataKey;
 //		}
 		
 		String query = request.getParameter("query");
+		if (query == null){
+			XmlUtil.generateError("Must provide parameter called: query", writer);
+			return;
+		}
 		
-		//TITLE:ELO
-		List<IELO> elosFound = repositoryJcrImpl.search(query);
 		
-		String elosXml = XmlUtil.generateEloList(elosFound);
+		String elosXml = null;
+		try{
+			//TITLE:ELO
+			List<IELO> elosFound = repositoryJcrImpl.search(query);
+			
+			elosXml = XmlUtil.generateEloList(elosFound);
+		}catch(Exception e){
+			XmlUtil.generateError(e, writer);
+			return;
+		}
 		
 		writer.write(elosXml);
 	}
