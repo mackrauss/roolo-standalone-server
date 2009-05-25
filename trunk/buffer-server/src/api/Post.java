@@ -84,12 +84,13 @@ import xml.XmlUtil;
 			XmlUtil.generateError("Malformed XML. No 'content' tag exists under 'message'", writer);
 			return;
 		}
-//		content = contentElem.toString();
-		System.out.println(jdomConverter.xmlToString(contentElem));
+		content = jdomConverter.xmlToString((Element)contentElem.getChildren().get(0));
 		
 		Message msgObj = new Message(from, to, type, content);
 		MessageRepository repo = MessageRepository.getInstance();
 		repo.addMessage(msgObj);
+		
+		System.out.println("Added: \n"+msgObj.toXml());
 		
 		XmlUtil.generateSuccess("The message was successfully posted", writer);
 	}  	

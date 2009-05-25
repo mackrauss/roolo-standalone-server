@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import repo.Message;
 import repo.MessageRepository;
+import sun.io.MalformedInputException;
 import uigenerator.IUiGenerator;
 import xml.XmlUtil;
 
@@ -40,14 +41,13 @@ import xml.XmlUtil;
 		
 		this.typeToGeneratorMap = new HashMap<String, Class>();
 		this.typeToGeneratorMap.put("showMessage", uigenerator.ShowMessage.class);
-//		this.typeToGeneratorMap.put("listGroupMembers", uigenerator.ListGroupMembers.class);
-//		this.typeToGeneratorMap.put("showGroupCategory", uigenerator.ShowGroupCategory.class);
-//		this.typeToGeneratorMap.put("showProblemToTag", uigenerator.ShowQuestion.class);
-//		this.typeToGeneratorMap.put("showProblemToSolve", uigenerator.ShowQuestion.class);
-//		this.typeToGeneratorMap.put("askForConfirmation", uigenerator.AskForConfirmation.class);
-//		this.typeToGeneratorMap.put("askForComment", uigenerator.AskForComment.class);
-//		this.typeToGeneratorMap.put("postVisualization", uigenerator..class);
-
+		this.typeToGeneratorMap.put("listGroupMembers", uigenerator.ListGroupMembers.class);
+		this.typeToGeneratorMap.put("showGroupCategory", uigenerator.ShowGroupCategory.class);
+		this.typeToGeneratorMap.put("showProblemToTag", uigenerator.ShowQuestion.class);
+		this.typeToGeneratorMap.put("showProblemToSolve", uigenerator.ShowQuestion.class);
+		this.typeToGeneratorMap.put("askForConfirmation", uigenerator.AskForConfirmation.class);
+		this.typeToGeneratorMap.put("askForComment", uigenerator.AskForComment.class);
+		this.typeToGeneratorMap.put("askForSolution", uigenerator.AskForSolution.class);
 	}
 	
 	/* (non-Java-doc)
@@ -86,7 +86,7 @@ import xml.XmlUtil;
 		this.doGet(request, response);
 	}   	
 	
-	private String generateOutput(Message curMessage) throws NoSuchMethodException, InstantiationException, InvocationTargetException, IllegalAccessException{
+	private String generateOutput(Message curMessage) throws NoSuchMethodException, InstantiationException, InvocationTargetException, IllegalAccessException, MalformedInputException{
 		String output = "";
 		
 		//if curMessage is null, then return ""
@@ -97,25 +97,19 @@ import xml.XmlUtil;
 		String curMessageType = curMessage.getType();
 		
 		//if the type is empty, simply return the XML repres. of the message
-		if (curMessageType.equals("")){
-			output += curMessage.toXml();
-			System.out.println("type was empty");
-		}
+//		if (curMessageType.equals("")){
+//			System.out.println("type was empty");
+//		}
 		
-		//if no generator is associated with this type, return XML repres. of the message
-		else if (this.typeToGeneratorMap.get(curMessageType) == null){
-			output += curMessage.toXml();
-			System.out.println("no generator associated");
-		}
 		
-		//if generator exists, utilize it
-		else {
+		//if generator exists, utilize it		
+		if (this.typeToGeneratorMap.get(curMessageType) != null){
 			Class generatorClass = this.typeToGeneratorMap.get(curMessageType);
 			Constructor generatorConstructor = generatorClass.getConstructor(new Class[] {});
 			IUiGenerator generator = (IUiGenerator)generatorConstructor.newInstance(new Object[] {});
-			output += generator.generate(curMessage);
+			curMessage = generator.generate(curMessage);
 		}
 		
-		return output;
+		return curMessage.toXml();
 	}
 }
