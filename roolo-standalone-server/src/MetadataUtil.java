@@ -4,7 +4,7 @@ import roolo.elo.api.I18nType;
 import roolo.elo.api.IMetadataKey;
 import roolo.elo.api.IMetadataTypeManager;
 import roolo.elo.api.metadata.MetadataValueCount;
-import roolo.elo.metadata.keys.LongMetadataKey;
+import roolo.elo.metadata.keys.StringMetadataKey;
 
 
 public class MetadataUtil {
@@ -21,6 +21,17 @@ public class MetadataUtil {
 		typeManager.registerMetadataKey(ELOMetadataKeys.FAMILYTAG.getKey());
 		typeManager.registerMetadataKey(ELOMetadataKeys.ISCURRENT.getKey());
 		typeManager.registerMetadataKey(ELOMetadataKeys.DATE_CREATED.getKey());
+		typeManager.registerMetadataKey(ELOMetadataKeys.KEYWORDS.getKey());
+		typeManager.registerMetadataKey(ELOMetadataKeys.COMMENT.getKey());
+		
+		/** 
+		 * Metadata keys specific to S3
+		 */
+		IMetadataKey relatedTo = new StringMetadataKey ("relatedto", "/relatedto", I18nType.UNIVERSAL, MetadataValueCount.SINGLE, null);
+		IMetadataKey contributors = new StringMetadataKey ("contributors", "/contributors", I18nType.UNIVERSAL, MetadataValueCount.SINGLE, null);
+		
+		typeManager.registerMetadataKey(relatedTo);
+		typeManager.registerMetadataKey(contributors);
 		
 		return typeManager;
 	}
