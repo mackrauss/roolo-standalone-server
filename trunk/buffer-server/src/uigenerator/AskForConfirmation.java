@@ -6,7 +6,7 @@ import repo.Message;
 import sun.io.MalformedInputException;
 import xml.JDomStringConversion;
 
-public class ShowMessage implements IUiGenerator {
+public class AskForConfirmation implements IUiGenerator {
 
 	public Message generate(Message message) throws MalformedInputException {
 		String output = "";
@@ -17,10 +17,17 @@ public class ShowMessage implements IUiGenerator {
 			throw new MalformedInputException("Message with type "+message.getType()+" must have a <message>");
 		}
 		
-		String alertMessage = msgElem.getText();
-		message.setContent(alertMessage);
+		String msgString = msgElem.getText();
+		String yesBtnOnclick = "Post('userConfirmed','<confirm>YES</confirm>')";
+		String noBtnOnclick = "Post('userConfirmed','<confirm>NO</confirm>')";
 		
+		output += 
+			msgString + "<br/>" +
+			"<input id='yesBtn' name='yesBtn' type='button' value='Yes' onclick=\""+yesBtnOnclick+"\" />" +
+			"<input id='noBtn' name='noBtn' type='button' value='No' onclick=\""+noBtnOnclick+"\" />"
+			; 
+		
+		message.setContent(output);
 		return message;
 	}
-
 }

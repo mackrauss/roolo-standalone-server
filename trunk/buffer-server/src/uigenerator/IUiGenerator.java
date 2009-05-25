@@ -1,7 +1,8 @@
 package uigenerator;
 
 import repo.Message;
+import sun.io.MalformedInputException;
 
 public interface IUiGenerator {
-	public String generate(Message message);
+	public Message generate(Message message) throws MalformedInputException;
 }

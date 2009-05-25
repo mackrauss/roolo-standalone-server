@@ -36,28 +36,9 @@ public class MessageRepository {
 		this.messages.add(msg);
 	}
 	
-//	/**
-//	 * Get a message for given from & to
-//	 * @param from
-//	 * @param to
-//	 * @return the message found, or null if no such message exists
-//	 */
-//	public Message getMessage(String from, String to){
-//		
-//		Message msg = new Message (from, to, "", "");
-//		
-//		synchronized (this) {
-//			int msgIndex = this.getMessageIndex(msg);
-//			
-//			if (msgIndex == -1){
-//				return null;
-//			}else{
-//				Message msgToReturn = messages.get(msgIndex).clone();
-//				this.messages.remove(msgIndex);
-//				return msgToReturn;
-//			}
-//		}
-//	}
+	public void clear(){
+		this.messages = new ArrayList<Message>();
+	}
 	
 	/**
 	 * Return a list of messages that are sent to "to"
