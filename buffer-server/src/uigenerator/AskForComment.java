@@ -6,7 +6,7 @@ import repo.Message;
 import sun.io.MalformedInputException;
 import xml.JDomStringConversion;
 
-public class ShowMessage implements IUiGenerator {
+public class AskForComment implements IUiGenerator {
 
 	public Message generate(Message message) throws MalformedInputException {
 		String output = "";
@@ -17,9 +17,16 @@ public class ShowMessage implements IUiGenerator {
 			throw new MalformedInputException("Message with type "+message.getType()+" must have a <message>");
 		}
 		
-		String alertMessage = msgElem.getText();
-		message.setContent(alertMessage);
+		String msgString = msgElem.getText();
+		String submitBtnOnclick = "Post('userCommented','<comment>'+document.getElementById('commentBox').value+'</comment>')";
 		
+		output += 
+			msgString + "<br/>" +
+			"<textarea id='commentBox' name='commentBox' cols='50' rows='5'></textarea>"+
+			"<input type='button'   id='submitBtn'  name='submitBtn' value='Comment' onclick=\""+submitBtnOnclick+"\" />"
+			; 
+		
+		message.setContent(output);
 		return message;
 	}
 
