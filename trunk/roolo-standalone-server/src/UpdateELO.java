@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import roolo.elo.ELOMetadataKeys;
 import roolo.elo.JDomBasicELOFactory;
 import roolo.elo.MetadataTypeManager;
 import roolo.elo.RepositoryJcrImpl;
@@ -16,6 +17,7 @@ import roolo.elo.api.IELO;
 import roolo.elo.api.IELOFactory;
 import roolo.elo.api.IMetadataKey;
 import roolo.elo.api.IMetadataTypeManager;
+import roolo.elo.api.IMetadataValueContainer;
 
 /**
  * Servlet implementation class for Servlet: UpdateELO
@@ -51,9 +53,18 @@ import roolo.elo.api.IMetadataTypeManager;
 		}
 		
 		try{
-			IMetadataTypeManager<IMetadataKey> typeManager = new MetadataTypeManager<IMetadataKey>();
+			IMetadataTypeManager<IMetadataKey> typeManager = MetadataUtil.createTypeManager();
+			
 			IELOFactory<IMetadataKey> eloFactory = new JDomBasicELOFactory<IMetadataKey>(typeManager);
 			IELO<IMetadataKey> elo = eloFactory.createELOFromXml(eloXMLReceived);
+			
+			//This statement CREATES the URI key in the ELO's Metadata
+			IMetadataValueContainer uriKeyContainer = elo.getMetadata().getMetadataValueContainer(ELOMetadataKeys.URI.getKey());
+			//this is the URI string set in the metadata, but it should be of type URI, so extract it and shove it into a URI object
+			String uriString =  (String) uriKeyContainer.getValue();
+			IMetadataKey uriKey = uriKeyContainer.getKey();
+			uriKeyContainer.setValue(new URI(uriString));
+			elo.setUriKey(uriKey);
 			
 			repositoryJcrImpl.updateELO(elo);
 		}catch(Exception e){

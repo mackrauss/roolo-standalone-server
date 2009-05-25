@@ -119,6 +119,24 @@
 		<servlet-class>
 		RetrieveAll</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		ManualAddELO</display-name>
+		<servlet-name>ManualAddELO</servlet-name>
+		<servlet-class>
+		ManualAddELO</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		DeleteAll</display-name>
+		<servlet-name>DeleteAll</servlet-name>
+		<servlet-class>
+		DeleteAll</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>TestELO</servlet-name>
 		<url-pattern>/TestELO</url-pattern>
@@ -170,6 +188,14 @@
 	<servlet-mapping>
 		<servlet-name>RetrieveAll</servlet-name>
 		<url-pattern>/RetrieveAll</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ManualAddELO</servlet-name>
+		<url-pattern>/ManualAddELO</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DeleteAll</servlet-name>
+		<url-pattern>/DeleteAll</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
