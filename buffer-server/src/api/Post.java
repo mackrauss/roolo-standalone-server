@@ -50,6 +50,7 @@ import xml.XmlUtil;
 			return;
 		}
 		
+		System.out.println("ATTEMPING POST: "+msg);
 		JDomStringConversion jdomConverter = new JDomStringConversion();
 		Element msgElem = jdomConverter.stringToXml(msg);
 		if (msgElem == null){
@@ -84,7 +85,12 @@ import xml.XmlUtil;
 			XmlUtil.generateError("Malformed XML. No 'content' tag exists under 'message'", writer);
 			return;
 		}
-		content = jdomConverter.xmlToString((Element)contentElem.getChildren().get(0));
+		
+		if(contentElem.getChildren().size() != 0){
+			content = jdomConverter.xmlToString((Element)contentElem.getChildren().get(0));
+		}else{
+			content = "";
+		}
 		
 		Message msgObj = new Message(from, to, type, content);
 		MessageRepository repo = MessageRepository.getInstance();
