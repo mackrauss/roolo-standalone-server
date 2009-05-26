@@ -65,11 +65,17 @@ import xml.XmlUtil;
 			return;
 		}
 		
+		String contentOnlyStr = request.getParameter("contentOnly");
+		boolean contentOnly = false;
+		if (contentOnlyStr != null && contentOnlyStr.equals("true")){
+			contentOnly = true;
+		}
+		
 		MessageRepository repo = MessageRepository.getInstance();
 		Message messagesFound = repo.getNextMessage(to);
 		String output = null;
 		try{
-			output = this.generateOutput(messagesFound);
+			output = this.generateOutput(messagesFound, contentOnly);
 		}catch(Exception e){
 			XmlUtil.generateError(e, writer);
 			return;
@@ -86,7 +92,7 @@ import xml.XmlUtil;
 		this.doGet(request, response);
 	}   	
 	
-	private String generateOutput(Message curMessage) throws NoSuchMethodException, InstantiationException, InvocationTargetException, IllegalAccessException, MalformedInputException{
+	private String generateOutput(Message curMessage, boolean contentOnly) throws NoSuchMethodException, InstantiationException, InvocationTargetException, IllegalAccessException, MalformedInputException{
 		String output = "";
 		
 		//if curMessage is null, then return ""
@@ -96,12 +102,6 @@ import xml.XmlUtil;
 		
 		String curMessageType = curMessage.getType();
 		
-		//if the type is empty, simply return the XML repres. of the message
-//		if (curMessageType.equals("")){
-//			System.out.println("type was empty");
-//		}
-		
-		
 		//if generator exists, utilize it		
 		if (this.typeToGeneratorMap.get(curMessageType) != null){
 			Class generatorClass = this.typeToGeneratorMap.get(curMessageType);
@@ -110,6 +110,11 @@ import xml.XmlUtil;
 			curMessage = generator.generate(curMessage);
 		}
 		
-		return curMessage.toXml();
+		if (contentOnly){
+			return curMessage.getContent();
+		}else{
+			return curMessage.toXml();
+		}
+		
 	}
 }

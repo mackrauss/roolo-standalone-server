@@ -50,6 +50,7 @@ import xml.XmlUtil;
 			XmlUtil.generateError("Must provide parameter called: message", writer);
 			return;
 		}
+		System.out.println("ATTEMPING REPLACE: "+msg);
 		
 		JDomStringConversion jdomConverter = new JDomStringConversion();
 		Element msgElem = null;
@@ -86,11 +87,18 @@ import xml.XmlUtil;
 			XmlUtil.generateError("Malformed XML. No 'content' tag exists under 'message'", writer);
 			return;
 		}
-		content = contentElem.getText();
+		
+		if(contentElem.getChildren().size() != 0){
+			content = jdomConverter.xmlToString((Element)contentElem.getChildren().get(0));
+		}else{
+			content = "";
+		}
 		
 		Message msgObj = new Message(from, to, type, content);
 		MessageRepository repo = MessageRepository.getInstance();
 		repo.replaceMessage(msgObj);
+		
+		System.out.println("Added: \n"+msgObj.toXml());
 		
 		XmlUtil.generateSuccess("The message was successfully posted", writer);
 	}  	

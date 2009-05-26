@@ -32,8 +32,8 @@ import uigenerator.ShowGroupCategory;
 		String from = "agents";
 		String to   = "rokham";
 		
-		Message showMessage = new Message(from, to, "showMessage", "<message>hello world</message>");
-		repo.addMessage(showMessage);
+//		Message showMessage = new Message(from, to, "showMessage", "<message>hello world</message>");
+//		repo.addMessage(showMessage);
 		
 		Message listGroupMembers = new Message(from, to, "listGroupMembers", "<group><member>m1</member><member>m2</member><member>m3</member></group>");
 		repo.addMessage(listGroupMembers);
@@ -44,8 +44,14 @@ import uigenerator.ShowGroupCategory;
 		Message showProblemToTag = new Message(from, to, "showProblemToTag", "<imageUrl>http://docs.google.com/images/doclist/logo_docs.gif</imageUrl>");
 		repo.addMessage(showProblemToTag);
 		
-		Message askForConfirmation = new Message(from, to, "askForConfirmation", "<message>Do you agree?</message>");
-		repo.addMessage(askForConfirmation);
+//		Message askForConfirmation = new Message(from, to, "askForConfirmation", "<message>Do you agree?</message>");
+//		repo.addMessage(askForConfirmation);
+		
+		Message askForSolution = new Message(from, to, "askForSolution", "");
+		repo.addMessage(askForSolution);
+		
+		System.out.println(getServletContext().getRealPath("/"));
+		
 	}  	
 	
 	/* (non-Java-doc)
