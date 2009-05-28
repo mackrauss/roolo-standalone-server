@@ -18,7 +18,7 @@ public class AskForComment implements IUiGenerator {
 		}
 		
 		String msgString = msgElem.getText();
-		String submitBtnOnclick = "Post('userCommented','<comment>'+document.getElementById('commentBox').value+'</comment>')";
+		String submitBtnOnclick = "clearInteractionPane(); Post('userCommented','<comment>'+document.getElementById('commentBox').value+'</comment>')";
 		
 		output += 
 			msgString + "<br/>" +

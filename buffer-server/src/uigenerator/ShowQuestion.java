@@ -20,7 +20,7 @@ public class ShowQuestion implements IUiGenerator {
 		}
 		
 		String imgUrl = imgElem.getText();
-		output += "<img border='0' style='width: 150px; height: 65px;' src='"+contentServerAddress+imgUrl+"' alt='Question'>";
+		output += "<img border='0' src='"+contentServerAddress+imgUrl+"' alt='Question'>";
 		
 		message.setContent(output);
 		

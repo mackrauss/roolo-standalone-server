@@ -18,8 +18,8 @@ public class AskForConfirmation implements IUiGenerator {
 		}
 		
 		String msgString = msgElem.getText();
-		String yesBtnOnclick = "Post('userConfirmed','<confirm>YES</confirm>')";
-		String noBtnOnclick = "Post('userConfirmed','<confirm>NO</confirm>')";
+		String yesBtnOnclick = "clearInteractionPane(); Post('userConfirmed','<confirm>YES</confirm>');";
+		String noBtnOnclick = "clearInteractionPane(); Post('userConfirmed','<confirm>NO</confirm>');";
 		
 		output += 
 			msgString + "<br/>" +
