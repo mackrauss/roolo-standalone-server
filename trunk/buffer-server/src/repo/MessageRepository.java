@@ -105,6 +105,26 @@ public class MessageRepository {
 		return null;
 	}
 	
+	public Message getPeekMessage(String to){
+		int numMessages = this.messages.size();
+		Message curMessage = null;
+		synchronized (this) {
+			/*
+			 * Find all the right messages and store their clones in messagesToReturn
+			 */
+			for(int i=0;i<numMessages;i++){
+				curMessage = this.messages.get(i);
+				if (curMessage.getTo().equals(to)){
+					Message messageFound = curMessage.clone();
+					//this.messages.remove(i);
+					return messageFound;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	public void replaceMessage (Message message){
 		int numMessages = this.messages.size();
 		Message curMessage = null;

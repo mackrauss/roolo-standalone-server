@@ -29,6 +29,14 @@
 		<servlet-class>
 		api.GetNext</servlet-class>
 	</servlet>
+		<servlet>
+		<description>
+		</description>
+		<display-name>Peek</display-name>
+		<servlet-name>Peek</servlet-name>
+		<servlet-class>
+		api.Peek</servlet-class>
+	</servlet>
 	<servlet>
 		<description>
 		</description>
@@ -67,6 +75,10 @@
 	<servlet-mapping>
 		<servlet-name>GetNext</servlet-name>
 		<url-pattern>/GetNext</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Peek</servlet-name>
+		<url-pattern>/Peek</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Replace</servlet-name>

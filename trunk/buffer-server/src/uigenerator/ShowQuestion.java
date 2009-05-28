@@ -11,7 +11,7 @@ public class ShowQuestion implements IUiGenerator {
 
 	public Message generate(Message message) throws MalformedInputException {
 		String output = "";
-		String contentServerAddress = "http://192.168.0.110";
+		String contentServerAddress = "http://192.168.0.189";
 		
 		JDomStringConversion jdomConverter = new JDomStringConversion();
 		Element imgElem = jdomConverter.stringToXml(message.getContent());
