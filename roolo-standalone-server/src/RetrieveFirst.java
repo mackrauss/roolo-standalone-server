@@ -24,7 +24,7 @@ import roolo.elo.api.IELO;
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
 	 */
 	public RetrieveFirst() {
-		super();
+		super(); 
 	}   	
 	
 	/* (non-Java-doc)
