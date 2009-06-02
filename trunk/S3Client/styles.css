@@ -1,0 +1,83 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	font-family:: Verdana, Geneva, sans-serif;
+	font-size: 35px;
+	color: #401E1F;
+	background-color: #FFF; /*#EDE1B2;*/
+}
+
+
+a:link, a:active, a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+table {
+	border: 0;
+	padding: 0;
+	margin: 0 auto 0 auto;
+}
+
+th, td {
+	border: 0;
+	text-align: left;
+}
+
+th {
+	text-align: center;
+}
+
+th {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 15px;
+	font-weight: bold;
+	color: #401E1F;
+	border-bottom: 1px solid #401E1F;
+	vertical-align: bottom;
+	padding-bottom: 5px;
+	letter-spacing: 1px;
+}
+
+td {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 13px;
+	color: #8C713E;
+	vertical-align: top;
+}
+
+#groupMembers {
+	padding: 10px 0px;
+}
+
+#functionalArea {
+	padding: 10px 0px;
+	font-weight: bold;
+	color: #55706E;
+}
+
+#mathProblem {
+	padding: 10px 0px;
+}
+
+#interactionPane {
+	padding: 0px;
+}
+
+#interactionPane input {
+	margin-top: 5px;
+	color: #55706E;
+	font-weight: bold;
+	padding: 0px 5px 0px 5px;
+	font-size: 14px;
+}
+
+.container {
+	margin-left: 20%;
+	margin-right: 20%;
+	margin-top: 2px;
+}
