@@ -26,7 +26,7 @@ import xml.XmlUtil;
 	 */
 	public Post() {
 		super();
-	}   	
+	}
 	
 	/* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
