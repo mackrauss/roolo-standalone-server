@@ -11,15 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import roolo.elo.ELOMetadataKeys;
 import roolo.elo.JDomBasicELOFactory;
 import roolo.elo.RepositoryJcrImpl;
-import roolo.elo.api.I18nType;
 import roolo.elo.api.IELO;
 import roolo.elo.api.IELOFactory;
-import roolo.elo.api.IMetadata;
 import roolo.elo.api.IMetadataKey;
 import roolo.elo.api.IMetadataTypeManager;
 import roolo.elo.api.IMetadataValueContainer;
-import roolo.elo.api.metadata.MetadataValueCount;
-import roolo.elo.metadata.keys.StringMetadataKey;
 
 /**
  * Servlet implementation class for Servlet: AddELO
