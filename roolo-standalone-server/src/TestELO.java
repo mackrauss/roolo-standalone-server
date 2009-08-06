@@ -24,6 +24,7 @@ import roolo.elo.api.IMetadata;
 import roolo.elo.api.IMetadataKey;
 import roolo.elo.api.IMetadataValueContainer;
 import roolo.elo.api.exceptions.DeleteELOException;
+import roolo.elo.api.metadata.MetadataTokenization;
 import roolo.elo.api.metadata.MetadataValueCount;
 import roolo.elo.content.BasicContent;
 import roolo.elo.metadata.keys.LongMetadataKey;
@@ -133,7 +134,7 @@ import roolo.elo.metadata.keys.LongMetadataKey;
 		I18nType uriType = ELOMetadataKeys.URI.getI18n();
 		MetadataValueCount uriCount = ELOMetadataKeys.URI.getCount();
 		
-		IMetadataKey uriKey = new LongMetadataKey(uriId, uriXpath, uriType, uriCount , null);
+		IMetadataKey uriKey = new LongMetadataKey(uriId, uriXpath, uriType, uriCount , MetadataTokenization.UNTOKENIZED, null);
 		
 		return uriKey;
 	}

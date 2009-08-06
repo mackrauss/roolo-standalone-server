@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,21 +14,23 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
+import roolo.api.search.IQuery;
+import roolo.api.search.ISearchResult;
 import roolo.elo.BasicELO;
 import roolo.elo.ELOMetadataKeys;
 import roolo.elo.RepositoryJcrImpl;
 import roolo.elo.api.I18nType;
 import roolo.elo.api.IContent;
-import roolo.elo.api.IELO;
 import roolo.elo.api.IMetadata;
 import roolo.elo.api.IMetadataKey;
 import roolo.elo.api.IMetadataValueContainer;
 import roolo.elo.api.exceptions.DeleteELOException;
+import roolo.elo.api.metadata.MetadataTokenization;
 import roolo.elo.api.metadata.MetadataValueCount;
 import roolo.elo.content.BasicContent;
 import roolo.elo.metadata.keys.LongMetadataKey;
+import roolo.search.LuceneQuery;
 
 /**
  * Servlet implementation class for Servlet: Search
@@ -67,25 +67,25 @@ import roolo.elo.metadata.keys.LongMetadataKey;
 //			e.printStackTrace(writer);
 //		}
 		
-		String query = request.getParameter("query");
-		if (query == null){
+		String queryStr = request.getParameter("query");
+		if (queryStr == null){
 			XmlUtil.generateError("Must provide parameter called: query", writer);
 			return;
 		}
-		
+		IQuery query = new LuceneQuery(queryStr);
 		
 		String elosXml = null;
 		try{
 			//TITLE:ELO
-			List<IELO> elosFound = repositoryJcrImpl.search(query);
+			List<ISearchResult> elosFound = repositoryJcrImpl.search(query);
 			
-			elosXml = XmlUtil.generateEloList(elosFound);
+//			elosXml = XmlUtil.generateEloList(elosFound);
 		}catch(Exception e){
 			XmlUtil.generateError(e, writer);
 			return;
 		}
 		
-		writer.write(elosXml);
+//		writer.write(elosXml);
 	}
 	
 	private void createTestElos() throws URISyntaxException{
@@ -158,7 +158,7 @@ import roolo.elo.metadata.keys.LongMetadataKey;
 		I18nType uriType = ELOMetadataKeys.URI.getI18n();
 		MetadataValueCount uriCount = ELOMetadataKeys.URI.getCount();
 		
-		IMetadataKey uriKey = new LongMetadataKey(uriId, uriXpath, uriType, uriCount , null);
+		IMetadataKey uriKey = new LongMetadataKey(uriId, uriXpath, uriType, uriCount , MetadataTokenization.UNTOKENIZED, null);
 		
 		return uriKey;
 	}
