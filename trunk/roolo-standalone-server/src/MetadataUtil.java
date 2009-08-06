@@ -3,6 +3,7 @@ import roolo.elo.MetadataTypeManager;
 import roolo.elo.api.I18nType;
 import roolo.elo.api.IMetadataKey;
 import roolo.elo.api.IMetadataTypeManager;
+import roolo.elo.api.metadata.MetadataTokenization;
 import roolo.elo.api.metadata.MetadataValueCount;
 import roolo.elo.metadata.keys.StringMetadataKey;
 
@@ -27,8 +28,8 @@ public class MetadataUtil {
 		/** 
 		 * Metadata keys specific to S3
 		 */
-		IMetadataKey relatedTo = new StringMetadataKey ("relatedto", "/relatedto", I18nType.UNIVERSAL, MetadataValueCount.SINGLE, null);
-		IMetadataKey contributors = new StringMetadataKey ("contributors", "/contributors", I18nType.UNIVERSAL, MetadataValueCount.SINGLE, null);
+		IMetadataKey relatedTo = new StringMetadataKey ("relatedto", "/relatedto", I18nType.UNIVERSAL, MetadataValueCount.SINGLE, MetadataTokenization.UNTOKENIZED, null);
+		IMetadataKey contributors = new StringMetadataKey ("contributors", "/contributors", I18nType.UNIVERSAL, MetadataValueCount.SINGLE, MetadataTokenization.UNTOKENIZED, null);
 		
 		typeManager.registerMetadataKey(relatedTo);
 		typeManager.registerMetadataKey(contributors);
