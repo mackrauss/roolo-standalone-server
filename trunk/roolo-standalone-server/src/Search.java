@@ -31,6 +31,7 @@ import roolo.elo.api.metadata.MetadataValueCount;
 import roolo.elo.content.BasicContent;
 import roolo.elo.metadata.keys.LongMetadataKey;
 import roolo.search.LuceneQuery;
+import roolo.search.SearchResult;
 
 /**
  * Servlet implementation class for Servlet: Search
@@ -77,8 +78,14 @@ import roolo.search.LuceneQuery;
 		String elosXml = null;
 		try{
 			//TITLE:ELO
+			String toReturn = "";
 			List<ISearchResult> elosFound = repositoryJcrImpl.search(query);
+			for (int i=0;i<elosFound.size();i++){
+				SearchResult curResult = (SearchResult) elosFound.get(i);
+				toReturn += curResult.toXml();
+			}
 			
+			writer.write("<SearchResults>" + toReturn + "</SearchResults>");
 //			elosXml = XmlUtil.generateEloList(elosFound);
 		}catch(Exception e){
 			XmlUtil.generateError(e, writer);
