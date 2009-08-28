@@ -1,6 +1,6 @@
 <?php 
 
-require_once '../domLib/simple_html_dom.php';
+require_once '../../domLib/simple_html_dom.php';
 require_once 'dataModels/XMLSupported.php';
 require_once 'dataModels/Elo.php';
 require_once 'dataModels/Proposal.php';
