@@ -1,6 +1,6 @@
 <?php
 
-require_once '../domLib/simple_html_dom.php';
+require_once '../../domLib/simple_html_dom.php';
 
 class RooloClient {
 	

@@ -10,7 +10,7 @@ $allIssues = file_get_contents($retrieveAll);
 <ul>
 
 	<?php 
-		include_once '../domLib/simple_html_dom.php';
+		include_once '../../domLib/simple_html_dom.php';
 		include_once 'dataModels/Elo.php';
 		$dom = str_get_dom($allIssues);
 		
