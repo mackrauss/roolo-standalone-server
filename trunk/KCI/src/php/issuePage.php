@@ -77,7 +77,7 @@ if (isset($_REQUEST['action'])){
 <!--<head>-->
 <!---->
 <!-- Load TinyMCE -->
-<script type="text/javascript" src="/library/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/library/js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
 
 <script type="text/javascript"><!--
@@ -124,25 +124,38 @@ if (isset($_REQUEST['action'])){
 
 <body>
 	<form method="post">
-		Issue Title <br/>
-		<input type="text" id="eloName" name="eloName" value="<?= $_REQUEST['eloName'] ?>"/>
-		<br />
-		<br />
-		Issue Description
-		<div>
-			<div>
-				<textarea id="eloContent" name="eloContent" rows="15" cols="80" style="width: 80%" class="tinymce">
+		<div style='width: 50%; margin-left: auto; margin-right: auto'>
+		
+			Issue Title 
+			<div style='width: 70%'>
+				<input type="text" id="eloName" name="eloName" value="<?= $_REQUEST['eloName'] ?>" style='width: 70%'/>
+			</div>
+			
+			
+			<div style='margin-top: 20px; margin-bottom: 20px; width: 90%;'>
+				<label for='eloContent'>Issue Description</label>
+				<br/>
+				<textarea id="eloContent" name="eloContent" class="tinymce" style='float: left'>
 					<?= htmlentities($_REQUEST['eloContent']) ?>
 				</textarea>
 			</div>
 	
 			<!-- Some integration calls -->
-		
+
+
+			<div style='margin-top: 20px;'>
+				<label for='eloTags'>Tags</label>
+				<input id='eloTags' type="text" size="100%" style='margin-top: 10px; margin-bottom: 10px; width 100%; float: left'>
+			</div>		
 	
-			<br />
-			<input type="submit" name="save" value="Submit" />
-			<input type="reset" name="reset" value="Reset" />
+			<div style='margin-top:1px; float: right'>
+				<input type="submit" name="save" value="Submit"/>
+				<input type="reset" name="reset" value="Reset"/>
+			</div>
+			
+			
 		</div>
+		
 		<input type="hidden" id="action" name="action" value="<?= $action?>" />
 		<input type="hidden" id="eloId" name="eloId" value="<?=$_REQUEST['eloId'] ?>" />
 		<input type="hidden" id="eloVersion" name="eloVersion" value="<?=$_REQUEST['eloVerion'] ?>" />

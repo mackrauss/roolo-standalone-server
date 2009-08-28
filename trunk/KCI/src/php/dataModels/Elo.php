@@ -1,6 +1,7 @@
 <?php
 
-require_once '../domLib/simple_html_dom.php';
+require_once 'domLib/simple_html_dom.php';
+require_once 'XMLSupported.php';
 
 //$elo1 = new Elo();
 //$elo1->setContent('<p>hello world, this is my blow me.</p>');
@@ -89,6 +90,7 @@ class Elo implements XMLSupported{
 		$resources = '<resources>'.$resources.'</resources>';
 		
 		$xml = '<elo>'.$metadata.$content.$resources.'</elo>'; 
+		return $xml;
 		return urlencode($xml);
 	}
 	
