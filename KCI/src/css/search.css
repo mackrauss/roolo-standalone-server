@@ -2,50 +2,52 @@
 
 /* the main DIV containes all DIVs  */
 #page_dvi {
-	width:50%;
+	width:60%;
+//	height: 100%;
+//	max-height: 800px;
 	margin-left: auto;
 	margin-right: auto;	
-	background-color:#E6E6E6;
+	margin-up: 10px;	
+	//	background-color:#E6E6E6;
 	padding:0px; 
-	overflow:auto; 
 	text-align:center; 
 }
 
-div.rows {
-	width:100%
+.section_text{
+	margin: 0% 5% 1% 5%;
+	float: left;
 }	
+
+.section_button_Div{
+	margin: 100px 55px 0px 0px;	
+}
 	      	
-/* label*/
-div.label{
-	width:25%;
-	float:left;
-	font-size:150%; 
-	font-family:Times New Roman;
+.section_button{
+	float: right;
+	width: 80px;
+	margin: 0px 5px 5px 5px;
+	padding: 3px 10px 3px 10px;	
+	text-align: center;
+}
+.title{
+	float: right;
+	width: 95%;
+	text-align: left;
 	font-style:italic;
-	color:black;
-	padding:2px, 0, 2, 0; 
-	margin-top: 20px;
-	margin-bottom: 25px;
+	color:#0300ee;
 }
 
-/* textArea*/
-div.textArea{
-	width:50%;
-	float:left;
-	font-family:ariel;
-	color:black;
-	margin-top: 10px;
-	margin-bottom: 10px;
+.tag{
+	margin: 0% 5% 3% 5%;
+	float: left;
 }
 
-/* button*/
-div.button{
-	width:25%;
-	float:left;
-	font-family:ariel;
-	color:black;
-	padding:10px, 0, 10, 0; 
-	margin-top: 25px;
-	margin-bottom: 30px;
+.referance{
+	margin: 0% 5% 5% 5%;
+	float: left;
 }
-
+.search{
+	margin-left:30%;
+	float: left;
+	
+}	
