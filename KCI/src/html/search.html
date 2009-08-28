@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<script type="text/javascript" src="../library/js/jquery-1.3.2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../css/search.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>Form</title>
+	<script type='text/javascript'>
+
+	$(document).ready(function() {
+		$('#textArea1').attr('disabled', true);
+		$('#textArea2').attr('disabled', true);
+		$('#textArea3').attr('disabled', true);
+
+		$('.button').click(function () {
+			if(this.id == "bt_1") {
+				$('#textArea1').attr('disabled', false);
+				$('#textArea2').attr('disabled', true);
+				$('#textArea3').attr('disabled', true);
+			}	
+			if(this.id == "bt_2") {
+				$('#textArea2').attr('disabled', false);
+				$('#textArea1').attr('disabled', true);
+				$('#textArea3').attr('disabled', true);
+			}
+			if(this.id == "bt_3") {
+				$('#textArea3').attr('disabled', false);
+				$('#textArea1').attr('disabled', true);
+				$('#textArea2').attr('disabled', true);
+			}
+	    });
+
+      return false; 
+	});
+
+
+	   
+	</script>
+</head>
+<body>
+	<div id='page_dvi'>
+		<div id='div1' class='rows'>
+			<div class='label'>	
+				<label for='textArea'>First</label>
+			</div>
+			<div class='textArea'>	
+				<textarea cols='30' rows='2' id='textArea1'>
+					This is the first textArea. 
+					Just shows 2 rows and 20 columns.
+				</textarea>	
+			</div>
+			<div class='button'>	
+				<button id='bt_1' class='button'>first disable</button><br />
+			</div>
+		</div>
+		<div id='div2'class='rows'>
+			<div class='label'>	
+				<label for='textArea2'>Second</label>
+			</div>
+			<div class='textArea'>	
+				<textarea cols='30' rows='2' id='textArea2' >
+					This is the second textArea. 
+					Just shows 2 rows and 20 columns.
+				</textarea>	
+			</div>
+			<div class='button'>	
+			  	<button id='bt_2' class='button'>second disable</button>
+			</div>
+		</div>
+		<div id='div3'class='rows'>
+			<div class='label'>	
+				<label for='textArea3'>Third</label>
+			</div>
+			<div class='textArea'>	
+				<textarea cols='30' rows='2' id='textArea3' >
+					This is the third textArea. 
+					Just shows 2 rows and 20 columns.
+				</textarea>	
+			</div>
+			<div class='button'>	
+			  	<button id='bt_3' class='button'>third disable</button>
+			</div>
+		</div>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		
+		<div class='rows'><label >Search</label></div>
+		<div class='rows'><input type='text' id='searchText' name='searchStr' value=''/></div>
+		<div class='rows'><button id='searchBtn' onClick='jsonCall()'>search</button></div>
+		
+		<div id="searched">
+			<h2>Searched tag</h2>
+		</div>	
+	</div>	
+</body>
+</html>
