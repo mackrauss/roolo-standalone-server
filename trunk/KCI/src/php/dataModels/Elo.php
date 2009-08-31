@@ -91,7 +91,6 @@ class Elo implements XMLSupported{
 		
 		$xml = '<elo>'.$metadata.$content.$resources.'</elo>'; 
 		return $xml;
-		return urlencode($xml);
 	}
 	
 	/**
