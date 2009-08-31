@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import roolo.elo.EloUri;
 import roolo.elo.RepositoryJcrImpl;
 import roolo.elo.api.IELO;
 
@@ -71,7 +72,7 @@ import roolo.elo.api.IELO;
 		List<IELO> elos = new ArrayList<IELO>();
 		
 		for (String eloUri : eloUris) {
-			elos.add(this.repositoryJcrImpl.retrieveELO(new URI(eloUri)));
+			elos.add(this.repositoryJcrImpl.retrieveELO(new EloUri(eloUri).convertToURI()));
 		}
 		
 		return elos;
