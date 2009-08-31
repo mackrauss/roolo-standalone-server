@@ -23,6 +23,7 @@ class RooloClient {
 							'retrieveElo' => $this->_rooloUrl . 'RetrieveELO',
 							'addElo' => $this->_rooloUrl . 'AddELO',
 							'deleteElo' => $this->_rooloUrl . 'DeleteELO',
+							'updateElo' => $this->_rooloUrl . 'UpdateELO',
 							'search' => $this->_rooloUrl . 'Search');
 		
 	}
@@ -49,6 +50,30 @@ class RooloClient {
 		}else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Given an elo object, update it to the repository
+	 * 
+	 * If updating causes an error, the error is returned
+	 * otherwise false is returned.
+	 *
+	 * @param unknown_type $eloObj
+	 * @return unknown
+	 */
+	public function updateElo($eloObj){
+		$eloXml = $eloObj->generateXml();
+		$eloXml = urlencode($eloXml);
+		
+		$url = $this->_rooloServiceUrls['updateElo'] . '?eloXML=' . $eloXml;
+		
+		$error = file_get_contents($url);
+		
+		if ($error) {
+			return $error;	
+		}else {
+			return false;
+		}	
 	}
 	
 	/**
