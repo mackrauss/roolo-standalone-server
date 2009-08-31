@@ -1,6 +1,7 @@
 import java.io.PrintWriter;
 import java.util.List;
 
+import roolo.api.search.ISearchResult;
 import roolo.elo.api.I18nType;
 import roolo.elo.api.IELO;
 import roolo.elo.api.IMetadataKey;
@@ -23,6 +24,21 @@ public class XmlUtil {
 		elosXml += "</EloList>";
 		
 		return elosXml;
+	}
+	
+	public static String generateSearchResultList(List<ISearchResult> results ){
+		String xml = "";
+		
+		String resultXml = null;
+		for (ISearchResult searchResult : results) {
+			resultXml = "";
+			resultXml += "\t<uri>" + searchResult.getUri() + "</uri>\n";
+			resultXml += "\t<version>" + searchResult.getVersion() + "</version>\n";
+			resultXml += "\t<relevance>" + searchResult.getRelevance() + "</relevance>\n";
+			xml += "<SearchResult>\n" + resultXml + "</SearchResult>\n";
+		}
+		
+		return "<SearchResults>\n" + xml + "</SearchResults>";
 	}
 	
 	public static void generateError(Exception e, PrintWriter writer){
