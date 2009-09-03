@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
@@ -22,6 +20,7 @@ import roolo.elo.ELOMetadataKeys;
 import roolo.elo.RepositoryJcrImpl;
 import roolo.elo.api.I18nType;
 import roolo.elo.api.IContent;
+import roolo.elo.api.IELO;
 import roolo.elo.api.IMetadata;
 import roolo.elo.api.IMetadataKey;
 import roolo.elo.api.IMetadataValueContainer;
@@ -39,6 +38,9 @@ import roolo.search.LuceneQuery;
  public class Search extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
    static final long serialVersionUID = 1L;
    private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
+   
+   public static final String RESULT_TYPE_ELO = "elo";
+   public static final String RESULT_TYPE_URI = "uri";
    
     /* (non-Java-doc)
 	 * @see javax.servlet.http.HttpServlet#HttpServlet()
@@ -61,32 +63,43 @@ import roolo.search.LuceneQuery;
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/xml; charset=UTF-8");
 		
-//		try{
-//			createTestElos();
-//		}catch(URISyntaxException e){
-//			e.printStackTrace(writer);
-//		}
-		
-		String queryStr = request.getParameter("query");
-		if (queryStr == null){
+		String p_queryStr = request.getParameter("query");
+		if (p_queryStr == null){
 			XmlUtil.generateError("Must provide parameter called: query", writer);
 			return;
 		}
-		IQuery query = new LuceneQuery(queryStr);
+		
+		String p_resultType = request.getParameter("resultType");
+		if (p_resultType != null){
+			p_resultType = p_resultType.toLowerCase();
+			if (!p_resultType.equals(Search.RESULT_TYPE_ELO) && !p_resultType.equals(Search.RESULT_TYPE_URI)){
+				XmlUtil.generateError("The resultType parameter may only be '" + Search.RESULT_TYPE_ELO + "' or '" + Search.RESULT_TYPE_URI + "'", writer);
+				return;
+			}
+		}else{
+			p_resultType = Search.RESULT_TYPE_URI;
+		}
+		
+		
+		IQuery query = new LuceneQuery(p_queryStr);
 		
 		String searchResultsXml = null;
 		try{
 			//TITLE:ELO
-			List<ISearchResult> elosFound = repositoryJcrImpl.search(query);
+			List<ISearchResult> searchResultUris = repositoryJcrImpl.search(query);
 			
-			searchResultsXml = XmlUtil.generateSearchResultList(elosFound);
+			if (p_resultType.equals(Search.RESULT_TYPE_ELO)){
+				List<IELO> searchResultElos = EloUtil.retrieveSearchResultElos(searchResultUris, this.repositoryJcrImpl);
+				searchResultsXml = XmlUtil.generateEloList(searchResultElos);
+			}else if (p_resultType.equals(Search.RESULT_TYPE_URI)) {
+				searchResultsXml = XmlUtil.generateSearchResultList(searchResultUris);
+			}
+			
 			writer.write(searchResultsXml);
 		}catch(Exception e){
 			XmlUtil.generateError(e, writer);
 			return;
 		}
-		
-//		writer.write(elosXml);
 	}
 	
 	private void createTestElos() throws URISyntaxException{
