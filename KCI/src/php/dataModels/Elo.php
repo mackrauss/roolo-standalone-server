@@ -28,42 +28,42 @@ class Elo implements XMLSupported{
 		}
 	}
 	
-	protected function getMetadata($key){
+	public function getMetadata($key){
 		return $this->_metadata[$key];
 	}
 	
-	protected function getAllMetadata(){
+	public function getAllMetadata(){
 		return $this->_metadata;
 	}
 	
-	protected function getContent (){
+	public function getContent (){
 		return $this->_content;
 	}
 	
-	protected function getContentDataTag(){
+	public function getContentDataTag(){
 		$contentDom = str_get_dom($this->_content);
 		$content = $contentDom->find('data');
 		$content = $content[0];
 		return $content->innertext;
 	}
 	
-	protected function setContent($content){
+	public function setContent($content){
 		$this->_content = $content;
 	}
 	
-	protected function addMetadata($key, $value){
+	public function addMetadata($key, $value){
 		$this->_metadata[$key] = $value;
 	}
 	
-	protected function removeMetadata($key){
+	public function removeMetadata($key){
 		unset($this->_metadata[$key]);
 	}
 	
-	protected function addResource($key, $value){
+	public function addResource($key, $value){
 		$this->_resources[$key] = $value;
 	}
 	
-	protected function removeResource($key){
+	public function removeResource($key){
 		unset($this->_resources[$key]);
 	}
 	
