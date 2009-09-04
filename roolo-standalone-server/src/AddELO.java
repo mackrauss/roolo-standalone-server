@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import roolo.elo.ELOMetadataKeys;
 import roolo.elo.JDomBasicELOFactory;
+import roolo.elo.MetadataTypeManager;
 import roolo.elo.RepositoryJcrImpl;
 import roolo.elo.api.IELO;
 import roolo.elo.api.IELOFactory;
 import roolo.elo.api.IMetadataKey;
 import roolo.elo.api.IMetadataTypeManager;
 import roolo.elo.api.IMetadataValueContainer;
+import roolo.elo.metadata.keys.BasicMetadataKey;
 
 /**
  * Servlet implementation class for Servlet: AddELO
@@ -55,17 +57,17 @@ import roolo.elo.api.IMetadataValueContainer;
 //		String eloXMLReceived = "<elo><metadata><uri>StrContentLanguageIndependent2</uri><type>Universal Type</type><version>First VERSION</version><title>ELO</title><author>ELO AUTHOR</author><subject>This is the SUBJECT of ELO</subject><gradelevel>GRADELEVEL 5</gradelevel><familytag>FAMILYTAG R</familytag><iscurrent>ISCURRENT Yes</iscurrent><datecreated>Fri Apr 24 19:11:03 EDT 2009</datecreated></metadata><content languageIndependend='true' contentType='xml'><html><body>hello content</body></html></content><resources></resources></elo>";
 		
 		try{
-			IMetadataTypeManager<IMetadataKey> typeManager = MetadataUtil.createTypeManager();
+			IMetadataTypeManager<BasicMetadataKey> typeManager = new MetadataTypeManager<BasicMetadataKey>();
 			
-			IELOFactory<IMetadataKey> eloFactory = new JDomBasicELOFactory<IMetadataKey>(typeManager);
-			IELO<IMetadataKey> elo = eloFactory.createELOFromXml(eloXMLReceived);
+			IELOFactory<BasicMetadataKey> eloFactory = new JDomBasicELOFactory<BasicMetadataKey>(typeManager);
+			IELO<BasicMetadataKey> elo = eloFactory.createELOFromXml(eloXMLReceived);
 			
 			//This statement CREATES the URI key in the ELO's Metadata
-			IMetadataValueContainer uriKeyContainer = elo.getMetadata().getMetadataValueContainer(ELOMetadataKeys.URI.getKey());
+			IMetadataValueContainer uriKeyContainer = elo.getMetadata().getMetadataValueContainer(typeManager.getMetadataKey("uri"));
 			//this is the URI string set in the metadata, but it should be of type URI, so extract it and shove it into a URI object
-			String uriString =  (String) uriKeyContainer.getValue();
-			IMetadataKey uriKey = uriKeyContainer.getKey();
-			uriKeyContainer.setValue(new URI(uriString));
+//			URI uri =  (URI) uriKeyContainer.getValue();
+			BasicMetadataKey uriKey = (BasicMetadataKey)uriKeyContainer.getKey();
+//			uriKeyContainer.setValue(uri);
 			elo.setUriKey(uriKey);
 			
 			/**
