@@ -43,13 +43,7 @@ class RooloClient {
 
 		$eloXml = urlencode($eloXml);
 		$url = $this->_rooloServiceUrls['addElo'] . '?eloXML=' . $eloXml;
-		$error = file_get_contents($url);
-		
-		if ($error) {
-			return $error;	
-		}else {
-			return false;
-		}
+		return file_get_contents($url);
 	}
 	
 	/**
