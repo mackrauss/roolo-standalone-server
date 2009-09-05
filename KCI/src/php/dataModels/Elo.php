@@ -108,10 +108,20 @@ class Elo implements XMLSupported{
 			$metadataElem = $this->getElemAtPos($dom, 'metadata', 0);
 			if ($metadataElem !== null){
 				foreach($metadataElem->childNodes() as $curMetadataElem){
-					$key = $curMetadataElem->tag;
-					$value = $curMetadataElem->innertext;
 					
+					if ($curMetadataElem->tag == 'uri'){
+						$curMetadataElem = $curMetadataElem->find('entry');
+						$curMetadataElem = $curMetadataElem[0];
+						
+						$key = 'uri';
+						
+					}else {
+						$key = $curMetadataElem->tag;
+					}
+					
+					$value = $curMetadataElem->innertext;
 					$this->_metadata[$key] = $value;
+					
 				}
 			}
 			

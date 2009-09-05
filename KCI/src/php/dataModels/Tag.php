@@ -27,6 +27,7 @@ private $_allMetadata = array();
 	public function fillMetadata($allMetadata){
 
 		$this->_uri = $allMetadata['uri'];
+		$this->_title = $allMetadata['title'];
 		$this->_author = $allMetadata['author'];
 		$this->_dateCreated = $allMetadata['datecreated'];
 		$this->_dateDeleted = $allMetadata['datedeleted'];
