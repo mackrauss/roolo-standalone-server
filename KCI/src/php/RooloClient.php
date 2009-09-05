@@ -128,6 +128,82 @@ class RooloClient {
 	}
 	
 	/**
+	 * Given a LUCENE query, retrieve ELOs based on the type and scope
+	 * parameters and convert the results to PHP data model objects
+	 *
+	 * @param String $query Lucene query to be run against Roolo
+	 * @param String $resultType Whether the returned value(s) should hold only the URIs of the elos or the entire elos (default: 'uri')
+	 * @param String $searchScope Whether the search should be performed on all versions of all ELOs or only their latest versions (default: 'all')
+	 */
+	public function search ($query=null, $resultType='uri', $searchScope='all'){
+		
+		
+		if ($query == null){
+			return null;
+		}
+		
+		$searchUrl = $this->_rooloServiceUrls['search'] . '?query=' . $query . '&resultType=' . $resultType . '&searchScope=' . $searchScope;
+		
+		$xmlResults = file_get_contents($searchUrl);
+
+		
+		$elos = array();
+		if ($resultType == 'uri'){
+			$elos = $this->parseEloUris($xmlResults);	
+		}else {
+			$elos = $this->parseElos ($xmlResults);
+		}
+		
+		return $elos;
+		
+	}
+	
+	/**
+	 * Given XML representation of a set of ELO URIs and their versions, extract
+	 * each item an return an array of the collection
+	 *
+	 * @param unknown_type $xmlResults
+	 */
+	private function parseEloUris($xmlResults){
+		$resultsDom = str_get_dom($xmlResults);
+		$resultElos = array();
+		
+		$xmlElos = $resultsDom->find('SearchResult');
+		foreach ($xmlElos as $xmlElo){
+			$uri = $xmlElo->find('uri');
+			$version = $xmlElo->find('version');
+			
+			$elo = new Elo();
+			$elo->addMetadata('uri', $uri[0]->innertext);
+			$elo->addMetadata('version', $version[0]->innertext);
+			
+			$resultElos[] = $elo;
+ 		}
+ 		return $resultElos;
+	}
+	
+	/**
+	 * Given XML representation of a set of ELOs, extract
+	 * each elo and return them in an array
+	 *
+	 * @param unknown_type $xmlResults
+	 */
+	private function parseElos($xmlResults){
+		$resultsDom = str_get_dom($xmlResults);
+		$resultElos = array();
+		
+		$xmlElos = $resultsDom->find('elo');
+		foreach ($xmlElos as $xmlElo){
+			
+			$eloType = $xmlElo->find('type');
+			$eloType = $eloType[0]->innertext;
+			$elo = new $eloType($xmlElo->innertext);
+			$resultElos[] = $elo;
+ 		}
+ 		return $resultElos;
+	}
+	
+	/**
 	 * Given the XML representation of an elo,
 	 * return the object representation
 	 *
