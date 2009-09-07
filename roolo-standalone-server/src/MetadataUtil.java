@@ -7,7 +7,6 @@ import roolo.elo.api.metadata.MetadataTokenization;
 import roolo.elo.api.metadata.MetadataValueCount;
 import roolo.elo.metadata.keys.StringMetadataKey;
 
-
 public class MetadataUtil {
 	public static IMetadataTypeManager<IMetadataKey> createTypeManager(){
 		IMetadataTypeManager<IMetadataKey> typeManager = new MetadataTypeManager<IMetadataKey>();

@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
@@ -23,63 +21,37 @@ import roolo.elo.metadata.keys.BasicMetadataKey;
  * Servlet implementation class for Servlet: AddELO
  *
  */
- public class AddELO extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
-   static final long serialVersionUID = 1L;
-   private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
-   
-    /* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#HttpServlet()
-	 */
+public class AddELO extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+	static final long serialVersionUID = 1L;
+	private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
+	
+	public static final String P_ELO_XML = "eloXML";
+	
 	public AddELO() {
 		super();
 	}
 	
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doPost(request, response);
-	}  	
-	
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/xml; charset=UTF-8");
 		
-		String eloXMLReceived = request.getParameter("eloXML");
-		if (eloXMLReceived == null){
-			XmlUtil.generateError("Must provide parameter called: eloXML", writer);
+		String p_eloXML = request.getParameter(AddELO.P_ELO_XML);
+		if (p_eloXML == null){
+			XmlUtil.generateError("Must provide parameter called: " + AddELO.P_ELO_XML, writer);
 			return;
 		}
-		
-//		String eloXMLReceived = "<elo><metadata><uri>StrContentLanguageIndependent2</uri><type>Universal Type</type><version>First VERSION</version><title>ELO</title><author>ELO AUTHOR</author><subject>This is the SUBJECT of ELO</subject><gradelevel>GRADELEVEL 5</gradelevel><familytag>FAMILYTAG R</familytag><iscurrent>ISCURRENT Yes</iscurrent><datecreated>Fri Apr 24 19:11:03 EDT 2009</datecreated></metadata><content languageIndependend='true' contentType='xml'><html><body>hello content</body></html></content><resources></resources></elo>";
 		
 		try{
 			IMetadataTypeManager<BasicMetadataKey> typeManager = new MetadataTypeManager<BasicMetadataKey>();
 			
 			IELOFactory<BasicMetadataKey> eloFactory = new JDomBasicELOFactory<BasicMetadataKey>(typeManager);
-			IELO<BasicMetadataKey> elo = eloFactory.createELOFromXml(eloXMLReceived);
+			IELO<BasicMetadataKey> elo = eloFactory.createELOFromXml(p_eloXML);
 			
 			//This statement CREATES the URI key in the ELO's Metadata
 			IMetadataValueContainer uriKeyContainer = elo.getMetadata().getMetadataValueContainer(typeManager.getMetadataKey("uri"));
 			//this is the URI string set in the metadata, but it should be of type URI, so extract it and shove it into a URI object
-//			URI uri =  (URI) uriKeyContainer.getValue();
 			BasicMetadataKey uriKey = (BasicMetadataKey)uriKeyContainer.getKey();
-//			uriKeyContainer.setValue(uri);
 			elo.setUriKey(uriKey);
-			
-			/**
-			 * testing related_to mdk
-			 */
-//			IMetadataKey relatedToMDK = new StringMetadataKey ("relatedTo", "/relatedto", I18nType.UNIVERSAL, MetadataValueCount.LIST, null);
-//			IMetadata metadata = elo.getMetadata();
-//			IMetadataValueContainer relatedToMDC = metadata.getMetadataValueContainer(relatedToMDK);
-//			relatedToMDC.addValue("myass1");
-//			relatedToMDC.addValue("myass2");
-//			relatedToMDC.addValue("myass3");
-			/********* end test code ***********/
 			
 			repositoryJcrImpl.addELO(elo);
 		}catch(Exception e){
@@ -88,5 +60,9 @@ import roolo.elo.metadata.keys.BasicMetadataKey;
 		}
 		
 		XmlUtil.generateSuccess("ELO added successfully", writer);
+	}  	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.doGet(request, response);
 	}
 }
