@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
@@ -25,16 +23,10 @@ import roolo.elo.RepositoryJcrImpl;
    static final long serialVersionUID = 1L;
    private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
    
-    /* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#HttpServlet()
-	 */
 	public DeleteAll() {
 		super();
 	}   	
 	
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/xml; charset=UTF-8");
@@ -56,9 +48,6 @@ import roolo.elo.RepositoryJcrImpl;
 		writer.write(finalXml);
 	}  	
 	
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.doGet(request, response);
 	}
