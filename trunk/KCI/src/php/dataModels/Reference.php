@@ -9,6 +9,10 @@ class Reference extends Elo {
 	private $_uri = '';
 	private $_title = '';
 	private $_author = '';
+	private $_type = '';
+	private $_version = '';
+	
+
 	private $_dateCreated = '';
 	private $_dateDeleted = '';
 	private $_uri1 = '';
@@ -28,6 +32,8 @@ class Reference extends Elo {
 		$this->_uri = $allMetadata['uri'];
 		$this->_title = $allMetadata['title'];
 		$this->_author = $allMetadata['author'];
+		$this->_type = $allMetadata['type'];
+		$this->_version = $allMetadata['version'];
 		$this->_dateCreated = $allMetadata['datecreated'];
 		$this->_dateDeleted = $allMetadata['datedeleted'];
 		$this->_uri1 = $allMetadata['uri1'];
@@ -195,6 +201,37 @@ class Reference extends Elo {
 	public function set_title($_title) {
 		$this->_title = $_title;
 		$this->updateMetadata('title', $_title);
+	}
+	
+	
+/**
+	 * @return unknown
+	 */
+	public function get_type() {
+		return $this->_type;
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_version() {
+		return $this->_version;
+	}
+	
+	/**
+	 * @param unknown_type $_type
+	 */
+	public function set_type($_type) {
+		$this->_type = $_type;
+		$this->updateMetadata('type', $_type);
+	}
+	
+	/**
+	 * @param unknown_type $_version
+	 */
+	public function set_version($_version) {
+		$this->_version = $_version;
+		$this->updateMetadata('version', $_version);
 	}
 	
 }
