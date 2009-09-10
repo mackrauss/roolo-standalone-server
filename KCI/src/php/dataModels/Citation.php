@@ -9,6 +9,7 @@ class Citation extends Elo {
 	private $_uri = '';
 	private $_title = '';
 	private $_author = '';
+	private $_type = '';
 	private $_dateCreated = '';
 	private $_dateModified = '';
 	private $_version = '';
@@ -21,6 +22,7 @@ class Citation extends Elo {
 		parent::__construct($xml);
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
+		$this->_type = 'Citation';
 	}
 	
 	
@@ -40,6 +42,17 @@ class Citation extends Elo {
 		$contributors = $allMetadata['contributors'];
 		$this->_contributors = explode(',', $contributors);
 		
+	}
+	
+	/**
+	 * Everytime a metadata is modified, we need to update
+	 * our list of metadatas
+	 *
+	 * @param unknown_type $fieldName
+	 * @param unknown_type $fieldValue
+	 */
+	public function updateMetadata($fieldName, $fieldValue){
+		$this->_allMetadata[$fieldName] = $fieldValue;
 	}
 	
 	
@@ -111,6 +124,7 @@ class Citation extends Elo {
 	 */
 	public function set_author($_author) {
 		$this->_author = $_author;
+		$this->updateMetadata('author', $_author);
 	}
 	
 	/**
@@ -118,6 +132,7 @@ class Citation extends Elo {
 	 */
 	public function set_contributors($_contributors) {
 		$this->_contributors = $_contributors;
+		$this->updateMetadata('contributors', $_contributors);
 	}
 	
 	/**
@@ -125,6 +140,7 @@ class Citation extends Elo {
 	 */
 	public function set_dateCreated($_dateCreated) {
 		$this->_dateCreated = $_dateCreated;
+		$this->updateMetadata('dateCreated', $_dateCreated);
 	}
 	
 	/**
@@ -132,6 +148,7 @@ class Citation extends Elo {
 	 */
 	public function set_dateModified($_dateModified) {
 		$this->_dateModified = $_dateModified;
+		$this->updateMetadata('dateModified', $_dateModified);		
 	}
 	
 	/**
@@ -139,6 +156,7 @@ class Citation extends Elo {
 	 */
 	public function set_desc($_desc) {
 		$this->_desc = $_desc;
+		$this->updateMetadata('description', $_desc);
 	}
 	
 	/**
@@ -146,6 +164,7 @@ class Citation extends Elo {
 	 */
 	public function set_keywords($_keywords) {
 		$this->_keywords = $_keywords;
+		$this->updateMetadata('keywords', $_keywords);
 	}
 	
 	/**
@@ -153,6 +172,7 @@ class Citation extends Elo {
 	 */
 	public function set_title($_title) {
 		$this->_title = $_title;
+		$this->updateMetadata('title', $_title);
 	}
 	
 	/**
@@ -160,6 +180,7 @@ class Citation extends Elo {
 	 */
 	public function set_uri($_uri) {
 		$this->_uri = $_uri;
+		$this->updateMetadata('uri', $_uri);
 	}
 	
 	/**
@@ -167,6 +188,14 @@ class Citation extends Elo {
 	 */
 	public function set_version($_version) {
 		$this->_version = $_version;
+		$this->updateMetadata('version', $_version);
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_type() {
+		return $this->_type;
 	}
 	
 }

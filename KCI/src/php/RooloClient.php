@@ -5,6 +5,7 @@ require_once 'dataModels/Article.php';
 
 class RooloClient {
 	
+	private $_uriDomain = 'roolo://scy.collide.info/scy-collide-server/';
 	private $_rooloUrl = '';
 	private $_rooloServiceUrls = array();
 	
@@ -60,14 +61,7 @@ class RooloClient {
 		$eloXml = urlencode($eloXml);
 		
 		$url = $this->_rooloServiceUrls['updateElo'] . '?eloXML=' . $eloXml;
-		
-		$error = file_get_contents($url);
-		
-		if ($error) {
-			return $error;	
-		}else {
-			return false;
-		}	
+		return file_get_contents($url);
 	}
 	
 	/**
@@ -82,13 +76,7 @@ class RooloClient {
 	public function deleteElo($eloUri){
 		
 		$url = $this->_rooloServiceUrls['deleteElo'] . '?uri=' . $eloUri;
-		$error = file_get_contents($url);
-		
-		if ($error) {
-			return $error;	
-		}else {
-			return false;
-		}
+		return file_get_contents($url);
 	}
 	
 	/**
@@ -100,6 +88,7 @@ class RooloClient {
 	 */
 	public function retrieveElo($eloUri){
 		
+		$eloUri = $this->_uriDomain . $eloUri;
 		$url = $this->_rooloServiceUrls['retrieveElo'] . '?uri=' . $eloUri;
 		
 		$eloXml = file_get_contents($url);
@@ -216,27 +205,15 @@ class RooloClient {
 		$type = $dom->find('metadata type');
 		$type = $type[0];
 		$type = $type->innertext;
+
 		
-		switch ($type) {
-			case 'article':
-				return new Article($eloXml);				
-				break;
-			case 'citation':
-				return new Citation($eloXml);
-				break;
-			case 'comment':
-				return new Comment($eloXml);
-				break;
-			case 'lock':
-				return new Lock($eloXml);
-				break;
-			case 'reference':
-				return new Reference($eloXml);
-				break;
-			case 'tag':
-				return new Tag($eloXml);
-				break;
-		}
+		$elo = new $type($eloXml);
+		$eloUri = $elo->get_uri();
+		$eloUri = str_replace($this->_uriDomain, '', $eloUri);
+		//$eloUri = str_replace('.'. $type, '', $eloUri);
+		$elo->set_uri($eloUri);
+		
+		return $elo;
 		
 	}
 

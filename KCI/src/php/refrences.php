@@ -94,16 +94,21 @@ require_once 'dataModels/Tag.php';
 		$tagFrequencyMap = array();
 		$tags = $rooloClient->search('TYPE:tag', 'elo');
 		
-//		foreach ($tags as $tag){
-//			if (array_key_exists($tag->get_title(), $tagFrequencyMap)){
-//				$tagFrequencyMap[$tag->get_title()] += 1;				
-//			}
-//		}
-//		
-//		print_r($tagFrequencyMap);
-//		die();
+		foreach ($tags as $tag){
+			if (array_key_exists($tag->get_title(), $tagFrequencyMap)){
+				$tagFrequencyMap[$tag->get_title()] += 1;				
+			}else {
+				$tagFrequencyMap[$tag->get_title()] = 1;
+			}
+		}
+		
+		print_r($tagFrequencyMap);
+		die();
+		
+		echo "ul id='tagList'";
 		
 		foreach ($tags as $tag){
+			echo "<li>";
 			echo $tag->get_title() . "<br/>";
 			echo $tag->get_author() . "<br/><br/>";
 			

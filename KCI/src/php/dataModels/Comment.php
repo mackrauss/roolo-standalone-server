@@ -9,7 +9,10 @@ class Comment extends Elo {
 	private $_uri = '';
 	private $_title = '';
 	private $_author = '';
-	private $_commentText = '';
+	private $_type = '';
+	private $_version = '';
+
+
 	private $_dateCreated = '';
 	
 	private $_ownerUri = '';
@@ -19,6 +22,7 @@ class Comment extends Elo {
 		parent::__construct($xml);
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
+		$this->_type = 'Comment';
 	}
 	
 	
@@ -30,18 +34,23 @@ class Comment extends Elo {
 		$this->_commentText = $allMetadata['commentText'];
 		$this->_dateCreated = $allMetadata['datecreated'];
 		
-		$this->_articleUri = $allMetadata['articleuri'];
+		$this->_ownerUri = $allMetadata['articleuri'];
 		$this->_ownerType = $allMetadata['ownertype'];
 		
 	}
 	
-	
 	/**
-	 * @return unknown
+	 * Everytime a metadata is modified, we need to update
+	 * our list of metadatas
+	 *
+	 * @param unknown_type $fieldName
+	 * @param unknown_type $fieldValue
 	 */
-	public function get_articleUri() {
-		return $this->_articleUri;
+	public function updateMetadata($fieldName, $fieldValue){
+		$this->_allMetadata[$fieldName] = $fieldValue;
 	}
+	
+	
 	
 	/**
 	 * @return unknown
@@ -50,12 +59,6 @@ class Comment extends Elo {
 		return $this->_author;
 	}
 	
-	/**
-	 * @return unknown
-	 */
-	public function get_commentText() {
-		return $this->_commentText;
-	}
 	
 	/**
 	 * @return unknown
@@ -74,8 +77,22 @@ class Comment extends Elo {
 	/**
 	 * @return unknown
 	 */
+	public function get_ownerUri() {
+		return $this->_ownerUri;
+	}
+	
+	/**
+	 * @return unknown
+	 */
 	public function get_title() {
 		return $this->_title;
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_type() {
+		return $this->_type;
 	}
 	
 	/**
@@ -86,31 +103,20 @@ class Comment extends Elo {
 	}
 	
 	/**
-	 * @param unknown_type $_articleUri
-	 */
-	public function set_articleUri($_articleUri) {
-		$this->_articleUri = $_articleUri;
-	}
-	
-	/**
 	 * @param unknown_type $_author
 	 */
 	public function set_author($_author) {
 		$this->_author = $_author;
+		$this->updateMetadata('author', $_author);
 	}
 	
-	/**
-	 * @param unknown_type $_commentText
-	 */
-	public function set_commentText($_commentText) {
-		$this->_commentText = $_commentText;
-	}
 	
 	/**
 	 * @param unknown_type $_dateCreated
 	 */
 	public function set_dateCreated($_dateCreated) {
 		$this->_dateCreated = $_dateCreated;
+		$this->updateMetadata('dateCreated', $_dateCreated);
 	}
 	
 	/**
@@ -118,6 +124,15 @@ class Comment extends Elo {
 	 */
 	public function set_ownerType($_ownerType) {
 		$this->_ownerType = $_ownerType;
+		$this->updateMetadata('ownerType', $_ownerType);
+	}
+	
+	/**
+	 * @param unknown_type $_ownerUri
+	 */
+	public function set_ownerUri($_ownerUri) {
+		$this->_ownerUri = $_ownerUri;
+		$this->updateMetadata('ownerUri', $_ownerUri);
 	}
 	
 	/**
@@ -125,6 +140,7 @@ class Comment extends Elo {
 	 */
 	public function set_title($_title) {
 		$this->_title = $_title;
+		$this->updateMetadata('title', $_title);
 	}
 	
 	/**
@@ -132,6 +148,21 @@ class Comment extends Elo {
 	 */
 	public function set_uri($_uri) {
 		$this->_uri = $_uri;
+		$this->updateMetadata('uri', $_uri);
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_version() {
+		return $this->_version;
+	}
+	
+	/**
+	 * @param unknown_type $_version
+	 */
+	public function set_version($_version) {
+		$this->_version = $_version;
 	}
 
 }
