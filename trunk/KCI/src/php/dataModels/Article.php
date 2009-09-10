@@ -24,7 +24,7 @@ class Article extends Elo {
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
 		$this->_content = parent::getContent();
-		$this->_type = 'Article';
+		$this->_allMetadata['type'] = 'Article';
 	}
 	
 	

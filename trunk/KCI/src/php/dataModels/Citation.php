@@ -22,7 +22,7 @@ class Citation extends Elo {
 		parent::__construct($xml);
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
-		$this->_type = 'Citation';
+		$this->_allMetadata['type'] = 'Citation';
 	}
 	
 	
