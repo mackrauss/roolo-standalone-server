@@ -8,6 +8,10 @@ class Lock extends Elo {
 	
 	private $_uri = '';
 	private $_author = '';
+	private $_type = '';
+	private $_version = '';
+
+
 	private $_dateCreated = '';
 	private $_dateModified = '';
 	private $_ownerUri = '';  // The URI of the ELO being locked
@@ -19,6 +23,7 @@ class Lock extends Elo {
 		parent::__construct($xml);
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
+		$this->_type = 'Lock';
 	}
 	
 	
@@ -34,6 +39,17 @@ class Lock extends Elo {
 		
 	}
 
+	/**
+	 * Everytime a metadata is modified, we need to update
+	 * our list of metadatas
+	 *
+	 * @param unknown_type $fieldName
+	 * @param unknown_type $fieldValue
+	 */
+	public function updateMetadata($fieldName, $fieldValue){
+		$this->_allMetadata[$fieldName] = $fieldValue;
+	}
+	
 	/**
 	 * @return unknown
 	 */
@@ -88,6 +104,7 @@ class Lock extends Elo {
 	 */
 	public function set_author($_author) {
 		$this->_author = $_author;
+		$this->updateMetadata('author', $_author);
 	}
 	
 	/**
@@ -95,6 +112,7 @@ class Lock extends Elo {
 	 */
 	public function set_dateCreated($_dateCreated) {
 		$this->_dateCreated = $_dateCreated;
+		$this->updateMetadata('dateCreated', $_dateCreated);
 	}
 	
 	/**
@@ -102,6 +120,7 @@ class Lock extends Elo {
 	 */
 	public function set_dateModified($_dateModified) {
 		$this->_dateModified = $_dateModified;
+		$this->updateMetadata('dateModified', $_dateModified);
 	}
 	
 	/**
@@ -109,6 +128,7 @@ class Lock extends Elo {
 	 */
 	public function set_ownerType($_ownerType) {
 		$this->_ownerType = $_ownerType;
+		$this->updateMetadata('ownerType', $_ownerType);
 	}
 	
 	/**
@@ -116,6 +136,7 @@ class Lock extends Elo {
 	 */
 	public function set_ownerUri($_ownerUri) {
 		$this->_ownerUri = $_ownerUri;
+		$this->updateMetadata('ownerUri', $_ownerUri);
 	}
 	
 	/**
@@ -123,6 +144,7 @@ class Lock extends Elo {
 	 */
 	public function set_sectionId($_sectionId) {
 		$this->_sectionId = $_sectionId;
+		$this->updateMetadata('sectionId', $_sectionId);
 	}
 	
 	/**
@@ -130,6 +152,22 @@ class Lock extends Elo {
 	 */
 	public function set_uri($_uri) {
 		$this->_uri = $_uri;
+		$this->updateMetadata('uri', $_uri);
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_version() {
+		return $this->_version;
+	}
+	
+	/**
+	 * @param unknown_type $_version
+	 */
+	public function set_version($_version) {
+		$this->_version = $_version;
+		$this->updateMetadata('version', $_version);
 	}
 }
 

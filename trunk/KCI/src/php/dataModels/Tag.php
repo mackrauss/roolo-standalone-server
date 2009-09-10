@@ -9,13 +9,16 @@ private $_allMetadata = array();
 	private $_uri = '';
 	private $_title = '';
 	private $_author = '';
+	private $_type = '';
+	private $_version = '';
+
+
 	private $_dateCreated = '';
 	private $_dateDeleted = '';
 	
 	private $_ownerUri = '';
 	// what is this tag for ('proposal, citation, or article)
 	private $_ownerType = '';
-	private $_tag = '';
 	
 	public function __construct($xml=null){
 		parent::__construct($xml);
@@ -29,6 +32,7 @@ private $_allMetadata = array();
 		$this->_uri = $allMetadata['uri'];
 		$this->_title = $allMetadata['title'];
 		$this->_author = $allMetadata['author'];
+		$this->_type = 'Tag';
 		$this->_dateCreated = $allMetadata['datecreated'];
 		$this->_dateDeleted = $allMetadata['datedeleted'];
 		$this->_ownerUri = $allMetadata['owneruri'];
@@ -98,12 +102,6 @@ private $_allMetadata = array();
 		return $this->_ownerUri;
 	}
 	
-	/**
-	 * @return unknown
-	 */
-	public function get_tag() {
-		return $this->_tag;
-	}
 	
 	/**
 	 * @return unknown
@@ -149,13 +147,6 @@ private $_allMetadata = array();
 	}
 	
 	/**
-	 * @param unknown_type $_tag
-	 */
-	public function set_tag($_tag) {
-		$this->_tag = $_tag;
-	}
-	
-	/**
 	 * @param unknown_type $_uri
 	 */
 	public function set_uri($_uri) {
@@ -177,6 +168,28 @@ private $_allMetadata = array();
 	public function set_title($_title) {
 		$this->_title = $_title;
 		$this->updateMetadata('title', $_title);
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_type() {
+		return $this->_type;
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_version() {
+		return $this->_version;
+	}
+	
+	/**
+	 * @param unknown_type $_version
+	 */
+	public function set_version($_version) {
+		$this->_version = $_version;
+		$this->updateMetadata('version', $_version);
 	}
 	
 }

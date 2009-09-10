@@ -3,7 +3,7 @@
 require_once ('Elo.php');
 
 class Article extends Elo {
-
+	
 	
 	private $_allMetadata = array();
 	private $_content = '';
@@ -11,6 +11,7 @@ class Article extends Elo {
 	private $_uri = '';
 	private $_title = '';
 	private $_author = '';
+	private $_type = '';
 	private $_dateCreated = '';
 	private $_dateModified = '';
 	private $_version = '';
@@ -23,6 +24,7 @@ class Article extends Elo {
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
 		$this->_content = parent::getContent();
+		$this->_type = 'Article';
 	}
 	
 	
@@ -43,6 +45,17 @@ class Article extends Elo {
 	}
 	
 	/**
+	 * Everytime a metadata is modified, we need to update
+	 * our list of metadatas
+	 *
+	 * @param unknown_type $fieldName
+	 * @param unknown_type $fieldValue
+	 */
+	public function updateMetadata($fieldName, $fieldValue){
+		$this->_allMetadata[$fieldName] = $fieldValue;
+	}
+	
+	/**
 	 * @return unknown
 	 */
 	public function get_content() {
@@ -54,6 +67,7 @@ class Article extends Elo {
 	 */
 	public function set_content($_content) {
 		$this->_content = $_content;
+		$this->updateMetadata('content', $_content);
 	}
 	
 	
@@ -125,6 +139,7 @@ class Article extends Elo {
 	 */
 	public function set_author($_author) {
 		$this->_author = $_author;
+		$this->updateMetadata('author', $_author);
 	}
 	
 	/**
@@ -132,6 +147,7 @@ class Article extends Elo {
 	 */
 	public function set_contributors($_contributors) {
 		$this->_contributors = $_contributors;
+		$this->updateMetadata('contributors', $_contributors);
 	}
 	
 	/**
@@ -139,6 +155,7 @@ class Article extends Elo {
 	 */
 	public function set_dateCreated($_dateCreated) {
 		$this->_dateCreated = $_dateCreated;
+		$this->updateMetadata('dateCreated', $_dateCreated);
 	}
 	
 	/**
@@ -146,6 +163,7 @@ class Article extends Elo {
 	 */
 	public function set_dateModified($_dateModified) {
 		$this->_dateModified = $_dateModified;
+		$this->updateMetadata('dateModified', $_dateModified);
 	}
 	
 	/**
@@ -153,6 +171,7 @@ class Article extends Elo {
 	 */
 	public function set_desc($_desc) {
 		$this->_desc = $_desc;
+		$this->updateMetadata('description', $_desc);
 	}
 	
 	/**
@@ -160,6 +179,7 @@ class Article extends Elo {
 	 */
 	public function set_sectionModified($_sectionModified) {
 		$this->_sectionModified = $_sectionModified;
+		$this->updateMetadata('sectionModified', $_sectionModified);
 	}
 	
 	/**
@@ -167,6 +187,7 @@ class Article extends Elo {
 	 */
 	public function set_title($_title) {
 		$this->_title = $_title;
+		$this->updateMetadata('title', $_title);
 	}
 	
 	/**
@@ -174,6 +195,7 @@ class Article extends Elo {
 	 */
 	public function set_uri($_uri) {
 		$this->_uri = $_uri;
+		$this->updateMetadata('uri', $_uri);
 	}
 	
 	/**
@@ -181,6 +203,14 @@ class Article extends Elo {
 	 */
 	public function set_version($_version) {
 		$this->_version = $_version;
+		$this->updateMetadata('version', $_version);
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_type() {
+		return $this->_type;
 	}
 }
 

@@ -37,6 +37,17 @@ class Proposal extends Elo {
 		
 	}
 	
+	/**
+	 * Everytime a metadata is modified, we need to update
+	 * our list of metadatas
+	 *
+	 * @param unknown_type $fieldName
+	 * @param unknown_type $fieldValue
+	 */
+	public function updateMetadata($fieldName, $fieldValue){
+		$this->_allMetadata[$fieldName] = $fieldValue;
+	}
+	
 	
 	/**
 	 * @return unknown
