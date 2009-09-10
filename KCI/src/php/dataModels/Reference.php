@@ -24,7 +24,7 @@ class Reference extends Elo {
 		parent::__construct($xml);
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
-		$this->_type = 'reference';
+		$this->_allMetadata['type'] = 'Reference';
 	}
 	
 	

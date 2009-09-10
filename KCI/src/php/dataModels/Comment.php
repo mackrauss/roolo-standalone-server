@@ -22,7 +22,7 @@ class Comment extends Elo {
 		parent::__construct($xml);
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
-		$this->_type = 'Comment';
+		$this->_allMetadata['type'] = 'Comment';
 	}
 	
 	

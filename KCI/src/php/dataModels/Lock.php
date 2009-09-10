@@ -23,7 +23,7 @@ class Lock extends Elo {
 		parent::__construct($xml);
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
-		$this->_type = 'Lock';
+		$this->_allMetadata['type'] = 'Lock';
 	}
 	
 	

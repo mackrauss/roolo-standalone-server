@@ -24,6 +24,7 @@ private $_allMetadata = array();
 		parent::__construct($xml);
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
+		$this->_allMetadata['type'] = 'Tag';
 	}
 	
 	
@@ -32,7 +33,6 @@ private $_allMetadata = array();
 		$this->_uri = $allMetadata['uri'];
 		$this->_title = $allMetadata['title'];
 		$this->_author = $allMetadata['author'];
-		$this->_type = 'Tag';
 		$this->_dateCreated = $allMetadata['datecreated'];
 		$this->_dateDeleted = $allMetadata['datedeleted'];
 		$this->_ownerUri = $allMetadata['owneruri'];
@@ -115,6 +115,7 @@ private $_allMetadata = array();
 	 */
 	public function set_author($_author) {
 		$this->_author = $_author;
+		$this->updateMetadata('author', $_author);
 	}
 	
 	/**
@@ -122,6 +123,7 @@ private $_allMetadata = array();
 	 */
 	public function set_dateCreated($_dateCreated) {
 		$this->_dateCreated = $_dateCreated;
+		$this->updateMetadata('dateCreated', $_dateCreated);
 	}
 	
 	/**
@@ -129,6 +131,7 @@ private $_allMetadata = array();
 	 */
 	public function set_dateDeleted($_dateDeleted) {
 		$this->_dateDeleted = $_dateDeleted;
+		$this->updateMetadata('dateDeleted', $_dateDeleted);
 	}
 	
 	/**
@@ -136,6 +139,7 @@ private $_allMetadata = array();
 	 */
 	public function set_ownerType($_ownerType) {
 		$this->_ownerType = $_ownerType;
+		$this->updateMetadata('ownerType', $_ownerType);
 	}
 	
 	/**
@@ -151,6 +155,7 @@ private $_allMetadata = array();
 	 */
 	public function set_uri($_uri) {
 		$this->_uri = $_uri;
+		$this->updateMetadata('uri', $_uri);
 	}
 	
 	/**
