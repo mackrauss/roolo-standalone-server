@@ -75,6 +75,8 @@ class RooloClient {
 	 */
 	public function deleteElo($eloUri){
 		
+		$eloUri = $this->_uriDomain . $eloUri;
+		$eloUri = urlencode($eloUri);
 		$url = $this->_rooloServiceUrls['deleteElo'] . '?uri=' . $eloUri;
 		return file_get_contents($url);
 	}
@@ -130,6 +132,8 @@ class RooloClient {
 		if ($query == null){
 			return null;
 		}
+		
+		$query = urlencode($query);
 		
 		$searchUrl = $this->_rooloServiceUrls['search'] . '?query=' . $query . '&resultType=' . $resultType . '&searchScope=' . $searchScope;
 		
