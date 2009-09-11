@@ -31,42 +31,25 @@ import roolo.elo.content.BasicContent;
 import roolo.elo.metadata.keys.LongMetadataKey;
 import roolo.search.LuceneQuery;
 
-/**
- * Servlet implementation class for Servlet: Search
- *
- */
- public class Search extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
-   static final long serialVersionUID = 1L;
-   private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
+public class Search extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+	static final long serialVersionUID = 1L;
+	private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
+	
+	public static final String RESULT_TYPE_ELO 		= "elo";
+	public static final String RESULT_TYPE_URI 		= "uri";
+	
+	public static final String SEARCH_SCOPE_ALL 		= "all";
+	public static final String SEARCH_SCOPE_LATEST 	= "latest";
+	   
+	public static final String P_QUERY 				= "query";
+	public static final String P_RESULT_TYPE 		= "resultType";
+	public static final String P_SEARCH_SCOPE 		= "searchScope";
    
-   public static final String RESULT_TYPE_ELO 		= "elo";
-   public static final String RESULT_TYPE_URI 		= "uri";
-   
-   public static final String SEARCH_SCOPE_ALL 		= "all";
-   public static final String SEARCH_SCOPE_LATEST 	= "latest";
-   
-   public static final String P_QUERY 				= "query";
-   public static final String P_RESULT_TYPE 		= "resultType";
-   public static final String P_SEARCH_SCOPE 		= "searchScope";
-   
-    /* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#HttpServlet()
-	 */
 	public Search() {
 		super();
 	}
 	
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
-	
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/xml; charset=UTF-8");
 		
@@ -119,5 +102,9 @@ import roolo.search.LuceneQuery;
 			XmlUtil.generateError(e, writer);
 			return;
 		}
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		this.doGet(request, response);
 	}
 }

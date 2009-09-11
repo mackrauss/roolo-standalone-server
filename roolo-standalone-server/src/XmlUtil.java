@@ -14,11 +14,8 @@ public class XmlUtil {
 		String elosXml = "";
 		
 		elosXml += "<EloList>";
-		IMetadataKey relatedToMDK = new StringMetadataKey ("relatedTo", "/relatedto", I18nType.UNIVERSAL, MetadataValueCount.LIST, MetadataTokenization.UNTOKENIZED, null);
 		for (IELO curElo : elos) {
 			elosXml += curElo.getXml();
-//			String relatedto = curElo.getMetadata().getMetadataValueContainer(relatedToMDK).toString();
-//			System.out.println("RELATED_TO_MDK: "+relatedto);
 		}
 		
 		elosXml += "</EloList>";
@@ -32,10 +29,10 @@ public class XmlUtil {
 		String resultXml = null;
 		for (ISearchResult searchResult : results) {
 			resultXml = "";
-			resultXml += "\t<uri>" + searchResult.getUri() + "</uri>\n";
-			resultXml += "\t<version>" + searchResult.getVersion() + "</version>\n";
-			resultXml += "\t<relevance>" + searchResult.getRelevance() + "</relevance>\n";
-			xml += "<SearchResult>\n" + resultXml + "</SearchResult>\n";
+			resultXml += "<uri>" + searchResult.getUri() + "</uri>";
+			resultXml += "<version>" + searchResult.getVersion() + "</version>";
+			resultXml += "<relevance>" + searchResult.getRelevance() + "</relevance>";
+			xml += "<SearchResult>" + resultXml + "</SearchResult>";
 		}
 		
 		return "<SearchResults>\n" + xml + "</SearchResults>";

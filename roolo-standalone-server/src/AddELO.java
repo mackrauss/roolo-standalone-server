@@ -17,10 +17,6 @@ import roolo.elo.api.IMetadataTypeManager;
 import roolo.elo.api.IMetadataValueContainer;
 import roolo.elo.metadata.keys.BasicMetadataKey;
 
-/**
- * Servlet implementation class for Servlet: AddELO
- *
- */
 public class AddELO extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 	static final long serialVersionUID = 1L;
 	private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
@@ -42,16 +38,16 @@ public class AddELO extends javax.servlet.http.HttpServlet implements javax.serv
 		}
 		
 		try{
+			/*
+			 * Replace all '&' chars with '||||' to make sure that even if the content XML is malformed, 
+			 * it won't bother the SAX parser
+			 */
+//			p_eloXML = p_eloXML.replace("&", "||||");
+			
 			IMetadataTypeManager<BasicMetadataKey> typeManager = new MetadataTypeManager<BasicMetadataKey>();
 			
 			IELOFactory<BasicMetadataKey> eloFactory = new JDomBasicELOFactory<BasicMetadataKey>(typeManager);
 			IELO<BasicMetadataKey> elo = eloFactory.createELOFromXml(p_eloXML);
-			
-			//This statement CREATES the URI key in the ELO's Metadata
-			IMetadataValueContainer uriKeyContainer = elo.getMetadata().getMetadataValueContainer(typeManager.getMetadataKey("uri"));
-			//this is the URI string set in the metadata, but it should be of type URI, so extract it and shove it into a URI object
-			BasicMetadataKey uriKey = (BasicMetadataKey)uriKeyContainer.getKey();
-			elo.setUriKey(uriKey);
 			
 			repositoryJcrImpl.addELO(elo);
 		}catch(Exception e){
