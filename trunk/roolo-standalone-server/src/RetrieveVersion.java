@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
@@ -12,43 +10,36 @@ import javax.servlet.http.HttpServletResponse;
 import roolo.elo.RepositoryJcrImpl;
 import roolo.elo.api.IELO;
 
-/**
- * Servlet implementation class for Servlet: RetrieveVersion
- *
- */
- public class RetrieveVersion extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
-   static final long serialVersionUID = 1L;
-   private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
+public class RetrieveVersion extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
+	static final long serialVersionUID = 1L;
+	private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
+	
+	public static final String P_URI = "uri";
+	public static final String P_VERSION = "version";
 
-    /* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#HttpServlet()
-	 */
 	public RetrieveVersion() {
 		super();
 	}   	
 	
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/xml; charset=UTF-8");
 		
-		String eloURIString = request.getParameter("uri");
-		String eloVersionString = request.getParameter("version");
+		String p_uri = request.getParameter(RetrieveVersion.P_URI);
+		String p_version = request.getParameter(RetrieveVersion.P_VERSION);
 		
-		if (eloURIString == null){
-			XmlUtil.generateError("Must provide parameter called: uri", writer);
+		if (p_uri == null){
+			XmlUtil.generateError("Must provide parameter called: " + RetrieveVersion.P_URI, writer);
 			return;
 		}
 		
-		if (eloVersionString == null){
-			XmlUtil.generateError("Must provide parameter called: version", writer);
+		if (p_version == null){
+			XmlUtil.generateError("Must provide parameter called: " + RetrieveVersion.P_VERSION, writer);
 			return;
 		}
 		
 		try{
-			IELO retrievedELO = repositoryJcrImpl.retrieveVersion(new URI(eloURIString), eloVersionString);
+			IELO retrievedELO = repositoryJcrImpl.retrieveVersion(new URI(p_uri), p_version);
 			writer.write(retrievedELO.getXml());
 		}catch(URISyntaxException e){
 			XmlUtil.generateError(e, writer);
@@ -58,9 +49,6 @@ import roolo.elo.api.IELO;
 		
 	}  	
 	
-	/* (non-Java-doc)
-	 * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.doGet(request, response);
 	}

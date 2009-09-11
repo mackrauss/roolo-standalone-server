@@ -9,10 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import roolo.elo.RepositoryJcrImpl;
 
-/**
- * Servlet implementation class for Servlet: DeleteELO
- *
- */
 public class DeleteELO extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 	static final long serialVersionUID = 1L;
 	private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
