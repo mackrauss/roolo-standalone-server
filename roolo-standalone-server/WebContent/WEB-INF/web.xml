@@ -114,6 +114,15 @@
 		<description>
 		</description>
 		<display-name>
+		RebuildIndex</display-name>
+		<servlet-name>RebuildIndex</servlet-name>
+		<servlet-class>
+		RebuildIndex</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
 		RetrieveAll</display-name>
 		<servlet-name>RetrieveAll</servlet-name>
 		<servlet-class>
@@ -184,6 +193,10 @@
 	<servlet-mapping>
 		<servlet-name>Search</servlet-name>
 		<url-pattern>/Search</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RebuildIndex</servlet-name>
+		<url-pattern>/RebuildIndex</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>RetrieveAll</servlet-name>
