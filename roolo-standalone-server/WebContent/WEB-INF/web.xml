@@ -146,6 +146,15 @@
 		<servlet-class>
 		DeleteAll</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>
+		SearchLatest</display-name>
+		<servlet-name>SearchLatest</servlet-name>
+		<servlet-class>
+		SearchLatest</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>TestELO</servlet-name>
 		<url-pattern>/TestELO</url-pattern>
@@ -209,6 +218,10 @@
 	<servlet-mapping>
 		<servlet-name>DeleteAll</servlet-name>
 		<url-pattern>/DeleteAll</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SearchLatest</servlet-name>
+		<url-pattern>/SearchLatest</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
