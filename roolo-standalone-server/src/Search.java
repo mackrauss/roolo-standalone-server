@@ -38,13 +38,13 @@ public class Search extends javax.servlet.http.HttpServlet implements javax.serv
 	public static final String RESULT_TYPE_ELO 		= "elo";
 	public static final String RESULT_TYPE_URI 		= "uri";
 	
-	public static final String SEARCH_SCOPE_ALL 		= "all";
+	public static final String SEARCH_SCOPE_ALL 	= "all";
 	public static final String SEARCH_SCOPE_LATEST 	= "latest";
 	   
 	public static final String P_QUERY 				= "query";
 	public static final String P_RESULT_TYPE 		= "resultType";
 	public static final String P_SEARCH_SCOPE 		= "searchScope";
-   
+	
 	public Search() {
 		super();
 	}
