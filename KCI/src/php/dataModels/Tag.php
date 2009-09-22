@@ -4,7 +4,7 @@ require_once ('Elo.php');
 
 class Tag extends Elo {
 	
-private $_allMetadata = array();
+	private $_allMetadata = array();
 	
 	private $_uri = '';
 	private $_title = '';
@@ -37,7 +37,7 @@ private $_allMetadata = array();
 		$this->_dateDeleted = $allMetadata['datedeleted'];
 		$this->_ownerUri = $allMetadata['owneruri'];
 		$this->_ownerType = $allMetadata['ownertype'];
-		$this->_tag = $allMetadata['tag'];
+		//$this->_tag = $allMetadata['tag'];
 		
 	}
 	
@@ -147,7 +147,7 @@ private $_allMetadata = array();
 	 */
 	public function set_ownerUri($_ownerUri) {
 		$this->_ownerUri = $_ownerUri;
-		$this->updateMetadata('belongsTo', $_ownerUri);
+		$this->updateMetadata('ownerUri', $_ownerUri);
 	}
 	
 	/**

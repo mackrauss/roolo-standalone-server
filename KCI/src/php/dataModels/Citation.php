@@ -10,9 +10,10 @@ class Citation extends Elo {
 	private $_title = '';
 	private $_author = '';
 	private $_type = '';
+	private $_version = '';
+	
 	private $_dateCreated = '';
 	private $_dateModified = '';
-	private $_version = '';
 	private $_desc = '';
 	private $_keywords = array();
 	private $_contributors = array();
@@ -35,12 +36,13 @@ class Citation extends Elo {
 		$this->_dateModified = $allMetadata['datemodified'];
 		$this->_version = $allMetadata['version'];
 		$this->_desc = $allMetadata['desc'];
+		//$this->_type = $allMetadata['citation'];
 		
-		$keywords = $allMetadata['keywords'];
-		$this->_keywords = explode(',', $keywords);
-		
-		$contributors = $allMetadata['contributors'];
-		$this->_contributors = explode(',', $contributors);
+//		$keywords = $allMetadata['keywords'];
+//		$this->_keywords = explode(',', $keywords);
+//		
+//		$contributors = $allMetadata['contributors'];
+//		$this->_contributors = explode(',', $contributors);
 		
 	}
 	
@@ -53,6 +55,20 @@ class Citation extends Elo {
 	 */
 	public function updateMetadata($fieldName, $fieldValue){
 		$this->_allMetadata[$fieldName] = $fieldValue;
+	}
+	
+	/**
+	 * We add the metadata to parent's metadata beacause
+	 * generateXml() is using parent's metadata
+	 *
+	 * @return unknown
+	 */
+	public function generateXml(){
+		foreach ($this->_allMetadata as $key => $value){
+			parent::addMetadata($key, $value);
+		}
+		
+		return parent::generateXml();
 	}
 	
 	
@@ -197,6 +213,8 @@ class Citation extends Elo {
 	public function get_type() {
 		return $this->_type;
 	}
+	
+	
 	
 }
 
