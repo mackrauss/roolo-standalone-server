@@ -2,6 +2,7 @@
 
 require_once 'domLib/simple_html_dom.php';
 require_once 'dataModels/Article.php';
+require_once 'dataModels/Citation.php';
 
 class RooloClient {
 	
