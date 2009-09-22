@@ -1,0 +1,115 @@
+@CHARSET "ISO-8859-1";
+
+/* the main DIV containes all DIVs  */
+#page_dvi {
+	width:60%;
+	margin-left: auto;
+	margin-right: auto;	
+	padding:0px; 
+	text-align:center; 
+/*	border-style: none solid solid;
+	background-color: #ffffff; */
+	padding: 6px;
+	
+}
+div.section { 
+	padding:3px;
+	background: #fffff;
+	
+}
+
+div.section_button_Div{
+/*	border:2px solid;
+*/	margin: 100px 55px 0px 0px;
+	padding:3px;
+	background: #ffffff;
+}
+.title{
+	margin: 0% 2% 1% 2%;
+	background-color: #ffffff;
+	border: 1px solid #AFAFAF;
+	padding: 2px;
+	float: right;
+	width: 95%;
+	text-align: left;
+	font-style:italic;
+	color:#0300ee;
+	cursor: pointer;
+}
+
+.section_text{
+	margin: 0% 5% 1% 5%;
+	float: left;
+}	
+      	
+.section_button{
+	float: right;
+	width: 80px;
+	margin: 0px 5px 5px 5px;
+	padding: 3px 10px 3px 10px;	
+	text-align: center;
+}
+
+.tag{
+	margin: 0% 5% 3% 5%;
+	float: left;
+}
+
+div#citation_area{
+	margin: 4px 0px 0px 0px;
+	border: 1px solid #F2F0F0;
+	padding: 0px;
+	float: left;
+	width: 95%;
+	text-align: left;
+}
+
+.search{
+	margin-left:30%;
+	float: left;
+	text-align:left;
+}
+#searchList{
+	width:80%
+	margin-left: auto;
+	margin-right: auto;	
+	margin-up: 100px;	
+	float: left;
+	text-align:center;
+}
+div.searchResult{
+	margin: 4px 0px 0px 0px;
+	border: 1px solid #F2F0F0;
+	padding: 0px;
+	float: left;
+	width: 95%;
+	text-align: left;
+}
+.add_button{
+	margin: opx 0px 0px 0px;
+	padding: 0px;
+	float: left;
+}
+img.add_button{
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
