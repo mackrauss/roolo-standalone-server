@@ -23,6 +23,10 @@ public class XmlUtil {
 		return elosXml;
 	}
 	
+	public static String generateElo(IELO elo){
+		return elo.getXml();
+	}
+	
 	public static String generateSearchResultList(List<ISearchResult> results ){
 		String xml = "";
 		
