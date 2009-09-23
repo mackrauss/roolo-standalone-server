@@ -48,12 +48,12 @@ public class UpdateELO extends javax.servlet.http.HttpServlet implements javax.s
 			IELO<IMetadataKey> elo = eloFactory.createELOFromXml(p_eloXml);
 			
 			//This statement CREATES the URI key in the ELO's Metadata
-			IMetadataValueContainer uriKeyContainer = elo.getMetadata().getMetadataValueContainer(typeManager.getMetadataKey("uri"));
+//			IMetadataValueContainer uriKeyContainer = elo.getMetadata().getMetadataValueContainer();
 			//this is the URI string set in the metadata, but it should be of type URI, so extract it and shove it into a URI object
-			String uriString =  (String) uriKeyContainer.getValue();
-			IMetadataKey uriKey = uriKeyContainer.getKey();
-			uriKeyContainer.setValue(new URI(uriString));
-			elo.setUriKey(uriKey);
+//			String uriString =  (String) uriKeyContainer.getValue();
+//			IMetadataKey uriKey = uriKeyContainer.getKey();
+//			uriKeyContainer.setValue(new URI(uriString));
+			elo.setUriKey(typeManager.getMetadataKey("uri"));
 			
 			repositoryJcrImpl.updateELO(elo);
 		}catch(Exception e){
