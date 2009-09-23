@@ -1,20 +1,18 @@
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import roolo.elo.ELOMetadataKeys;
+import roolo.elo.BasicELO;
 import roolo.elo.JDomBasicELOFactory;
 import roolo.elo.MetadataTypeManager;
 import roolo.elo.RepositoryJcrImpl;
 import roolo.elo.api.IELO;
 import roolo.elo.api.IELOFactory;
-import roolo.elo.api.IMetadataKey;
+import roolo.elo.api.IMetadata;
 import roolo.elo.api.IMetadataTypeManager;
-import roolo.elo.api.IMetadataValueContainer;
 import roolo.elo.metadata.keys.BasicMetadataKey;
 
 public class AddELO extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
@@ -38,18 +36,15 @@ public class AddELO extends javax.servlet.http.HttpServlet implements javax.serv
 		}
 		
 		try{
-			/*
-			 * Replace all '&' chars with '||||' to make sure that even if the content XML is malformed, 
-			 * it won't bother the SAX parser
-			 */
-//			p_eloXML = p_eloXML.replace("&", "||||");
-			
 			IMetadataTypeManager<BasicMetadataKey> typeManager = new MetadataTypeManager<BasicMetadataKey>();
 			
 			IELOFactory<BasicMetadataKey> eloFactory = new JDomBasicELOFactory<BasicMetadataKey>(typeManager);
 			IELO<BasicMetadataKey> elo = eloFactory.createELOFromXml(p_eloXML);
 			
-			repositoryJcrImpl.addELO(elo);
+			IMetadata returnedMetadata = repositoryJcrImpl.addELO(elo);
+			
+			elo.setMetadata(returnedMetadata);
+			XmlUtil.generateElo(elo);
 		}catch(Exception e){
 			XmlUtil.generateError(e, writer);
 			return;
