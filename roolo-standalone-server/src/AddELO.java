@@ -49,8 +49,6 @@ public class AddELO extends javax.servlet.http.HttpServlet implements javax.serv
 			XmlUtil.generateError(e, writer);
 			return;
 		}
-		
-		XmlUtil.generateSuccess("ELO added successfully", writer);
 	}  	
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
