@@ -15,12 +15,14 @@ import roolo.elo.api.IELOFactory;
 import roolo.elo.api.IMetadataKey;
 import roolo.elo.api.IMetadataTypeManager;
 import roolo.elo.api.IMetadataValueContainer;
+import roolo.elo.metadata.keys.BasicMetadataKey;
 
 public class UpdateELO extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 	static final long serialVersionUID = 1L;
 	private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
 
 	public static final String P_ELO_XML = "eloXML";
+	private static MetadataTypeManager<BasicMetadataKey> typeManager = new MetadataTypeManager<BasicMetadataKey>();
 	
 	public UpdateELO() {
 		super();
@@ -44,6 +46,14 @@ public class UpdateELO extends javax.servlet.http.HttpServlet implements javax.s
 																typeManager.getMetadataKey("uri"), 
 																null);
 			IELO<IMetadataKey> elo = eloFactory.createELOFromXml(p_eloXml);
+			
+			//This statement CREATES the URI key in the ELO's Metadata
+			IMetadataValueContainer uriKeyContainer = elo.getMetadata().getMetadataValueContainer(typeManager.getMetadataKey("uri"));
+			//this is the URI string set in the metadata, but it should be of type URI, so extract it and shove it into a URI object
+			String uriString =  (String) uriKeyContainer.getValue();
+			IMetadataKey uriKey = uriKeyContainer.getKey();
+			uriKeyContainer.setValue(new URI(uriString));
+			elo.setUriKey(uriKey);
 			
 			repositoryJcrImpl.updateELO(elo);
 		}catch(Exception e){
