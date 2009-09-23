@@ -44,7 +44,7 @@ public class AddELO extends javax.servlet.http.HttpServlet implements javax.serv
 			IMetadata returnedMetadata = repositoryJcrImpl.addELO(elo);
 			
 			elo.setMetadata(returnedMetadata);
-			XmlUtil.generateElo(elo);
+			writer.write(XmlUtil.generateElo(elo));
 		}catch(Exception e){
 			XmlUtil.generateError(e, writer);
 			return;
