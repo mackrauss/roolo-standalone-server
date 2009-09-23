@@ -1,20 +1,18 @@
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import roolo.elo.ELOMetadataKeys;
 import roolo.elo.JDomBasicELOFactory;
 import roolo.elo.MetadataTypeManager;
 import roolo.elo.RepositoryJcrImpl;
 import roolo.elo.api.IELO;
 import roolo.elo.api.IELOFactory;
+import roolo.elo.api.IMetadata;
 import roolo.elo.api.IMetadataKey;
 import roolo.elo.api.IMetadataTypeManager;
-import roolo.elo.api.IMetadataValueContainer;
 import roolo.elo.metadata.keys.BasicMetadataKey;
 
 public class UpdateELO extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
@@ -55,7 +53,9 @@ public class UpdateELO extends javax.servlet.http.HttpServlet implements javax.s
 //			uriKeyContainer.setValue(new URI(uriString));
 			elo.setUriKey(typeManager.getMetadataKey("uri"));
 			
-			repositoryJcrImpl.updateELO(elo);
+			IMetadata returnedMetadata = repositoryJcrImpl.updateELO(elo);
+			elo.setMetadata(returnedMetadata);
+			writer.write(XmlUtil.generateElo(elo));
 		}catch(Exception e){
 			XmlUtil.generateError(e, writer);
 			return;
