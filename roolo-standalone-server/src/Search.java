@@ -1,34 +1,16 @@
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-
 import roolo.api.search.IQuery;
 import roolo.api.search.ISearchResult;
-import roolo.elo.BasicELO;
-import roolo.elo.ELOMetadataKeys;
 import roolo.elo.RepositoryJcrImpl;
-import roolo.elo.api.I18nType;
-import roolo.elo.api.IContent;
 import roolo.elo.api.IELO;
-import roolo.elo.api.IMetadata;
-import roolo.elo.api.IMetadataKey;
-import roolo.elo.api.IMetadataValueContainer;
-import roolo.elo.api.exceptions.DeleteELOException;
-import roolo.elo.api.metadata.MetadataTokenization;
-import roolo.elo.api.metadata.MetadataValueCount;
-import roolo.elo.content.BasicContent;
-import roolo.elo.metadata.keys.LongMetadataKey;
 import roolo.search.LuceneQuery;
 
 public class Search extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
@@ -40,10 +22,14 @@ public class Search extends javax.servlet.http.HttpServlet implements javax.serv
 	
 	public static final String SEARCH_SCOPE_ALL 	= "all";
 	public static final String SEARCH_SCOPE_LATEST 	= "latest";
+	
+	public static final String INDEXED_DATA_ONLY_TRUE 	= "true";
+	public static final String INDEXED_DATA_ONLY_FALSE 	= "false";
 	   
 	public static final String P_QUERY 				= "query";
 	public static final String P_RESULT_TYPE 		= "resultType";
 	public static final String P_SEARCH_SCOPE 		= "searchScope";
+	public static final String P_INDEXED_DATA_ONLY  = "indexedDataOnly";
 	
 	public Search() {
 		super();
@@ -73,28 +59,52 @@ public class Search extends javax.servlet.http.HttpServlet implements javax.serv
 		if (p_searchScope != null){
 			if (!p_searchScope.equals(Search.SEARCH_SCOPE_ALL) && !p_searchScope.equals(Search.SEARCH_SCOPE_LATEST)){
 				XmlUtil.generateError("The " + Search.P_SEARCH_SCOPE + " parameter may only be one of '" + Search.SEARCH_SCOPE_ALL + "' or '" + Search.SEARCH_SCOPE_LATEST + "'", writer);
+				return;
 			}
 		}else{
 			p_searchScope = Search.SEARCH_SCOPE_ALL;
 		}
 		
+		String indexedDataOnly = request.getParameter(Search.P_INDEXED_DATA_ONLY);
+		boolean p_indexedDataOnly = false;
+		if (indexedDataOnly != null){
+			if (indexedDataOnly.equals(Search.INDEXED_DATA_ONLY_TRUE)){
+				p_indexedDataOnly = true;
+			}else if (indexedDataOnly.equals(Search.INDEXED_DATA_ONLY_FALSE)) {
+				p_indexedDataOnly = false;
+			}else{
+				XmlUtil.generateError("The " + Search.P_INDEXED_DATA_ONLY + " parameter may only be one of " + Search.INDEXED_DATA_ONLY_TRUE + " or " + Search.INDEXED_DATA_ONLY_FALSE, writer);
+				return;
+			}
+		}
 		
-		IQuery query = new LuceneQuery(p_queryStr);
+		if (p_indexedDataOnly == true && p_resultType.equals(Search.RESULT_TYPE_ELO)){
+			XmlUtil.generateError("You cannot set the resultType=elo and indexedDataOnly=true at the same time!", writer);
+			return;
+		}
+		
+		IQuery query = new LuceneQuery(p_queryStr, p_indexedDataOnly);
 		
 		String searchResultsXml = null;
 		try{
-			List<ISearchResult> searchResultUris = null;
+			List<ISearchResult> searchResults = null;
 			if (p_searchScope.equals(Search.SEARCH_SCOPE_ALL)){
-				searchResultUris = repositoryJcrImpl.search(query);
+				searchResults = repositoryJcrImpl.search(query);
 			}else if (p_searchScope.equals(Search.SEARCH_SCOPE_LATEST)){
-				searchResultUris = repositoryJcrImpl.searchLatest(query);
+				searchResults = repositoryJcrImpl.searchLatest(query);
 			}
 			
-			if (p_resultType.equals(Search.RESULT_TYPE_ELO)){
-				List<IELO> searchResultElos = EloUtil.retrieveSearchResultElos(searchResultUris, this.repositoryJcrImpl);
+			if (p_indexedDataOnly == true){
+				List<IELO> searchResultElos = new ArrayList<IELO>();
+				for (ISearchResult curSearchResult : searchResults) {
+					searchResultElos.add(curSearchResult.getELO());
+				}
+				searchResultsXml = XmlUtil.generateEloList(searchResultElos);
+			}else if (p_resultType.equals(Search.RESULT_TYPE_ELO)){
+				List<IELO> searchResultElos = EloUtil.retrieveSearchResultElos(searchResults, this.repositoryJcrImpl);
 				searchResultsXml = XmlUtil.generateEloList(searchResultElos);
 			}else if (p_resultType.equals(Search.RESULT_TYPE_URI)) {
-				searchResultsXml = XmlUtil.generateSearchResultList(searchResultUris);
+				searchResultsXml = XmlUtil.generateSearchResultList(searchResults);
 			}
 			
 			writer.write(searchResultsXml);
