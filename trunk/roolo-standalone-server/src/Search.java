@@ -25,7 +25,7 @@ public class Search extends javax.servlet.http.HttpServlet implements javax.serv
 	
 	public static final String INDEXED_DATA_ONLY_TRUE 	= "true";
 	public static final String INDEXED_DATA_ONLY_FALSE 	= "false";
-	   
+	
 	public static final String P_QUERY 				= "query";
 	public static final String P_RESULT_TYPE 		= "resultType";
 	public static final String P_SEARCH_SCOPE 		= "searchScope";
