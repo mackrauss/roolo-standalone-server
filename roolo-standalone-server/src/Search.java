@@ -19,17 +19,18 @@ public class Search extends javax.servlet.http.HttpServlet implements javax.serv
 	
 	public static final String RESULT_TYPE_ELO 		= "elo";
 	public static final String RESULT_TYPE_URI 		= "uri";
+	public static final String RESULT_TYPE_METADATA = "metadata";
 	
 	public static final String SEARCH_SCOPE_ALL 	= "all";
 	public static final String SEARCH_SCOPE_LATEST 	= "latest";
 	
-	public static final String INDEXED_DATA_ONLY_TRUE 	= "true";
-	public static final String INDEXED_DATA_ONLY_FALSE 	= "false";
+//	public static final String INDEXED_DATA_ONLY_TRUE 	= "true";
+//	public static final String INDEXED_DATA_ONLY_FALSE 	= "false";
 	
 	public static final String P_QUERY 				= "query";
 	public static final String P_RESULT_TYPE 		= "resultType";
 	public static final String P_SEARCH_SCOPE 		= "searchScope";
-	public static final String P_INDEXED_DATA_ONLY  = "indexedDataOnly";
+//	public static final String P_INDEXED_DATA_ONLY  = "indexedDataOnly";
 	
 	public Search() {
 		super();
@@ -45,11 +46,19 @@ public class Search extends javax.servlet.http.HttpServlet implements javax.serv
 			return;
 		}
 		
+		boolean fetchIndexedDataOnly = false;
 		String p_resultType = request.getParameter(Search.P_RESULT_TYPE);
 		if (p_resultType != null){
-			if (!p_resultType.equals(Search.RESULT_TYPE_ELO) && !p_resultType.equals(Search.RESULT_TYPE_URI)){
+			if (!p_resultType.equals(Search.RESULT_TYPE_ELO) && 
+				!p_resultType.equals(Search.RESULT_TYPE_URI) && 
+				!p_resultType.equals(Search.RESULT_TYPE_METADATA)){
+				
 				XmlUtil.generateError("The " + Search.P_RESULT_TYPE +" parameter may only be one of '" + Search.RESULT_TYPE_ELO + "' or '" + Search.RESULT_TYPE_URI + "'", writer);
 				return;
+			}
+			
+			if (p_resultType.equals(Search.RESULT_TYPE_METADATA)){
+				fetchIndexedDataOnly = true;
 			}
 		}else{
 			p_resultType = Search.RESULT_TYPE_URI;
@@ -65,25 +74,25 @@ public class Search extends javax.servlet.http.HttpServlet implements javax.serv
 			p_searchScope = Search.SEARCH_SCOPE_ALL;
 		}
 		
-		String indexedDataOnly = request.getParameter(Search.P_INDEXED_DATA_ONLY);
-		boolean p_indexedDataOnly = false;
-		if (indexedDataOnly != null){
-			if (indexedDataOnly.equals(Search.INDEXED_DATA_ONLY_TRUE)){
-				p_indexedDataOnly = true;
-			}else if (indexedDataOnly.equals(Search.INDEXED_DATA_ONLY_FALSE)) {
-				p_indexedDataOnly = false;
-			}else{
-				XmlUtil.generateError("The " + Search.P_INDEXED_DATA_ONLY + " parameter may only be one of " + Search.INDEXED_DATA_ONLY_TRUE + " or " + Search.INDEXED_DATA_ONLY_FALSE, writer);
-				return;
-			}
-		}
+//		String indexedDataOnly = request.getParameter(Search.P_INDEXED_DATA_ONLY);
+//		
+//		if (indexedDataOnly != null){
+//			if (indexedDataOnly.equals(Search.INDEXED_DATA_ONLY_TRUE)){
+//				p_indexedDataOnly = true;
+//			}else if (indexedDataOnly.equals(Search.INDEXED_DATA_ONLY_FALSE)) {
+//				p_indexedDataOnly = false;
+//			}else{
+//				XmlUtil.generateError("The " + Search.P_INDEXED_DATA_ONLY + " parameter may only be one of " + Search.INDEXED_DATA_ONLY_TRUE + " or " + Search.INDEXED_DATA_ONLY_FALSE, writer);
+//				return;
+//			}
+//		}
+//		
+//		if (p_indexedDataOnly == true && p_resultType.equals(Search.RESULT_TYPE_ELO)){
+//			XmlUtil.generateError("You cannot set the resultType=elo and indexedDataOnly=true at the same time!", writer);
+//			return;
+//		}
 		
-		if (p_indexedDataOnly == true && p_resultType.equals(Search.RESULT_TYPE_ELO)){
-			XmlUtil.generateError("You cannot set the resultType=elo and indexedDataOnly=true at the same time!", writer);
-			return;
-		}
-		
-		IQuery query = new LuceneQuery(p_queryStr, p_indexedDataOnly);
+		IQuery query = new LuceneQuery(p_queryStr, fetchIndexedDataOnly);
 		
 		String searchResultsXml = null;
 		try{
@@ -94,7 +103,7 @@ public class Search extends javax.servlet.http.HttpServlet implements javax.serv
 				searchResults = repositoryJcrImpl.searchLatest(query);
 			}
 			
-			if (p_indexedDataOnly == true){
+			if (fetchIndexedDataOnly == true){
 				List<IELO> searchResultElos = new ArrayList<IELO>();
 				for (ISearchResult curSearchResult : searchResults) {
 					searchResultElos.add(curSearchResult.getELO());
