@@ -23,20 +23,21 @@ class Citation extends Elo {
 		parent::__construct($xml);
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
-		$this->_allMetadata['type'] = 'Citation';
+		$this->_type = 'Citation';
+		parent::addMetadata('type', 'Citation');
 	}
 	
 	
 	public function fillMetadata($allMetadata){
 
-		$this->_uri = $allMetadata['uri'];
-		$this->_title = $allMetadata['title'];
-		$this->_author = $allMetadata['author'];
-		$this->_dateCreated = $allMetadata['datecreated'];
-		$this->_dateModified = $allMetadata['datemodified'];
-		$this->_version = $allMetadata['version'];
-		$this->_desc = $allMetadata['desc'];
-		//$this->_type = $allMetadata['citation'];
+		$this->_uri = $allMetadata['uri'] ? $allMetadata['uri'] : '';
+		$this->_title = $allMetadata['title'] ? $allMetadata['title'] : '';
+		$this->_author = $allMetadata['author'] ? $allMetadata['author'] : '';
+		$this->_dateCreated = $allMetadata['datecreated'] ? $allMetadata['datecreated'] : '';
+		$this->_dateModified = $allMetadata['datemodified'] ? $allMetadata['datemodified'] : '';
+		$this->_version = $allMetadata['version'] ? $allMetadata['version'] : '';
+		$this->_desc = $allMetadata['desc'] ? $allMetadata['desc'] : '';
+//		$this->_type = $allMetadata['citation'];
 		
 //		$keywords = $allMetadata['keywords'];
 //		$this->_keywords = explode(',', $keywords);
@@ -54,22 +55,9 @@ class Citation extends Elo {
 	 * @param unknown_type $fieldValue
 	 */
 	public function updateMetadata($fieldName, $fieldValue){
-		$this->_allMetadata[$fieldName] = $fieldValue;
+		parent::addMetadata($fieldName, $fieldValue);
 	}
 	
-	/**
-	 * We add the metadata to parent's metadata beacause
-	 * generateXml() is using parent's metadata
-	 *
-	 * @return unknown
-	 */
-	public function generateXml(){
-		foreach ($this->_allMetadata as $key => $value){
-			parent::addMetadata($key, $value);
-		}
-		
-		return parent::generateXml();
-	}
 	
 	
 	/**
