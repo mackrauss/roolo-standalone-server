@@ -24,6 +24,7 @@ class Elo implements XMLSupported{
 	
 	public function __construct($xml=null){
 		if ($xml !== null){
+			$xml = str_replace('|||', '&', $xml);
 			$this->buildFromXML($xml);
 		}
 	}
@@ -70,6 +71,8 @@ class Elo implements XMLSupported{
 	public function generateXml(){
 		//$content = '<content contentType="xml"><data>'.addslashes($this->_content).'</data></content>';
 		$content = '<content contentType="xml"><data>'.$this->_content.'</data></content>';
+		
+		$content = str_replace('&', '|||', $content);
 		
 		/*
 		 * generate Metadata
@@ -159,5 +162,9 @@ class Elo implements XMLSupported{
 		}else{
 			return $results;
 		}
+	}
+	
+	public function toString(){
+		echo $this->generateXml();
 	}
 }

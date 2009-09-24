@@ -23,8 +23,8 @@ class Article extends Elo {
 		parent::__construct($xml);
 		$this->_allMetadata = parent::getAllMetadata();
 		$this->fillMetadata ($this->_allMetadata);
-		$this->_content = parent::getContent();
-		$this->_allMetadata['type'] = 'Article';
+		$this->_type = 'Article';
+		parent::addMetadata('type', 'Article');
 	}
 	
 	
@@ -52,8 +52,9 @@ class Article extends Elo {
 	 * @param unknown_type $fieldValue
 	 */
 	public function updateMetadata($fieldName, $fieldValue){
-		$this->_allMetadata[$fieldName] = $fieldValue;
+		parent::addMetadata($fieldName, $fieldValue);
 	}
+	
 	
 	/**
 	 * @return unknown
