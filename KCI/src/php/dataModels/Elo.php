@@ -3,28 +3,19 @@
 require_once 'domLib/simple_html_dom.php';
 require_once 'XMLSupported.php';
 
-//$elo1 = new Elo();
-//$elo1->setContent('<p>hello world, this is my blow me.</p>');
-//$elo1->addMetadata('title', 'elo title');
-//$elo1->addMetadata('type', 'question');
-//$elo1->addMetadata('keywords', 'life death beyond');
-//$elo1->addMetadata('author', 'aajellu');
-//$elo1->addMetadata('description', 'this elo is meant to blow your mind');
-//echo $elo1->generateXml();
-
-//$xml = '<elo><metadata><title>elo title</title><type>question</type><keywords>life death beyond</keywords><author>aajellu</author><description>this elo is meant to blow your mind</description></metadata><content>hello world, this is my freaking content. blow me.</content><metadata></metadata></elo>';
-//$elo1 = new Elo($xml);
-//echo $elo1->generateXml();
-//echo $elo1->getContent();
 
 class Elo implements XMLSupported{
+	
+	
+	public $_id = '';
+	
 	private $_content = '';
 	private $_metadata = array();
 	private $_resources = array();
 	
+	
 	public function __construct($xml=null){
 		if ($xml !== null){
-			$xml = str_replace('|||', '&', $xml);
 			$this->buildFromXML($xml);
 		}
 	}
@@ -49,6 +40,8 @@ class Elo implements XMLSupported{
 	}
 	
 	public function setContent($content){
+		$content = str_replace('|||', '&', $content);
+		$content = html_entity_decode($content);
 		$this->_content = $content;
 	}
 	
@@ -69,16 +62,17 @@ class Elo implements XMLSupported{
 	}
 	
 	public function generateXml(){
-		//$content = '<content contentType="xml"><data>'.addslashes($this->_content).'</data></content>';
-		$content = '<content contentType="xml"><data>'.$this->_content.'</data></content>';
-		
-		$content = str_replace('&', '|||', $content);
+		$content = $this->genXmlForContent();
 		
 		/*
 		 * generate Metadata
 		 */
 		$metadata = '';
 		foreach ($this->_metadata as $key => $value){
+			if ($key == 'uri'){
+				$value = '<catalog>scy.collide.info</catalog><entry>' . $value . '</entry>';
+			}
+			
 			$metadata .= "<$key>$value</$key>";
 		}
 		$metadata = '<metadata>'.$metadata.'</metadata>';
@@ -96,6 +90,12 @@ class Elo implements XMLSupported{
 		return $xml;
 	}
 	
+	public function genXmlForContent(){
+		$content = '<content contentType="xml"><data>'. htmlentities($this->_content) .'</data></content>';
+		$content = str_replace('&', '|||', $content);
+		return $content;
+	}
+	
 	/**
 	 * Given the xml representation of the elo, build
 	 * the elo object from the xml input
@@ -106,7 +106,7 @@ class Elo implements XMLSupported{
 		if ($eloXML !== null){
 			$dom = str_get_dom($eloXML);
 			
-			$this->_content = $this->getElemAtPos($dom, 'content', 0)->innertext;
+			$this->setContent($this->getElemAtPos($dom, 'content', 0)->innertext);
 			
 			$metadataElem = $this->getElemAtPos($dom, 'metadata', 0);
 			if ($metadataElem !== null){
@@ -124,6 +124,17 @@ class Elo implements XMLSupported{
 					
 					$value = $curMetadataElem->innertext;
 					$this->_metadata[$key] = $value;
+
+					// extract the id from URI
+					if ($key === 'uri'){
+						$this->_id = substr(strrchr($value, '/'), 1);
+					}
+					
+					// This code is to dynamically set the values for the
+					// elo's metadatas
+					$keyVar = "_" . $key;
+					$this->$keyVar = $value;
+					$this->addMetadata($key, $value);
 					
 				}
 			}
@@ -164,7 +175,129 @@ class Elo implements XMLSupported{
 		}
 	}
 	
+	
 	public function toString(){
 		echo $this->generateXml();
 	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_author() {
+		return $this->getMetadata('author');
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_datecreated() {
+		return $this->getMetadata('datecreated');
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_datelastmodified() {
+		return $this->getMetadata('datelastmodified');
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_title() {
+		return $this->getMetadata('title');
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_type() {
+		return $this->getMetadata('type');
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_uri($escape=false) {
+		if ($escape){
+			$newUri = $this->getMetadata('uri');
+			$newUri = str_replace(':', '\:', $newUri);
+			$newUri = str_replace('-', '\-', $newUri);
+			return $newUri;
+		}
+		return $this->getMetadata('uri');
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_version() {
+		return $this->getMetadata('version');
+	}
+	
+	/**
+	 * @param unknown_type $_author
+	 */
+	public function set_author($_author) {
+		$this->addMetadata('author', $_author);
+	}
+	
+	/**
+	 * @param unknown_type $_dateCreated
+	 */
+	public function set_datecreated($_dateCreated) {
+		$this->addMetadata('datecreated', $_dateCreated);
+	}
+	
+	/**
+	 * @param unknown_type $_dateLastModified
+	 */
+	public function set_datelastmodified($_dateLastModified) {
+		$this->addMetadata('datelastmodified', $_dateLastModified);
+	}
+	
+	/**
+	 * @param unknown_type $_title
+	 */
+	public function set_title($_title) {
+		$this->addMetadata('title', $_title);
+	}
+	
+	/**
+	 * @param unknown_type $_type
+	 */
+	protected function set_type($_type) {
+		$this->addMetadata('type', $_type);
+	}
+	
+	/**
+	 * @param unknown_type $_uri
+	 */
+	public function set_uri($_uri) {
+		$this->addMetadata('uri', $_uri);
+		
+	}
+	
+	/**
+	 * @param unknown_type $_version
+	 */
+	public function set_version($_version) {
+		$this->addMetadata('version', $_version);
+	}
+	
+	
+	/**
+	 * @param unknown_type $_uri
+	 */
+	public function set_id($_id) {
+		$this->_id = $_id;
+	}
+	
+	/**
+	 * @return unknown
+	 */
+	public function get_id() {
+		return $this->_id;
+	}
+	
 }
