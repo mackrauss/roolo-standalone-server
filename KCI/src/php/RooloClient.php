@@ -1,8 +1,11 @@
 <?php
 
 require_once 'domLib/simple_html_dom.php';
-require_once 'dataModels/Article.php';
-require_once 'dataModels/Citation.php';
+require_once "dataModels/Tag.php";
+require_once "dataModels/Elo.php";
+require_once "dataModels/Citation.php";
+require_once "RooloClient.php";
+
 
 class RooloClient {
 	
@@ -28,6 +31,12 @@ class RooloClient {
 							'updateElo' => $this->_rooloUrl . 'UpdateELO',
 							'search' => $this->_rooloUrl . 'Search');
 		
+	}
+	
+	
+	
+	public function getUriDomain(){
+		return $this->_uriDomain;
 	}
 	
 	/**
@@ -58,6 +67,7 @@ class RooloClient {
 	 * @return unknown
 	 */
 	public function updateElo($eloObj){
+		
 		$eloXml = $eloObj->generateXml();
 		$eloXml = urlencode($eloXml);
 		
@@ -91,7 +101,7 @@ class RooloClient {
 	 */
 	public function retrieveElo($eloUri){
 		
-		$eloUri = $this->_uriDomain . $eloUri;
+		//$eloUri = $this->_uriDomain . $eloUri;
 		$url = $this->_rooloServiceUrls['retrieveElo'] . '?uri=' . $eloUri;
 		
 		$eloXml = file_get_contents($url);
@@ -129,7 +139,6 @@ class RooloClient {
 	 */
 	public function search ($query=null, $resultType='uri', $searchScope='all'){
 		
-		
 		if ($query == null){
 			return null;
 		}
@@ -143,7 +152,7 @@ class RooloClient {
 		
 		$elos = array();
 		if ($resultType == 'uri'){
-			$elos = $this->parseEloUris($xmlResults);	
+			$elos = $this->parseEloUris($xmlResults);
 		}else {
 			$elos = $this->parseElos ($xmlResults);
 		}
@@ -191,6 +200,7 @@ class RooloClient {
 			
 			$eloType = $xmlElo->find('type');
 			$eloType = $eloType[0]->innertext;
+			
 			$elo = new $eloType($xmlElo->innertext);
 			$resultElos[] = $elo;
  		}
@@ -213,10 +223,10 @@ class RooloClient {
 
 		
 		$elo = new $type($eloXml);
-		$eloUri = $elo->get_uri();
-		$eloUri = str_replace($this->_uriDomain, '', $eloUri);
+//		$eloUri = $elo->get_uri();
+//		$eloUri = str_replace($this->_uriDomain, '', $eloUri);
 		//$eloUri = str_replace('.'. $type, '', $eloUri);
-		$elo->set_uri($eloUri);
+//		$elo->set_uri($eloUri);
 		
 		return $elo;
 		
