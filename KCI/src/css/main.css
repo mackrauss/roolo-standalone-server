@@ -1,0 +1,24 @@
+body {
+
+}
+
+#main {
+
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #e1efff;
+	
+	-moz-border-radius-topleft: 50px; 
+	-moz-border-radius-topright: 50px; 
+	-moz-border-radius-bottomleft: 50px; 
+	-moz-border-radius-bottomright: 50px;
+	
+//	filter:alpha(opacity=50);
+//	-moz-opacity:0.5; 
+//    opacity: 0.5;
+	width: 70%;
+	height: 100%;
+	margin-top: 8%;
+	padding-top: 3%;
+	
+}
