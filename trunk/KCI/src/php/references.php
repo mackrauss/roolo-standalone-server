@@ -1,8 +1,12 @@
 <?php 
+require_once 'header.php';
+
 require_once 'RooloClient.php';
-require_once 'dataModels/Tag.php';
 require_once 'dataModels/Elo.php';
+require_once 'dataModels/Reference.php';
+require_once 'ReferenceCategories.php';
 ?>
+
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -12,9 +16,7 @@ require_once 'dataModels/Elo.php';
  		<link rel="stylesheet" type="text/css" href="/src/css/proposal.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>KCI</title>
-	 	<style>
-	 	 	a { color:#01DF74; margin:10px 10px 10px 0px; cursor:pointer; }
-	    </style>
+	 	
 		
 		<script type='text/javascript'>
 
@@ -75,64 +77,40 @@ require_once 'dataModels/Elo.php';
 		
 <body>
 
-<div id="tagCloud" class='center'>
-	<div style='float: right'>
-		<a href='' id='allTags' style='text-decoration:none'> <font size="4"> Show all Tags </font></a>
-	</div>
-	<br/>
-	<font color="#1C1C1C" size="5">Tag Cloud</font>
-	<br/>
-	<br/>
-	
-</div>
-
-
 
 <?php 
 		$rooloClient = new RooloClient();
-		$tagFrequencyMap = array();
-		$tags = $rooloClient->search('type:Tag AND ownertype:Citation', 'metadata');
+	
+?>
+
+
+
+<div id='categoryDiv'>
+
+	<table id='categoryTable' style='margin-left:auto; margin-right:auto'>
+	
+	<?php 
+	
+		$referenceCategory = new RefereneceCategories();
+		$referenceCategories = $referenceCategory->getReferenceCategories();
 		
-		//TODO the 'uri' parameter of search doesn't seem to work. That option should return
-		// an array of URIs
-		$citations = $rooloClient->search('type:Citation', 'metadata');
-		
-		$citationUris = array();
-		
-		
-		// Iterate through all the tags and do the following two tasks:
-		// 1. extract the frequency of each tag to decide it's font size
-		// 2. create a mapping between each citation and all its corresponding tags
-		foreach ($tags as $tag){
-			if (array_key_exists($tag->get_title(), $tagFrequencyMap)){
-				$tagFrequencyMap[$tag->get_title()] += 1;				
-			}else {
-				$tagFrequencyMap[$tag->get_title()] = 1;
-			}
-			
-			
-			if (array_key_exists($tag->get_ownerUri(), $citationUris)){
-				$citationUris[$tag->get_ownerUri()][] = str_replace(' ', '', $tag->get_title());
-			}else{
-				$citationUris[$tag->get_ownerUri()] = array();
-				$citationUris[$tag->get_ownerUri()][] = str_replace(' ', '', $tag->get_title());
-			}
-		}
-		
-		
-		echo "<ul id='tagList'>";
-		
-		foreach ($tagFrequencyMap as $tag => $tagFrequency){
-			
-			$fontSize = 1 + ($tagFrequency / 10);	
-		
-			echo "<li>";
-			echo "<a id='" . str_replace(' ', '', $tag) . "' href='' style='font-size: " . $fontSize . "em'>". $tag ."</a>";
-			echo "</li>";
-			
-		}
-		echo "</ul>";
+		for ($i=0; $i < sizeof($referenceCategories); $i+=4){
 	?>
+	
+			<tr> 
+				<td> <a href='' ><?= @$referenceCategories[$i]?>  </a> </td>
+				<td> <a href='' ><?= @$referenceCategories[$i+1]?> </a> </td>
+				<td> <a href='' ><?= @$referenceCategories[$i+2]?> </a> </td>
+				<td> <a href='' ><?= @$referenceCategories[$i+3]?> </a> </td>
+			</tr>	
+	
+	<?php		
+		}
+	?>
+
+	</table>
+
+</div>
 
 
 <div id="newProposalDiv">
@@ -144,21 +122,6 @@ require_once 'dataModels/Elo.php';
 	
 <div id='tagDivs' class='center'>
 
-	<div id='proposalTitle'>
-		Title
-	</div>
-	
-	<div id='proposalAuthor'>
-		Author
-	</div>
-	
-	<div id='proposalDate'>
-		Date Updated
-	</div>
-
-	<br/>
-	<br/>
-	
 	<?php 
 		foreach ($citationUris as $citationUri => $tagArray){
 			
@@ -172,16 +135,8 @@ require_once 'dataModels/Elo.php';
 		}
 	?>
 	
-	
-	
-<!--	<div id='1' class='tag'>-->
-<!--		<div id='t1' class='title'>Asl</div>-->
-<!--		<div id='a1' class='author'>Java Author</div>-->
-<!--		<div id='d1' class='date'>Aug. 12, 2009 @ 14:25</div>-->
-<!--	</div>-->
-	
 </div>
 
-	</body>
-</html>
-
+<?php
+	require_once 'footer.php';
+?>
