@@ -1,7 +1,7 @@
 <?php
 
 require_once ('Elo.php');
-require_once 'src/php/domLib/simple_html_dom.php';
+require_once 'domLib/simple_html_dom.php';
 
 class Reference extends Elo {
 	
