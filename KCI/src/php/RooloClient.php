@@ -3,7 +3,6 @@
 require_once 'domLib/simple_html_dom.php';
 require_once "dataModels/Tag.php";
 require_once "dataModels/Elo.php";
-require_once "dataModels/Citation.php";
 require_once "RooloClient.php";
 
 
