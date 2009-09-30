@@ -82,7 +82,7 @@ require_once './header.php';
 	        		$('.referenceTitle').hide();
 	        		$('.' + this.id).fadeIn(250);
 	    			$('#showAll').fadeIn(300);
-//	    			$(this).css('color', '#000000');
+	    			//$(this).css('color', '#000000');
 					return false;
 	    	    });
 	    	    
@@ -102,7 +102,7 @@ require_once './header.php';
 			</div><br/><br/>
 			<div id='categories'>
 				<?php                                
-					$referenceCategories = new RefereneceCategories();
+					$referenceCategories = new ReferenceCategories();
 					$refCatsList = $referenceCategories->getReferenceCategories(); 
 					$result = "<ui>";
 					for ($i = 0; $i < sizeof($refCatsList); $i++){
