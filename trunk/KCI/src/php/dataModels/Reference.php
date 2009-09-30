@@ -18,10 +18,15 @@ class Reference extends Elo {
 		$dom = str_get_dom($content);
 		
 		$annotation = $dom->find('annotation');
-		$this->_annotation = $annotation[0]->innertext();
+		if (sizeof($annotation) > 0){
+			$this->_annotation = $annotation[0]->innertext();
+		}
 		
 		$citation = $dom->find('citation');
-		$this->_citation = $citation[0]->innertext();
+		if (sizeof($citation) > 0){
+			$this->_citation = $citation[0]->innertext();	
+		}
+		
 	}
 	
 	public function get_citation(){
