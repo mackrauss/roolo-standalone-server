@@ -1,142 +1,151 @@
-<?php 
-require_once 'header.php';
-
-require_once 'RooloClient.php';
-require_once 'dataModels/Elo.php';
-require_once 'dataModels/Reference.php';
+<?php
 require_once 'ReferenceCategories.php';
+require_once '../php/RooloClient.php';
 ?>
-
-
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 	<head>
-		<script type="text/javascript" src="/library/js/jquery-1.3.2.min.js"></script>
- 		<link rel="stylesheet" type="text/css" href="/src/css/proposal.css">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>KCI</title>
-	 	
+		<script type='text/javascript' src='../../library/js/jquery-1.3.2.min.js'></script>
+		<script type='text/javascript' src='../../library/js/jquery-ui-1.7.2.custom.min.js'></script>
+		<meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'>
+		<title>References Page</title>
+		<style>
+			#centerArea { 
+	 	 		width:70%;
+				padding:0px; 
+				overflow:auto; 
+	 	 		margin-left: auto;
+				margin-right: auto;
+			}
+		
+	 	 	#categoriesArea {  
+	 	 		width:80%;	 		
+				padding:10px 10px 10px 10px; 
+				overflow:auto; 
+				font-size:70%; 
+				font-family:arial;
+				text-align:center; 
+	 	 		list-style-type:none;
+	 	 		cursor:pointer;
+	 	 		margin-left: auto;
+				margin-right: auto;
+			}
+	 	 	li {
+	 	 		float:left; 
+	 	 		margin:0 10px;
+	 	 	}
+	 	 	li a {
+	 	 		 margin:10px 10px 10px 0px; 
+	 	 	}
+	 	 	#buttomArea {
+	 	 		width:80%;
+	 	 		margin-left: auto;
+				margin-right: auto;	
+				padding:10px 10px 10px 10px; 
+	 	 	}
+	 	 	#referencesArea {
+	 	 		width:80%;
+				padding:0px; 
+				overflow:auto; 
+				font-family:arial;
+				text-align:left; 
+	 	 		list-style-type:none;
+	 	 		cursor:pointer;
+	 	 		margin-left: auto;
+				margin-right: auto;	
+				padding:0px 10px 10px 10px; 
+	 	 	}
+	 	 	#newReference {
+	 	 		float:right;
+	 	 	}
+	    </style>
 		
 		<script type='text/javascript'>
 
-			//Change the background color of the div
-			// which we have hovered over 
-			function changeRowColor(){
-
-			}
-
-			// Hide the "show all" link when it is clicked
 			function hideShowAll(){
-				$('#allTags').hide();
+				$('#showAll').hide();
 				return false;
 			}
-		
+			//This function is executed when the click on one of reference title 	
+			function goRefPage(id) {
+				alert ("id =" + id);
+				//$.get('http://localhost/KCI/src/php/search.php', {id: id },
+				//	function(addedCitationURI){
+				//	}
+				// );
+			}
+
 			$(document).ready(function(){
-				$('#tagList').appendTo("#tagCloud");
 
-				$('#allTags').hide();
-
-				$('div.tag').mouseover(function(){
-					$(this).css('background-color', '#E6E6E6');
-				}).mouseout(function(){
-					$(this).css('background-color', 'white');
-				});
-
-				// This event should always precede the 
-				// next $('#allTags').click event. This is because
-				// the "show all" link should hide when it is clicked
-
-				$("a").hover(
-					function () {
-			      		$(this).addClass("hilite");
-			    	}, function () {
-			      		$(this).removeClass("hilite");
-			    });
-				
-				$("a").click(function () { 
-	        		$('.tag').hide();
-	    			$('.' + this.id).slideDown('800');
-	    			$('#allTags').fadeIn(300);
-	    			$('li a').css('color', '#848484');
-	    			$(this).css('color', '#74DF00');
-	    	        return false; 
+				hideShowAll();
+				$('a').click(function () { 
+	        		$('.referenceTitle').hide();
+	        		$('.' + this.id).fadeIn(250);
+	    			$('#showAll').fadeIn(300);
+	    			//$('li a').css('color', '#898989');
+	    			$(this).css('color', '#000000');
+					return false;
 	    	    });
-
-				$('#allTags').click(function(){
-					$('.tag').slideDown('800');
-					$('li a').css('color', '#848484');
+	    	    
+				$('#showAll').click(function(){
+					$('.referenceTitle').fadeIn(250);
+					$('li a').css('color', '#898989');
 					hideShowAll();
 					return false;
 				});
-			    
-		    });
-	
+				//return false;
+			})
 		</script>
 	</head>
-		
-<body>
-
-
-<?php 
-		$rooloClient = new RooloClient();
+	<body>
+	<div id='centerArea'>
+		<div id='categoriesArea'>
+			<div style='float: right'>
+				<a href='' id='showAll' > <font size="3"> Show all Categories </font></a>
+			</div><br/><br/>
+			<div id='categories'>
+				<?php                                
+					$referenceCategories = new RefereneceCategories();
+					$refCatsList = $referenceCategories->getReferenceCategories(); 
+					$result = "<ui>";
+					for ($i = 0; $i < sizeof($refCatsList); $i++){
+						$result .= "<li>"."<a id='".$refCatsList[$i]."' href='' onClick=''>".$refCatsList[$i]."</a></li>";		
+					}
+					$result .= "</ui>";
+					echo $result;
+				?>
+			</div>
+		</div>
 	
-?>
+		<div id='buttomArea'>
+			<input id='newReference' type='button'  onClick = 'goRefPage()' value='Create a new Reference'>
+		</div>
+		<div id='referencesArea'>
+			<?php 
+				$searchStr = "type:Reference"; 
+				$rooloClient = new RooloClient();
+				$references = $rooloClient->search($searchStr, 'elo');
 
-
-
-<div id='categoryDiv'>
-
-	<table id='categoryTable' style='margin-left:auto; margin-right:auto'>
+				//Makes html references title to send back to client
+				$oddColor = '#FBFBF7';
+				$evenColor = '#FBFBF7';
+				//$addImagePath = 'http://localhost/KCI/resources/images/add.png';
+				$result = "";
+				foreach($references as $reference){
+					$refID = $reference->get_id();
+					$refCategory = $reference->get_category();
+					//echo $refCategory;
+					//die();
+					$result .= "<div id='".$refID."' style='background-color:#FBFBF7';'class='".$refCategory." referenceTitle'>";
+					$result .= "<p onClick='goRefPage(\"".$refID."\")'> <b>Title:</b>".$reference->get_title()."</p>";
+					$result .= "</div>";
+					//$result .= "<img id='".$uriID."' src='".$addImagePath."' 
+					//			 onClick='addCitation(\"".$uriID."\")' class='add_button'/>";
+					list($oddColor, $evenColor) = array($evenColor, $oddColor);
+				}
+				echo $result;
+			?>
+		</div>
+	</div>	
+	</body>
+</html>
 	
-	<?php 
-	
-		$referenceCategory = new RefereneceCategories();
-		$referenceCategories = $referenceCategory->getReferenceCategories();
-		
-		for ($i=0; $i < sizeof($referenceCategories); $i+=4){
-	?>
-	
-			<tr> 
-				<td> <a href='' ><?= @$referenceCategories[$i]?>  </a> </td>
-				<td> <a href='' ><?= @$referenceCategories[$i+1]?> </a> </td>
-				<td> <a href='' ><?= @$referenceCategories[$i+2]?> </a> </td>
-				<td> <a href='' ><?= @$referenceCategories[$i+3]?> </a> </td>
-			</tr>	
-	
-	<?php		
-		}
-	?>
-
-	</table>
-
-</div>
-
-
-<div id="newProposalDiv">
-	<input id="newProposal" type="button" value="Create a new citation" onClick="parent.location='http://localhost/src/php/citationPage.php'">
-</div>
-<br/>
-<br/>
-<br/>
-	
-<div id='tagDivs' class='center'>
-
-	<?php 
-		foreach ($citationUris as $citationUri => $tagArray){
-			
-			$citation = $rooloClient->retrieveElo($citationUri);
-			
-			$citationId = $citation->get_id();
-			
-			echo "<div class='tag " . implode(' ', $tagArray) . "' onClick=\"parent.location='http://localhost/src/php/citationPage.php?id=" . $citationId . "'\">" .
-				 "<div class='title'>" . $citation->get_title() . "</div>" .
-				 "</div>";
-		}
-	?>
-	
-</div>
-
-<?php
-	require_once 'footer.php';
-?>
