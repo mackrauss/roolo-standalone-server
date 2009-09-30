@@ -1,25 +1,25 @@
 <?php
 require_once 'ReferenceCategories.php';
 require_once '../php/RooloClient.php';
+
+require_once './header.php';
 ?>
-<html>
-	<head>
+		
 		<script type='text/javascript' src='../../library/js/jquery-1.3.2.min.js'></script>
 		<script type='text/javascript' src='../../library/js/jquery-ui-1.7.2.custom.min.js'></script>
 		<meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'>
 		<title>References Page</title>
 		<style>
 			#centerArea { 
-	 	 		width:70%;
-				padding:0px; 
-				overflow:auto; 
-	 	 		margin-left: auto;
-				margin-right: auto;
+	 	 		width:100%;
+//				overflow:auto; 
+//	 	 		margin-left: auto;
+//				margin-right: auto;
 			}
 		
 	 	 	#categoriesArea {  
 	 	 		width:80%;	 		
-				padding:10px 10px 10px 10px; 
+				padding:0% 10px 10px 10px; 
 				overflow:auto; 
 				font-size:70%; 
 				font-family:arial;
@@ -28,6 +28,7 @@ require_once '../php/RooloClient.php';
 	 	 		cursor:pointer;
 	 	 		margin-left: auto;
 				margin-right: auto;
+				font-size: 20;
 			}
 	 	 	li {
 	 	 		float:left; 
@@ -35,23 +36,23 @@ require_once '../php/RooloClient.php';
 	 	 	}
 	 	 	li a {
 	 	 		 margin:10px 10px 10px 0px; 
+	 	 		 padding-top: 5px;
+	 	 		 padding-bottom: 5px;
 	 	 	}
-	 	 	#buttomArea {
-	 	 		width:80%;
+	 	 	#buttonArea {
+	 	 		width:90%;
 	 	 		margin-left: auto;
 				margin-right: auto;	
-				padding:10px 10px 10px 10px; 
+				padding:10px 0px 40px 10px; 
 	 	 	}
 	 	 	#referencesArea {
-	 	 		width:80%;
-				padding:0px; 
+	 	 		width:40%;
 				overflow:auto; 
 				font-family:arial;
 				text-align:left; 
 	 	 		list-style-type:none;
 	 	 		cursor:pointer;
-	 	 		margin-left: auto;
-				margin-right: auto;	
+	 	 			
 				padding:0px 10px 10px 10px; 
 	 	 	}
 	 	 	#newReference {
@@ -81,18 +82,15 @@ require_once '../php/RooloClient.php';
 	        		$('.referenceTitle').hide();
 	        		$('.' + this.id).fadeIn(250);
 	    			$('#showAll').fadeIn(300);
-	    			//$('li a').css('color', '#898989');
-	    			$(this).css('color', '#000000');
+//	    			$(this).css('color', '#000000');
 					return false;
 	    	    });
 	    	    
 				$('#showAll').click(function(){
 					$('.referenceTitle').fadeIn(250);
-					$('li a').css('color', '#898989');
 					hideShowAll();
 					return false;
 				});
-				//return false;
 			})
 		</script>
 	</head>
@@ -100,7 +98,7 @@ require_once '../php/RooloClient.php';
 	<div id='centerArea'>
 		<div id='categoriesArea'>
 			<div style='float: right'>
-				<a href='' id='showAll' > <font size="3"> Show all Categories </font></a>
+				<a href='' id='showAll' style='padding-top:30px' > <font size="3"> Show all Categories </font></a>
 			</div><br/><br/>
 			<div id='categories'>
 				<?php                                
@@ -116,7 +114,7 @@ require_once '../php/RooloClient.php';
 			</div>
 		</div>
 	
-		<div id='buttomArea'>
+		<div id='buttonArea'>
 			<input id='newReference' type='button'  onClick = 'goRefPage()' value='Create a new Reference'>
 		</div>
 		<div id='referencesArea'>
@@ -133,10 +131,8 @@ require_once '../php/RooloClient.php';
 				foreach($references as $reference){
 					$refID = $reference->get_id();
 					$refCategory = $reference->get_category();
-					//echo $refCategory;
-					//die();
-					$result .= "<div id='".$refID."' style='background-color:#FBFBF7';'class='".$refCategory." referenceTitle'>";
-					$result .= "<p onClick='goRefPage(\"".$refID."\")'> <b>Title:</b>".$reference->get_title()."</p>";
+					$result .= "<div id='".$refID."' style='border:1px solid #FBFBF7';'class='".$refCategory." referenceTitle'>";
+					$result .= "<p onClick='goRefPage(\"".$refID."\")'>".$reference->get_title()."</p>";
 					$result .= "</div>";
 					//$result .= "<img id='".$uriID."' src='".$addImagePath."' 
 					//			 onClick='addCitation(\"".$uriID."\")' class='add_button'/>";
@@ -146,6 +142,10 @@ require_once '../php/RooloClient.php';
 			?>
 		</div>
 	</div>	
-	</body>
-</html>
 	
+	
+<?php 
+
+require_once './footer.php';
+
+?>	
