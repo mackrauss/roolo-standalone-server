@@ -1,6 +1,7 @@
 <?php
 require_once 'dataModels/Elo.php';
 require_once 'dataModels/Citation.php';
+require_once 'ReferenceCategories.php';
 require_once 'RooloClient.php';
 
 $rooloClient = new RooloClient();

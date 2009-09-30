@@ -5,7 +5,7 @@ class RefereneceCategories {
 	private $_referenceCategories;
 	
 	public function __construct(){
-		$this->_referenceCategories = array('cat1', 'cat2', 'cat3', 'cat4');
+		$this->_referenceCategories = array('cat01', 'cat02', 'cat03', 'cat04');
 	}
 	
 	public function getReferenceCategories(){
