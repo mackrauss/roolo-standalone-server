@@ -41,18 +41,22 @@ require_once './header.php';
 	 	 	}
 	 	 	#buttonArea {
 	 	 		width:90%;
-	 	 		margin-left: auto;
-				margin-right: auto;	
+	 	 		//margin-left: auto;
+				//margin-right: auto;
+				margin-right: 20px;	
 				padding:10px 0px 40px 10px; 
 	 	 	}
 	 	 	#referencesArea {
-	 	 		width:40%;
+	 	 		width:80%;
 				overflow:auto; 
 				font-family:arial;
 				text-align:left; 
 	 	 		list-style-type:none;
 	 	 		cursor:pointer;
-	 	 			
+
+				border-top: 3px solid #8eff61;
+	 	 		
+	 	 		margin-left: 10%;
 				padding:0px 10px 10px 10px; 
 	 	 	}
 	 	 	#newReference {
@@ -67,12 +71,17 @@ require_once './header.php';
 				return false;
 			}
 			//This function is executed when the click on one of reference title 	
-			function goRefPage(id) {
-				alert ("id =" + id);
-				//$.get('http://localhost/KCI/src/php/search.php', {id: id },
-				//	function(addedCitationURI){
-				//	}
-				// );
+			function goToRefPage(id) {
+				if (id == ""){
+					location = "http://localhost/src/php/referencePage.php";
+				}else{
+					location = "http://localhost/src/php/referencePage.php?id=" + id;
+				}
+//				
+//				$.get('http://localhost/KCI/src/php/search.php', {id: id },
+//					function(addedCitationURI){
+//					}
+//				 );
 			}
 
 			$(document).ready(function(){
@@ -82,7 +91,6 @@ require_once './header.php';
 	        		$('.referenceTitle').hide();
 	        		$('.' + this.id).fadeIn(250);
 	    			$('#showAll').fadeIn(300);
-	    			//$(this).css('color', '#000000');
 					return false;
 	    	    });
 	    	    
@@ -91,14 +99,22 @@ require_once './header.php';
 					hideShowAll();
 					return false;
 				});
-			})
+
+
+				$('.referenceTitle').hover(function (){
+						$(this).css('background-color', '#e6ffe7');
+					},function (){
+						$(this).css('background-color', '#f9fffe');
+						});
+			});
 		</script>
 	</head>
 	<body>
 	<div id='centerArea'>
 		<div id='categoriesArea'>
+			<font size="4px" style="float: left"> Reference Categories </font>
 			<div style='float: right'>
-				<a href='' id='showAll' style='padding-top:30px' > <font size="3"> Show all Categories </font></a>
+				<a href='' id='showAll' style='padding-top:30px' > <font size="3"> Show all References </font></a>
 			</div><br/><br/>
 			<div id='categories'>
 				<?php                                
@@ -115,7 +131,7 @@ require_once './header.php';
 		</div>
 	
 		<div id='buttonArea'>
-			<input id='newReference' type='button'  onClick = 'goRefPage()' value='Create a new Reference'>
+			<input id='newReference' type='button'  onClick ='goToRefPage("")' value='Create a new Reference'>
 		</div>
 		<div id='referencesArea'>
 			<?php 
@@ -125,18 +141,22 @@ require_once './header.php';
 
 				//Makes html references title to send back to client
 				$oddColor = '#FBFBF7';
-				$evenColor = '#FBFBF7';
-				//$addImagePath = 'http://localhost/KCI/resources/images/add.png';
+				$evenColor = '#a8ff7f';
+				
+			    echo "<div style='margin-top: 3%; margin-bottom: 8%'> <span style='width: 60%; float:left'> References </span> " . 
+			    			" </div>\n";
+				
 				$result = "";
 				foreach($references as $reference){
 					$refID = $reference->get_id();
 					$refCategory = $reference->get_category();
-					$result .= "<div id='".$refID."' style='border:1px solid #FBFBF7';'class='".$refCategory." referenceTitle'>";
-					$result .= "<p onClick='goRefPage(\"".$refID."\")'>".$reference->get_title()."</p>";
-					$result .= "</div>";
-					//$result .= "<img id='".$uriID."' src='".$addImagePath."' 
-					//			 onClick='addCitation(\"".$uriID."\")' class='add_button'/>";
-					list($oddColor, $evenColor) = array($evenColor, $oddColor);
+					$dateLastModified = date('l g:i a - Mt' , $reference->get_datelastmodified()); 
+					
+					$result .= "<div id='".$refID."' class='".$refCategory." referenceTitle' onClick='goToRefPage(\"".$refID."\")' style='margin: 2% 0 2% 0; padding:5px 0 5px 0;'>\n\t";
+					$result .= $reference->get_title();
+					$result .= "<i> <font size='2'>" . $dateLastModified . " </font> </i>";
+					$result .= "</div>\n";
+					//list($oddColor, $evenColor) = array($evenColor, $oddColor);
 				}
 				echo $result;
 			?>
