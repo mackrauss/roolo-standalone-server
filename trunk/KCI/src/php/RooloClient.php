@@ -1,11 +1,6 @@
 <?php
-
-require_once 'domLib/simple_html_dom.php';
-require_once "dataModels/Tag.php";
-require_once "dataModels/Elo.php";
-require_once "dataModels/Reference.php";
-require_once "RooloClient.php";
-
+require_once dirname(__FILE__).'/domLib/simple_html_dom.php';
+require_once dirname(__FILE__).'/dataModels/Elo.php';
 
 class RooloClient {
 	
@@ -29,7 +24,8 @@ class RooloClient {
 							'addElo' => $this->_rooloUrl . 'AddELO',
 							'deleteElo' => $this->_rooloUrl . 'DeleteELO',
 							'updateElo' => $this->_rooloUrl . 'UpdateELO',
-							'search' => $this->_rooloUrl . 'Search');
+							'search' => $this->_rooloUrl . 'Search',
+							'deleteAll' => $this->_rooloUrl . 'DeleteAll');
 		
 	}
 	
@@ -37,6 +33,11 @@ class RooloClient {
 	
 	public function getUriDomain(){
 		return $this->_uriDomain;
+	}
+	
+	public function deleteAll(){
+		$url = $this->_rooloServiceUrls['deleteAll'];
+		return file_get_contents($url);
 	}
 	
 	/**
@@ -158,7 +159,6 @@ class RooloClient {
 		}
 		
 		return $elos;
-		
 	}
 	
 	/**
@@ -200,6 +200,7 @@ class RooloClient {
 			
 			$eloType = $xmlElo->find('type');
 			$eloType = $eloType[0]->innertext;
+			include_once('dataModels/'.$eloType.'.php');
 			
 			$elo = new $eloType($xmlElo->innertext);
 			$resultElos[] = $elo;
@@ -230,6 +231,36 @@ class RooloClient {
 		
 		return $elo;
 		
+	}
+	
+	public function escapeUri($uri){
+		return $this->escapeSearchTerm($uri);
+	}
+	
+	/**
+	 * Extracted from http://lucene.apache.org/java/2_3_2/queryparsersyntax.html
+	 */
+	public function escapeSearchTerm($term){
+		$term = str_replace('\\', '\\\\', $term); //never move this down. The precendence is very important here
+		$term = str_replace('+', '\+', $term);
+		$term = str_replace('-', '\-', $term);
+		$term = str_replace('&&', '\&&', $term);
+		$term = str_replace('||', '\||', $term);
+		$term = str_replace('!', '\!', $term);
+		$term = str_replace('(', '\(', $term);
+		$term = str_replace(')', '\)', $term);
+		$term = str_replace('{', '\{', $term);
+		$term = str_replace('}', '\}', $term);
+		$term = str_replace('[', '\[', $term);
+		$term = str_replace(']', '\]', $term);
+		$term = str_replace('^', '\^', $term);
+		$term = str_replace('"', '\"', $term);
+		$term = str_replace('~', '\~', $term);
+		$term = str_replace('*', '\*', $term);
+		$term = str_replace('?', '\?', $term);
+		$term = str_replace(':', '\:', $term);
+		
+		return $term;
 	}
 
 }
