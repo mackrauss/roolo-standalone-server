@@ -1,6 +1,6 @@
 <?php
 
-require_once ('Elo.php');
+require_once dirname(__FILE__).'/Elo.php';
 
 class Comment extends Elo {
 	

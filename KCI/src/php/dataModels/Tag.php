@@ -1,12 +1,15 @@
 <?php
-
-require_once ('Elo.php');
+require_once dirname(__FILE__).'/Elo.php';
 
 class Tag extends Elo {
 	
 	public function __construct($xml=null){
 		parent::__construct($xml);
 		parent::addMetadata('type', 'Tag');
+	}
+	
+	public function get_status(){
+		return parent::getMetadata('status');
 	}
 	
 	/**
@@ -31,6 +34,10 @@ class Tag extends Elo {
 	}
 	
 	
+	public function set_status($status){
+		parent::addMetadata('status', $status);
+	}
+	
 	/**
 	 * @param unknown_type $_dateDeleted
 	 */
@@ -52,6 +59,16 @@ class Tag extends Elo {
 		parent::addMetadata('owneruri', $_ownerUri);
 	}
 	
+	public static function generateHtml($tagUri, $tagTitle){
+		$divId = $tagUri.'_tag_div';
+		
+		$o = '';
+		$o .= "<div name='$divId' id='$divId' style='float:left; margin-right: 10px; border: solid 1px black'>";
+		$o .= $tagTitle." <a href='#' onclick=\"return removeSectionTag('$tagUri', this)\">x</a>";
+		$o .= " </div>\n";
+		
+		return $o;
+	}
 }
 
 ?>

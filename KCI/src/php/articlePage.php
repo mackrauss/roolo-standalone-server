@@ -1,287 +1,378 @@
 <?php
-require_once 'dataModels/Reference.php';
-require_once 'dataModels/Tag.php';
-require_once 'dataModels/Citation.php';
 require_once 'RooloClient.php';
+require_once 'dataModels/Article.php';
+require_once 'dataModels/Section.php';
 
-error_reporting(E_STRICT);
+$action = $_REQUEST['action'];
+$articleUriToLoad = isset($_REQUEST['articleUri']) ? $_REQUEST['articleUri'] : '' ;
 
-if ($_REQUEST['isAjax']){
+$roolo = new RooloClient();
 
-	if ($_REQUEST['function'] == 'createReference'){
-		//echo "in the createReference";
-		$modifiedUri = trim($_GET['id']) ;
-		//echo "modified Uri = ".$modifiedUri;
-		createReference(encode($eloUri));
-	}
-	if ($_REQUEST['function'] == 'search'){
-		searchCitationByTag();
-	}
+$sections = Article::getSections();
+$scienceSections = Article::getScienceSections();
+$uncatSections = Article::getUncatSections();
 
-}else {
-?>
-<html>
-	<head>
-	<script type='text/javascript' src='../../library/js/jquery-1.3.2.min.js'></script>
-	<script type='text/javascript' src='../../library/js/jquery-ui-1.7.2.custom.min.js'></script>
-	<link rel='stylesheet' type='text/css' href='../css/article.css'>
-	<meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'>
-	<title>Search</title>
-	<script type='text/javascript'>
+$articleUri = '';
+$articleTitle = '';
+$articleDesc  = '';
 
-		function addCitation(currentUri) {
-			var uriModified = currentUri;
-			var selectedID = "#" + uriModified;
-			htmlStr = $(selectedID).html();
-			$(selectedID).hide(500);
-			$('#searchList').children(selectedID).hide();
-			var div = $('<div>').attr("id",uriModified);
-			$(htmlStr).appendTo(div);
-			$('<img>').attr({onClick:"removeCitation('" + uriModified +"')", src:"/resources/icon/cross.png", id:uriModified}).addClass("delete_button").appendTo(div);
-			$('#citation_area').append(div);
+$articleFormAction = $action == 'create' ? 'createArticle' : 'saveArticle';
+$sectionElos = null;
 
-//			//Request the search.php page and get the search resault
-			//$.get('http://localhost/KCI/src/php/search.php', { action:'addCitation', eloUri:uri, eloTitle:title },
-			$.get('http://localhost/src/php/article.php', { isAjax:'true', function:'createReference', id: uriModified },
-				function(htmlResult){
-					alert('Data Loaded after click on add image: ' + htmlResult);
-				}
-			 );
+switch($action){
+	case 'create':
+		break;
+	case 'load':
+		if ($articleUriToLoad == ''){
+			echo "Trying to load, but no eloId found";
+			die();
 		}
-
-		function removeCitation(curentUri){
-			//alert("curentUri =" + curentUri);
-			$('#citation_area').children('#' + curentUri).remove();
-		}
-
-		$(document).ready(function() {
-			$('#textArea1').attr('disabled', true);
-			$('#textArea2').attr('disabled', true);
-			$('#textArea3').attr('disabled', true);
-			$('#section1_cancel_btn').attr('disabled', true);
-			$('#section1_update_btn').attr('disabled', true);
-			$('#section2_cancel_btn').attr('disabled', true);
-			$('#section2_update_btn').attr('disabled', true);
-			$('#section3_cancel_btn').attr('disabled', true);
-			$('#section3_update_btn').attr('disabled', true);
-
-			$('.edit_btn').click(function(){
-				if(this.id == 'section1_edit_btn' ){
-					$('#textArea1').attr('disabled', false);
-					$('#section1_cancel_btn').attr('disabled', false);
-					$('#section1_update_btn').attr('disabled', false);
-					$('#textArea2').attr('disabled', true);
-					$('#section2_cancel_btn').attr('disabled', true);
-					$('#section2_update_btn').attr('disabled', true);
-					$('#textArea3').attr('disabled', true);
-					$('#section2_cancel_btn').attr('disabled', true);
-					$('#section2_update_btn').attr('disabled', true);
-				}
-				if(this.id == 'section2_edit_btn' ){
-					$('#textArea2').attr('disabled', false);
-					$('#section2_cancel_btn').attr('disabled', false);
-					$('#section2_update_btn').attr('disabled', false);
-					$('#textArea1').attr('disabled', true);
-					$('#section1_cancel_btn').attr('disabled', true);
-					$('#section1_update_btn').attr('disabled', true);
-					$('#textArea3').attr('disabled', true);
-					$('#section3_cancel_btn').attr('disabled', true);
-					$('#section3_update_btn').attr('disabled', true);
-				}
-				if(this.id == 'section3_edit_btn' ){
-					$('#textArea3').attr('disabled', false);
-					$('#section3_cancel_btn').attr('disabled', false);
-					$('#section3_update_btn').attr('disabled', false);
-					$('#textArea1').attr('disabled', true);
-					$('#section1_cancel_btn').attr('disabled', true);
-					$('#section1_update_btn').attr('disabled', true);
-					$('#textArea2').attr('disabled', true);
-					$('#section2_cancel_btn').attr('disabled', true);
-					$('#section2_update_btn').attr('disabled', true);
-				}
-			});
-
-
-			//click on title and hide and show the textaria and buttons
-			$('.title').click(function() {
-				var section ='';
-				var titleText ='';
-				if (this.id == 'title1'){
-					section = '#section1';
-					if ($(this).text() == 'The title of section one' )
-						titleText = 'The title of section one (click to show!)';
-					else
-						titleText = 'The title of section one';
-				}
-				if (this.id == 'title2'){
-					section = '#section2';
-					if ($(this).text() == 'The title of section two' )
-						titleText = 'The title of section two (click to show!)';
-					else
-						titleText = 'The title of section two';
-				}
-				if (this.id == 'title3'){
-					section = '#section3';
-					if ($(this).text() == 'The title of section three' )
-						titleText = 'The title of section three (click to show!)';
-					else
-						titleText = 'The title of section three';
-				}
-				//run the effect
-				$(section).toggle('blind',{},500);
-				$(this).text(titleText);
-				return false;
-			});
-
-
-			$('#search_button').click(function(){
-
-				var textField = $('#searchText').val();
-				//Request the search.php page and get the search resault
-				$.get('http://localhost/src/php/article.php', { isAjax:'true', function:'search', searchItem: textField },
-					function(htmlResult){
-						//removeOldSearchResault();
-						//alert('Data Loaded: ' + htmlResult);
-						$('#searchList').html(htmlResult);
-					}
-				 );
-			});
-
-			return false;
-		});
-	</script>
-	</head>
-	<body>
-		<div id='page_dvi'>
-			<label class='title' id='title1'>The title of section one</label>
-			<div class='section' id='section1'>
-				<textarea class='section_text' rows='10' cols='80' id='textArea1'>
-					
-				</textarea>
-				<div class='section_button_Div'>
-					<input class='section_button' type='button' id='section1_cancel_btn' value='Cancel'>
-					<input class='section_button' type='button' id='section1_update_btn' value='Update'>
-					<input class='section_button edit_btn' type='button' id='section1_edit_btn' value='Edit'>
-				</div>
-			</div>
-			<label class='title' id='title2'>The title of section two</label>
-			<div class='section' id='section2'>
-				<textarea class='section_text' rows='10' cols='80' id='textArea2'>
-					
-				</textarea>
-				<div class='section_button_Div'>
-					<input class='section_button' type='button' id='section2_cancel_btn' value='Cancel'>
-					<input class='section_button' type='button' id='section2_update_btn' value='Update'>
-					<input class='section_button edit_btn' type='button' id='section2_edit_btn' value='Edit'>
-				</div>
-			</div>
-			<label class='title' id='title3'>The title of section three</label>
-			<div class='section' id='section3'>
-				<textarea class='section_text' rows='10' cols='80' id='textArea3'>
-					
-				</textarea>
-				<div class='section_button_Div'>
-					<input class='section_button' type='button' id='section3_cancel_btn' value='Cancel'>
-					<input class='section_button' type='button' id='section3_update_btn' value='Update'>
-					<input class='section_button edit_btn' type='button' id='section3_edit_btn' value='Edit'>
-				</div>
-			</div>
-
-			<div>
-				<label class='title'>this is the tag area</label>
-				<textarea class='tag' rows='5' cols='80' id='tag_textArea'>
-					
-				</textarea>
-			</div>
-			<label class='title'>this is the citation area</label>
-			<div id='citation_area'>
-			</div>
-			<div class='search'>
-				<label class ='searchLabel' style='font-size:30'>Search</label>
-				<input type='text' id='searchText'>
-				<input type='button' class='search_button' id='search_button'  value='Search' >
-			</div>
-			<div id='searchList'></div>
-		</div>
-	</body>
-</html>
-<?php
-} // the braket of else
-?>
-<?php
-
-	function searchCitationByTag(){
-
-		$searchItem = trim($_GET['searchItem']);
-		$tagsTitles = explode(" ", $searchItem);
-
-		// make the search string for retrieve tags ELO
-		$searchStr = "TYPE:Tag AND (";
-		for($i=0; $i < sizeof($tagsTitles); $i++){
-			$searchStr .= "TITLE:".trim($tagsTitles[$i]);
-			if ($i < sizeof($tagsTitles) - 1){
-				$searchStr .= " OR ";
-			}
-		}
-		$searchStr .= ")";
 		
-		$rooloClient = new RooloClient();
-		$tags = $rooloClient->search($searchStr, 'elo');
+		$article = $roolo->retrieveElo($articleUriToLoad);
+		$articleUri = $article->get_uri();
+		$articleTitle = $article->get_title();
+		$articleDesc = $article->get_desc();
+		
+		$sectionElos = retrieveSectionElos($article, $roolo);
+		$sectionTagElos = retrieveSectionTagElos($sectionElos, $roolo);
+		break;
+	case 'createArticle':
+		$article = new Article();
+		$article->set_uri('');
+		$article->set_author($_SESSION['username']);
+		$article->set_datecreated('');
+		$article->set_datelastmodified('');
+		$article->set_title($_REQUEST['articleTitle']);
+		$article->set_desc($_REQUEST['articleDesc']);
+		
+		$response = $roolo->addElo($article);
+		$savedArticle = new Article($response);
+		$articleUri = $savedArticle->get_uri();
+		$articleTitle = $savedArticle->get_title();
+		$articleDesc  = $savedArticle->get_desc();
 
-		//Search for Citation ELO/s
-		$citations = array();
-		foreach ($tags as $tag){
-//			$citationUri = $rooloClient->getUriDomain() . $tag->get_ownerUri() . '.Citation';
-			$citationUri = $tag->get_ownerUri();
-			$curCitation = $rooloClient->retrieveElo($citationUri);
-			$citations[$citationUri] = $curCitation;
+		foreach($sections as $sectionCode => $sectionTitle){
+			$section = new Section();
+			$section->set_uri('');
+			$section->set_author($_SESSION['username']);
+			$section->set_datecreated('');
+			$section->set_datelastmodified('');
+			$section->set_title($sectionCode);
+			$section->set_ownerType('Article');
+			$section->set_ownerUri($articleUri);
+			
+			$response = $roolo->addElo($section);
+			$sectionElos[$sectionCode] = new Section($response);
+		}
+		
+//		$sectionTagElos = array();
+		$sectionTagElos = retrieveSectionTagElos($sectionElos, $roolo);
+		
+		break;
+	case 'saveArticle':
+		$article = new Article();
+		$article->set_uri($_REQUEST['articleUri']);
+		$article->set_author($_SESSION['username']);
+		$article->set_datecreated('');
+		$article->set_datelastmodified('');
+		$article->set_title($_REQUEST['articleTitle']);
+		$article->set_desc($_REQUEST['articleDesc']);
+		
+		$response = $roolo->updateElo($article);
+		$savedArticle = new Article($response);
+		
+		$articleUri = $savedArticle->get_uri();
+		$articleTitle = $savedArticle->get_title();
+		$articleDesc  = $savedArticle->get_desc();
+		
+		$sectionElos = retrieveSectionElos($article, $roolo);
+		$sectionTagElos = retrieveSectionTagElos($sectionElos, $roolo);
+		break;
+	default:
+		echo "NO ACTION FOUND";
+		die();
+		break;
+}
+
+//echo sizeof($sectionElos);
+//foreach($sectionElos as $seciontCode => $sectionElo){
+//	echo $sectionElo->get_uri()."<br/>";
+//}
+
+?>
+<?php
+include_once 'header.php';
+?>
+<script type="text/javascript">
+//	$(document).ready(function() {
+//		$('textarea.tinymce').tinymce({
+//			// Location of TinyMCE script
+//			script_url : '/tinymce/jscripts/tiny_mce/tiny_mce.js',
+//
+//			// General options
+//			theme : "advanced",
+//			plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+//
+//			// Theme options
+//			theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+//			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+//			theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+//			theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
+//			theme_advanced_toolbar_location : "top",
+//			theme_advanced_toolbar_align : "left",
+//			theme_advanced_statusbar_location : "bottom",
+//			theme_advanced_resizing : true,
+//
+//			// Example content CSS (should be your site CSS)
+//			//content_css : "css/content.css",
+//
+//			// Drop lists for link/image/media/template dialogs
+//			template_external_list_url : "lists/template_list.js",
+//			external_link_list_url : "lists/link_list.js",
+//			external_image_list_url : "lists/image_list.js",
+//			media_external_list_url : "lists/media_list.js",
+//
+//			// Replace values for the template plugin
+//			template_replace_values : {
+//				username : "Some User",
+//				staffid : "991234"
+//			}
+//		});
+//	});
+	
+	editMode = false;
+	articleUri = '<?= $articleUri?>';
+
+	function startSectionEdit(sectionCode){
+		if (editMode){
+			alert('You may only edit one section at a time. Please finish (or cancel) editing other section.');
+		}else{
+			contentDiv = $('#'+sectionCode+'_content'); 
+			contentDiv.hide(400);
+
+			textarea = $('#'+sectionCode+'_textarea');
+			textarea.html(contentDiv.html());
+			
+			editDiv = $('#'+sectionCode+'_edit_div');
+			editDiv.show(400); 
+			
+			editMode = true;
+		}
+	}
+
+	function cancelSectionEdit(sectionCode){
+		$('#'+sectionCode+'_edit_div').hide(400);
+		$('#'+sectionCode+'_content').show(400);
+		editMode = false;
+	}
+
+	function saveSectionEdit(sectionCode){
+		sectionUri = $('#'+sectionCode+'_uri').val();
+		sectionContent = $('#'+sectionCode+'_textarea').val();
+		$.post('/src/php/ajaxServices/saveSection.php', {'sectionUri': sectionUri, 'sectionCode': sectionCode, 'articleUri': articleUri, 'sectionContent': sectionContent}, 
+			function(data){
+				contentDiv = $('#'+sectionCode+'_content');
+				textarea = $('#'+sectionCode+'_textarea');
+				editDiv = $('#'+sectionCode+'_edit_div');
+
+				contentDiv.html(textarea.val());
+
+				editDiv.hide(400);
+				contentDiv.show(400);
+				
+				editMode = false;
+			}
+		);
+	}
+
+	function addSectionTag(sectionCode, sectionUri){
+		tag = $('#'+sectionCode+'_tags_textbox').val();
+		$.post('/src/php/ajaxServices/addTag.php', {'tag': tag, 'ownerType': 'Section', 'ownerUri': sectionUri},
+			function(data){
+				if (data == "DUPLICATE"){
+					alert("The tag you entered seems to be a duplicate. Please check and try again!");
+				}else{
+					$('#'+sectionCode+'_existing_tags').append(data);
+					$('#'+sectionCode+'_tags_textbox').val('');
+				}
+			}
+		);
+	}
+
+	function removeSectionTag(tagUri, linkElem){
+		$.post('/src/php/ajaxServices/removeTag.php', {'tagUri': tagUri}, 
+				function(data){
+					$(linkElem).parent().hide(400);
+				}
+		);
+		
+		return false;
+	}
+
+	function articleSaveHandler(){
+		if ($('#articleTitle').val() == ''){
+			alert('Article title cannot be left empty');
+			return false;
 		}
 
-		//Make html tags to send back to client
-		$oddColor = '#F2F0F0';
-		$evenColor = '#FFFFFF';
-		$addImagePath = '/resources/icon/add.png';
-		$result = "";
-		foreach($citations as $citation){
-			$uriID = decode($citation->get_uri());
-			$result .= "<div id='".$uriID."' style='background-color:".$oddColor.";'class='searchResult'>";
-			$result .= "<p> Author:".$citation->get_author()."_____Date Created:".$citation->get_dateCreated()."</p>";
-			$result .= "<p> Title:".$citation->get_title()."</p>";
-			$result .= "</div>";
-			$result .= "<img id='".$uriID."' src='".$addImagePath."'
-						 onClick='addCitation(\"".$uriID."\")' class='add_button'/>";
-			list($oddColor, $evenColor) = array($evenColor, $oddColor);
+		if ($('#articleDesc').val() == ''){
+			alert('Article description cannot be left empty');
+			return false;
 		}
-		echo $result;
+
+		if (editMode){
+			alert('Please finish (or cancel) editing the open section before attempting to save the article.')
+			return false;
+		}
 	}
 
-	function createReference($uri){
+</script>
+<h2>Article Page</h2>
 
-		$reference = new reference();
 
-		$reference->set_uri('');
-		$reference->set_version('');
-		$reference->set_dateCreated('');
-		$reference->set_dateModified('');
-		$reference->set_type("reference");
-		$reference->set_title("reference".$uri);
-		$reference->set_author("author_Reference_1");
+<form action='articlePage.php' method='GET' onsubmit='return articleSaveHandler();'>
+	<h3>Title</h3>
+	<input type='text' name='articleTitle' id='articleTitle' value="<?= htmlspecialchars($articleTitle) ?>" size='58'/>
+	
+	<h3>Description</h3>
+	<textarea name='articleDesc' id='articleDesc' rows="10" cols="50" ><?= htmlspecialchars($articleDesc) ?></textarea> <br/>
+	<input type='submit' value='Save' />
+	<input type='hidden' value='<?= $articleFormAction ?>' name='action'/>
+	<input type='hidden' value='<?= $articleUri ?>' name='articleUri'/>
+</form>
 
-		$reference->set_uri1($_uri);
-		$reference->set_uriType1("Citation");
-		$reference->set_uri2($_uri2);
-		$reference->set_uriType2("Article");
-		$rooloClient = new RooloClient();
-		echo $rooloClient->addElo($reference);
+<?php 
+if ($action != 'create'){
+?>
+<h3>Science</h3>
+<?php 
+	foreach ($scienceSections as $sectionCode){
+		$sectionTitle = $sections[$sectionCode];
+		$section = $sectionElos[$sectionCode];
+		
+		echo generateSection($sectionCode, $sectionTitle, $section->get_uri(), $section->getContent());
+		echo generateTags($sectionTagElos[$sectionCode], 'Section', $section->get_uri(), $sectionCode); 
 	}
-
-	//modifies elo's uri for using it as html tag's id
-	function decode($uri){
-		return str_replace(".", "_", $uri);
+	 
+	foreach ($uncatSections as $sectionCode){
+		$sectionTitle = $sections[$sectionCode];
+		$section = $sectionElos[$sectionCode];
+		
+		echo generateSection($sectionCode, $sectionTitle, $section->get_uri(), $section->getContent());
+		echo generateTags($sectionTagElos[$sectionCode], 'Section', $section->get_uri(), $sectionCode);
 	}
+?>
+<h3>References</h3>
+<h4>Search for References</h4>
+<form>
+	<input type='text' name='refsearch_textbox' id='refsearch_textbox' value='' size='20' />
+	<input type='button' value='Search' onclick='searchReferences()' />
+	<div name='refsearch_results_div' id='refsearch_results_div'>
+	</div>
+</form>
+<h3>Comments</h3>
 
-	//brings back modified elo's uri to original form
-	function encode($modifiedUri){
-		return str_replace(".", "_", $modifiedUri);
+<?php 
+}
+?>
+
+
+<?php
+function generateTags($tagElos, $ownerType, $ownerUri, $prefix){
+	$o = '';
+	$formId = $prefix."_tags_form";
+	$textboxId = $prefix."_tags_textbox";
+	$existingTagsDivId = $prefix."_existing_tags";
+	
+	$o .= "<form name='$formId' id='$formId'>";
+	$o .= "    Add tags: <input type='text' name='$textboxId' id='$textboxId' />";
+	$o .= "    <input type='button' value='Add' onclick=\"addSectionTag('$prefix', '$ownerUri');\" />";
+	$o .= "    <div name='$existingTagsDivId' id='$existingTagsDivId' style='float:left; width:100%; margin-bottom: 30px;'>";
+	
+	foreach($tagElos as $tagElo){
+		$curTagUri = $tagElo->get_uri();
+		
+		$o .= Tag::generateHtml($curTagUri, $tagElo->get_title());
 	}
+	
+	$o .= "    </div>";
+	$o .= "</form>";
+	
+	return $o;
+}
+
+function generateSection($sectionCode, $sectionTitle, $sectionUri, $content){
+	$o = '';
+	$textareaId = $sectionCode.'_textarea';
+	$contentDivId = $sectionCode.'_content';
+	$editDivId = $sectionCode.'_edit_div';
+	$formId = $sectionCode.'_form';
+	$sectionUriId = $sectionCode.'_uri';
+	
+	
+	$o .= "<form name='$formId' id='$formId'>";
+	$o .= "    <span style='font-size:large;'>$sectionTitle</span> <span style='font-size: small; text-decoration: underline;' onclick=\"startSectionEdit('$sectionCode');\">edit</span>";
+	$o .= "    <br/>";
+	$o .= "    <div name='$contentDivId' id='$contentDivId'>$content</div>";
+	$o .= "    <div name='$editDivId' id='$editDivId' style='display:none;'>";
+	$o .= "        <textarea name='$textareaId' id='$textareaId' rows='10' cols='50'></textarea> <br/>";
+	$o .= "        <input type='button' value='Save' onclick=\"saveSectionEdit('$sectionCode');\" />";
+	$o .= "        <span style='font-size: small; text-decoration: underline;' onclick=\"cancelSectionEdit('$sectionCode');\">cancel</span>";
+	$o .= "        <input type='hidden' name='$sectionUriId' id='$sectionUriId' value='$sectionUri' />";
+	$o .= "    </div>";
+	$o .= "    ";
+	$o .= "</form>";
+	return $o;
+}
+
+function retrieveSectionElos($article, $roolo){
+	$sectionEloMap = array();
+	$articleUri = $article->get_uri(true);
+	
+	$query = "type:Section AND owneruri:$articleUri";
+	
+	$sectionElos = $roolo->search($query, 'elo', 'latest');
+	foreach($sectionElos as $sectionElo){
+//		echo $sectionElo->get_title()."<br/>";
+		$sectionEloMap[$sectionElo->get_title()] = $sectionElo;
+	}
+	
+	return $sectionEloMap;
+}
+
+function retrieveSectionTagElos($sectionElos, $roolo){
+	$sectionTagElos = array();
+	foreach($sectionElos as $sectionCode => $section){
+		$sectionTagElos[$sectionCode] = retrieveTagsForSection($section->get_uri(true), $roolo);
+	}
+	return $sectionTagElos;
+}
+
+function retrieveTagsForSection($sectionUri, $roolo){
+	$query = "type:Tag AND owneruri:$sectionUri AND status:active";
+	$sectionTags = $roolo->search($query, 'metadata', 'latest');
+	
+	return $sectionTags;
+}
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php 
+include_once 'footer.php';
 ?>
