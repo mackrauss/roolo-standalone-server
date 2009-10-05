@@ -1,10 +1,3 @@
-<?php
-
-
-?>
-
-</div>
-
-</body>
-
+		</div> <!-- End of the #main div -->
+	</body>
 </html>

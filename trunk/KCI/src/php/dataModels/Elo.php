@@ -1,7 +1,7 @@
 <?php
 
-require_once 'domLib/simple_html_dom.php';
-require_once 'XMLSupported.php';
+require_once dirname(__FILE__).'/../domLib/simple_html_dom.php';
+require_once dirname(__FILE__).'/XMLSupported.php';
 
 
 class Elo implements XMLSupported{
@@ -106,7 +106,15 @@ class Elo implements XMLSupported{
 		if ($eloXML !== null){
 			$dom = str_get_dom($eloXML);
 			
-			$this->setContent($this->getElemAtPos($dom, 'content', 0)->innertext);
+			$contentWithDataTag = $this->getElemAtPos($dom, 'content', 0);
+			$dataTag = $this->getElemAtPos($contentWithDataTag, 'data', 0); 
+			if ($dataTag->innertext !== null){
+				$content = $dataTag->innertext;
+			}else{
+				$content = '';
+			}
+			
+			$this->setContent($content);
 			
 			$metadataElem = $this->getElemAtPos($dom, 'metadata', 0);
 			if ($metadataElem !== null){
