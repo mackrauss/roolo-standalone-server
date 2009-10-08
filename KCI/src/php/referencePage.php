@@ -11,7 +11,6 @@ $rooloClient = new RooloClient();
 
 
 if ($_REQUEST['action'] == 'addElo'){
-	
 	// Add the submitted Reference to Roolo
 	$submittedReference = new Reference();
 	//get the author from the session
@@ -20,13 +19,30 @@ if ($_REQUEST['action'] == 'addElo'){
 	$submittedReference->set_annotation($_POST["annotationText"]);
 	$submittedReference->set_citation($_POST["citationText"]);
 	
-	echo $_POST["referenceCategoryList"];
+	//echo "reference Category =".$_POST["referenceCategoryList"];
+	$submittedReference->set_category($_POST["referenceCategoryList"]);
+	$submittedReference->set_datecreated('');
+	$submittedReference->set_uri('');
+	$submittedReference->set_version('');
+
+	$reference = new Reference($rooloClient->addElo($submittedReference));
+	$ownerUri = $reference->get_uri();
+
+	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
+	foreach ($tagsArray as $tagTitle){
+		$tagObject = new Tag();
+		$tagObject->set_ownerType("Reference");
+		$tagObject->set_ownerUri($ownerUri);
+		$tagObject->set_title(trim($tagTitle));
+		$tagObject->set_uri('');
+		$tagObject->set_version('');
+		$rooloClient->addElo($tagObject);
+	}
 	
-	$reference = new Reference($submittedReference->generateXml());
-
 	$action = 'update';
-} else if ($_REQUEST['action'] == 'update') {
+	//$reference = new Reference($submittedReference->generateXml());
 
+} else if ($_REQUEST['action'] == 'update') {
 	// Updte the submitted Reference in Roolo
 	echo 'updated';
 	// need to fill this object with all the send in params of the form
@@ -34,6 +50,7 @@ if ($_REQUEST['action'] == 'addElo'){
 	
 	$action = 'update';
 }else{
+
 	if (isset($_REQUEST['id'])){
 		$id = $_REQUEST['id'];
 		$eloId = $rooloClient->getUriDomain() . $id;
@@ -81,7 +98,7 @@ if ($_REQUEST['action'] == 'addElo'){
 			}
 			#tagArea { 
 	 	 		width:80%;
-				padding:20px 0px 0px 0px; 
+				padding:20px 0px 0px 150px; 
 	 	 		margin-left: auto;
 				margin-right: auto;
 			}
@@ -114,20 +131,21 @@ if ($_REQUEST['action'] == 'addElo'){
 				color:#0300ee;
 			}
 			
-			input.myButton { 
+			.myButton { 
 			   font-family: Arial, Helvetica, sans-serif; 
-			   font-size: 30px; 
+			   font-size: 20px; 
 			   background-color: #bcffaf;
 			   margin-top: 2%;
-			   margin-left: 10%; 
-			   padding: 2px; 
-			   height: 50px; 
-			   width: 800px; 
+			   margin-right: 20%; 
+			   padding: 0.1%; 
+			   height: 30px; 
+			   width: 200px;
+			   float: right;
 			   border: 1px solid #000000;
 			   -moz-border-radius-topleft: 50px; 
 			   -moz-border-radius-topright: 50px; 
 			   -moz-border-radius-bottomleft: 50px; 
-			   -moz-border-radius-bottomright: 50px; 
+			   -moz-border-radius-bottomright: 50px;  
 			} 
 			
 	    </style>
@@ -171,7 +189,8 @@ if ($_REQUEST['action'] == 'addElo'){
 									$result = "<option value=''> Select a Category </option>";									
 								}
 								for ($i = 0; $i < sizeof($refCatsList); $i++){
-									$result .= "<option value='".$i."'>".$refCatsList[$i]."</option>";
+									//$result .= "<option value='".$i."'>".$refCatsList[$i]."</option>";
+									$result .= "<option value='".$refCatsList[$i]."'>".$refCatsList[$i]."</option>";
 								}
 								echo $result;
 							?>
@@ -191,8 +210,8 @@ if ($_REQUEST['action'] == 'addElo'){
 
 				<div id='tagArea' >
 					<div id='tag'>
-						<font size='4'>Tags</font>
-						<textarea id="tags" name="tags" style="width:800px; height: 100px;"><?= $refernceTagsString?> </textarea>
+						<font size='4'>Tags</font><br/>
+						<input type="text" id="tags" name="tags" onKeyPress="return disableEnterKey(event)" style="width:600px; height: 100px;" value="<?= $refernceTagsString?>" />
 					</div>
 				</div>
 				
@@ -202,10 +221,13 @@ if ($_REQUEST['action'] == 'addElo'){
 					<input type="submit" value='Submit' class='myButton'>
 				</div>
 				
+				
 				<br/>
 				<br/>
 				<br/>
 				<br/>
+				<br/>
+				
 	 	</form>	
 	
 	
