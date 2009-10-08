@@ -39,6 +39,8 @@ if ($_REQUEST['action'] == 'addElo'){
 		$rooloClient->addElo($tagObject);
 	}
 	
+	$refernceTagsString = trim($_POST["tags"]);
+	
 	$action = 'update';
 	//$reference = new Reference($submittedReference->generateXml());
 
@@ -58,11 +60,7 @@ if ($_REQUEST['action'] == 'addElo'){
 		$reference = $rooloClient->retrieveElo($eloId);
 
 		// get all the tags for the current reference
-		$tags = $rooloClient->search('type:Tag AND owneruri:'.$reference->get_uri(true), 'metadata');
-		$tagsArray = array();
-		foreach ($tags as $tag){
-			$tagsArray[] = $tag->get_title();
-		}
+		$tagsArray = getReferenceTags($reference->get_uri(true), $rooloClient);
 		$refernceTagsString = implode(', ', $tagsArray);
 
 		$action = 'update';
@@ -203,12 +201,12 @@ if ($_REQUEST['action'] == 'addElo'){
 		  		
 				<div id='anotationArea' >
 					<font size='4'>Annotation</font><br/>
-					<textarea id="annotationText" name="annotationText" rows='10' cols='75' id='anotation'> <?= $reference->get_annotation() ?></textarea>
+					<textarea id="annotationText" name="annotationText" rows='10' cols='75' id='anotation'><?= $reference->get_annotation() ?></textarea>
 				</div>
 				
 				<div id='citationArea'>
 					<font size='4'>Citation</font> <br/>
-					<textarea id="citationText" name="citationText" rows='10' cols='75' id='citation'> <?= $reference->get_citation() ?> </textarea>
+					<textarea id="citationText" name="citationText" rows='10' cols='75' id='citation'><?= $reference->get_citation() ?></textarea>
 				</div>
 
 				<div id='tagArea' >
@@ -234,6 +232,17 @@ if ($_REQUEST['action'] == 'addElo'){
 	 	</form>	
 	
 	
+<?php 
+function getReferenceTags($referenceUri, $rooloClient){ 
+	$tags = $rooloClient->search('type:Tag AND owneruri:'.$referenceUri, 'metadata');
+	$tagsArray = array();
+	foreach ($tags as $tag){
+		$tagsArray[] = $tag->get_title();
+	}
+	
+	return $tagsArray;
+}
+?>
 <?php 
 	require_once 'footer.php';
 ?>
