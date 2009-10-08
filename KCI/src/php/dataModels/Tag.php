@@ -63,8 +63,8 @@ class Tag extends Elo {
 		$divId = $tagUri.'_tag_div';
 		
 		$o = '';
-		$o .= "<div name='$divId' id='$divId' style='float:left; margin-right: 10px; border: solid 1px black'>";
-		$o .= $tagTitle." <a href='#' onclick=\"return removeSectionTag('$tagUri', this)\">x</a>";
+		$o .= "<div name='$divId' id='$divId' class='tag' style='float:left; vertical-align: middle;'>";
+		$o .= $tagTitle."&nbsp;<img src='/src/images/cross.png' width='10px' height='10px' onclick=\"return removeSectionTag('$tagUri', this)\" />";
 		$o .= " </div>\n";
 		
 		return $o;

@@ -41,7 +41,7 @@ class Comment extends Elo {
 		$o = '';
 		
 		$o .= "<div style='margin-bottom: 10px;'>";
-		$o .= '<span style="font-size:small"> By '.htmlspecialchars($this->get_author).' on '.date('Y d m', $this->get_dateCreated()). ' </span><br/>';
+		$o .= '<span style="font-size:small"> By '.htmlspecialchars($this->get_author()).' on '.date('F jS', $this->get_dateCreated()/1000). ' </span><br/>';
 		$o .= htmlspecialchars($this->get_title());
 		$o .= '</div>';
 		return $o;
