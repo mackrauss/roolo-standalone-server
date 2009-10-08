@@ -1,4 +1,7 @@
 <?php
+include_once 'header.php';
+?>
+<?php
 require_once 'RooloClient.php';
 require_once 'dataModels/Article.php';
 require_once 'dataModels/Section.php';
@@ -103,9 +106,7 @@ switch($action){
 //}
 
 ?>
-<?php
-include_once 'header.php';
-?>
+
 <script type="text/javascript">
 //	$(document).ready(function() {
 //		$('textarea.tinymce').tinymce({
@@ -150,6 +151,9 @@ include_once 'header.php';
 		if (editMode){
 			alert('You may only edit one section at a time. Please finish (or cancel) editing other section.');
 		}else{
+			editLink = $('#'+sectionCode+'_edit_link');
+			editLink.hide(400);
+			
 			contentDiv = $('#'+sectionCode+'_content'); 
 			contentDiv.hide(400);
 
@@ -166,6 +170,7 @@ include_once 'header.php';
 	function cancelSectionEdit(sectionCode){
 		$('#'+sectionCode+'_edit_div').hide(400);
 		$('#'+sectionCode+'_content').show(400);
+		$('#'+sectionCode+'_edit_link').show(400);
 		editMode = false;
 	}
 
@@ -177,11 +182,13 @@ include_once 'header.php';
 				contentDiv = $('#'+sectionCode+'_content');
 				textarea = $('#'+sectionCode+'_textarea');
 				editDiv = $('#'+sectionCode+'_edit_div');
+				editLink = $('#'+sectionCode+'_edit_link');
 
 				contentDiv.html(textarea.val());
 
 				editDiv.hide(400);
 				contentDiv.show(400);
+				editLink.show(400);
 				
 				editMode = false;
 			}
@@ -241,6 +248,7 @@ include_once 'header.php';
 	}
 
 </script>
+<a href='/src/php/articles.php' /> <?= htmlspecialchars('< Back to Artilces')?></a>
 <h2>Article Page</h2>
 
 
@@ -250,7 +258,7 @@ include_once 'header.php';
 	
 	<h3>Description</h3>
 	<textarea name='articleDesc' id='articleDesc' rows="10" cols="50" ><?= htmlspecialchars($articleDesc) ?></textarea> <br/>
-	<input type='submit' value='Save' />
+	<input type='submit' class='SmallButton' value='Save' />
 	<input type='hidden' value='<?= $articleFormAction ?>' name='action'/>
 	<input type='hidden' value='<?= $articleUri ?>' name='articleUri'/>
 </form>
@@ -280,7 +288,7 @@ if ($action != 'create'){
 <h4>Search for References</h4>
 <form>
 	<input type='text' name='refsearch_textbox' id='refsearch_textbox' value='' size='20' />
-	<input type='button' value='Search' onclick='searchReferences()' />
+	<input type='button' class='SmallButton' value='Search' onclick='searchReferences()' />
 	<div name='refsearch_results_div' id='refsearch_results_div'>
 	</div>
 </form>
@@ -294,8 +302,8 @@ if ($action != 'create'){
 	?>
 	</div>
 	Post a Comment: <br/>
-	<textarea cols='50' rows='10' name='comment_textbox' id='comment_textbox'> </textarea> <br/>
-	<input type='button' value='Post Comment' onclick='postComment()' />
+	<textarea cols='50' rows='10' name='comment_textbox' id='comment_textbox'></textarea> <br/>
+	<input type='button' class='SmallButton' value='Post Comment' onclick='postComment()' />
 </form>
 <?php 
 }
@@ -306,7 +314,7 @@ if ($action != 'create'){
 function retrieveCommentElos($article, $roolo){
 	$articleUri = $roolo->escapeSearchTerm($article->get_uri());
 	$query = "type:Comment AND ownertype:Article AND owneruri:$articleUri";
-	echo $query;
+//	echo $query;
 	$results = $roolo->search($query, 'metadata', 'latest');
 	
 	return $results;
@@ -318,8 +326,8 @@ function generateTags($tagElos, $ownerType, $ownerUri, $prefix){
 	$existingTagsDivId = $prefix."_existing_tags";
 	
 	$o .= "<form name='$formId' id='$formId'>";
-	$o .= "    Add tags: <input type='text' name='$textboxId' id='$textboxId' />";
-	$o .= "    <input type='button' value='Add' onclick=\"addSectionTag('$prefix', '$ownerUri');\" />";
+	$o .= "    Add tags: <input type='text' name='$textboxId' id='$textboxId' style='margin-bottom: 10px;'/>";
+	$o .= "    <input type='button' class='SmallButton' value='Add' onclick=\"addSectionTag('$prefix', '$ownerUri');\" />";
 	$o .= "    <div name='$existingTagsDivId' id='$existingTagsDivId' style='float:left; width:100%; margin-bottom: 30px;'>";
 	
 	foreach($tagElos as $tagElo){
@@ -337,6 +345,7 @@ function generateTags($tagElos, $ownerType, $ownerUri, $prefix){
 function generateSection($sectionCode, $sectionTitle, $sectionUri, $content){
 	$o = '';
 	$textareaId = $sectionCode.'_textarea';
+	$editLinkId = $sectionCode.'_edit_link';
 	$contentDivId = $sectionCode.'_content';
 	$editDivId = $sectionCode.'_edit_div';
 	$formId = $sectionCode.'_form';
@@ -344,12 +353,13 @@ function generateSection($sectionCode, $sectionTitle, $sectionUri, $content){
 	
 	
 	$o .= "<form name='$formId' id='$formId'>";
-	$o .= "    <span style='font-size:large;'>$sectionTitle</span> <span style='font-size: small; text-decoration: underline;' onclick=\"startSectionEdit('$sectionCode');\">edit</span>";
+	$o .= "    <span style='font-size:x-large;'>$sectionTitle</span> "; 
+	$o .= "    <span name='$editLinkId' id='$editLinkId' style='font-size: small; text-decoration: underline;' onclick=\"startSectionEdit('$sectionCode');\">edit</span>";
 	$o .= "    <br/>";
-	$o .= "    <div name='$contentDivId' id='$contentDivId'>$content</div>";
+	$o .= "    <div name='$contentDivId' id='$contentDivId' style='width: 80%;'>$content</div>";
 	$o .= "    <div name='$editDivId' id='$editDivId' style='display:none;'>";
-	$o .= "        <textarea name='$textareaId' id='$textareaId' rows='10' cols='50'></textarea> <br/>";
-	$o .= "        <input type='button' value='Save' onclick=\"saveSectionEdit('$sectionCode');\" />";
+	$o .= "        <textarea name='$textareaId' id='$textareaId' rows='10' cols='100'></textarea> <br/>";
+	$o .= "        <input type='button' class='SmallButton' value='Save' onclick=\"saveSectionEdit('$sectionCode');\" />";
 	$o .= "        <span style='font-size: small; text-decoration: underline;' onclick=\"cancelSectionEdit('$sectionCode');\">cancel</span>";
 	$o .= "        <input type='hidden' name='$sectionUriId' id='$sectionUriId' value='$sectionUri' />";
 	$o .= "    </div>";

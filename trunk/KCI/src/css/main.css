@@ -6,6 +6,9 @@ body {
 }
 
 #main {
+	font-family: Verdana;
+	font-size: 13px; 
+	
 	margin-left: auto;
 	margin-right: auto;
 	border:1px solid grey;
@@ -24,11 +27,10 @@ body {
 	padding-right: 20px;
 }
 input {
-	font-family: Verdana;
 	font-size: 13px;
 }
 .small_info{
-	font-size: small; 
+	font-size: x-small; 
 }
 
 .BigButton { 
@@ -62,4 +64,31 @@ input {
 textarea {
 	font-family: Verdana;
 	font-size: 13px; 
+}
+
+.tag {
+	border: 1px solid darkgrey;
+	font-size: x-small;
+	padding-right: 7px; 
+	padding-left:  7px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	color: white;
+	background-color: 6699CC;
+	margin-right: 10px;
+	
+	-moz-border-radius-topleft: 10px; 
+	-moz-border-radius-topright: 10px; 
+	-moz-border-radius-bottomleft: 10px; 
+	-moz-border-radius-bottomright: 10px; 
+}
+
+.tagImage {
+	text-decoration:none; 
+	border:0 none; 
+	background:transparent none repeat scroll 0 0;
+	
+	outline-color:-moz-use-text-color;
+	outline-style:none;
+	outline-width:0;
 }
