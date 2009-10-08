@@ -9,7 +9,7 @@ require_once('dataModels/Reference.php');
 //$articles = addArticles();
 //addSectionsToArticles($articles);
 //addTagsToArticles($articles);
-$references = addReferences();
+//$references = addReferences();
 
 function addReferences(){
 	$roolo = new RooloClient();
@@ -27,7 +27,7 @@ function addReferences(){
 		$reference->set_annotation('annotation'.$i);
 		$reference->set_category('category'.$i);
 		
-		$response = $roolo->addElo($references);
+		$response = $roolo->addElo($reference);
 		$references[] = new Reference($response);
 	}
 	
