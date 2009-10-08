@@ -62,6 +62,14 @@ require_once './header.php';
 	 	 	#newReference {
 	 	 		float:right;
 	 	 	}
+	 	 	
+	 	 	.BigButton{
+	 	 		font-size: 16px;
+	 	 		width: 200px;
+	 	 		height: 40px;
+	 	 		margin-bottom: 2%;
+	 	 	}
+	 	 	
 	    </style>
 		
 		<script type='text/javascript'>
@@ -131,7 +139,7 @@ require_once './header.php';
 		</div>
 	
 		<div id='buttonArea'>
-			<input id='newReference' type='button'  onClick ='goToRefPage("")' value='Create a new Reference'>
+			<input id='newReference' type='button' class='BigButton' onClick ='goToRefPage("")' value='Create a new Reference'>
 		</div>
 		<div id='referencesArea'>
 			<?php 
@@ -150,7 +158,7 @@ require_once './header.php';
 				foreach($references as $reference){
 					$refID = $reference->get_id();
 					$refCategory = $reference->get_category();
-					$dateLastModified = date('l g:i a - Mt' , $reference->get_datelastmodified()); 
+					$dateLastModified = date('l g:i a - M t' , $reference->get_datelastmodified()/1000); 
 					
 					$result .= "<div id='".$refID."' class='".$refCategory." referenceTitle' onClick='goToRefPage(\"".$refID."\")' style='margin: 2% 0 2% 0; padding:5px 0 5px 0;'>\n\t";
 					$result .= $reference->get_title();

@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/domLib/simple_html_dom.php';
 require_once dirname(__FILE__).'/dataModels/Elo.php';
+require_once dirname(__FILE__).'/dataModels/Tag.php';
 
 class RooloClient {
 	
@@ -200,7 +201,7 @@ class RooloClient {
 			
 			$eloType = $xmlElo->find('type');
 			$eloType = $eloType[0]->innertext;
-			include_once('dataModels/'.$eloType.'.php');
+			include_once(dirname(__FILE__).'/dataModels/'.$eloType.'.php');
 			
 			$elo = new $eloType($xmlElo->innertext);
 			$resultElos[] = $elo;
