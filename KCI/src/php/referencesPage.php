@@ -151,7 +151,7 @@ require_once './header.php';
 				$oddColor = '#FBFBF7';
 				$evenColor = '#a8ff7f';
 				
-			    echo "<div style='margin-top: 3%; margin-bottom: 8%'> <span style='width: 60%; float:left'> References </span> " . 
+			    echo "<div style='margin-top: 3%; margin-bottom: 8%'> <span style='width: 60%; float:left; font-size: large'> References </span> " . 
 			    			" </div>\n";
 				
 				$result = "";
