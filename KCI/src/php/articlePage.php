@@ -35,6 +35,7 @@ switch($action){
 		
 		$sectionElos = retrieveSectionElos($article, $roolo);
 		$sectionTagElos = retrieveSectionTagElos($sectionElos, $roolo);
+		$commentElos = retrieveCommentElos($article, $roolo);
 		break;
 	case 'createArticle':
 		$article = new Article();
@@ -67,6 +68,7 @@ switch($action){
 		
 //		$sectionTagElos = array();
 		$sectionTagElos = retrieveSectionTagElos($sectionElos, $roolo);
+		$commentElos = retrieveCommentElos($article, $roolo);
 		
 		break;
 	case 'saveArticle':
@@ -87,6 +89,7 @@ switch($action){
 		
 		$sectionElos = retrieveSectionElos($article, $roolo);
 		$sectionTagElos = retrieveSectionTagElos($sectionElos, $roolo);
+		$commentElos = retrieveCommentElos($article, $roolo);
 		break;
 	default:
 		echo "NO ACTION FOUND";
@@ -226,6 +229,17 @@ include_once 'header.php';
 		}
 	}
 
+	function postComment(){
+		var commentText = $('#comment_textbox').val();
+
+		$.post('/src/php/ajaxServices/postComment.php', {'commentText': commentText, 'ownerType': 'Article', 'ownerUri': articleUri}, 
+				function(data){
+					$('#existing_comments').append(data);
+					$('#comment_textbox').val('');
+				}
+		);
+	}
+
 </script>
 <h2>Article Page</h2>
 
@@ -271,13 +285,32 @@ if ($action != 'create'){
 	</div>
 </form>
 <h3>Comments</h3>
-
+<form>
+	<div name='existing_comments' id='existing_comments'>
+	<?php
+	foreach($commentElos as $commentElo){
+		echo $commentElo->generateHtml();
+	}
+	?>
+	</div>
+	Post a Comment: <br/>
+	<textarea cols='50' rows='10' name='comment_textbox' id='comment_textbox'> </textarea> <br/>
+	<input type='button' value='Post Comment' onclick='postComment()' />
+</form>
 <?php 
 }
 ?>
 
 
 <?php
+function retrieveCommentElos($article, $roolo){
+	$articleUri = $roolo->escapeSearchTerm($article->get_uri());
+	$query = "type:Comment AND ownertype:Article AND owneruri:$articleUri";
+	echo $query;
+	$results = $roolo->search($query, 'metadata', 'latest');
+	
+	return $results;
+}
 function generateTags($tagElos, $ownerType, $ownerUri, $prefix){
 	$o = '';
 	$formId = $prefix."_tags_form";
