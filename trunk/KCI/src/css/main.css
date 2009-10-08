@@ -1,17 +1,15 @@
 body {
-	background-image: url('/resources/images/header_background.jpg');
+	background-image: url(/resources/images/header_background.jpg);
 	background-repeat: no-repeat;
-	//background-position: right;
-	background-color: #42a8ff;
-	
+	background-position: top left;
+	background-color: #76C4E9;
 }
 
 #main {
-
 	margin-left: auto;
 	margin-right: auto;
 	border:1px solid grey;
-	background-color: #f9fffe;
+	background-color: #e1efff;
 	
 	-moz-border-radius-topleft: 50px; 
 	-moz-border-radius-topright: 50px; 
@@ -19,9 +17,14 @@ body {
 	-moz-border-radius-bottomright: 50px;
 	
 	width: 70%;
+	height: 100%;
 	margin-top: 1%;
-	margin-left: auto;
-	margin-right: auto;
 	padding-top: 2%;
-	
+	padding-bottom: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.small_info{
+	font-size: small; 
 }
