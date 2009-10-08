@@ -170,6 +170,9 @@ if ($_REQUEST['action'] == 'addElo'){
 	
 	
 	<body>
+	
+		<a href='http://localhost/src/php/referencesPage.php'> <?= htmlspecialchars(' < Back to References')  ?> </a>
+		
 		<form method="post" action="referencePage.php">
 				<div id='titleArea'>
 					<div id='title'>
