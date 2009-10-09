@@ -39,17 +39,37 @@ if ($_REQUEST['action'] == 'addElo'){
 		$rooloClient->addElo($tagObject);
 	}
 	
-	$refernceTagsString = trim($_POST["tags"]);
+	$refernceTagsString = implode(', ', $tagsArray);
 	
 	$action = 'update';
 	//$reference = new Reference($submittedReference->generateXml());
 
 } else if ($_REQUEST['action'] == 'update') {
-	// Updte the submitted Reference in Roolo
-	echo 'updated';
-	// need to fill this object with all the send in params of the form
-	$reference = new Reference();
+	// update the submitted Reference to Roolo
+	$newVersionReference = new Reference();
+	//get the author from the session
+	//$newVersionReference->set_author($_SESSION['user']);
+	$newVersionReference->set_title($_POST["referenceTitle"]);
+	$newVersionReference->set_annotation($_POST["annotationText"]);
+	$newVersionReference->set_citation($_POST["citationText"]);
 	
+	$newVersionReference->set_category($_POST["referenceCategoryList"]);
+	$newVersionReference->set_uri($rooloClient->getUriDomain() . $_POST["id"]);
+	$reference = new Reference($rooloClient->updateElo($newVersionReference));
+	
+	$ownerUri = $reference->get_uri();
+	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
+	foreach ($tagsArray as $tagTitle){
+		$tagObject = new Tag();
+		$tagObject->set_ownerType("Reference");
+		$tagObject->set_ownerUri($ownerUri);
+		$tagObject->set_title(trim($tagTitle));
+		$tagObject->set_uri('');
+		$tagObject->set_version('');
+		$rooloClient->addElo($tagObject);
+	}
+	
+	$refernceTagsString = implode(', ', $tagsArray);
 	$action = 'update';
 }else{
 
@@ -60,7 +80,11 @@ if ($_REQUEST['action'] == 'addElo'){
 		$reference = $rooloClient->retrieveElo($eloId);
 
 		// get all the tags for the current reference
-		$tagsArray = getReferenceTags($reference->get_uri(true), $rooloClient);
+		$tags = $rooloClient->search('type:Tag AND owneruri:'.$reference->get_uri(true), 'metadata');
+		$tagsArray = array();
+		foreach ($tags as $tag){
+			$tagsArray[] = $tag->get_title();
+		}
 		$refernceTagsString = implode(', ', $tagsArray);
 
 		$action = 'update';
@@ -170,8 +194,7 @@ if ($_REQUEST['action'] == 'addElo'){
 	<body>
 	
 		<a href='http://localhost/src/php/referencesPage.php'> <?= htmlspecialchars(' < Back to References')  ?> </a>
-		
-		<form method="post" action="referencePage.php">
+		<form method="post" action="referencePage.php?id=<?= $reference->get_id();?>">
 				<div id='titleArea'>
 					<div id='title'>
 						<font size='4'>Reference Title</font>
@@ -185,7 +208,7 @@ if ($_REQUEST['action'] == 'addElo'){
 								
 								// Fill in the reference's category
 								if (isset($_REQUEST['id'])){
-									$result = "<option value=''>" . $reference->get_category() . "</option>";
+									$result = "<option value='".$reference->get_category()."'>" . $reference->get_category() . "</option>";
 								}else {
 									$result = "<option value=''> Select a Category </option>";									
 								}
@@ -232,17 +255,6 @@ if ($_REQUEST['action'] == 'addElo'){
 	 	</form>	
 	
 	
-<?php 
-function getReferenceTags($referenceUri, $rooloClient){ 
-	$tags = $rooloClient->search('type:Tag AND owneruri:'.$referenceUri, 'metadata');
-	$tagsArray = array();
-	foreach ($tags as $tag){
-		$tagsArray[] = $tag->get_title();
-	}
-	
-	return $tagsArray;
-}
-?>
 <?php 
 	require_once 'footer.php';
 ?>
