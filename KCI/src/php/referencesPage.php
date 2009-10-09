@@ -145,7 +145,7 @@ require_once './header.php';
 			<?php 
 				$searchStr = "type:Reference"; 
 				$rooloClient = new RooloClient();
-				$references = $rooloClient->search($searchStr, 'elo');
+				$references = $rooloClient->search($searchStr, 'elo', 'latest');
 
 				//Makes html references title to send back to client
 				$oddColor = '#FBFBF7';
