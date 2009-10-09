@@ -13,7 +13,7 @@ $_SESSION['username'] = 'Ali Ajellu';
 	<body>
 		<div style='margin-top: 4%; margin-left:20%'>
 			<font size='5' color='blue'> UTS M3 Science </font><br/>
-			<font size='9' onclick="document.location.href='/src/php/index.php'"> Climage Change </font> 
+			<font size='9' onclick="document.location.href='/src/php/index.php'"> Climate Change </font> 
 		</div>
 
 		<div id='main'>

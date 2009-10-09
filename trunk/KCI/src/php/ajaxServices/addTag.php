@@ -11,7 +11,7 @@ $ownerUri = $_REQUEST['ownerUri'];
 
 $roolo = new RooloClient();
 
-
+$finalResponse = '';
 foreach($tags as $curTagStr){
 	/*
 	 * Make sure it's not a duplicate tag
@@ -42,7 +42,8 @@ foreach($tags as $curTagStr){
 	$response = $roolo->addElo($tag);
 	$savedTag = new Tag($response);
 	
-	echo Tag::generateHtml($savedTag->get_uri(), $savedTag->get_title());
+	$finalResponse .= Tag::generateHtml($savedTag->get_uri(), $savedTag->get_title());
 }
-//echo $response;
+
+echo $finalResponse;
 ?>

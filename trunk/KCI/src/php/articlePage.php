@@ -5,6 +5,7 @@ include_once 'header.php';
 require_once 'RooloClient.php';
 require_once 'dataModels/Article.php';
 require_once 'dataModels/Section.php';
+require_once 'util/TagUtil.php';
 
 $action = $_REQUEST['action'];
 $articleUriToLoad = isset($_REQUEST['articleUri']) ? $_REQUEST['articleUri'] : '' ;
@@ -318,28 +319,6 @@ function retrieveCommentElos($article, $roolo){
 	$results = $roolo->search($query, 'metadata', 'latest');
 	
 	return $results;
-}
-function generateTags($tagElos, $ownerType, $ownerUri, $prefix){
-	$o = '';
-	$formId = $prefix."_tags_form";
-	$textboxId = $prefix."_tags_textbox";
-	$existingTagsDivId = $prefix."_existing_tags";
-	
-	$o .= "<form name='$formId' id='$formId'>";
-	$o .= "    Add tags: <input type='text' name='$textboxId' id='$textboxId' style='margin-bottom: 10px;'/>";
-	$o .= "    <input type='button' class='SmallButton' value='Add' onclick=\"addSectionTag('$prefix', '$ownerUri');\" />";
-	$o .= "    <div name='$existingTagsDivId' id='$existingTagsDivId' style='float:left; width:100%; margin-bottom: 30px;'>";
-	
-	foreach($tagElos as $tagElo){
-		$curTagUri = $tagElo->get_uri();
-		
-		$o .= Tag::generateHtml($curTagUri, $tagElo->get_title());
-	}
-	
-	$o .= "    </div>";
-	$o .= "</form>";
-	
-	return $o;
 }
 
 function generateSection($sectionCode, $sectionTitle, $sectionUri, $content){
