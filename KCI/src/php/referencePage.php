@@ -31,23 +31,27 @@ if ($_REQUEST['action'] == 'addElo'){
 
 	$reference = new Reference($rooloClient->addElo($submittedReference));
 	$ownerUri = $reference->get_uri();
-
-	$tags = array_unique(explode (',', trim($_POST["tags"])));
-//	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
-//	foreach ($tagsArray as $tagTitle){
-//		$tagObject = new Tag();
-//		$tagObject->set_ownerType("Reference");
-//		$tagObject->set_ownerUri($ownerUri);
-//		$tagObject->set_title(trim($tagTitle));
-//		$tagObject->set_uri('');
-//		$tagObject->set_version('');
-//		$rooloClient->addElo($tagObject);
-//	}
-//	
-//	$refernceTagsString = implode(', ', $tagsArray);
 	
+	//$tags = array_unique(explode (',', trim($_POST["tags"])));
+	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
+	foreach ($tagsArray as $tagTitle){
+		
+		$query = "type:Tag AND owneruri:". $reference->get_uri(true) . " AND title:$tagTitle AND status:active";
+		$results = $rooloClient->search($query, 'metadata', 'latest');
+		if (sizeof($results) == 0){
+			$tagObject = new Tag();
+			$tagObject->set_ownerType("Reference");
+			$tagObject->set_ownerUri($ownerUri);
+			$tagObject->set_title(trim($tagTitle));
+			$tagObject->set_uri('');
+			$tagObject->set_version('');
+			$tagObject->set_status('active');
+			$rooloClient->addElo($tagObject); 
+		}
+	}
+	
+	$tags = $rooloClient->search('type:Tag AND owneruri:'.$reference->get_uri(true) . ' AND status:active', 'metadata', 'latest');
 	$action = 'update';
-	//$reference = new Reference($submittedReference->generateXml());
 
 } else if ($_REQUEST['action'] == 'update') {
 	// update the submitted Reference to Roolo
@@ -63,19 +67,24 @@ if ($_REQUEST['action'] == 'addElo'){
 	$reference = new Reference($rooloClient->updateElo($newVersionReference));
 	
 	$ownerUri = $reference->get_uri();
-	$tags = array_unique(explode (',', trim($_POST["tags"])));
-//	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
-//	foreach ($tagsArray as $tagTitle){
-//		$tagObject = new Tag();
-//		$tagObject->set_ownerType("Reference");
-//		$tagObject->set_ownerUri($ownerUri);
-//		$tagObject->set_title(trim($tagTitle));
-//		$tagObject->set_uri('');
-//		$tagObject->set_version('');
-//		$rooloClient->addElo($tagObject);
-//	}
-//	
-//	$refernceTagsString = implode(', ', $tagsArray);
+	
+	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
+	foreach ($tagsArray as $tagTitle){
+		
+		$query = "type:Tag AND owneruri:". $reference->get_uri(true) . " AND title:$tagTitle AND status:active";
+		$results = $rooloClient->search($query, 'metadata', 'latest');
+		if (sizeof($results) == 0){
+			$tagObject = new Tag();
+			$tagObject->set_ownerType("Reference");
+			$tagObject->set_ownerUri($ownerUri);
+			$tagObject->set_title(trim($tagTitle));
+			$tagObject->set_uri('');
+			$tagObject->set_version('');
+			$tagObject->set_status('active');
+			$rooloClient->addElo($tagObject); 
+		}
+	}
+	$tags = $rooloClient->search('type:Tag AND owneruri:'.$reference->get_uri(true) . ' AND status:active', 'metadata', 'latest');
 	$action = 'update';
 }else{
 
@@ -86,13 +95,7 @@ if ($_REQUEST['action'] == 'addElo'){
 		$reference = $rooloClient->retrieveElo($eloId);
 
 		// get all the tags for the current reference
-		$tags = $rooloClient->search('type:Tag AND owneruri:'.$reference->get_uri(true), 'metadata');
-//		echo generateTags($tags, $tags[0]->get_ownertype(), $reference->get_uri(), '');
-//		$tagsArray = array();
-//		foreach ($tags as $tag){
-//			$tagsArray[] = $tag->get_title();
-//		}
-//		$refernceTagsString = implode(', ', $tagsArray);
+		$tags = $rooloClient->search('type:Tag AND owneruri:'.$reference->get_uri(true) . ' AND status:active', 'metadata', 'latest');
 
 		$action = 'update';
 	}else {
@@ -106,23 +109,6 @@ if ($_REQUEST['action'] == 'addElo'){
 		<script type='text/javascript' src='../../library/js/jquery-ui-1.7.2.custom.min.js'></script>
 		<meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'>
 		
-		<script type='text/javascript'>
-
-			function loadTags(ownerType, ownerUri){
-				$.post('/src/php/ajaxServices/loadTags.php', {'ownerType': ownerType, 'ownerUri': ownerUri}, 
-						function(data){
-							$('#currentTags').html(data);
-						}
-				);
-			}
-
-		
-			$(document).ready(function(ownerType, ownerUri){
-				loadTags('Reference', 'roolo://scy.collide.info/scy-collide-server/174.Reference');
-			});
-			
-		</script>
-				
 		<title>References Page</title>
 		<style>
 			#titleArea { 
@@ -133,7 +119,7 @@ if ($_REQUEST['action'] == 'addElo'){
 			}
 			#anotationArea { 
 	 	 		width:80%;
-				padding:40px 0px 0px 150px; 
+				padding:30px 0px 0px 150px; 
 	 	 		margin-left: auto;
 				margin-right: auto;
 			}
@@ -149,6 +135,15 @@ if ($_REQUEST['action'] == 'addElo'){
 	 	 		margin-left: auto;
 				margin-right: auto;
 			}
+			
+			#currentTags{
+				width:60%;
+				padding:20px 0px 0px 0px; 
+	 	 		margin-left: 18%;
+				margin-right: auto;
+			}
+			
+			
 			#submitArea { 
 	 	 		width:80%;
 				padding:20px 0px 0px 0px; 
@@ -199,6 +194,17 @@ if ($_REQUEST['action'] == 'addElo'){
 		
 		<script type='text/javascript'>
 
+
+			function removeSectionTag(tagUri, linkElem){
+				$.post('/src/php/ajaxServices/removeTag.php', {'tagUri': tagUri}, 
+						function(data){
+							$(linkElem).parent().hide(400);
+						}
+				);
+				
+				return false;
+			}
+		
 			// disable the form submission, if the user accidentaly
 			// hits the enter button, while the cursor is in a textbox. 
 			// There is no need to do this for TextAreas
@@ -260,11 +266,23 @@ if ($_REQUEST['action'] == 'addElo'){
 				<div id='newTags' >
 					<div id='tag'>
 						<font size='4'>Tags</font><br/>
-						<input type="text" id="tags" name="tags" onKeyPress="return disableEnterKey(event)" style="width:600px; height: 100px;"/>
+						<input type="text" id="tags" name="tags" onKeyPress="return disableEnterKey(event)" style="width:600px; "/>
 					</div>
 				</div>
 				
-				<div id='currentTags'></div>
+				<div id='currentTags'>
+				
+					<?php 
+						$tagResult = '';
+						foreach($tags as $tag){
+							
+							$curTagUri = $tag->get_uri();
+							$tagResult .= Tag::generateHtml($curTagUri, $tag->get_title());
+						}
+						echo $tagResult;
+					?>
+				
+				</div>
 
 				
 				<div style='width: 100%; height: 20%; float:left'>
