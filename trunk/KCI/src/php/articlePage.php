@@ -25,7 +25,7 @@ $sectionElos = null;
 
 switch($action){
 	case 'create':
-		break;
+		break; 
 	case 'load':
 		if ($articleUriToLoad == ''){
 			echo "Trying to load, but no eloId found";

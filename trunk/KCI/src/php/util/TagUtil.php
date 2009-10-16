@@ -21,5 +21,5 @@ function generateTags($tagElos, $ownerType, $ownerUri, $prefix){
 	$o .= "    </div>";
 	$o .= "</form>";
 	
-	return $o;
+	return $o; 
 }

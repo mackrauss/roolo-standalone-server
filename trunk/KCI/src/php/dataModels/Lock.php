@@ -8,7 +8,7 @@ class Lock extends Elo {
 		parent::__construct($xml);
 		parent::addMetadata('type', 'Lock');
 	}
-	
+	 
 
 	/**
 	 * @return unknown

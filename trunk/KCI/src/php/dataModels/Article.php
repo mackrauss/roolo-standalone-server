@@ -7,7 +7,7 @@ class Article extends Elo {
 		parent::__construct($xml);
 		parent::addMetadata('type', 'Article');
 	}
-
+ 
 	/**
 	 * @return unknown
 	 */

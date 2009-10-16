@@ -18,7 +18,7 @@ class RooloClient {
 	 * Constructs URLs for all available services provided by Roolo-standalone-server 
 	 *
 	 * @return unknown
-	 */
+	 */ 
 	private function populateServiceUrls(){
 		$this->_rooloServiceUrls = array('retrieveAll' => $this->_rooloUrl . 'RetrieveAll',
 							'retrieveElo' => $this->_rooloUrl . 'RetrieveELO',

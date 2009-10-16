@@ -16,7 +16,7 @@ require_once './header.php';
 //	 	 		margin-left: auto;
 //				margin-right: auto;
 			}
-		
+		 
 	 	 	#categoriesArea {  
 	 	 		width:80%;	 		
 				padding:0% 10px 10px 10px; 

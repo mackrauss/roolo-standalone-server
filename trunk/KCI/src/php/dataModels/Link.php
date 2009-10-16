@@ -9,7 +9,7 @@ class Link extends Elo {
 		parent::__construct($xml);
 		parent::addMetadata('type', 'Link');
 		
-	}
+	} 
 	
 	public function get_dateDeleted (){
 		return parent::getMetadata('datedeleted');

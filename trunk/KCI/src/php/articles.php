@@ -27,7 +27,7 @@ $articles = $roolo->search('type:Article', 'metadata', 'latest');
 	<?php
 	}
 	?>
-	</ul>
+	</ul> 
 </div>
 <div style='text-align: right'>
 	<img src='/src/images/add.png' />

@@ -12,7 +12,7 @@ error_reporting(E_STRICT);
 $rooloClient = new RooloClient();
 
 $tags = array();
-
+ 
 
 if ($_REQUEST['action'] == 'addElo'){
 	// Add the submitted Reference to Roolo

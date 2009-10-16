@@ -11,7 +11,7 @@ class Section extends Elo {
 	public function get_sectionType(){
 		return parent::getMetadata('sectiontype');
 	}
-	
+	 
 	public function set_sectionType($sectionType){
 		parent::addMetadata('sectiontype', $sectionType);
 	}
