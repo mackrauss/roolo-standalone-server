@@ -16,4 +16,4 @@ $_SESSION['username'] = 'Ali Ajellu';
 			<font size='9' onclick="document.location.href='/src/php/index.php'"> Climate Change </font> 
 		</div>
 
-		<div id='main'>
+		<div id='main'> 

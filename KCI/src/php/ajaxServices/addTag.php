@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(); 
 
 require_once dirname(__FILE__).'/../RooloClient.php';
 require_once dirname(__FILE__).'/../dataModels/Tag.php';
@@ -24,7 +24,6 @@ foreach($tags as $curTagStr){
 		echo "DUPLICATE";
 		die(); 
 	}
-	
 	
 	$tag = new Tag();
 	$tag->set_uri('');

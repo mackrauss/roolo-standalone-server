@@ -26,5 +26,5 @@ $matchingTags = $roolo->search($rooloQuery, 'metadata', 'latest');
 
 
 
-//echo "<pre>$rooloQuery</pre>";
+echo "<pre>$rooloQuery</pre>";
 ?>

@@ -9,7 +9,7 @@ class Comment extends Elo {
 		parent::addMetadata('type', 'Comment');
 	}
 	
-	/**
+	/** 
 	 * @return unknown
 	 */
 	public function get_ownerType() {

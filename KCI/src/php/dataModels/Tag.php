@@ -11,7 +11,7 @@ class Tag extends Elo {
 	public function get_status(){
 		return parent::getMetadata('status');
 	}
-	
+	 
 	/**
 	 * @return unknown
 	 */

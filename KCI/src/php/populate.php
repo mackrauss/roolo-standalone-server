@@ -33,7 +33,7 @@ function addReferences(){
 	
 	return $references;
 }
-
+ 
 function deleteAll(){
 	$roolo = new RooloClient();
 	$roolo->deleteAll();

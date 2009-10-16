@@ -7,7 +7,7 @@ require_once dirname(__FILE__).'/XMLSupported.php';
 class Elo implements XMLSupported{
 	
 	
-	public $_id = '';
+	public $_id = ''; 
 	
 	private $_content = '';
 	private $_metadata = array();
