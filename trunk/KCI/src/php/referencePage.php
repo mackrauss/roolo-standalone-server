@@ -2,12 +2,16 @@
 require_once 'ReferenceCategories.php';
 require_once 'RooloClient.php';
 require_once 'dataModels/Reference.php';
+require_once 'util/TagUtil.php';
+
 
 require_once './header.php';
 
 error_reporting(E_STRICT);
 
 $rooloClient = new RooloClient();
+
+$tags = array();
 
 
 if ($_REQUEST['action'] == 'addElo'){
@@ -28,18 +32,19 @@ if ($_REQUEST['action'] == 'addElo'){
 	$reference = new Reference($rooloClient->addElo($submittedReference));
 	$ownerUri = $reference->get_uri();
 
-	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
-	foreach ($tagsArray as $tagTitle){
-		$tagObject = new Tag();
-		$tagObject->set_ownerType("Reference");
-		$tagObject->set_ownerUri($ownerUri);
-		$tagObject->set_title(trim($tagTitle));
-		$tagObject->set_uri('');
-		$tagObject->set_version('');
-		$rooloClient->addElo($tagObject);
-	}
-	
-	$refernceTagsString = implode(', ', $tagsArray);
+	$tags = array_unique(explode (',', trim($_POST["tags"])));
+//	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
+//	foreach ($tagsArray as $tagTitle){
+//		$tagObject = new Tag();
+//		$tagObject->set_ownerType("Reference");
+//		$tagObject->set_ownerUri($ownerUri);
+//		$tagObject->set_title(trim($tagTitle));
+//		$tagObject->set_uri('');
+//		$tagObject->set_version('');
+//		$rooloClient->addElo($tagObject);
+//	}
+//	
+//	$refernceTagsString = implode(', ', $tagsArray);
 	
 	$action = 'update';
 	//$reference = new Reference($submittedReference->generateXml());
@@ -58,18 +63,19 @@ if ($_REQUEST['action'] == 'addElo'){
 	$reference = new Reference($rooloClient->updateElo($newVersionReference));
 	
 	$ownerUri = $reference->get_uri();
-	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
-	foreach ($tagsArray as $tagTitle){
-		$tagObject = new Tag();
-		$tagObject->set_ownerType("Reference");
-		$tagObject->set_ownerUri($ownerUri);
-		$tagObject->set_title(trim($tagTitle));
-		$tagObject->set_uri('');
-		$tagObject->set_version('');
-		$rooloClient->addElo($tagObject);
-	}
-	
-	$refernceTagsString = implode(', ', $tagsArray);
+	$tags = array_unique(explode (',', trim($_POST["tags"])));
+//	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
+//	foreach ($tagsArray as $tagTitle){
+//		$tagObject = new Tag();
+//		$tagObject->set_ownerType("Reference");
+//		$tagObject->set_ownerUri($ownerUri);
+//		$tagObject->set_title(trim($tagTitle));
+//		$tagObject->set_uri('');
+//		$tagObject->set_version('');
+//		$rooloClient->addElo($tagObject);
+//	}
+//	
+//	$refernceTagsString = implode(', ', $tagsArray);
 	$action = 'update';
 }else{
 
@@ -81,11 +87,12 @@ if ($_REQUEST['action'] == 'addElo'){
 
 		// get all the tags for the current reference
 		$tags = $rooloClient->search('type:Tag AND owneruri:'.$reference->get_uri(true), 'metadata');
-		$tagsArray = array();
-		foreach ($tags as $tag){
-			$tagsArray[] = $tag->get_title();
-		}
-		$refernceTagsString = implode(', ', $tagsArray);
+//		echo generateTags($tags, $tags[0]->get_ownertype(), $reference->get_uri(), '');
+//		$tagsArray = array();
+//		foreach ($tags as $tag){
+//			$tagsArray[] = $tag->get_title();
+//		}
+//		$refernceTagsString = implode(', ', $tagsArray);
 
 		$action = 'update';
 	}else {
@@ -98,6 +105,24 @@ if ($_REQUEST['action'] == 'addElo'){
 		<script type='text/javascript' src='../../library/js/jquery-1.3.2.min.js'></script>
 		<script type='text/javascript' src='../../library/js/jquery-ui-1.7.2.custom.min.js'></script>
 		<meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'>
+		
+		<script type='text/javascript'>
+
+			function loadTags(ownerType, ownerUri){
+				$.post('/src/php/ajaxServices/loadTags.php', {'ownerType': ownerType, 'ownerUri': ownerUri}, 
+						function(data){
+							$('#currentTags').html(data);
+						}
+				);
+			}
+
+		
+			$(document).ready(function(ownerType, ownerUri){
+				loadTags('Reference', 'roolo://scy.collide.info/scy-collide-server/174.Reference');
+			});
+			
+		</script>
+				
 		<title>References Page</title>
 		<style>
 			#titleArea { 
@@ -118,7 +143,7 @@ if ($_REQUEST['action'] == 'addElo'){
 	 	 		margin-left: auto;
 				margin-right: auto;
 			}
-			#tagArea { 
+			#newTags { 
 	 	 		width:80%;
 				padding:20px 0px 0px 150px; 
 	 	 		margin-left: auto;
@@ -231,13 +256,16 @@ if ($_REQUEST['action'] == 'addElo'){
 					<font size='4'>Citation</font> <br/>
 					<textarea id="citationText" name="citationText" rows='10' cols='75' id='citation'><?= $reference->get_citation() ?></textarea>
 				</div>
-
-				<div id='tagArea' >
+				
+				<div id='newTags' >
 					<div id='tag'>
 						<font size='4'>Tags</font><br/>
-						<input type="text" id="tags" name="tags" onKeyPress="return disableEnterKey(event)" style="width:600px; height: 100px;" value="<?= $refernceTagsString?>" />
+						<input type="text" id="tags" name="tags" onKeyPress="return disableEnterKey(event)" style="width:600px; height: 100px;"/>
 					</div>
 				</div>
+				
+				<div id='currentTags'></div>
+
 				
 				<div style='width: 100%; height: 20%; float:left'>
 					<input type="hidden" id="action" name="action" value="<?= $action?>" />
