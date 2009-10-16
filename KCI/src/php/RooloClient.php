@@ -149,6 +149,8 @@ class RooloClient {
 		
 		$searchUrl = $this->_rooloServiceUrls['search'] . '?query=' . $query . '&resultType=' . $resultType . '&searchScope=' . $searchScope;
 		
+//		echo $searchUrl . "<br/>";
+
 		$xmlResults = file_get_contents($searchUrl);
 
 		
@@ -223,7 +225,7 @@ class RooloClient {
 		$type = $type[0];
 		$type = $type->innertext;
 
-		
+		include_once(dirname(__FILE__).'/dataModels/'.$type.'.php');
 		$elo = new $type($eloXml);
 //		$eloUri = $elo->get_uri();
 //		$eloUri = str_replace($this->_uriDomain, '', $eloUri);
