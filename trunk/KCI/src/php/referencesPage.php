@@ -85,11 +85,14 @@ require_once './header.php';
 				}else{
 					location = "http://localhost/src/php/referencePage.php?id=" + id;
 				}
-//				
-//				$.get('http://localhost/KCI/src/php/search.php', {id: id },
-//					function(addedCitationURI){
-//					}
-//				 );
+			}
+
+			function changeBackgroundColor(selectedRow){
+				$(selectedRow).hover(function (){
+					$(selectedRow).css('background-color', '#e6ffe7');
+				},function (){
+					$(selectedRow).css('background-color', '#f9fffe');
+				});
 			}
 
 			$(document).ready(function(){
@@ -108,12 +111,6 @@ require_once './header.php';
 					return false;
 				});
 
-
-				$('.referenceTitle').hover(function (){
-						$(this).css('background-color', '#e6ffe7');
-					},function (){
-						$(this).css('background-color', '#f9fffe');
-						});
 			});
 		</script>
 	</head>
@@ -146,25 +143,26 @@ require_once './header.php';
 				$searchStr = "type:Reference"; 
 				$rooloClient = new RooloClient();
 				$references = $rooloClient->search($searchStr, 'elo', 'latest');
+				$references = array_reverse($references);
 
 				//Makes html references title to send back to client
 				$oddColor = '#FBFBF7';
 				$evenColor = '#a8ff7f';
 				
-			    echo "<div style='margin-top: 3%; margin-bottom: 8%'> <span style='width: 60%; float:left; font-size: large'> References </span> " . 
+			    echo "<div style='margin-top: 3%; margin-bottom: 8%'> <span style='width: 60%; float:left; font-size: large'> References </span> <span style='width: 30%; float:right; font-size: large'>Last Modified On </span> " . 
 			    			" </div>\n";
 				
 				$result = "";
 				foreach($references as $reference){
 					$refID = $reference->get_id();
 					$refCategory = $reference->get_category();
-					$dateLastModified = date('l g:i a - M t' , $reference->get_datelastmodified()/1000); 
+					$dateLastModified = date('l g:i a - F jS' , $reference->get_datelastmodified()/1000); 
 					
-					$result .= "<div id='".$refID."' class='".$refCategory." referenceTitle' onClick='goToRefPage(\"".$refID."\")' style='margin: 2% 0 2% 0; padding:5px 0 5px 0;'>\n\t";
-					$result .= $reference->get_title();
-					$result .= "<i> <font size='2'>" . $dateLastModified . " </font> </i>";
+					$result .= "<div id='".$refID."' class='".$refCategory." referenceTitle' style='height:7px; padding:2% 0% 2% 2%;' onMouseOver='changeBackgroundColor(this)' onClick='goToRefPage(\"".$refID."\")'>";
+					$result .= "<div style='width: 49%; float: left'>";
+					$result .= $reference->get_title() . "</div>";
+					$result .= "<div style='width: 30%; float: right'> " . $dateLastModified . "  </div>";
 					$result .= "</div>\n";
-					//list($oddColor, $evenColor) = array($evenColor, $oddColor);
 				}
 				echo $result;
 			?>
