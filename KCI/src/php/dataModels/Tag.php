@@ -63,7 +63,7 @@ class Tag extends Elo {
 		$divId = $tagUri.'_tag_div';
 		
 		$o = '';
-		$o .= "<div name='$divId' id='$divId' class='tag' style='float:left; vertical-align: middle;'>";
+		$o .= "<div name='$divId' id='$divId' class='tag' style='float:left; vertical-align: middle; margin-bottom: 5px'>";
 		$o .= $tagTitle."&nbsp;<img src='/src/images/cross.png' width='10px' height='10px' onclick=\"return removeSectionTag('$tagUri', this)\" />";
 		$o .= " </div>\n";
 		
