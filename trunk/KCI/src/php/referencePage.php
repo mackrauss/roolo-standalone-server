@@ -1,11 +1,11 @@
 <?php
+session_start();
+require_once './header.php';
 require_once 'ReferenceCategories.php';
 require_once 'RooloClient.php';
 require_once 'dataModels/Reference.php';
 require_once 'util/TagUtil.php';
 
-
-require_once './header.php';
 
 error_reporting(E_STRICT);
 

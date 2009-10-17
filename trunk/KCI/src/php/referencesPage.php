@@ -1,8 +1,9 @@
 <?php
+session_start();
+require_once './header.php';
 require_once 'ReferenceCategories.php';
 require_once '../php/RooloClient.php';
 
-require_once './header.php';
 ?>
 		
 		<script type='text/javascript' src='../../library/js/jquery-1.3.2.min.js'></script>
