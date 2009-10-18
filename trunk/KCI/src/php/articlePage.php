@@ -2,10 +2,11 @@
 include_once 'header.php';
 ?>
 <?php
-require_once 'RooloClient.php';
-require_once 'dataModels/Article.php';
-require_once 'dataModels/Section.php';
-require_once 'util/TagUtil.php';
+require_once dirname(__FILE__).'/RooloClient.php';
+require_once dirname(__FILE__).'/dataModels/Article.php';
+require_once dirname(__FILE__).'/dataModels/Section.php';
+require_once dirname(__FILE__).'/util/TagUtil.php';
+require_once dirname(__FILE__).'/util/ReferenceUtil.php';
 
 $action = $_REQUEST['action'];
 $articleUriToLoad = isset($_REQUEST['articleUri']) ? $_REQUEST['articleUri'] : '' ;
@@ -40,6 +41,8 @@ switch($action){
 		$sectionElos = retrieveSectionElos($article, $roolo);
 		$sectionTagElos = retrieveSectionTagElos($sectionElos, $roolo);
 		$commentElos = retrieveCommentElos($article, $roolo);
+		$referenceElos = retrieveReferenceElos($article, $roolo);
+		
 		break;
 	case 'createArticle':
 		$article = new Article();
@@ -73,6 +76,7 @@ switch($action){
 //		$sectionTagElos = array();
 		$sectionTagElos = retrieveSectionTagElos($sectionElos, $roolo);
 		$commentElos = retrieveCommentElos($article, $roolo);
+		$referenceElos = retrieveReferenceElos($article, $roolo);
 		
 		break;
 	case 'saveArticle':
@@ -94,6 +98,8 @@ switch($action){
 		$sectionElos = retrieveSectionElos($article, $roolo);
 		$sectionTagElos = retrieveSectionTagElos($sectionElos, $roolo);
 		$commentElos = retrieveCommentElos($article, $roolo);
+		$referenceElos = retrieveReferenceElos($article, $roolo);
+		
 		break;
 	default:
 		echo "NO ACTION FOUND";
@@ -147,6 +153,10 @@ switch($action){
 	
 	editMode = false;
 	articleUri = '<?= $articleUri?>';
+
+	String.prototype.trim = function() { 
+		return this.replace(/^\s+|\s+$/, ''); 
+	};
 
 	function startSectionEdit(sectionCode){
 		if (editMode){
@@ -248,6 +258,52 @@ switch($action){
 		);
 	}
 
+	function searchReferences(){
+		var query = $('#refsearch_textbox').val();
+
+		$.post('/src/php/ajaxServices/searchReferences.php', {'query': query}, 
+				function(data){
+					$('#refsearch_results_div').html(data);
+					$('#refsearch_textbox').val('');
+				}
+		);
+	}
+
+	function addReferenceToArticle(refUri){
+		$.post('/src/php/ajaxServices/addReferenceToArticle.php', {'articleUri': articleUri, 'refUri': refUri}, 
+				function(data){
+					data = data.trim();
+					
+					if (data == 'DUPLICATE'){
+						alert('The reference you selected is already attached to this article');
+					}else{
+						$('#existing_refs_div').append(data);
+					}
+				}
+		);
+	}
+
+	function openCreateReferenceWindow(){
+		popupWin = window.open('/src/php/referencePage.php',
+				 'open_window',
+				 '');
+	}
+
+	function removeReferenceFromArticle(refUri){
+		console.log('in remove reference');
+		$.post('/src/php/ajaxServices/removeReferenceFromArticle.php', {'refUri': refUri, 'articleUri': articleUri}, 
+				function(data){
+					console.log('returned: ' + data);
+					data = data.trim();
+					
+					if (data == 'SUCCESS'){
+						divToHide = document.getElementById(refUri+'_link_div');
+						console.log('hiding ' + refUri+'_link_div');
+						$(divToHide).remove();
+					}
+				}
+		);
+	}
 </script>
 <a href='/src/php/articles.php' /> <?= htmlspecialchars('< Back to Artilces')?></a>
 <h2>Article Page</h2>
@@ -276,7 +332,7 @@ if ($action != 'create'){
 		echo generateSection($sectionCode, $sectionTitle, $section->get_uri(), $section->getContent());
 		echo generateTags($sectionTagElos[$sectionCode], 'Section', $section->get_uri(), $sectionCode); 
 	}
-	 
+	
 	foreach ($uncatSections as $sectionCode){
 		$sectionTitle = $sections[$sectionCode];
 		$section = $sectionElos[$sectionCode];
@@ -286,6 +342,15 @@ if ($action != 'create'){
 	}
 ?>
 <h3>References</h3>
+<div id='existing_refs_div' name='existing_refs_div'>
+<?php 
+foreach($referenceElos as $referenceElo){
+	echo generateAttachedReference($referenceElo);
+}
+?>
+</div>
+
+<input type='button' class='SmallButton' value='Create New Reference' onclick='openCreateReferenceWindow()' />
 <h4>Search for References</h4>
 <form>
 	<input type='text' name='refsearch_textbox' id='refsearch_textbox' value='' size='20' />
@@ -377,6 +442,25 @@ function retrieveTagsForSection($sectionUri, $roolo){
 	return $sectionTags;
 }
 
+function retrieveReferenceElos($article, $roolo){
+	$articleUriEscaped = $roolo->escapeSearchTerm($article->get_uri());
+	$linksQuery = "type:Link AND uri1:$articleUriEscaped";
+	$links = $roolo->search($linksQuery, 'metadata', 'latest');
+
+	$references = array();
+	foreach($links as $link){
+		$refUri = $roolo->escapeSearchTerm($link->get_uri2());
+		$query = "type:Reference AND uri:$refUri";
+		$results = $roolo->search($query, 'elo', 'latest');
+		
+		$references[] = $results[0];
+	}
+//	echo "<pre>";
+//	print_r($references);
+//	echo "</pre>";	
+	
+	return $references;
+}
 
 ?>
 
