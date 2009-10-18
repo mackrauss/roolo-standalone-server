@@ -21,8 +21,7 @@ foreach($tags as $curTagStr){
 	$query = "type:Tag AND owneruri:$ownerUriForSearch AND title:$curTagStr AND status:active";
 	$results = $roolo->search($query, 'metadata', 'latest');
 	if (sizeof($results) != 0){
-		echo "DUPLICATE";
-		die(); 
+		continue; 
 	}
 	
 	$tag = new Tag();
