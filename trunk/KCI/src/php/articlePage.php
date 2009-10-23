@@ -327,7 +327,7 @@ if ($action != 'create'){
 <?php 
 	foreach ($scienceSections as $sectionCode){
 		$sectionTitle = $sections[$sectionCode];
-		$section = $sectionElos[$sectionCode];
+		$section = $sectionElos[$sectionCode]; 
 		
 		echo generateSection($sectionCode, $sectionTitle, $section->get_uri(), $section->getContent());
 		echo generateTags($sectionTagElos[$sectionCode], 'Section', $section->get_uri(), $sectionCode); 
