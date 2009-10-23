@@ -16,7 +16,7 @@ class Article extends Elo {
 	}
 	
 	
-	/**
+	/** 
 	 * @param unknown_type $_desc
 	 */
 	public function set_desc($_desc) {
