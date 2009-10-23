@@ -15,7 +15,7 @@ $articles = $roolo->search('type:Article', 'metadata', 'latest');
 ?>
 
 <h2>Articles</h2>
-<div>
+<div> 
 	<ul>
 	<?php 
 	foreach($articles as $article){
