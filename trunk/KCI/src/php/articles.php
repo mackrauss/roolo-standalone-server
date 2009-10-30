@@ -12,9 +12,32 @@ require_once 'dataModels/Elo.php';
  */
 $roolo = new RooloClient();
 $articles = $roolo->search('type:Article', 'metadata', 'latest');
+$articles = sortArticles($articles);
+
+//$s = array('3' => 'three', '1' => 'one', '2' => 'two');
+//ksort($s);
+//foreach($s as $curS){
+//	echo $curS;
+//}
+
+function sortArticles($articles){
+	$dates = array();
+	$midArticles = array();
+	foreach($articles as $article){
+		$midArticles[$article->get_datelastmodified()] = $article;
+	}
+	
+	krsort($midArticles);
+	$sortedArticles = array();
+	foreach($midArticles as $article){
+		$sortedArticles[] = $article;
+	}
+	
+	return $sortedArticles;
+}
 ?>
 
-<h2>Articles</h2>
+<h2>Climate Change Issues</h2>
 <div> 
 	<ul>
 	<?php 

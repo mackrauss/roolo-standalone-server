@@ -158,31 +158,77 @@ switch($action){
 		return this.replace(/^\s+|\s+$/, ''); 
 	};
 
-	function startSectionEdit(sectionCode){
+	function requestSectionEdit(sectionCode, sectionUri){
+		
 		if (editMode){
 			alert('You may only edit one section at a time. Please finish (or cancel) editing other section.');
 		}else{
-			editLink = $('#'+sectionCode+'_edit_link');
-			editLink.hide(400);
-			
-			contentDiv = $('#'+sectionCode+'_content'); 
-			contentDiv.hide(400);
-
-			textarea = $('#'+sectionCode+'_textarea');
-			textarea.html(contentDiv.html());
-			
-			editDiv = $('#'+sectionCode+'_edit_div');
-			editDiv.show(400); 
-			
-			editMode = true;
+			console.log('calling jsbon');
+			$.getJSON('/src/php/ajaxServices/isLocked.php', {'uri': sectionUri}, 
+				function(data){
+					// section is not locked, so allow editing
+					if (data.isLocked == '0'){
+						// lock the section
+						$.post('/src/php/ajaxServices/lockElo.php', {'ownerUri': sectionUri, 'ownerType': 'Section'}, 
+							function(data){
+								startSectionEdit(sectionCode, sectionUri);
+							}
+						);
+					}else{
+						releaseLocks = confirm('section is locked by ' + data.lockedBy + '. Would you like to release the lock?');
+						if (releaseLocks){
+							$.post('/src/php/ajaxServices/unlockElo.php', {'ownerUri': sectionUri}, 
+								function(data){
+									console.log('tried to unlock elo: ' + data);
+									$.post('/src/php/ajaxServices/lockElo.php', {'ownerUri': sectionUri, 'ownerType': 'Section'}, 
+										function(data){
+											startSectionEdit(sectionCode, sectionUri);
+										}
+									);
+								}
+							);
+						}
+					}
+				}
+			);
 		}
 	}
 
-	function cancelSectionEdit(sectionCode){
-		$('#'+sectionCode+'_edit_div').hide(400);
-		$('#'+sectionCode+'_content').show(400);
-		$('#'+sectionCode+'_edit_link').show(400);
-		editMode = false;
+	function startSectionEdit(sectionCode, sectionUri){
+		$.post('/src/php/ajaxServices/getSectionContent.php', {'uri': sectionUri}, 
+			function(sectionContent){
+				sectionContent = sectionContent.trim();
+
+				editLink = $('#'+sectionCode+'_edit_link');
+				editLink.hide(400);
+				
+				contentDiv = $('#'+sectionCode+'_content');
+				contentDiv.html(sectionContent); 
+				contentDiv.hide(400);
+
+				textarea = $('#'+sectionCode+'_textarea');
+//				textarea.html(contentDiv.html());
+				textarea.html(sectionContent);
+				
+				editDiv = $('#'+sectionCode+'_edit_div');
+				editDiv.show(400); 
+				
+				editMode = true;
+			}
+		);
+		
+	}
+
+	function cancelSectionEdit(sectionCode, sectionUri){
+		$.post('/src/php/ajaxServices/unlockElo.php', {'ownerUri': sectionUri}, 
+				function(data){
+					$('#'+sectionCode+'_edit_div').hide(400);
+					$('#'+sectionCode+'_content').show(400);
+					$('#'+sectionCode+'_edit_link').show(400);
+					editMode = false;
+				}
+		);
+		
 	}
 
 	function saveSectionEdit(sectionCode){
@@ -202,6 +248,11 @@ switch($action){
 				editLink.show(400);
 				
 				editMode = false;
+
+				$.post('/src/php/ajaxServices/unlockElo.php', {'ownerUri': sectionUri}, 
+						function(data){
+						}
+				);
 			}
 		);
 	}
@@ -306,7 +357,7 @@ switch($action){
 	}
 </script>
 <a href='/src/php/articles.php' /> <?= htmlspecialchars('< Back to Artilces')?></a>
-<h2>Article Page</h2>
+<h2>Climate Change Issue Page</h2>
 
 
 <form action='articlePage.php' method='GET' onsubmit='return articleSaveHandler();'>
@@ -397,14 +448,15 @@ function generateSection($sectionCode, $sectionTitle, $sectionUri, $content){
 	
 	
 	$o .= "<form name='$formId' id='$formId'>";
-	$o .= "    <span style='font-size:x-large;'>$sectionTitle</span> "; 
-	$o .= "    <span name='$editLinkId' id='$editLinkId' style='font-size: small; text-decoration: underline;' onclick=\"startSectionEdit('$sectionCode');\">edit</span>";
+	$o .= "    <span style='font-size:x-large;'>$sectionTitle</span> ";
+	$o .= "    <br/>"; 
+	$o .= "    <span name='$editLinkId' id='$editLinkId' style='font-size: small; text-decoration: underline;' onclick=\"requestSectionEdit('$sectionCode', '$sectionUri');\">edit</span>";
 	$o .= "    <br/>";
 	$o .= "    <div name='$contentDivId' id='$contentDivId' style='width: 80%;'>$content</div>";
 	$o .= "    <div name='$editDivId' id='$editDivId' style='display:none;'>";
 	$o .= "        <textarea name='$textareaId' id='$textareaId' rows='10' cols='100'></textarea> <br/>";
 	$o .= "        <input type='button' class='SmallButton' value='Save' onclick=\"saveSectionEdit('$sectionCode');\" />";
-	$o .= "        <span style='font-size: small; text-decoration: underline;' onclick=\"cancelSectionEdit('$sectionCode');\">cancel</span>";
+	$o .= "        <span style='font-size: small; text-decoration: underline;' onclick=\"cancelSectionEdit('$sectionCode', '$sectionUri');\">cancel</span>";
 	$o .= "        <input type='hidden' name='$sectionUriId' id='$sectionUriId' value='$sectionUri' />";
 	$o .= "    </div>";
 	$o .= "    ";
