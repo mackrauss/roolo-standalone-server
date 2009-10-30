@@ -38,11 +38,15 @@ class Comment extends Elo {
 	}
 	
 	public function generateHtml(){
+		$roolo = new RooloClient();
+		
+		$commentText = $roolo->decodeContent($this->get_title());
+		
 		$o = '';
 		
 		$o .= "<div style='margin-bottom: 10px;'>";
 		$o .= '<span style="font-size:small"> By '.htmlspecialchars($this->get_author()).' on '.date('F jS', $this->get_dateCreated()/1000). ' </span><br/>';
-		$o .= htmlspecialchars($this->get_title());
+		$o .= $commandText;
 		$o .= '</div>';
 		return $o;
 	}
