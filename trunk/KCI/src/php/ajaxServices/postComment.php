@@ -9,7 +9,7 @@ $roolo = new RooloClient();
 $commentText = $_REQUEST['commentText']; 
 $ownerUri = $_REQUEST['ownerUri'];
 $ownerType = $_REQUEST['ownerType'];
-echo $commentText;
+//echo $commentText;
 
 
 $comment = new Comment();
