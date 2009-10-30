@@ -40,7 +40,8 @@ class Comment extends Elo {
 	public function generateHtml(){
 		$roolo = new RooloClient();
 		
-		$commentText = $roolo->decodeContent($this->get_title());
+//		$commentText = $roolo->decodeContent($this->get_title());
+		$commentText = $this->get_title();
 		
 		$o = '';
 		

@@ -5,7 +5,8 @@ require_once dirname(__FILE__).'/../RooloClient.php';
 require_once dirname(__FILE__).'/../dataModels/Comment.php';
 $roolo = new RooloClient();
 
-$commentText = $roolo->encodeContent($_REQUEST['commentText']); 
+//$commentText = $roolo->encodeContent($_REQUEST['commentText']);
+$commentText = $_REQUEST['commentText']; 
 $ownerUri = $_REQUEST['ownerUri'];
 $ownerType = $_REQUEST['ownerType'];
 echo $commentText;
