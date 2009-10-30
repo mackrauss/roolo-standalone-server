@@ -267,8 +267,8 @@ class RooloClient {
 	}
 	
 	public function escapeContent($content){
+		$content = htmlspecialchars($content);
 		$content = str_replace('&', '|||', $content);
-//		$content = html_entity_decode($content);
 		return $content;
 	}
 
