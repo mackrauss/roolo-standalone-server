@@ -228,7 +228,6 @@ switch($action){
 					editMode = false;
 				}
 		);
-		
 	}
 
 	function saveSectionEdit(sectionCode){

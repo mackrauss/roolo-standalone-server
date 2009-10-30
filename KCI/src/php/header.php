@@ -5,8 +5,6 @@ session_start();
 <html>
 	<head>
 		<script type="text/javascript" src="/src/js/jquery-1.3.2.min.js"></script>
-		<script type="text/javascript" src="/src/tinymce/jscripts/tiny_mce/jquery.tinymce.js"></script>
-	
 		<link rel="stylesheet" type="text/css" href="/src/css/main.css" />
 	</head>
 
