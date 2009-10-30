@@ -3,12 +3,13 @@ session_start();
 
 require_once dirname(__FILE__).'/../RooloClient.php';
 require_once dirname(__FILE__).'/../dataModels/Comment.php';
+$roolo = new RooloClient();
 
-$commentText = $_REQUEST['commentText']; 
+$commentText = $roolo->escapeContent($_REQUEST['commentText']); 
 $ownerUri = $_REQUEST['ownerUri'];
 $ownerType = $_REQUEST['ownerType'];
 
-$roolo = new RooloClient();
+
 
 $comment = new Comment();
 $comment->set_uri('');
