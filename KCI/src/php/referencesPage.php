@@ -128,7 +128,7 @@ require_once '../php/RooloClient.php';
 					$refCatsList = $referenceCategories->getReferenceCategories(); 
 					$result = "<ui>";
 					for ($i = 0; $i < sizeof($refCatsList); $i++){
-						$result .= "<li> <font size='2'>"."<a id='\'" . $refCatsList[$i] . "\'' href='' onClick=''>".$refCatsList[$i]."</a> </font></li>";		
+						$result .= "<li> <font size='2'>"."<a id='" . $refCatsList[$i] . "' href='' onClick=''>".$refCatsList[$i]."</a> </font></li>";		
 					}
 					$result .= "</ui>";
 					echo $result;
@@ -159,7 +159,7 @@ require_once '../php/RooloClient.php';
 					$refCategory = $reference->get_category();
 					$dateLastModified = date('l g:i a - F jS' , $reference->get_datelastmodified()/1000); 
 					
-					$result .= "<div id='".$refID."' class='\'" . $refCategory . "\' referenceTitle' style='height:7px; padding:2% 0% 2% 2%;' onMouseOver='changeBackgroundColor(this)' onClick='goToRefPage(\"".$refID."\")'>";
+					$result .= "<div id='".$refID."' class='" . $refCategory . " referenceTitle' style='height:7px; padding:2% 0% 2% 2%;' onMouseOver='changeBackgroundColor(this)' onClick='goToRefPage(\"".$refID."\")'>";
 					$result .= "<div style='width: 49%; float: left'>";
 					$result .= $reference->get_title() . "</div>";
 					$result .= "<div style='width: 30%; float: right'> " . $dateLastModified . "  </div>";
