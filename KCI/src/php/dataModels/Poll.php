@@ -1,14 +1,20 @@
 <?php
-
 require_once dirname(__FILE__).'/Elo.php';
 
-class Lock extends Elo {
-	
+class Poll extends Elo {
 	public function __construct($xml=null){
 		parent::__construct($xml);
-		parent::addMetadata('type', 'Lock');
+		parent::addMetadata('type', 'Poll');
 	}
-
+	
+	public function set_choice($choice){
+		parent::addMetadata('choice', $choice);
+	}
+	
+	public function get_choice(){
+		return parent::getMetadata('choice');
+	}
+	
 	/**
 	 * @return unknown
 	 */
@@ -36,6 +42,5 @@ class Lock extends Elo {
 	public function set_ownerUri($_ownerUri) {
 		parent::addMetadata('owneruri', $_ownerUri);
 	}
+	
 }
-
-?>

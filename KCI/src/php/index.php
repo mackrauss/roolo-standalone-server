@@ -1,7 +1,9 @@
 <?php 
-
-
 require_once './header.php';
+
+if (isset($_REQUEST['username'])){
+	$_SESSION['username'] = $_REQUEST['username'];	
+}
 
 ?>
  
