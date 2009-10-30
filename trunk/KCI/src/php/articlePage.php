@@ -163,7 +163,7 @@ switch($action){
 		if (editMode){
 			alert('You may only edit one section at a time. Please finish (or cancel) editing other section.');
 		}else{
-			console.log('calling jsbon');
+//			console.log('calling jsbon');
 			$.getJSON('/src/php/ajaxServices/isLocked.php', {'uri': sectionUri}, 
 				function(data){
 					// section is not locked, so allow editing
@@ -179,7 +179,7 @@ switch($action){
 						if (releaseLocks){
 							$.post('/src/php/ajaxServices/unlockElo.php', {'ownerUri': sectionUri}, 
 								function(data){
-									console.log('tried to unlock elo: ' + data);
+//									console.log('tried to unlock elo: ' + data);
 									$.post('/src/php/ajaxServices/lockElo.php', {'ownerUri': sectionUri, 'ownerType': 'Section'}, 
 										function(data){
 											startSectionEdit(sectionCode, sectionUri);
@@ -340,15 +340,15 @@ switch($action){
 	}
 
 	function removeReferenceFromArticle(refUri){
-		console.log('in remove reference');
+//		console.log('in remove reference');
 		$.post('/src/php/ajaxServices/removeReferenceFromArticle.php', {'refUri': refUri, 'articleUri': articleUri}, 
 				function(data){
-					console.log('returned: ' + data);
+//					console.log('returned: ' + data);
 					data = data.trim();
 					
 					if (data == 'SUCCESS'){
 						divToHide = document.getElementById(refUri+'_link_div');
-						console.log('hiding ' + refUri+'_link_div');
+//						console.log('hiding ' + refUri+'_link_div');
 						$(divToHide).remove();
 					}
 				}
