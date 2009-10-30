@@ -207,8 +207,8 @@ switch($action){
 				contentDiv.hide(400);
 
 				textarea = $('#'+sectionCode+'_textarea');
-//				textarea.html(contentDiv.html());
-				textarea.html(sectionContent);
+				textarea.html(contentDiv.html());
+//				textarea.html(sectionContent);
 				
 				editDiv = $('#'+sectionCode+'_edit_div');
 				editDiv.show(400); 
