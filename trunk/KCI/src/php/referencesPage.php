@@ -82,9 +82,9 @@ require_once '../php/RooloClient.php';
 			//This function is executed when the click on one of reference title 	
 			function goToRefPage(id) {
 				if (id == ""){
-					location = "http://localhost/src/php/referencePage.php";
+					location = "/src/php/referencePage.php";
 				}else{
-					location = "http://localhost/src/php/referencePage.php?id=" + id;
+					location = "/src/php/referencePage.php?id=" + id;
 				}
 			}
 
@@ -128,7 +128,7 @@ require_once '../php/RooloClient.php';
 					$refCatsList = $referenceCategories->getReferenceCategories(); 
 					$result = "<ui>";
 					for ($i = 0; $i < sizeof($refCatsList); $i++){
-						$result .= "<li>"."<a id='".$refCatsList[$i]."' href='' onClick=''>".$refCatsList[$i]."</a></li>";		
+						$result .= "<li> <font size='2'>"."<a id='\'" . $refCatsList[$i] . "\'' href='' onClick=''>".$refCatsList[$i]."</a> </font></li>";		
 					}
 					$result .= "</ui>";
 					echo $result;
@@ -143,7 +143,7 @@ require_once '../php/RooloClient.php';
 			<?php 
 				$searchStr = "type:Reference"; 
 				$rooloClient = new RooloClient();
-				$references = $rooloClient->search($searchStr, 'elo', 'latest');
+				$references = $rooloClient->search($searchStr, 'metadata', 'latest');
 				$references = array_reverse($references);
 
 				//Makes html references title to send back to client
@@ -159,7 +159,7 @@ require_once '../php/RooloClient.php';
 					$refCategory = $reference->get_category();
 					$dateLastModified = date('l g:i a - F jS' , $reference->get_datelastmodified()/1000); 
 					
-					$result .= "<div id='".$refID."' class='".$refCategory." referenceTitle' style='height:7px; padding:2% 0% 2% 2%;' onMouseOver='changeBackgroundColor(this)' onClick='goToRefPage(\"".$refID."\")'>";
+					$result .= "<div id='".$refID."' class='\'" . $refCategory . "\' referenceTitle' style='height:7px; padding:2% 0% 2% 2%;' onMouseOver='changeBackgroundColor(this)' onClick='goToRefPage(\"".$refID."\")'>";
 					$result .= "<div style='width: 49%; float: left'>";
 					$result .= $reference->get_title() . "</div>";
 					$result .= "<div style='width: 30%; float: right'> " . $dateLastModified . "  </div>";
