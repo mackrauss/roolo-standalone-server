@@ -265,6 +265,12 @@ class RooloClient {
 		
 		return $term;
 	}
+	
+	public function escapeContent($content){
+		$content = str_replace('|||', '&', $content);
+		$content = html_entity_decode($content);
+		return $content;
+	}
 
 }
 
