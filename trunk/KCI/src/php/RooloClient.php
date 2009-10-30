@@ -274,7 +274,7 @@ class RooloClient {
 	
 	public function decodeContent($content){
 		$content = str_replace('|||', '&', $content);
-		$content = htmlentities($content);
+		$content = htmlspecialchars_decode($content);
 		
 		return $content;
 	}
