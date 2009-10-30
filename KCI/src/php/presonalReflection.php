@@ -72,7 +72,7 @@ echo "<h2>" . $username . "	- Personal Reflection Page</h2>";
 	function loadReflection(reflectionUri){
 		$.post('/src/php/ajaxServices/createPersonalReflection.php', {'action': 'loadReflection', 'reflectionUri': reflectionUri}, 
 				function(data){
-					console.log(data);
+//					console.log(data);
 					$('#curReflection').html(data);
 					$('#curReflection').show();
 				}
