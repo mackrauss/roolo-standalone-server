@@ -207,8 +207,8 @@ switch($action){
 				contentDiv.hide(400);
 
 				textarea = $('#'+sectionCode+'_textarea');
-				console.log('contentDiv: ' + contentDiv.html());
-				console.log('sectionContent: ' + sectionContent);
+//				console.log('contentDiv: ' + contentDiv.html());
+//				console.log('sectionContent: ' + sectionContent);
 //				textarea.html(contentDiv.html());
 				textarea.html(sectionContent);
 				textarea.val(sectionContent);
