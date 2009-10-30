@@ -180,9 +180,9 @@ function createPersonalReflection($reflection=null, $reflectionSectionMap=null, 
 	
 	$output .= "<h3>Personal Contribution</h3>";
 	$output .= "<h4>Nature of Personal Contribution</h4>";
-	$output .= "<input type='radio' class='personalContribChoice' value='1' ".($personalContribChoice == '1' ? 'checked': '')."/> was I adding information to the page? <br/>";
-	$output .= "<input type='radio' class='personalContribChoice' value='2' ".($personalContribChoice == '2' ? 'checked': '')."/> was I analyzing information on the page and following throught? <br/>";
-	$output .= "<input type='radio' class='personalContribChoice' value='3' ".($personalContribChoice == '3' ? 'checked': '')."/> was I summarizing <br/>";
+	$output .= "<input type='radio' name='personalContribChoice' value='1' ".($personalContribChoice == '1' ? 'checked': '')."/> was I adding information to the page? <br/>";
+	$output .= "<input type='radio' name='personalContribChoice' value='2' ".($personalContribChoice == '2' ? 'checked': '')."/> was I analyzing information on the page and following throught? <br/>";
+	$output .= "<input type='radio' name='personalContribChoice' value='3' ".($personalContribChoice == '3' ? 'checked': '')."/> was I summarizing <br/>";
 	$output .= "<br/>";
 	$output .= "Include an example of your contribution that highlights your choice<br/>";
 	$output .= "<textarea id='personalContribTextarea' name='personalContribTextarea' cols='60' rows='4'>".$personalContribSectionContent."</textarea>";
@@ -190,9 +190,9 @@ function createPersonalReflection($reflection=null, $reflectionSectionMap=null, 
 	
 	$output .= "<h3>Group Contribution</h3>";
 	$output .= "<h4>Nature of Contribution to the Group</h4>";
-	$output .= "<input type='radio' class='groupContribChoice' value='1' ".($groupContribChoice == '1' ? 'checked': '')."/> Addition <br/>";
-	$output .= "<input type='radio' class='groupContribChoice' value='2' ".($groupContribChoice == '2' ? 'checked': '')."/> Self-Edit <br/>";
-	$output .= "<input type='radio' class='groupContribChoice' value='3' ".($groupContribChoice == '3' ? 'checked': '')."/> Editing Others' Work <br/>";
+	$output .= "<input type='radio' name='groupContribChoice' value='1' ".($groupContribChoice == '1' ? 'checked': '')."/> Addition <br/>";
+	$output .= "<input type='radio' name='groupContribChoice' value='2' ".($groupContribChoice == '2' ? 'checked': '')."/> Self-Edit <br/>";
+	$output .= "<input type='radio' name='groupContribChoice' value='3' ".($groupContribChoice == '3' ? 'checked': '')."/> Editing Others' Work <br/>";
 	$output .= "<br/>";
 	$output .= "Include an example of your contribution that highlights your choice<br/>";
 	$output .= "<textarea id='groupContribTextarea' name='groupContribTextarea' cols='60' rows='4'>".$groupContribSectionContent."</textarea>";
@@ -200,8 +200,8 @@ function createPersonalReflection($reflection=null, $reflectionSectionMap=null, 
 
 	$output .= "<h3>Role in Group</h3>";
 	$output .= "<h4>What role did you take on in the group?</h4>";
-	$output .= "<input type='radio' class='roleChoice' value='1' ".($roleChoice == '1' ? 'checked': '')."/> Leader <br/>";
-	$output .= "<input type='radio' class='roleChoice' value='2' ".($roleChoice == '2' ? 'checked': '')."/> Follower <br/>";
+	$output .= "<input type='radio' name='roleChoice' value='1' ".($roleChoice == '1' ? 'checked': '')."/> Leader <br/>";
+	$output .= "<input type='radio' name='roleChoice' value='2' ".($roleChoice == '2' ? 'checked': '')."/> Follower <br/>";
 	$output .= "<br/>";
 	$output .= "Include an example of your contribution that highlights your choice<br/>";
 	$output .= "<textarea id='roleTextarea' name='roleTextarea' cols='60' rows='4'>".$roleSectionContent."</textarea>";
