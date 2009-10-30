@@ -197,7 +197,7 @@ switch($action){
 	function startSectionEdit(sectionCode, sectionUri){
 		$.post('/src/php/ajaxServices/getSectionContent.php', {'uri': sectionUri}, 
 			function(sectionContent){
-				sectionContent = sectionContent.trim();
+				sectionContent = sectionContent;
 
 				editLink = $('#'+sectionCode+'_edit_link');
 				editLink.hide(400);
@@ -221,12 +221,12 @@ switch($action){
 
 	function cancelSectionEdit(sectionCode, sectionUri){
 		$.post('/src/php/ajaxServices/unlockElo.php', {'ownerUri': sectionUri}, 
-				function(data){
-					$('#'+sectionCode+'_edit_div').hide(400);
-					$('#'+sectionCode+'_content').show(400);
-					$('#'+sectionCode+'_edit_link').show(400);
-					editMode = false;
-				}
+			function(data){
+				$('#'+sectionCode+'_edit_div').hide(400);
+				$('#'+sectionCode+'_content').show(400);
+				$('#'+sectionCode+'_edit_link').show(400);
+				editMode = false;
+			}
 		);
 	}
 
