@@ -5,8 +5,10 @@ class ReferenceCategories {
 	private $_referenceCategories;
 	
 	public function __construct(){
-		$this->_referenceCategories = array('cat01', 'cat02', 'cat03', 'cat04', 'cat05', 'cat06', 'cat07', 'cat08', 'cat09', 'cat10',
-											'cat11', 'cat12', 'cat13', 'cat14', 'cat15', 'cat16', 'cat17', 'cat18', 'cat19', 'cat20');
+		$this->_referenceCategories = array("c1" => "History of Global Change", "c2" => "Human Activities Impacts", "c3" => "Greenhouse effect", 
+											"c4" => "Evidence for climate change", "c5" => "Extreme Weather Events", "c6" => "Weather and wind patterns", 
+											"c7" => "Ocean circulation and related", "c8" => "Desertification", "c9" => "Biological effects", "Albedo",
+											"c10" => "Carbon Tax, Cap and Trade", "c11" => "Carbon Sinks", "c12" => "Acid Rain", "c13" => "Ocean Acidification", "c14" => "Phenology");
 	}
 	
 	public function getReferenceCategories(){

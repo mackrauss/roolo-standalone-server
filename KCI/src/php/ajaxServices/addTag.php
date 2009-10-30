@@ -5,6 +5,9 @@ require_once dirname(__FILE__).'/../RooloClient.php';
 require_once dirname(__FILE__).'/../dataModels/Tag.php';
 
 $tagStr = $_REQUEST['tag'];
+if (trim($tagStr) == ''){
+	die();
+}
 $tags = explode(',', $tagStr);
 $ownerType = $_REQUEST['ownerType'];
 $ownerUri = $_REQUEST['ownerUri'];

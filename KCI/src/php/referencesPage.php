@@ -127,8 +127,8 @@ require_once '../php/RooloClient.php';
 					$referenceCategories = new ReferenceCategories();
 					$refCatsList = $referenceCategories->getReferenceCategories(); 
 					$result = "<ui>";
-					for ($i = 0; $i < sizeof($refCatsList); $i++){
-						$result .= "<li> <font size='2'>"."<a id='" . $refCatsList[$i] . "' href='' onClick=''>".$refCatsList[$i]."</a> </font></li>";		
+					foreach ($refCatsList as $refKey => $refVal){
+						$result .= "<li> <font size='2'>"."<a id='" . $refKey . "' href='' onClick=''>".$refVal."</a> </font></li>";		
 					}
 					$result .= "</ui>";
 					echo $result;

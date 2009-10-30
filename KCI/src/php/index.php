@@ -32,7 +32,7 @@ if (isset($_REQUEST['username'])){
 	</li>
 	
 	<li> Work on your issues here. Also review and contribute to other group's issues here. <br/>
-	     <input type="button" class="SmallButton" value="ARTICLES page >" onClick="document.location.href='/src/php/articles.php'"/>
+	     <input type="button" class="SmallButton" value="ISSUES page >" onClick="document.location.href='/src/php/articles.php'"/>
 	</li>
 	
 	<li> Time for your persoanl reflection <br/>

@@ -33,20 +33,23 @@ if ($_REQUEST['action'] == 'addElo'){
 	$ownerUri = $reference->get_uri();
 	
 	//$tags = array_unique(explode (',', trim($_POST["tags"])));
-	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
-	foreach ($tagsArray as $tagTitle){
+	if (trim($_REQUEST['tags']) !== ''){
 		
-		$query = "type:Tag AND owneruri:". $reference->get_uri(true) . " AND title:$tagTitle AND status:active";
-		$results = $rooloClient->search($query, 'metadata', 'latest');
-		if (sizeof($results) == 0){
-			$tagObject = new Tag();
-			$tagObject->set_ownerType("Reference");
-			$tagObject->set_ownerUri($ownerUri);
-			$tagObject->set_title(trim($tagTitle));
-			$tagObject->set_uri('');
-			$tagObject->set_version('');
-			$tagObject->set_status('active');
-			$rooloClient->addElo($tagObject); 
+		$tagsArray = array_unique(explode (',', trim($_REQUEST["tags"])));
+		foreach ($tagsArray as $tagTitle){
+			
+			$query = "type:Tag AND owneruri:". $reference->get_uri(true) . " AND title:$tagTitle AND status:active";
+			$results = $rooloClient->search($query, 'metadata', 'latest');
+			if (sizeof($results) == 0){
+				$tagObject = new Tag();
+				$tagObject->set_ownerType("Reference");
+				$tagObject->set_ownerUri($ownerUri);
+				$tagObject->set_title(trim($tagTitle));
+				$tagObject->set_uri('');
+				$tagObject->set_version('');
+				$tagObject->set_status('active');
+				$rooloClient->addElo($tagObject); 
+			}
 		}
 	}
 	
@@ -239,13 +242,13 @@ if ($_REQUEST['action'] == 'addElo'){
 								
 								// Fill in the reference's category
 								if (isset($_REQUEST['id'])){
-									$result = "<option value='".$reference->get_category()."'>" . $reference->get_category() . "</option>";
+									$result = "<option value='".$reference->get_category()."'>" . $refCatsList[$reference->get_category()] . "</option>";
 								}else {
 									$result = "<option value=''> Select a Category </option>";									
 								}
-								for ($i = 0; $i < sizeof($refCatsList); $i++){
+								foreach ($refCatsList as $refKey => $refVal){
 									//$result .= "<option value='".$i."'>".$refCatsList[$i]."</option>";
-									$result .= "<option value='".$refCatsList[$i]."'>".$refCatsList[$i]."</option>";
+									$result .= "<option value='".$refKey."'>".$refVal."</option>";
 								}
 								echo $result;
 							?>
