@@ -8,7 +8,7 @@ $roolo = new RooloClient();
 $commentText = $roolo->escapeContent($_REQUEST['commentText']); 
 $ownerUri = $_REQUEST['ownerUri'];
 $ownerType = $_REQUEST['ownerType'];
-
+echo $commentText;
 
 
 $comment = new Comment();
