@@ -54,7 +54,7 @@ function sortArticles($articles){
 </div>
 <div style='text-align: right'>
 	<img src='/src/images/add.png' />
-	<input type='button' class='SmallButton' onclick="document.location.href='/src/php/articlePage.php?action=create'" value='Create an Article'/>
+	<input type='button' class='SmallButton' onclick="document.location.href='/src/php/articlePage.php?action=create'" value='Create an Issue'/>
 </div>
 
 <?php

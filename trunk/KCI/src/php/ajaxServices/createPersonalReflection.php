@@ -208,8 +208,8 @@ function createPersonalReflection($reflection=null, $reflectionSectionMap=null, 
 	$output .= "<br/>";
 	
 	if ($editMode){
-		$output .= "<input type='button' class='smallButton' value='save' onClick='saveReflection(\"$reflectionUri\")'/>";
-		$output .= "<input type='button' class='smallButton' value='cancel' onClick='cancelNewReflection()'/>";
+		$output .= "<input name='saveReflectionButton' type='button' class='smallButton' value='save' onClick='saveReflection(\"$reflectionUri\")'/>";
+		$output .= "<input name='cancelReflectionButton' type='button' class='smallButton' value='cancel' onClick='cancelNewReflection()'/>";
 	}
 	$output .= "</form>";
 	$output .= "</div>";
