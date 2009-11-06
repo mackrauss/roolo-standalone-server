@@ -12,7 +12,7 @@ import roolo.elo.api.IELO;
 
 public class RetrieveELO extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 	static final long serialVersionUID = 1L;
-	private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
+	private RepositoryJcrImpl repositoryJcrImpl;
 	
 	public static final String P_URI = "uri";
    
@@ -23,6 +23,7 @@ public class RetrieveELO extends javax.servlet.http.HttpServlet implements javax
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/xml; charset=UTF-8");
+		this.repositoryJcrImpl = RooloUtil.getRooloInstance(this.getServletContext());
 		
 		String p_uri = request.getParameter(RetrieveELO.P_URI);
 		if (p_uri == null){
