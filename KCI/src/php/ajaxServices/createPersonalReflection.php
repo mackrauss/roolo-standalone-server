@@ -132,7 +132,7 @@ switch($action){
 //			$rooloClient->addElo($section);
 //		}
 //	
-		echo $personalReflection->get_title() . " was successfully saved.";
+        echo "<a href='#' onClick='return loadReflection(\"" . $savedPersonalReflection->get_uri(). "\");'>" . @date('F jS',$savedPersonalReflection->get_datelastmodified()/1000) . "</a><br/>";
 		break;
 }
 
@@ -208,9 +208,8 @@ function createPersonalReflection($reflection=null, $reflectionSectionMap=null, 
 	$output .= "<br/>";
 	
 	if ($editMode){
-		$output .= "<input name='saveReflectionButton' id='saveReflectionButton'' type='button' class='smallButton' value='save' onClick='saveReflection(\"$reflectionUri\")'/>";
+		$output .= "<input name='saveReflectionButton' id='saveReflectionButton'' type='button' class='smallButton' value='save' onClick='loadPopup(); saveReflection(\"$reflectionUri\")'/>";
 		$output .= "<input name='cancelReflectionButton' id='cancelReflectionButton' type='button' class='smallButton' value='cancel' onClick='cancelNewReflection()'/>";
-		$output .= "<img   id='controlsSpinner' src='/src/images/spinner.gif' style='display: none;' />";
 	}
 	$output .= "</form>";
 	$output .= "</div>";
