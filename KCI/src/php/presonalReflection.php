@@ -35,6 +35,9 @@ echo "<h2>" . $username . "	- Personal Reflection Page</h2>";
 	sectionIds = new Array('<?= implode(array_keys(PersonalReflection::getSections()), "','") ?>');
 
 	function saveReflection(reflectionUri){
+		$('#saveReflectionButton').hide();
+		$('#cancelReflectionButton').hide();
+		$('#controlsSpinner').show();
 		
 		// Adding all the params (title, all sections ...etc) to the array to be sent via ajax
 		params = {	'action': 'saveReflection', 
@@ -52,15 +55,15 @@ echo "<h2>" . $username . "	- Personal Reflection Page</h2>";
 					$('#msgDiv').html(data);
 					$('#newReflection').show();
 					$('#curReflection').hide();
+
+					window.location.href='/src/php/index.php';
 				}
 		);
-		
-		
 	}
-
 
 	function createReflectionTemplate(action, reflectionUri){
 		$('#newReflection').hide();
+		
 		$.post('/src/php/ajaxServices/createPersonalReflection.php', {'action': action, 'reflectionUri': reflectionUri}, 
 				function(data){
 					$('#curReflection').html(data);

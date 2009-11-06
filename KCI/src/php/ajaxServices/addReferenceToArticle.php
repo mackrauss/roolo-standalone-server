@@ -44,7 +44,7 @@ $savedLink = new Link($response);
 /*
  * Retrieve Reference and return the generated div
  */
-$results = $roolo->search('type:Reference AND uri:'.$refUriEscaped, 'elo', 'latest');
+$results = $roolo->search('type:Reference AND uri:'.$refUriEscaped, 'metadata', 'latest');
 $reference = $results[0];
 
 echo generateAttachedReference($reference, $savedLink);
