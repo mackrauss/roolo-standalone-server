@@ -56,6 +56,9 @@ echo "<h2>" . $username . "	- Personal Reflection Page</h2>";
 		
 		$.post('/src/php/ajaxServices/createPersonalReflection.php', params, 
 				function(data){
+					if ($('#noReflectionsMsg').size() > 0){
+						$('#noReflectionsMsg').hide();
+					}
 					$('#msgDiv').html("");
 					$('#previousReflections').append(data);
 					$('#newReflection').show();
@@ -114,7 +117,7 @@ In this page you will be reflecting on what you have been learning and the learn
 				echo "<a href='#' onClick='return loadReflection(\"" . $reflection->get_uri(). "\");'>" . date('F jS',$reflection->get_datelastmodified()/1000) . "</a><br/>";
 			}
 		}else{
-			echo "You have not filled any personal reflections before.";
+			echo "<div id='noReflectionsMsg'> You have not filled any personal reflections before. </div>";
 		}
 	
 	
