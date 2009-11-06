@@ -18,7 +18,7 @@ import roolo.elo.RepositoryJcrImpl;
 
 public class DeleteAll extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 	static final long serialVersionUID = 1L;
-	private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
+	private RepositoryJcrImpl repositoryJcrImpl;
    
 	public DeleteAll() {
 		super();
@@ -27,6 +27,7 @@ public class DeleteAll extends javax.servlet.http.HttpServlet implements javax.s
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/xml; charset=UTF-8");
+		this.repositoryJcrImpl = RooloUtil.getRooloInstance(this.getServletContext());
 		
 		try{
 			List<String> eloUris = EloUtil.getAllEloUris(repositoryJcrImpl);

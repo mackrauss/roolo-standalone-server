@@ -15,7 +15,7 @@ import roolo.search.LuceneQuery;
 
 public class Search extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 	static final long serialVersionUID = 1L;
-	private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
+	private RepositoryJcrImpl repositoryJcrImpl;
 	
 	public static final String RESULT_TYPE_ELO 		= "elo";
 	public static final String RESULT_TYPE_URI 		= "uri";
@@ -36,6 +36,7 @@ public class Search extends javax.servlet.http.HttpServlet implements javax.serv
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/xml; charset=UTF-8");
+		this.repositoryJcrImpl = RooloUtil.getRooloInstance(this.getServletContext());
 		
 		String p_queryStr = request.getParameter(Search.P_QUERY);
 		if (p_queryStr == null){

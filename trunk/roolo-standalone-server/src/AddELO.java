@@ -17,7 +17,7 @@ import roolo.elo.metadata.keys.BasicMetadataKey;
 
 public class AddELO extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet {
 	static final long serialVersionUID = 1L;
-	private RepositoryJcrImpl repositoryJcrImpl = new RepositoryJcrImpl();
+	private RepositoryJcrImpl repositoryJcrImpl;
 	
 	public static final String P_ELO_XML = "eloXML";
 	
@@ -28,6 +28,7 @@ public class AddELO extends javax.servlet.http.HttpServlet implements javax.serv
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/xml; charset=UTF-8");
+		this.repositoryJcrImpl = RooloUtil.getRooloInstance(this.getServletContext());
 		
 		String p_eloXML = request.getParameter(AddELO.P_ELO_XML);
 		if (p_eloXML == null){
