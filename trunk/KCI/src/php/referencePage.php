@@ -55,6 +55,8 @@ if ($_REQUEST['action'] == 'addElo'){
 	
 	$tags = $rooloClient->search('type:Tag AND owneruri:'.$reference->get_uri(true) . ' AND status:active', 'metadata', 'latest');
 	$action = 'update';
+	echo "<script type='text/javascript'> window.location.href='/src/php/referencesPage.php'; </script>";
+	die();
 
 } else if ($_REQUEST['action'] == 'update') {
 	// update the submitted Reference to Roolo
@@ -89,6 +91,8 @@ if ($_REQUEST['action'] == 'addElo'){
 	}
 	$tags = $rooloClient->search('type:Tag AND owneruri:'.$reference->get_uri(true) . ' AND status:active', 'metadata', 'latest');
 	$action = 'update';
+	echo "<script type='text/javascript'> window.location.href='/src/php/referencesPage.php'; </script>";
+	die();
 }else{
 
 	if (isset($_REQUEST['id'])){
@@ -110,6 +114,10 @@ if ($_REQUEST['action'] == 'addElo'){
 ?>
 		<script type='text/javascript' src='../../library/js/jquery-1.3.2.min.js'></script>
 		<script type='text/javascript' src='../../library/js/jquery-ui-1.7.2.custom.min.js'></script>
+		
+		<script type='text/javascript' src='/src/js/popup.js'></script>
+		<link rel="stylesheet" type="text/css" href="/src/css/popup.css" />
+		
 		<meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'>
 		
 		<title>References Page</title>
@@ -221,6 +229,13 @@ if ($_REQUEST['action'] == 'addElo'){
 			     return (key != 13);
 			}
 
+
+			function submitForm(){
+				loadPopup(); 
+				//$('#' + formName).submit();
+				document.referenceForm.submit(); 
+			}
+			
 		</script>
 	</head>
 	
@@ -228,7 +243,7 @@ if ($_REQUEST['action'] == 'addElo'){
 	<body>
 	
 		<a href='/src/php/referencesPage.php'> <?= htmlspecialchars(' < Back to References')  ?> </a>
-		<form method="post" action="referencePage.php?id=<?= $reference->get_id();?>">
+		<form name="referenceForm" method="post" action="referencePage.php?id=<?= $reference->get_id();?>">
 				<div id='titleArea'>
 					<div id='title'>
 						<font size='4'>Reference Title</font>
@@ -291,7 +306,8 @@ if ($_REQUEST['action'] == 'addElo'){
 				<div style='width: 100%; height: 20%; float:left'>
 					<input type="hidden" id="action" name="action" value="<?= $action?>" />
 					<input type="hidden" id="id" name="id" value="<?= $reference->get_id() ?>" />
-					<input type="submit" value='Submit' class='myButton'>
+<!--					<input type="submit" value='Submit' class='myButton'>-->
+					<input type="button" value='Submit' class='myButton' onClick="submitForm();">
 				</div>
 				
 				
@@ -302,9 +318,16 @@ if ($_REQUEST['action'] == 'addElo'){
 				<br/>
 				
 	 	</form>	
-	
+
+
+
+<div id="centerPopup">
+	<img src="/src/images/loader.gif" name="loader" id='image'/>
+</div>
+<div id="backgroundPopup"></div>	
 	
 <?php 
 	require_once 'footer.php';
 ?>
+	
 	

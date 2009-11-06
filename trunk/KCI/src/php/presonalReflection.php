@@ -12,6 +12,10 @@ echo "<h2>" . $username . "	- Personal Reflection Page</h2>";
 
 <script type='text/javascript' src='../../library/js/jquery-1.3.2.min.js'></script>
 <script type='text/javascript' src='../../library/js/jquery-ui-1.7.2.custom.min.js'></script>
+
+<script type='text/javascript' src='/src/js/popup.js'></script>
+<link rel="stylesheet" type="text/css" href="/src/css/popup.css" />
+
 <meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'>
 <title>Personal Reflection</title>
 
@@ -52,11 +56,12 @@ echo "<h2>" . $username . "	- Personal Reflection Page</h2>";
 		
 		$.post('/src/php/ajaxServices/createPersonalReflection.php', params, 
 				function(data){
-					$('#msgDiv').html(data);
+					$('#msgDiv').html("");
+					$('#previousReflections').append(data);
 					$('#newReflection').show();
 					$('#curReflection').hide();
 
-					window.location.href='/src/php/index.php';
+					disablePopup();
 				}
 		);
 	}
@@ -127,3 +132,8 @@ In this page you will be reflecting on what you have been learning and the learn
 <br/>
 <br/>
 <br/>
+
+<div id="centerPopup">
+			<img src="/src/images/loader.gif" name="loader" id='image'/>
+</div>
+<div id="backgroundPopup"></div>
