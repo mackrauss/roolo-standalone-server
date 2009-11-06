@@ -163,6 +163,12 @@ switch($action){
 		if (editMode){
 			alert('You may only edit one section at a time. Please finish (or cancel) editing other section.');
 		}else{
+			var editLink = $('#'+sectionCode+'_edit_link');
+			var spinner  = $('#'+sectionCode+'_spinner');
+
+			editLink.hide();
+			spinner.show();
+			
 //			console.log('calling jsbon');
 			$.getJSON('/src/php/ajaxServices/isLocked.php', {'uri': sectionUri}, 
 				function(data){
@@ -199,8 +205,10 @@ switch($action){
 			function(sectionContent){
 				sectionContent = sectionContent;
 
-				editLink = $('#'+sectionCode+'_edit_link');
-				editLink.hide(400);
+//				editLink = $('#'+sectionCode+'_edit_link');
+//				editLink.hide(400);
+				spinner = $('#'+sectionCode+'_spinner');
+				spinner.hide();
 				
 				contentDiv = $('#'+sectionCode+'_content');
 				contentDiv.html(sectionContent); 
@@ -222,13 +230,38 @@ switch($action){
 		
 	}
 
+	function showSectionControlsSpinner(sectionCode){
+		var saveBtn = $('#'+sectionCode+'_save_btn');
+		var cancelBtn = $('#'+sectionCode+'_cancel_btn');
+		var spinner = $('#'+sectionCode+'_controls_spinner');
+
+		saveBtn.hide();
+		cancelBtn.hide();
+		spinner.show();
+	}
+
+	function hideSectionControlsSpinner(sectionCode){
+		var saveBtn = $('#'+sectionCode+'_save_btn');
+		var cancelBtn = $('#'+sectionCode+'_cancel_btn');
+		var spinner = $('#'+sectionCode+'_controls_spinner');
+
+		spinner.hide();
+		saveBtn.show();
+		cancelBtn.show();
+		
+	}
+	
 	function cancelSectionEdit(sectionCode, sectionUri){
+		showSectionControlsSpinner(sectionCode);
+		
 		$.post('/src/php/ajaxServices/unlockElo.php', {'ownerUri': sectionUri}, 
 			function(data){
 				$('#'+sectionCode+'_edit_div').hide(400);
 				$('#'+sectionCode+'_content').show(400);
 				$('#'+sectionCode+'_edit_link').show(400);
 				editMode = false;
+
+				hideSectionControlsSpinner(sectionCode);
 			}
 		);
 	}
@@ -236,6 +269,9 @@ switch($action){
 	function saveSectionEdit(sectionCode){
 		sectionUri = $('#'+sectionCode+'_uri').val();
 		sectionContent = $('#'+sectionCode+'_textarea').val();
+
+		showSectionControlsSpinner(sectionCode);
+		
 		$.post('/src/php/ajaxServices/saveSection.php', {'sectionUri': sectionUri, 'sectionCode': sectionCode, 'articleUri': articleUri, 'sectionContent': sectionContent}, 
 			function(data){
 				contentDiv = $('#'+sectionCode+'_content');
@@ -248,6 +284,8 @@ switch($action){
 				editDiv.hide(400);
 				contentDiv.show(400);
 				editLink.show(400);
+
+				hideSectionControlsSpinner(sectionCode);
 				
 				editMode = false;
 
@@ -302,11 +340,19 @@ switch($action){
 
 	function postComment(){
 		var commentText = $('#comment_textbox').val();
+		var postCommentBtn = $('#post_comment_btn');
+		var postCommentSpinner = $('#post_comment_spinner');
+
+		postCommentBtn.hide();
+		postCommentSpinner.show();
 
 		$.post('/src/php/ajaxServices/postComment.php', {'commentText': commentText, 'ownerType': 'Article', 'ownerUri': articleUri}, 
 				function(data){
 					$('#existing_comments').append(data);
 					$('#comment_textbox').val('');
+
+					postCommentSpinner.hide();
+					postCommentBtn.show();
 				}
 		);
 	}
@@ -382,6 +428,10 @@ if ($action != 'create'){
 		$sectionTitle = $sections[$sectionCode];
 		$section = $sectionElos[$sectionCode]; 
 		
+//		echo ">>>>>>$sectionCode<br/>";
+//		echo "<pre>";
+//		var_dump($section);
+//		echo "</pre>";
 		echo generateSection($sectionCode, $sectionTitle, $section->get_uri(), $section->getContent());
 		echo generateTags($sectionTagElos[$sectionCode], 'Section', $section->get_uri(), $sectionCode); 
 	}
@@ -422,7 +472,8 @@ foreach($referenceElos as $referenceElo){
 	</div>
 	Post a Comment: <br/>
 	<textarea cols='50' rows='10' name='comment_textbox' id='comment_textbox'></textarea> <br/>
-	<input type='button' class='SmallButton' value='Post Comment' onclick='postComment()' />
+	<input id='post_comment_btn' type='button' class='SmallButton' value='Post Comment' onclick='postComment()' />
+	<img   id='post_comment_spinner' src='/src/images/spinner.gif' style='display:none'; />
 </form>
 <?php 
 }
@@ -443,22 +494,27 @@ function generateSection($sectionCode, $sectionTitle, $sectionUri, $content){
 	$o = '';
 	$textareaId = $sectionCode.'_textarea';
 	$editLinkId = $sectionCode.'_edit_link';
+	$spinnerId  = $sectionCode.'_spinner';
 	$contentDivId = $sectionCode.'_content';
 	$editDivId = $sectionCode.'_edit_div';
 	$formId = $sectionCode.'_form';
 	$sectionUriId = $sectionCode.'_uri';
-	
+	$saveBtnId = $sectionCode.'_save_btn';
+	$cancelBtnId = $sectionCode.'_cancel_btn';
+	$controlsSpinnerId = $sectionCode.'_controls_spinner';
 	
 	$o .= "<form name='$formId' id='$formId'>";
 	$o .= "    <span style='font-size:x-large;'>$sectionTitle</span> ";
 	$o .= "    <br/>"; 
-	$o .= "    <span name='$editLinkId' id='$editLinkId' style='font-size: small; text-decoration: underline;' onclick=\"requestSectionEdit('$sectionCode', '$sectionUri');\">edit</span>";
+	$o .= "    <span name='$editLinkId' id='$editLinkId' style='font-size: small; text-decoration: underline; cursor: pointer' onclick=\"requestSectionEdit('$sectionCode', '$sectionUri');\">edit</span>";
+	$o .= "	   <img id='$spinnerId' src='/src/images/spinner.gif' style='display: none;' />";
 	$o .= "    <br/>";
 	$o .= "    <div name='$contentDivId' id='$contentDivId' style='width: 80%;'>$content</div>";
 	$o .= "    <div name='$editDivId' id='$editDivId' style='display:none;'>";
 	$o .= "        <textarea name='$textareaId' id='$textareaId' rows='10' cols='100'></textarea> <br/>";
-	$o .= "        <input type='button' class='SmallButton' value='Save' onclick=\"saveSectionEdit('$sectionCode');\" />";
-	$o .= "        <span style='font-size: small; text-decoration: underline;' onclick=\"cancelSectionEdit('$sectionCode', '$sectionUri');\">cancel</span>";
+	$o .= "        <input id='$saveBtnId' type='button' class='SmallButton' value='Save' onclick=\"saveSectionEdit('$sectionCode');\" />";
+	$o .= "        <span  id='$cancelBtnId' style='font-size: small; text-decoration: underline; cursor: pointer;' onclick=\"cancelSectionEdit('$sectionCode', '$sectionUri');\">cancel</span>";
+	$o .= "        <img   id='$controlsSpinnerId' src='/src/images/spinner.gif' style='display: none;' />";
 	$o .= "        <input type='hidden' name='$sectionUriId' id='$sectionUriId' value='$sectionUri' />";
 	$o .= "    </div>";
 	$o .= "    ";
@@ -472,7 +528,7 @@ function retrieveSectionElos($article, $roolo){
 	
 	$query = "type:Section AND owneruri:$articleUri";
 	
-	$sectionElos = $roolo->search($query, 'elo', 'latest');
+	$sectionElos = $roolo->search($query, 'metadata', 'latest');
 	foreach($sectionElos as $sectionElo){
 //		echo $sectionElo->get_title()."<br/>";
 		$sectionEloMap[$sectionElo->get_title()] = $sectionElo;
@@ -505,7 +561,7 @@ function retrieveReferenceElos($article, $roolo){
 	foreach($links as $link){
 		$refUri = $roolo->escapeSearchTerm($link->get_uri2());
 		$query = "type:Reference AND uri:$refUri";
-		$results = $roolo->search($query, 'elo', 'latest');
+		$results = $roolo->search($query, 'metadata', 'latest');
 		
 		$references[] = $results[0];
 	}
