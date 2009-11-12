@@ -170,17 +170,22 @@ class Elo implements XMLSupported{
 	 * @return Either a simple_html_dom_node, or an array(simple_html_dom_node)
 	 */
 	private function getElemAtPos($dom, $selector, $pos=-1){
-		$results = $dom->find($selector);
-		if ($pos != -1){
-			if (isset($results[$pos])){
-				return $results[$pos];
+		 if (get_class($dom) === false){
+		 	var_dump(debug_backtrace());
+		 }
+//		if ($dom != null){
+			$results = $dom->find($selector);
+			if ($pos != -1){
+				if (isset($results[$pos])){
+					return $results[$pos];
+				}else{
+					return null;
+				}
+				
 			}else{
-				return null;
+				return $results;
 			}
-			
-		}else{
-			return $results;
-		}
+//		}
 	}
 	
 	
