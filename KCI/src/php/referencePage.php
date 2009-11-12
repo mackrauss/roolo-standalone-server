@@ -73,22 +73,26 @@ if ($_REQUEST['action'] == 'addElo'){
 	
 	$ownerUri = $reference->get_uri();
 	
-	$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
-	foreach ($tagsArray as $tagTitle){
-		
-		$query = "type:Tag AND owneruri:". $reference->get_uri(true) . " AND title:$tagTitle AND status:active";
-		$results = $rooloClient->search($query, 'metadata', 'latest');
-		if (sizeof($results) == 0){
-			$tagObject = new Tag();
-			$tagObject->set_ownerType("Reference");
-			$tagObject->set_ownerUri($ownerUri);
-			$tagObject->set_title(trim($tagTitle));
-			$tagObject->set_uri('');
-			$tagObject->set_version('');
-			$tagObject->set_status('active');
-			$rooloClient->addElo($tagObject); 
+	if (trim($_REQUEST['tags']) !== ''){
+	
+		$tagsArray = array_unique(explode (',', trim($_POST["tags"])));
+		foreach ($tagsArray as $tagTitle){
+			
+			$query = "type:Tag AND owneruri:". $reference->get_uri(true) . " AND title:$tagTitle AND status:active";
+			$results = $rooloClient->search($query, 'metadata', 'latest');
+			if (sizeof($results) == 0){
+				$tagObject = new Tag();
+				$tagObject->set_ownerType("Reference");
+				$tagObject->set_ownerUri($ownerUri);
+				$tagObject->set_title(trim($tagTitle));
+				$tagObject->set_uri('');
+				$tagObject->set_version('');
+				$tagObject->set_status('active');
+				$rooloClient->addElo($tagObject); 
+			}
 		}
 	}
+	
 	$tags = $rooloClient->search('type:Tag AND owneruri:'.$reference->get_uri(true) . ' AND status:active', 'metadata', 'latest');
 	$action = 'update';
 	echo "<script type='text/javascript'> window.location.href='/src/php/referencesPage.php'; </script>";
