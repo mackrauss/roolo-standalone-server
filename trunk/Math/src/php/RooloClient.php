@@ -10,7 +10,8 @@ class RooloClient {
 	private $_rooloServiceUrls = array();
 	
 	public function __construct(){
-		$this->_rooloUrl = "http://localhost:8080/roolo-standalone-server/";
+		#$this->_rooloUrl = "http://localhost:8080/roolo-standalone-server/";
+        $this->_rooloUrl = "http://bobek.oise.utoronto.ca:8080/roolo-standalone-server/";
 		$this->populateServiceUrls();
 	}
 	
