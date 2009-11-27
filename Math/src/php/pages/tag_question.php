@@ -1,6 +1,6 @@
 <?php
-session_start();
-$_SESSION["username"] = $_GET["username"];
+//session_start();
+//$_SESSION["username"] = $_GET["username"];
 require_once './header.php';
 
 $questions = glob(dirname(__FILE__) . '/../../../Questions/*');
