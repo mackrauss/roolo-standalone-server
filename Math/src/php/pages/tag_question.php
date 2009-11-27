@@ -77,24 +77,24 @@ for ($i=0; $i<sizeof($questions); $i++){
 		</form>
 	</div>
 
-		<input type='button' value='clickMe' onClick='tagQuestion();'/>
+<!--		<input type='button' value='clickMe' onClick='tagQuestion();'/>-->
 
 </div>
 
 
-<script type='text/javascript'>
-
-	function tagQuestion (){
-
-		var saveData = $('input.categoryChoice:checked').serialize();
-		
-		$.get("/src/php/ajaxServices/tagQuestion.php", { username: '<?= $_SESSION['username']?>',  categories: saveData},
-		  	function(data){
-			}
-		);
-	}
-
-</script>
+<!--<script type='text/javascript'>-->
+<!---->
+<!--	function tagQuestion (){-->
+<!---->
+<!--		var saveData = $('input.categoryChoice:checked').serialize();-->
+<!--		-->
+<!--		$.get("/src/php/ajaxServices/tagQuestion.php", { username: '<?= $_SESSION['username']?>',  categories: saveData},-->
+<!--		  	function(data){-->
+<!--			}-->
+<!--		);-->
+<!--	}-->
+<!---->
+<!--</script>-->
 
 
 
