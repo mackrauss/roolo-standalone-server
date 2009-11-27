@@ -131,12 +131,12 @@ for ($i=0; $i<sizeof($questions); $i++){
 	<div id='categoryDiv'>
 		Please choose the category that this question fits best <br/><br/><br/>
 		<form action="">
-			<input class='categoryChoice' type="checkbox" name="category[]" value="Geometry"> Geometry <br/> <br/>
-			<input class='categoryChoice' type="checkbox" name="category[]" value="Trigonametry"> Trigonametry <br/> <br/>
-			<input class='categoryChoice' type="checkbox" name="category[]" value="Exponential"> Exponential <br/> <br/>
-			<input class='categoryChoice' type="checkbox" name="category[]" value="Algebra"> Algebra <br/> <br/>
-			<input type="button" id='submit' value="Submit" onClick="nextQuestion();"/>
-			<input type='hidden' id='counter' name='counter' value="0"/>
+          <label><input class='categoryChoice' type="checkbox" name="category[]" value="Geometry"> Geometry</label> <br/> <br/>
+          <label><input class='categoryChoice' type="checkbox" name="category[]" value="Trigonametry"> Trigonametry</label> <br/> <br/>
+          <label><input class='categoryChoice' type="checkbox" name="category[]" value="Exponential"> Exponential</label> <br/> <br/>
+		  <label><input class='categoryChoice' type="checkbox" name="category[]" value="Algebra"> Algebra</label> <br/> <br/>
+		  <input type="button" id='submit' value="Submit" onClick="nextQuestion();"/>
+          <input type='hidden' id='counter' name='counter' value="0"/>
 		</form>
 	</div>
 
