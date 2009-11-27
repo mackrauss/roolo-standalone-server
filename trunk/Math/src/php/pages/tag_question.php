@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+$_SESSION["username"] = $_GET["username"];
 require_once './header.php';
 
 $questions = glob(dirname(__FILE__) . '/../../../Questions/*');
@@ -23,11 +24,9 @@ for ($i=0; $i<sizeof($questions); $i++){
 
 		$('.categoryChoice').change(function () {
 		    if($(this).is(':checked')) {
-		        $(this).attr("checked", "checked");
-		        return;
+		        $(this).attr('checked','checked');
 		    }else {
-		    	$(this).removeAttr("checked");
-		    	return;
+		    	$(this).removeAttr('checked');
 			}
 			
 		});
@@ -69,18 +68,40 @@ for ($i=0; $i<sizeof($questions); $i++){
 	<div id='categoryDiv'>
 		Please choose the category that this question fits best <br/><br/><br/>
 		<form action="">
-			<input class='categoryChoice' type="checkbox" name="category[]" value="Geometry"> Geometry <br/> <br/>
-			<input class='categoryChoice' type="checkbox" name="category[]" value="Trigonametry"> Trigonametry <br/> <br/>
-			<input class='categoryChoice' type="checkbox" name="category[]" value="Exponential"> Exponential <br/> <br/>
-			<input class='categoryChoice' type="checkbox" name="category[]" value="Algebra"> Algebra <br/> <br/>
+			<input class='categoryChoice' type="checkbox" name="category" value="Geometry"> Geometry <br/> <br/>
+			<input class='categoryChoice' type="checkbox" name="category" value="Trigonametry"> Trigonametry <br/> <br/>
+			<input class='categoryChoice' type="checkbox" name="category" value="Exponential"> Exponential <br/> <br/>
+			<input class='categoryChoice' type="checkbox" name="category" value="Algebra"> Algebra <br/> <br/>
 			
 			<input type="button" value="Submit"/>
 		</form>
 	</div>
 
+		<input type='button' value='clickMe' onClick='tagQuestion();'/>
+
 </div>
 
+
+<script type='text/javascript'>
+
+	function tagQuestion (){
+
+		var saveData = $('input.categoryChoice:checked').serialize();
+		
+		$.get("/src/php/ajaxServices/tagQuestion.php", { username: '<?= $_SESSION['username']?>',  categories: saveData},
+		  	function(data){
+			}
+		);
+	}
+
+</script>
+
+
+
+
+
 <?php 
+
 
 require_once './footer.php';
 
