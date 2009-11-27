@@ -112,7 +112,7 @@ for ($i=0; $i<sizeof($questions); $i++){
 
 		$('#groupDiv').hide();
 		$('#groupDiv').html('').fadeOut("slow");
-		$('#groupDiv').html('<p>The system has not yet calculated which group you belong to. This might be because some peopel are still tagging questions</p>').fadeIn("slow");
+		$('#groupDiv').html('<p>The system has not yet calculated which group you belong to. This might be because some people are still tagging questions</p>').fadeIn("slow");
 	}
 		
 </script>
