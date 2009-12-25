@@ -61,33 +61,33 @@ for ($i=0; $i<sizeof($questions); $i++){
 
 		// DRAG and DROP functionality
 		$(".draggable").draggable({
-			helper: 'clone', 
-			opacity: '0.35',
 
-			start: function(event, ui) {
-//				console.log('started');
-//				console.log($(this).attr('id'));
-//				$('div#imgDiv').css({width : '10%', height : '100px'});
-			 }, 
+//			helper: 'original',
+//			revertDuration: 1000,
+//			snap: '.droppable',
 
-			 stop: function (event, ui){
-				 $('div#imgDiv').css({width : '40%', height : '150px', float : 'left'});
-			 }
+			revert: 'invalid',
+			opacity: '0.80',
+			cursor: 'move',
+			cursorAt: { top: 0, left: 0 },
+			helper: function(event) {
+				return $('<div style="background-color: #333333; color: white; border: 1px solid white; width: 100px; height: 20px; text-align: center"> Question ' + curQuestionNum + '</div>');
+			}
 		});
 		
 
 		$(".droppable").droppable({
-			
-			accept: ".draggable",
-			activeClass: 'droppable-active',
+
+			tolerance: 'touch',
+			accept: '.draggable',
 			hoverClass: 'droppable-hover',
 			drop: function(ev, ui) {
 
 				 category = $(this).find('h4').html();
 				 categoryCount = $(this).find('h3').html();
-//				 console.log('category count:' + $(this).find('categoryCount').html());
 				 categoryCount ++;
-			     $(this).html("<h4>" + category + "</h4>" + "<div class='categoryCount'><h3>" + categoryCount + "</h3></div>");
+			     $(this).html("<h4>" + category + "</h4>" + "<div class='categoryCount'><h3>" + categoryCount + "</h3></div>").fadeIn('slow');
+
 
 			     // **** parameter should be taken out if we don't want drag and drop
 			     nextQuestion(category);
@@ -249,6 +249,11 @@ for ($i=0; $i<sizeof($questions); $i++){
 		margin-top: 0;
 	}
 	
+	
+	.droppable-hover {
+	     background-color: #669900;
+	}
+	
 </style>
 
 <div id='greetingDiv'>
@@ -308,112 +313,6 @@ for ($i=0; $i<sizeof($questions); $i++){
 	</div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-<style>
-
-#divDrop
-
-{
-
-margin-left:auto;
-
-width:250px;
-
-height:250px;
-
-background-color:powderBlue;
-
-}
-
-#divDrag
-
-{
-
-width:100px;
-
-height:100px;
-
-position:absolute;
-
-top:0px;
-
-left:0px;
-
-background-color:yellow;
-
-}
-
-.droppable-active {
-     opacity: 1.0;
-//     background-color: #6699CC;
-}
-
-.droppable-hover {
-     background-color: #669900;
-}
-
-</style>
-
-<script>
-
-$(document).ready
-
-(
-
-function()
-
-{
-
-$("#divDrag").draggable({helper: 'clone', opacity: '0.1' });
-
-$("#divDrop").droppable({
-
-accept: "#divDrag",
-
-activeClass: 'droppable-active',
-
-hoverClass: 'droppable-hover',
-
-drop: function(ev, ui) {
-
-     $(this).append("<br>Dropped!");
-
-     var theId = $(this).attr("id");
-
-     alert(theId);
-
-     //Do your AJAX stuff in here.
-
-}
-
-});
-
- 
-
-}
-
-);
-
-</script>
-
- 
-
-</head>
-
-</body>
-
-</html>
-
 
 
 <?php 
