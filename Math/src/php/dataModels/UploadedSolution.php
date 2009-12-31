@@ -10,33 +10,47 @@ class UploadedSolution extends Elo {
 	}
 
 	/**
-	 * @return unknown
+	 * @return the 
 	 */
 	public function get_ownerType() {
 		return parent::getMetadata('ownertype');
 	}
 
 	/**
-	 * @return unknown
+	 * @param $ownerType
+	 */
+	public function set_ownerType($ownerType) {
+		parent::addMetadata('ownertype', $ownerType);
+	}
+	
+	/**
+	 * @return the question URI of this solution
 	 */
 	public function get_ownerUri() {
 		return parent::getMetadata('owneruri');
 	}
 
 	/**
-	 * @param unknown_type $_ownerType
-	 */
-	public function set_ownerType($_ownerType) {
-		parent::addMetadata('ownertype', $_ownerType);
-	}
-
-	/**
-	 * @param unknown_type $_ownerUri
+	 * @param $_ownerUri the question uri of this solution
 	 */
 	public function set_ownerUri($_ownerUri) {
 		parent::addMetadata('owneruri', $_ownerUri);
 	}
+	
+	/**
+	 * @return the saved solution path + filename
+	 * the filname is an integer according the saved time of solution file with itd extention
+	 */
+	public function get_path(){
+		return parent::getMetadata('path');
+	}
 
+	/**
+	 * @param $path is path+filename of uploaded solution file  
+	 */
+	public function set_path($path){
+		parent::addMetadata('path', $path);
+	}
 	
 }
 
