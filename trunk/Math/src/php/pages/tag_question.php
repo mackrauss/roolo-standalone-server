@@ -1,8 +1,10 @@
 <?php
-session_start();
+//session_start();
 
 require_once './header.php';
+require_once '../RooloClient.php';
 
+error_reporting(E_STRICT);
 // check username variable has been sent
 if(isset($_GET['username'])){
 	$_SESSION['username'] = $_GET['username'];
@@ -18,16 +20,31 @@ if(isset($_GET['masterSolution'])){
 	$_SESSION['masterSolution'] = 0;
 }
 
-$questions = glob(dirname(__FILE__) . '/../../../Questions/*');
-$questions = array_filter($questions, 'is_file');
-$counter=0;
-for ($i=0; $i<sizeof($questions); $i++){
-	$curPath = $questions[$i];
-	$curPath = substr($curPath, strrpos($curPath, '/Questions'));
-	$questions[$i] = $curPath;
+//$questions = glob(dirname(__FILE__) . '/../../../Questions/*');
+//$questions = array_filter($questions, 'is_file');
+//$counter=0;
+//for ($i=0; $i<sizeof($questions); $i++){
+//	$curPath = $questions[$i];
+//	$curPath = substr($curPath, strrpos($curPath, '/Questions'));
+//	$questions[$i] = $curPath;
+//}
+
+// retrieve questions from repository
+$rooloClient = new RooloClient();
+$query = "type:Question AND subtype:Math";
+$results = $rooloClient->search($query, 'metadata', 'latest');
+
+if (sizeof($results) != 0){
+	for ($i=0; $i< sizeof($results); $i++){
+		$questionObject = new Question();
+		$questionObject = $results[$i];
+		$questions[$i] = $questionObject->get_path();
+		$questionsURI[$i] = $questionObject->get_uri();
+		
+	}
+}else{
+	echo 'There is no question in repository!';
 }
-
-
 
 ?>
 
