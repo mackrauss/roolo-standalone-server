@@ -3,6 +3,8 @@
 
 require_once './header.php';
 require_once '../RooloClient.php';
+require_once '../dataModels/QuestionCategory.php';
+require_once '../dataModels/Question.php';
 
 error_reporting(E_STRICT);
 // check username variable has been sent
@@ -13,28 +15,54 @@ if(isset($_GET['username'])){
 	$_SESSION['username'] = '';
 	$greetingMsg = 'username has not been set !!!';
 }
-// check this has been taged by teacher or student
-if(isset($_GET['masterSolution'])){
-	$_SESSION['masterSolution'] = $_GET['masterSolution'];
-}else { // zero means false and one means true
-	$_SESSION['masterSolution'] = 0;
+// check role variable has been sent
+if(isset($_GET['role'])){
+	$_SESSION['role'] = $_GET['role'];
+}else {
+	$_SESSION['role'] = 'student';
+	//$greetingMsg = 'role has not been set !!!';
 }
-
-//$questions = glob(dirname(__FILE__) . '/../../../Questions/*');
-//$questions = array_filter($questions, 'is_file');
-//$counter=0;
-//for ($i=0; $i<sizeof($questions); $i++){
-//	$curPath = $questions[$i];
-//	$curPath = substr($curPath, strrpos($curPath, '/Questions'));
-//	$questions[$i] = $curPath;
-//}
 
 // retrieve questions from repository
 $rooloClient = new RooloClient();
-$query = "type:Question AND subtype:Math";
-$results = $rooloClient->search($query, 'metadata', 'latest');
+$query ='';
+$results = array();
 
-if (sizeof($results) != 0){
+if ($_SESSION['role'] == 'teacher'){
+	$query = 'type:Question AND masterSolution:"null"';
+	$results = $rooloClient->search($query, 'metadata', 'latest');
+}else {
+	$query = 'type:Question';
+	$allQuestions = $rooloClient->search($query, 'metadata');
+
+	$query = "type:QuestionCategory AND author:" . $_SESSION['username'];
+	$tagedQuestions = $rooloClient->search($query, 'metadata');
+
+	$questionCategoryObject = new QuestionCategory();
+	$questionObject = new Question();
+	for($i=0; $i<sizeof($allQuestions); $i++){
+		$questionObject = $allQuestions[$i];
+		$uri = $questionObject->get_uri();
+		//echo "</br>ownerUri[".$i."] = ".$ownerURI;
+		$found = FALSE;
+		for($j=0; $j<sizeof($tagedQuestions); $j++){
+			$questionCategoryObject = $tagedQuestions[$j];
+			$ownerURI = $questionCategoryObject->get_ownerUri();
+			//echo "</br>uri[".$j."] = ".$uri;
+			if ($ownerURI == $uri){
+				$found = TRUE;
+				//unset($allQuestions[$j]);
+			}
+		}
+		if (!$found){
+			array_push($results, $allQuestions[$i]);
+		}
+	}
+}
+$totalResults = sizeof($results);
+//echo "totalResult = ".$totalResults;
+
+if ($totalResults != 0){
 	for ($i=0; $i< sizeof($results); $i++){
 		$questionObject = new Question();
 		$questionObject = $results[$i];
@@ -43,7 +71,7 @@ if (sizeof($results) != 0){
 		
 	}
 }else{
-	echo 'There is no question in repository!';
+	$noQuestionMsg = 'All questions have been taged. There are no more questions to be taged!';
 }
 
 ?>
@@ -57,6 +85,8 @@ if (sizeof($results) != 0){
 	// an array that keeps all questions path
 	var questions = new Array('<?= implode('\', \'', $questions)?>');
 
+	var questionsURI = new Array('<?= implode('\', \'', $questionsURI)?>');
+
 	var numQuestion = questions.length;
 	var curQuestionNum = 1;
 
@@ -65,17 +95,33 @@ if (sizeof($results) != 0){
 
 	$(document).ready(function(){
 
-		$('#curQuestion').attr('src', questions[0]);
+		if ('<?= $totalResults ?>' == 0){
 
-		$('#greetingDiv').html('<?= $greetingMsg?>');
+			$('#imgDiv').remove();
+			$('#tagQuestionDiv').remove();
 
-		$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
+			$('#greetingDiv').html('<?= $greetingMsg?>');
 
-		$('div.categoryCount').html('<h3> 0 </h3>');
+			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
 
-
-		$('.droppable').corner();
-
+			if ('<?= $_SESSION['role']?>' == 'teacher'){
+				groupingMsg = "<h2 style='width: 100%; float: left'>" + '<?= $noQuestionMsg ?>' + "</h2>";
+			}else{
+				groupingMsg = "<h2 style='width: 100%; float: left'> Please wait for the system to send you to a group</h2>";
+				groupingMsg += "<input id='getGroupButton' type='button' value='What is my group' onClick='checkGroup()'/>";
+			}	
+			$('#groupingMsgDiv').html(groupingMsg);
+			$('#curQuestionNumDiv').html('');
+		}else{
+			
+			$('#curQuestion').attr('src', questions[0]);
+			$('#greetingDiv').html('<?= $greetingMsg?>');
+			$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
+	
+			$('div.categoryCount').html('<h3> 0 </h3>');
+			$('.droppable').corner();
+		}
+		
 		// DRAG and DROP functionality
 		$(".draggable").draggable({
 
@@ -134,14 +180,16 @@ if (sizeof($results) != 0){
 		//gets all checked checkboxes and serializes it
 	    checkedValues = $(':checkbox:checked').serialize();
 	    checkedValues = $('.categoryChoice:checked').val();
-
+//		alert('uri =' + questionsURI[counter]);
 	    //Ajax call to send username, uriOwner, masterSolution, checkedValues
 		$.get("/src/php/ajaxServices/tagQuestion.php",
 				{author:"<?= $_SESSION['username']?>",
+				role:"<?= $_SESSION['role']?>",
 				masterSolution:"<?= $_SESSION['masterSolution']?>",
 //			 	tags: checkedValues,
 				tags: category,
-			 	ownerURI:questions[counter]},
+				path:questions[counter],
+				ownerURI:questionsURI[counter]},
 		  		function(returned_data){
 			  		// We don't need to do anything in the call-back function
 			    }
@@ -165,9 +213,13 @@ if (sizeof($results) != 0){
 			$('#tagQuestionDiv').remove();
 
 			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
-			
-			groupingMsg = "<h2 style='width: 100%; float: left'> Please wait for the system to send you to a group</h2>";
-			groupingMsg += "<input id='getGroupButton' type='button' value='What is my group' onClick='checkGroup()'/>";
+
+			if ('<?= $_SESSION['role']?>' == 'teacher'){
+				groupingMsg = "<h2 style='width: 100%; float: left'> All questions have been taged. There are no more questions to be taged! </h2>";
+			}else{
+				groupingMsg = "<h2 style='width: 100%; float: left'> Please wait for the system to send you to a group</h2>";
+				groupingMsg += "<input id='getGroupButton' type='button' value='What is my group' onClick='checkGroup()'/>";
+			}	
 			$('#groupingMsgDiv').html(groupingMsg);
 			$('#curQuestionNumDiv').html('');
 		}
@@ -191,11 +243,11 @@ if (sizeof($results) != 0){
 
 <style type='text/css'>
 
-	body {
+	body{
 		font-family: Georgia,"Trebuchet MS",Arial,Helvetica,sans-serif;
-		font-weight: normal;
+		font-weight : normal;
 		font-size: 14px; 
-		color: #444444;
+		color:#444444;
 	}
 	
 	div#tagQuestionDiv{
