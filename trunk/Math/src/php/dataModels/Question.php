@@ -26,14 +26,14 @@ class Question extends Elo {
 	 * @return path+filename of this question
 	 */
 	public function get_path(){
-		return parent::getMetadata('path');
+		return parent::getMetadata('questionpath');
 	}
 	
 	/**
 	 * @param $path path+filename of this question
 	 */
 	public function set_path($path){
-		parent::addMetadata('path', $path);
+		parent::addMetadata('questionpath', $path);
 	}
 	/**
 	 * @return the master soulution of this question
