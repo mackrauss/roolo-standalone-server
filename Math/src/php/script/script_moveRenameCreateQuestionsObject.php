@@ -5,16 +5,16 @@
  * then makes an Elo Question Object for each of moved and rename questions in Repository
  */
 
-require_once 'RooloClient.php';
-require_once 'dataModels/Question.php';
+require_once '../RooloClient.php';
+require_once '../dataModels/Question.php';
 $rooloClient = new RooloClient();
 $question = new Question();
 
 //the directory of source questions
-$sourceDir = str_replace('//','/',dirname(__FILE__)."/../../questionsSource");
+$sourceDir = str_replace('//','/',dirname(__FILE__)."/../../../questionsSource");
 
 //The directory of destination questions
-$destinationDir = str_replace('//','/', dirname(__FILE__) . '/../../Questions/');
+$destinationDir = str_replace('//','/', dirname(__FILE__) . '/../../../Questions/');
 
 // create handlers for the directoris
 $sourceHandler = opendir($sourceDir);
@@ -62,7 +62,7 @@ while (false !== ($file = readdir($sourceHandler))) {
 		
 	}
 }
-	print 'The files have been saved are <b>' . $fileSaved . " / " . $fileCount . '</b><br>'; 
+	print 'The files have been saved. ' . $fileSaved . " / " . $fileCount . '</br>\n'; 
 		
 	closedir($sourceHandler);
 ?>
