@@ -5,6 +5,8 @@ require_once './header.php';
 
 <?php 
 require_once '../RooloClient.php';
+require_once '../dataModels/Question.php';
+require_once '../dataModels/UploadedSolution.php';
 
 error_reporting(E_STRICT);
 
@@ -32,12 +34,59 @@ if(isset($_GET['category'])){
 }
 
 // subtype of questions
-	$_SESSION['subject'] = "Math";
+$_SESSION['subject'] = "Math";
+
 
 // retrieve questions from repository
 $rooloClient = new RooloClient();
-$query = "type:Question AND subtype:". $_SESSION['subject'];
-$results = $rooloClient->search($query, 'metadata', 'latest');
+$query = 'type:Question';
+
+//$allQuestions = $rooloClient->search($query, 'metadata', 'latest');
+$allQuestions = $rooloClient->search($query, 'metadata');
+//echo "size of questions =" .sizeof($allQuestions);
+/*
+ TODO
+*/ 
+
+
+
+$query = "type:UploadedSolution AND author:" . $_SESSION['username'];
+
+//$answeredQuestions = $rooloClient->search($query, 'metadata', 'latest');
+$uploadedSolutions = $rooloClient->search($query, 'metadata');
+//echo "</br>size of uploadedSolutions =" .sizeof($uploadedSolutions);
+$solutionObject = new UploadedSolution();
+$questionObject = new Question();
+$results= array();
+if (sizeof($uploadedSolutions) == 0){
+	$results = $allQuestions;
+}else{
+	for($i=0; $i<sizeof($allQuestions); $i++){
+		$questionObject = $allQuestions[$i];
+		$uri = $questionObject->get_uri();
+		//echo "</br></br>uri[".$i."] = ".$uri;
+		$found = FALSE;
+		for($j=0; $j<sizeof($uploadedSolutions); $j++){
+			$solutionObject = $uploadedSolutions[$j];
+			$ownerURI = $solutionObject->get_ownerUri();
+			//echo "</br>ownerUri[".$j."] = ".$ownerURI;
+			if ($ownerURI == $uri){
+				$found = TRUE;
+				//unset($allQuestions[$j]);
+			}
+		}
+		//echo "</br>found = ".$found;
+		if (!$found){
+			//echo "</br>shoud be in result = ".$questionObject->get_uri();
+			array_push($results, $questionObject);
+		}
+	}
+}
+//echo "size of result = ". sizeof($results);
+//////////////////////////////////////	
+//$rooloClient = new RooloClient();
+//$query = "type:Question AND subtype:". $_SESSION['subject'];
+//$results = $rooloClient->search($query, 'metadata', 'latest');
 	if (sizeof($results) != 0){
 		for ($i=0; $i< sizeof($results); $i++){
 			$questionObject = new Question();
@@ -47,7 +96,7 @@ $results = $rooloClient->search($query, 'metadata', 'latest');
 			
 		}
 	}else{
-		echo 'There is no question in repository!';
+		$message =  'There are no more questions to solve!';
 	}
 
 ?>
@@ -65,76 +114,117 @@ $results = $rooloClient->search($query, 'metadata', 'latest');
 	var numQuestion = questions.length;
 	var curQuestionNum = 1;
 	
+	
     $(document).ready(function(){
+		if ('<?= sizeof($results) ?>' == 0){
+			$('#imgDiv').html('');
+			$('#imgDiv').remove();
+			
+			$('#uploadDiv').remove();
+			$('#greetingDiv').html('<?= $greetingMsg?>');
 
-    	new AjaxUpload('uploadButtonDiv', {  
-            action: '/src/php/ajaxServices/saveSolution.php',  
-            //Name of the file input box  
-            name: 'uploadedfile', 
-            data: { },
-
-            autoSubmit: false,
-                         
-            onSubmit: function(file, ext){
-            	  
-				$('#errorMessageDiv').empty();
-            	this.setData ( {'author'   : '<?= $_SESSION['username']?>',
-                	            'ownerURI' : $('#curQuestionId').val()});  
-            	this.disable();
-           },  
-           onComplete: function(file, response){
-
-	            if(response === "success"){  
-	            	var counter = $('#counter').val();
-	   	    		//changes the question if it is not last
-	   	    		if ( counter <= questions.length - 2 ){
-	   	    			counter++;
-	   	    			$('#counter').val(counter);
-	   	    			$('#curQuestionImg').attr('src', questions[counter]);
-	   	
-	   	    			//$('#curQuestionId').val(questions[counter]);
-	   	    			$('#curQuestionId').val(questionsURI[counter]);
-	   	            	this.enable();
-	   	     			// increment the current number of the question
-	   	     			curQuestionNum++;
-	   	     			//if (curQuestionNum <= numQuestion) {
-	   	     			$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
-	   	     			//}
-	   	     	   	            	
-	   	    		}
-	   	    		else{
-		   	 			$('#imgDiv').html('');
-		   				$('#imgDiv').remove();
+			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
+			
+			groupingMsg = "<h2 style='width: 100%; float: left'> Please wait for the system to send you to a group</h2>";
+			groupingMsg += "<input id='getGroupButton' type='button' value='What is my group' onClick='checkGroup()'/>";
+			groupingMsg += "<h4 style='width: 100%; float: left'>" + "<?= $message ?>" + "</h4>"; 
+			$('#groupingMsgDiv').html(groupingMsg);
+		}else {
+	    	ajaxUpload = new AjaxUpload(
+	    	    'uploadBtn',
+	    	    {  
+		        	action: '/src/php/ajaxServices/saveSolution.php',  
+		            //Name of the file input box  
+		            name: 'uploadedfile', 
+		            data: { },
+		            autoSubmit: false,
+		                         
+		            onSubmit: function(file, ext){
+		            	  
+						$('#messageDiv').empty();
+			            this.setData ( {'author'   : '<?= $_SESSION['username']?>',
+			               	            'ownerURI' : $('#curQuestionId').val()});  
+			            this.disable();
+					},
 	
-		   				$('#uploadDiv').remove();
+					onChange: function(file,ext){
+		            	$('#messageDiv').html('<label>Click <strong>Submit...</strong> to upload your solution: <label/>' + file);
+		           	    $('#submitBtn').removeAttr('disabled');
+		           	    $('#submitBtn').css({'color' : '#3366CC'});
+		            },
+		              
+		            onComplete: function(file, response){
+						//alert ("response is = '" + response + "'");
+						response = response.substr(0,7);
+			            if(response === "success"){  
+			            	var counter = $('#counter').val();
+								
+			   	    		//changes the question if it is not last
+			   	    		if ( counter <= questions.length - 2 ){
+			   	    			counter++;
+			   	    			$('#counter').val(counter);
+			   	    			$('#curQuestionImg').attr('src', questions[counter]);
+			   	
+			   	    			$('#curQuestionId').val(questionsURI[counter]);
+			   	            	this.enable();
+		
+			   	            	// increment the current number of the question
+			   	     			curQuestionNum++;
+			   	     			$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
+				           	    $('#submitBtn').css({'color' : '#cccccc'});
+			   	     			
+			   	    		}
+			   	    		else{
+				   	 			$('#imgDiv').html('');
+				   				$('#imgDiv').remove();
+			
+				   				$('#uploadDiv').remove();
+			
+				   				$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
+		
+				   				groupingMsg = "<h2 style='width: 100%; float: left'> Please wait for the system to send you to a group</h2>";
+				   				groupingMsg += "<input id='getGroupButton' type='button' value='What is my group' onClick='checkGroup()'/>";
+				   				$('#groupingMsgDiv').html(groupingMsg);
+				   				$('#curQuestionNumDiv').html('');
+			   	    		}
+						} else{
+							var par = $('<p>');
+							var str = '<B>' + file + '</B>' + '   has not saved!'; 
+							par.html(str);
+		    	            par.appendTo('#messageDiv');
+		    	           	this.enable();
+			            }
+	 	              
+	           		}  
+	       		});// end of define ajaxUpload
+	       $('#curQuestionImg').attr('src', questions[0]);
+	       $('#curQuestionId').val(questionsURI[0]);
+	   	   $('#submitBtn').attr('disabled', 'disabeled');        	
 	
-		   				$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
-		   				
-		   				groupingMsg = "<h2 style='width: 100%; float: left'> Please wait for the system to send you to a group</h2>";
-		   				groupingMsg += "<input id='getGroupButton' type='button' value='What is my group' onClick='checkGroup()'/>";
-		   				$('#groupingMsgDiv').html(groupingMsg);
-		   				$('#curQuestionNumDiv').html('');
-	   	    		}
-				} else{
-					var par = $('<p>');
-					var str = '<B>' + file + '</B>' + '   has not saved!'; 
-					par.html(str);
-    	            par.appendTo('#errorMessageDiv');
-    	           	this.enable();
-	            }
- 	              
-           }  
-       });  
-       $('#curQuestionImg').attr('src', questions[0]);
-       $('#curQuestionId').val(questionsURI[0]);
-
-       $('#greetingDiv').html('<?= $greetingMsg?>');
-	   $('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
-            
+	       $('#greetingDiv').html('<?= $greetingMsg?>');
+		   $('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
+			
+			$('Button').hover(
+				function(){ 
+					$(this).addClass("hover"); 
+				},
+				function(){ 
+					$(this).removeClass("hover"); 
+				}
+			)
+	    }//end of else
     });
 
-</script>
+    
+	function submit(){
+		$('#submitBtn').removeClass("hover"); 
+		$('#submitBtn').attr('disabled', 'disabeled');        	
+		ajaxUpload.submit();	
+	}
 
+</script>
+<script type='text/javascript'>
+</script>
 <style type='text/css'>
 
 	#uploadSolutionDiv{
@@ -145,7 +235,7 @@ $results = $rooloClient->search($query, 'metadata', 'latest');
 	#greetingDiv {
 		width: 100%;
 		margin: 2% 0 0 4%; 
-		font-size: 18px;
+		font-size: 13px;
 		//font-weight:normal;
 	}
 	
@@ -167,28 +257,79 @@ $results = $rooloClient->search($query, 'metadata', 'latest');
 		margin-left: 10%;
 	}
 	
-	#uploadButtonDiv {  
-        margin:30px 70px; padding:15px;  
-        font-weight:bold; font-size:1.3em;  
-        font-family:Arial, Helvetica, sans-serif;  
-        text-align:center;  
-        background:#f2f2f2;  
-        color:#3366cc;  
-        border:1px solid #ccc;  
-        width:150px;  
-        cursor:pointer !important;  
-        -moz-border-radius:5px; -webkit-border-radius:5px;  
-    }  
+//	#uploadButtonDiv {  
+//        margin:5px 70px;
+//        padding:5px;  
+//        font-weight:bold; font-size:1.3em;  
+//        font-family:Arial, Helvetica, sans-serif;  
+//        text-align:center;  
+//        background:#f2f2f2;  
+//        color:#3366cc;  
+//        border:1px solid #ccc;  
+//        width:150px;  
+//        cursor:pointer !important;  
+//        -moz-border-radius:5px; -webkit-border-radius:5px;  
+//    }  
+//	
+//	/* 
+//	We can't use ":hover" preudo-class because we have
+//	invisible file input above, so we have to simulate
+//	hover effect with javascript. 
+//	 */
+//	#uploadButtonDiv.hover {
+//		background: url(button.png) 0 56px;
+//		color: #95A226;
+//		cursor:pointer !important;  
+//	}
+//	#submitBtnDiv {
+//        margin:5px 70px; padding:5px;  
+//        font-weight:bold; font-size:1.3em;  
+//        font-family:Arial, Helvetica, sans-serif;  
+//        text-align:center;  
+//        background:#f2f2f2;  
+//        color:#3366cc;  
+//        border:1px solid #ccc;  
+//        width:150px;  
+//        cursor:pointer !important;  
+//        -moz-border-radius:5px; -webkit-border-radius:5px;  
+// 	}
+//	#submitBtnDiv.hover {
+//		background: url(button.png) 0 56px;
+//		color: #95A226;
+//		cursor:pointer !important;  
+//	}
 	
-	/* 
-	We can't use ":hover" preudo-class because we have
-	invisible file input above, so we have to simulate
-	hover effect with javascript. 
-	 */
-	#uploadButtonDiv.hover {
-		background: url(button.png) 0 56px;
-		color: #95A226;
-		cursor:pointer !important;  
+	.button { 
+	   //outline: 0; 
+	   text-decoration:none !important; 
+	   position: relative; 
+	   text-align: center; 
+	   //zoom: 1;
+	   
+	    margin:5px 10px; padding:5px;  
+	    font-weight:bold; font-size:1.3em;  
+	    font-family:Arial, Helvetica, sans-serif;  
+	    text-align:center;  
+	    background:#f2f2f2;  
+	    color:#3366cc;  
+	    border:1px solid #ccc;  
+	    width:140px;  
+	    -moz-border-radius:5px; -webkit-border-radius:5px;  
+	}
+	
+	.hover {
+			//background: url(button.png) 0 56px;
+			background:#ffffff;
+			//color: #95A226;
+			cursor:pointer !important;  
+	}
+	
+	#messageDiv {
+		margin;5px 500px; 
+		padding:5px;
+		//width: 100%;
+		height: 30px;
+		float: left;
 	}
 	
 
@@ -208,14 +349,20 @@ $results = $rooloClient->search($query, 'metadata', 'latest');
 	
 	<div id='uploadDiv'>
 		
-		</br></br></br></br>
+		</br></br></br>
           <label><p>
-            Click <strong>Browse...</strong> to upload your solution: <br/></p>
+            Click <strong>Browse...</strong> to select your solution: <br/></p></label>
             
 			<input type="hidden" id="curQuestionId" name="curQuestionId" value="" />
 			<input type='hidden' id='counter' name='counter' value="0"/>
-          	<div id="uploadButtonDiv">Browse</div>
-          	<div id='errorMessageDiv'></div>
+
+ 			<div id='buttonsDiv'>
+  				<input type="button" id='uploadBtn' value="Browse" class="button" />
+				<input type ="button" id='submitBtn' class="button" value="Submit" style="color:#cccccc" onClick='submit()'/>
+           	</div>
+          	<div id='messageDiv'>
+          		<label id='submitLbl'></label>
+          	</div>
 	</div>
 </div>
 
