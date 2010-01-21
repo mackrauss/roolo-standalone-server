@@ -26,7 +26,7 @@
     	$author = $_POST['author'];
 		$ownerURI = $_POST['ownerURI'];
 
-		$results = '';
+		//$results = '';
 		$rooloClient = new RooloClient();
 		// Creating a UploadedSolution elo. 
 		$uploadedSolution = new UploadedSolution();
@@ -36,6 +36,7 @@
 
 		$filePath = '/Answers/'. $fileName;
 		$uploadedSolution->set_path($filePath);
-		$results = $rooloClient->addElo($uploadedSolution);
+		//$results = $rooloClient->addElo($uploadedSolution);
+		$rooloClient->addElo($uploadedSolution);
     }
 ?>
