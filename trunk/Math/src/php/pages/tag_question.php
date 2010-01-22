@@ -233,10 +233,20 @@ if ($totalResults != 0){
 
 	function checkGroup(){
 
-		$('#groupDiv').css({'height' : '10%'});
+		/*
+        $('#groupDiv').css({'height' : '10%'});
 		$('#groupDiv').hide();
 		$('#groupDiv').html('').fadeOut("slow");
 		$('#groupDiv').html('<p>The system has not yet calculated which group you belong to. This might be because some people are still tagging questions</p>').fadeIn("slow");
+        */
+
+      $.ajax({
+        url: "/src/php/ajaxServices/checkActivityFinished.php",
+        data: {author:"<?= $_SESSION['username']?>", role:"<?= $_SESSION['role']?>"},
+        complete: function(data) {
+                  $('#groupDiv').show().html(data.responseText).fadeOut(6000)
+                }
+      });
 	}
 		
 </script>
