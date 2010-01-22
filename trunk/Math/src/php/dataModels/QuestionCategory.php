@@ -55,6 +55,10 @@ class QuestionCategory extends Elo {
 	public function set_ownerUri($_ownerUri) {
 		parent::addMetadata('owneruri', $_ownerUri);
 	}
+
+    public function get_answer() {
+      return $this->get_title();
+    }
 	
 }
 
