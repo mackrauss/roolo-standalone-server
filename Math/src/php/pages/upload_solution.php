@@ -42,7 +42,7 @@ $rooloClient = new RooloClient();
 $query = 'type:Question';
 
 //$allQuestions = $rooloClient->search($query, 'metadata', 'latest');
-$allQuestions = $rooloClient->search($query, 'metadata');
+$allQuestions = $rooloClient->search($query, 'metadata', 'latest');
 //echo "size of questions =" .sizeof($allQuestions);
 /*
  TODO

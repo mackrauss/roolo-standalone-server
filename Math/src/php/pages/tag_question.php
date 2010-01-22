@@ -33,7 +33,7 @@ if ($_SESSION['role'] == 'teacher'){
 	$results = $rooloClient->search($query, 'metadata', 'latest');
 }else {
 	$query = 'type:Question';
-	$allQuestions = $rooloClient->search($query, 'metadata');
+	$allQuestions = $rooloClient->search($query, 'metadata', 'latest');
 
 	$query = "type:QuestionCategory AND author:" . $_SESSION['username'];
 	$tagedQuestions = $rooloClient->search($query, 'metadata');
