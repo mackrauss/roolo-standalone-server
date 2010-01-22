@@ -24,7 +24,7 @@ date_default_timezone_set('Canada/Eastern');
 $fileCount = "0";
 $fileSaved = "0";
 while (false !== ($file = readdir($sourceHandler))) {
-	if ($file != "." && $file != "..") { 
+	if ($file != "." && $file != ".." && strpos($file, ".") !== 0) {
 		//take milliseconds
 		list( $msecs, $secs ) = split( ' ', microtime());
 		$threeDigitofmsecs = substr(number_format($msecs, 5),2);
