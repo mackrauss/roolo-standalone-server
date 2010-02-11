@@ -33,7 +33,7 @@ class Grader {
         throw new Exception("Couldn't find question $question_uri for answer $answer_uri!");
 
       $solution = $question->get_masterSolution();
-
+      
       if (!$solution || empty($solution))
         throw new Exception("Missing master solution for $question_uri!");
 
@@ -46,7 +46,7 @@ class Grader {
     }
 
 
-      print_r($studentReportCardContent);
+    print_r($studentReportCardContent);
   }
 
 
