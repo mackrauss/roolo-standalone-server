@@ -29,7 +29,7 @@ $query ='';
 $results = array();
 
 if ($_SESSION['role'] == 'teacher'){
-	$query = 'type:Question AND masterSolution:"null"';
+	$query = 'type:Question AND NOT masterSolution';
 	$results = $rooloClient->search($query, 'metadata', 'latest');
 }else {
 	$query = 'type:Question';
@@ -71,7 +71,7 @@ if ($totalResults != 0){
 		
 	}
 }else{
-	$noQuestionMsg = 'All questions have been taged. There are no more questions to be taged!';
+	$noQuestionMsg = 'All questions have been tagged. There are no more questions to be taged!';
 }
 
 ?>
@@ -244,7 +244,7 @@ if ($totalResults != 0){
         url: "/src/php/ajaxServices/checkActivityFinished.php",
         data: {author:"<?= $_SESSION['username']?>", role:"<?= $_SESSION['role']?>"},
         complete: function(data) {
-                  $('#groupDiv').show().html(data.responseText).fadeOut(6000)
+                  $('#groupDiv').show().html(data.responseText)//.fadeOut(6000)
                 }
       });
 	}
