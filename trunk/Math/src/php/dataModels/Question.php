@@ -39,7 +39,7 @@ class Question extends Elo {
 	 * @return the master soulution of this question
 	 */
 	public function get_masterSolution(){
-		return parent::getMetadata('masterSolution');
+		return parent::getMetadata('mastersolution');
 	}
 	
 	/**
