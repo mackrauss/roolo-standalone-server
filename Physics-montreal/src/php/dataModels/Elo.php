@@ -140,9 +140,14 @@ class Elo implements XMLSupported{
 					
 					// This code is to dynamically set the values for the
 					// elo's metadatas
-					$keyVar = "_" . $key;
-					$this->$keyVar = $value;
-					$this->addMetadata($key, $value);
+					/*
+					 * THIS WAS MESSING UP THE POPULATION OF THE CODE. 
+					 * SEEMS TO BE DOING THE EXACT SAME THING AS $this->_metadata[$key] = $value; BUT ADDING A _<mt key> VARIABLE THAT
+					 * MESSES UP THE XML GENERATION.
+					 */
+//					$keyVar = "_" . $key;
+//					$this->$keyVar = $value;
+//					$this->addMetadata($key, $value);
 					
 				}
 			}

@@ -10,7 +10,7 @@ class RooloClient {
 	private $_rooloServiceUrls = array();
 	
 	public function __construct(){
-		$this->_rooloUrl = "http://localhost:8070/roolo-standalone-server/";
+		$this->_rooloUrl = "http://baci.oise.utoronto.ca:8070/roolo-standalone-server/";
 //		$this->_rooloUrl = "http://baci.oise.utoronto.ca:8070/roolo-standalone-server/";
 		
 		$this->populateServiceUrls();
@@ -55,10 +55,11 @@ class RooloClient {
 	public function addElo($eloObj){
 		
 		$eloXml = $eloObj->generateXml();
-
+		
 		$eloXml = urlencode($eloXml);
 		$url = $this->_rooloServiceUrls['addElo'] . '?eloXML=' . $eloXml;
 		return file_get_contents($url);
+//		return $eloXml;
 	}
 	
 	/**

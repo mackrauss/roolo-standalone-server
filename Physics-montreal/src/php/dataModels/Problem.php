@@ -1,11 +1,10 @@
 <?php
 require_once dirname(__FILE__).'/Elo.php';
 
-
 class Problem extends Elo {
 	
 	private $_pathTypesArray = array("urlPath", "uriPath", "diskPath");
-			
+	
 	public function __construct($xml=null){
 		parent::__construct($xml);
 		parent::addMetadata('type', 'Problem');
@@ -63,6 +62,36 @@ class Problem extends Elo {
     public function __get($name) {
 		return parent::getMetadata($name);
     }
+    
+    public function set_principleUri($uri){
+    	parent::addMetadata('principleUri', $uri);
+    }
+    
+    public  function get_principleUri(){
+    	return parent::getMetadata('principleUri');
+    }
+    
+    public function set_principleName($name){
+    	parent::addMetadata('principleName', $name);
+    }
+    
+    public function get_principleName(){
+    	return parent::getMetadata('principleName');
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?>
