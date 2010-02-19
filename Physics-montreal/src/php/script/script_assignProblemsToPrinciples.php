@@ -33,6 +33,7 @@ for ($i=0;$i < $numPrinciples;$i++){
 		die();
 	}
 }
+
 var_dump($results);
 
 ?>
