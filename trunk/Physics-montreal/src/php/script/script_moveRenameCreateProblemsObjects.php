@@ -38,7 +38,7 @@ while (false !== ($file = readdir($sourceHandler))) {
 		$sourcePath = $sourceDir."/".$file;
 		$destinationPath = $destinationDir.$newFileName;
 
-		if (!rename($sourcePath, $destinationPath)) {
+		if (!copy($sourcePath, $destinationPath)) {
 			echo "failed to move" . $file . "...\n";
 		}else{
 			$curPath = substr($destinationPath, strrpos($destinationPath, '/Problems'));
