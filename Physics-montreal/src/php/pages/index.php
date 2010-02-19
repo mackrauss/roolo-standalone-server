@@ -33,6 +33,9 @@ $graphML->createGroupGraphMLs();
 	<li> Tag questions <br/>
 	     <input type="button" class="SmallButton" value="Tag Questions > " onClick="document.location.href='/src/php/pages/tag_question.php';"/>
 	</li>
+	<li> Multiple Choice <br/>
+	     <input type="button" class="SmallButton" value="Multiple Choice > " onClick="document.location.href='/src/php/pages/multiple_choice.php';"/>
+	</li>
 </ol>
 
 
