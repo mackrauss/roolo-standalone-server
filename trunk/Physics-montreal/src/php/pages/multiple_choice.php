@@ -101,8 +101,8 @@ if ($totalResults != 0){
 			
 			$('#curQuestion').attr('src', questions[randomIndex]);
 			$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
-			$('#countDown').text( "Time Left " + minutes + ":" + seconds );
-			$('#charLeftStr').text( rationaleTextMax + " characters left");
+			$('#countDown').text( "Time Left" + minutes + ":" + seconds );
+			$('#charLeftStr').text( rationaleTextMax + " characters left");
 			countDown(); 
 		}
 
@@ -140,9 +140,9 @@ if ($totalResults != 0){
 			seconds -= 1;
 		} 
 		if (seconds < 10)
-			$('#countDown').text( "Time Left " + minutes + ":0" + seconds ); 
+			$('#countDown').text( "Time Left" + minutes + ":0" + seconds ); 
 		else
-			$('#countDown').text( "Time Left " + minutes + ":" + seconds ); 
+			$('#countDown').text( "Time Left" + minutes + ":" + seconds ); 
 		setTimeout("countDown()",1000); 
 	 }
 
@@ -192,7 +192,7 @@ if ($totalResults != 0){
 			$('#curQuestion').attr('src', questions[counter]);
 
 			$('#rationaleTextarea').val('');
-			$('#charLeftStr').text( rationaleTextMax + " characters left");
+			$('#charLeftStr').text( rationaleTextMax + "characters left");
 
 			$("input[name='choice']:checked").attr("checked", false);
 
@@ -289,18 +289,22 @@ if ($totalResults != 0){
 	}
 
 	#choiceDiv {
-		width: 80%;
-		margin-left: 3%;
-		margin-bottom: 7%; 
+		width: 100%;
+		margin-bottom: 2%; 
+		float: left;
+	}
+	
+	#choiceDiv input {
+		margin-left: 5%;
+	}
+
+	#principleChoiceDiv input {
+		margin-top: 1%;
 	}
 
     #charLeftStr {
-    	color:	#736F6E;
     	text-align: right;
-    	//font-style: italic;
-    	font-weight: bold;
-    	font-size: 10px;
-    	font-family:"Lucida Console", Lucida Console, serif;
+    	font-size: 12px;
     	margin-left = 2%;
     }
 	#submitDiv {
@@ -331,29 +335,33 @@ if ($totalResults != 0){
 		<img id='curQuestion' src="" />
 	</div>
 	<div id='answerDiv'>
-		<div id='moltiplecchoiceTitleDiv' class='title'>
-			<font size='3px'> Select Correct answer </font><br/><br/>
-		</div>
-		<div id='choiceDiv'>
-			<input type="radio" name="choice" value="A"><b>A</b><br>
-			<input type="radio" name="choice" value="B"><b>B</b><br>
-			<input type="radio" name="choice" value="C"><b>C</b><br>
-			<input type="radio" name="choice" value="D"><b>D</b><br>
-<!--			<input type="radio" name="choice" value="E"><b>E</b><br>-->
-		</div>
-		<div id='rationaleDiv'>
-			<div id='textareaTitleDiv' class='title'>
-				<font size='3px'>Add Rationale</font>
-				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-				&nbsp&nbsp
-				<span id="charLeftStr" ></span>
+		<div style='width: 100%; float: left'>
+			<div id='choiceDiv'>
+				<h4> Choose your answer </h4>
+				<input type="radio" name="choice" value="A">A
+				<input type="radio" name="choice" value="B">B
+				<input type="radio" name="choice" value="C">C
+				<input type="radio" name="choice" value="D">D
+				<input type="radio" name="choice" value="E">E
 			</div>
-			<textarea id='rationaleTextarea' rows='5' cols='50'	white-space='nowrap'></textarea>
+		</div>
+		
+		<div id='rationaleDiv' style='width: 100%; float: left; margin-top: 10%'>
+			<div id='textareaTitleDiv' class='title'>
+				<div style='float: left; width: 59%'>Provide a rationale for your choice</div>
+				<div id="charLeftStr" style='float: right; width: 40%' ></div>
+			</div>
+			<textarea id='rationaleTextarea' rows='10' cols='50' white-space='nowrap'></textarea>
 		</div>
 		<div id='submitDiv'>
 			<input id='submitBtn' type="button" value='Submit' onClick='nextQuestion()'>
 		</div>
+	</div>
+	<div id='principleChoiceDiv' style='width: 100%; float: left; '>
+		<h4> Choose the principle which applies to this question </h4> 
+		<input type="radio" name="principleChoice" value="Newton\'s first law">Newton's First Law<br/>
+		<input type="radio" name="principleChoice" value="Newton\'s first law">Newton's Second Law<br/>
+		<input type="radio" name="principleChoice" value="Newton\'s first law">Newton's Third Law<br/>
 	</div>
 </div>
 
