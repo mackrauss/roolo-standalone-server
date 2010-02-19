@@ -30,7 +30,7 @@ function addPrinciple($title, $content){
 	$principle->title = $title;
 	$principle->content = $content;
 //	echo $principle->generateXml();
-	$rooloClient->addElo($principle);
+	echo $rooloClient->addElo($principle);
 }
 
 ?>
