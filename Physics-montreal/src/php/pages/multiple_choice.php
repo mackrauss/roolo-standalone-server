@@ -1,5 +1,4 @@
 <?php
-//session_start();
 
 require_once './header.php';
 require_once '../RooloClient.php';
@@ -7,14 +6,20 @@ require_once '../dataModels/Problem.php';
 require_once '../dataModels/Solution.php';
 
 error_reporting(E_STRICT);
+if (!$_SESSION['loggedIn'])
+	header("Location:/src/php/pages/");
+$_SESSION['loggedIn'] = FALSE;	
+$_SESSION['msg'] = "";
+$greetingMsg = "Hello " . $_SESSION['username'];
+$noMoreProblemMsg = 'You have finished answering all the questions. Please wait for your teacher to assign you to a super group!';
 
-if(isset($_GET['username'])){
-	$_SESSION['username'] = $_GET['username'];
-	$greetingMsg = "Hello " . $_SESSION['username'];
-}else {
-	$_SESSION['username'] = '';
-	$greetingMsg = 'username has not been set !!!';
-}
+//if(isset($_GET['username'])){
+//	$_SESSION['username'] = $_GET['username'];
+//	$greetingMsg = "Hello " . $_SESSION['username'];
+//}else {
+//	$_SESSION['username'] = '';
+//	$greetingMsg = 'username has not been set !!!';
+//}
 
 // retrieve questions from repository
 $rooloClient = new RooloClient();
@@ -22,7 +27,8 @@ $query ='';
 $results = array();
 
 $query = 'type:Problem';
-$allProblems = $rooloClient->search($query, 'metadata', 'latest');
+//$allProblems = $rooloClient->search($query, 'metadata', 'latest');
+$allProblems = $rooloClient->search($query, 'metadata');
 
 $query = "type:Solution AND author:" . $_SESSION['username'];
 $authorSolutions = $rooloClient->search($query, 'metadata');
@@ -56,8 +62,8 @@ if ($totalResults != 0){
 		$problems[$i] = $problemObject->path;
 		$problemsURI[$i] = $problemObject->uri;
 	}
-}else{
-	$noMoreProblemMsg = 'You have finished answering all the questions. Please wait for your teacher to assign you to a super group!';
+//}else{
+//	$noMoreProblemMsg = 'You have finished answering all the questions. Please wait for your teacher to assign you to a super group!';
 }
 ?>
 
@@ -101,8 +107,8 @@ if ($totalResults != 0){
 			
 			$('#curQuestion').attr('src', questions[randomIndex]);
 			$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
-			$('#countDown').text( "Time Left" + minutes + ":" + seconds );
-			$('#charLeftStr').text( rationaleTextMax + " characters left");
+			$('#countDown').text( "Time Left " + minutes + ":" + seconds );
+			$('#charLeftStr').text( rationaleTextMax + " characters left");
 			countDown(); 
 		}
 
@@ -140,9 +146,9 @@ if ($totalResults != 0){
 			seconds -= 1;
 		} 
 		if (seconds < 10)
-			$('#countDown').text( "Time Left" + minutes + ":0" + seconds ); 
+			$('#countDown').text( "Time Left " + minutes + ":0" + seconds ); 
 		else
-			$('#countDown').text( "Time Left" + minutes + ":" + seconds ); 
+			$('#countDown').text( "Time Left " + minutes + ":" + seconds ); 
 		setTimeout("countDown()",1000); 
 	 }
 
@@ -151,7 +157,7 @@ if ($totalResults != 0){
 	 }
 
 	 function loginPage(){
-		 alert ("Inested of this alert in loginPage function would use the ling to login page");
+		window.location = "/src/php/pages/";
 	 } 
 </script>
 <script type='text/javascript'>
@@ -192,7 +198,7 @@ if ($totalResults != 0){
 			$('#curQuestion').attr('src', questions[counter]);
 
 			$('#rationaleTextarea').val('');
-			$('#charLeftStr').text( rationaleTextMax + "characters left");
+			$('#charLeftStr').text( rationaleTextMax + " characters left");
 
 			$("input[name='choice']:checked").attr("checked", false);
 
@@ -209,7 +215,7 @@ if ($totalResults != 0){
 
 			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
 
-			groupingMsg = "<h2 style='width: 100%; float: left'> There are no more problems. Please join to your supper group!</h2>";
+			groupingMsg = "<h2 style='width: 100%; float: left'> '<?= $noMoreProblemMsg ?>' </h2>";
 
 			$('#groupingMsgDiv').html(groupingMsg);
 			$('#curQuestionNumDiv').html('');
@@ -277,7 +283,7 @@ if ($totalResults != 0){
 		width: 40%;
 		height: 170px;
 		float: left;
-		margin-left: 5%;
+		margin-left: 10%;
 		margin-top: 0%;
 		
 	}
@@ -289,22 +295,18 @@ if ($totalResults != 0){
 	}
 
 	#choiceDiv {
-		width: 100%;
-		margin-bottom: 2%; 
-		float: left;
-	}
-	
-	#choiceDiv input {
-		margin-left: 5%;
-	}
-
-	#principleChoiceDiv input {
-		margin-top: 1%;
+		width: 80%;
+		margin-left: 3%;
+		margin-bottom: 7%; 
 	}
 
     #charLeftStr {
+    	color:	#736F6E;
     	text-align: right;
-    	font-size: 12px;
+    	//font-style: italic;
+    	font-weight: bold;
+    	font-size: 10px;
+    	font-family:"Lucida Console", Lucida Console, serif;
     	margin-left = 2%;
     }
 	#submitDiv {
@@ -335,33 +337,27 @@ if ($totalResults != 0){
 		<img id='curQuestion' src="" />
 	</div>
 	<div id='answerDiv'>
-		<div style='width: 100%; float: left'>
-			<div id='choiceDiv'>
-				<h4> Choose your answer </h4>
-				<input type="radio" name="choice" value="A">A
-				<input type="radio" name="choice" value="B">B
-				<input type="radio" name="choice" value="C">C
-				<input type="radio" name="choice" value="D">D
-				<input type="radio" name="choice" value="E">E
-			</div>
+		<div id='moltiplecchoiceTitleDiv' class='title'>
+			<font size='3px'> Select Correct answer </font><br/><br/>
 		</div>
-		
-		<div id='rationaleDiv' style='width: 100%; float: left; margin-top: 10%'>
+		<div id='choiceDiv'>
+			<input type="radio" name="choice" value="A"><b>A</b><br>
+			<input type="radio" name="choice" value="B"><b>B</b><br>
+			<input type="radio" name="choice" value="C"><b>C</b><br>
+			<input type="radio" name="choice" value="D"><b>D</b><br>
+<!--			<input type="radio" name="choice" value="E"><b>E</b><br>-->
+		</div>
+		<div id='rationaleDiv'>
 			<div id='textareaTitleDiv' class='title'>
-				<div style='float: left; width: 59%'>Provide a rationale for your choice</div>
-				<div id="charLeftStr" style='float: right; width: 40%' ></div>
+				<font size='3px'>Add Rationale</font>
+				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+				<span id="charLeftStr" ></span>
 			</div>
-			<textarea id='rationaleTextarea' rows='10' cols='50' white-space='nowrap'></textarea>
+			<textarea id='rationaleTextarea' rows='5' cols='50'	white-space='nowrap'></textarea>
 		</div>
 		<div id='submitDiv'>
 			<input id='submitBtn' type="button" value='Submit' onClick='nextQuestion()'>
 		</div>
-	</div>
-	<div id='principleChoiceDiv' style='width: 100%; float: left; '>
-		<h4> Choose the principle which applies to this question </h4> 
-		<input type="radio" name="principleChoice" value="Newton\'s first law">Newton's First Law<br/>
-		<input type="radio" name="principleChoice" value="Newton\'s first law">Newton's Second Law<br/>
-		<input type="radio" name="principleChoice" value="Newton\'s first law">Newton's Third Law<br/>
 	</div>
 </div>
 
