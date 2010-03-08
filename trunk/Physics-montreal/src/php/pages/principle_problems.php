@@ -7,82 +7,79 @@ require_once '../dataModels/Problem.php';
 require_once '../dataModels/Principle.php';
 
 error_reporting(E_STRICT);
-// check username variable has been sent
-if(isset($_GET['username'])){
-	$_SESSION['username'] = $_GET['username'];
-	$greetingMsg = "Hello " . $_SESSION['username'];
-}else {
-	$_SESSION['username'] = '';
-	$greetingMsg = 'username has not been set !!!';
+
+if (!$_SESSION['loggedIn']){
+	header("Location:/src/php/pages/");
 }
-//// check role variable has been sent
-//if(isset($_GET['role'])){
-//	$_SESSION['role'] = $_GET['role'];
+$_SESSION['loggedIn'] = FALSE;
+$_SESSION['msg'] = "";
+$greetingMsg = "Hello " . $_SESSION['username'];
+
+//// check username variable has been sent
+//if(isset($_GET['username'])){
+//	$_SESSION['username'] = $_GET['username'];
+//	$greetingMsg = "Hello " . $_SESSION['username'];
 //}else {
-//	$_SESSION['role'] = 'student';
-//	//$greetingMsg = 'role has not been set !!!';
+//	$_SESSION['username'] = '';
+//	$greetingMsg = 'username has not been set !!!';
 //}
 
-// retrieve questions from repository
+$noMoreProblemMsg = 'You have finished answering all the questions.';
+
 $rooloClient = new RooloClient();
 $query ='';
-$results = array();
 
-//if ($_SESSION['role'] == 'teacher'){
-	//$query = 'type:Problems AND principleuri:""';
-	$query = 'type:Problem';
-	$results = $rooloClient->search($query, 'metadata', 'latest');
-//}else {
-//	$query = 'type:Question';
-//	$allQuestions = $rooloClient->search($query, 'metadata', 'latest');
+$query = 'type:Problem';
 //
-//	$query = "type:QuestionCategory AND author:" . $_SESSION['username'];
-//	$tagedQuestions = $rooloClient->search($query, 'metadata');
+//TODO
+// should change the querry like below
+//$query = 'type:Problem AND mcmastersolution:null AND principleuri:null';
+// it means just retrieve the problem elos that mcmustersolution and principleuri are null
 //
-//	$questionCategoryObject = new QuestionCategory();
-//	$problemObject = new Question();
-//	for($i=0; $i<sizeof($allQuestions); $i++){
-//		$problemObject = $allQuestions[$i];
-//		$uri = $problemObject->get_uri();
-//		//echo "</br>ownerUri[".$i."] = ".$ownerURI;
-//		$found = FALSE;
-//		for($j=0; $j<sizeof($tagedQuestions); $j++){
-//			$questionCategoryObject = $tagedQuestions[$j];
-//			$ownerURI = $questionCategoryObject->get_ownerUri();
-//			//echo "</br>uri[".$j."] = ".$uri;
-//			if ($ownerURI == $uri){
-//				$found = TRUE;
-//				//unset($allQuestions[$j]);
-//			}
-//		}
-//		if (!$found){
-//			array_push($results, $allQuestions[$i]);
-//		}
-//	}
-//}
-$totalResults = sizeof($results);
-//echo "totalResult = ".$totalResults;
 
-if ($totalResults != 0){
-	for ($i=0; $i< sizeof($results); $i++){
-		$problemObject = new Problem();
-		$problemObject = $results[$i];
-		$problems[$i] = $problemObject->path;
-		$problemsURIs[$i] = $problemObject->uri;
+$allProblems = $rooloClient->search($query, 'metadata', 'latest');
+//$allProblems = $rooloClient->search($query, 'metadata');
+//echo "</br>size of all problems = ".sizeof($allProblems);
+
+//$query = "type:Solution AND author:" . $_SESSION['username'];
+//$authorSolutions = $rooloClient->search($query, 'metadata');
+//$solutionObject = new Solution();
+$problemObject = new Problem();
+for($i=0; $i<sizeof($allProblems); $i++){
+	$problemObject = $allProblems[$i];
+	$principleUri = $problemObject->principleuri;
+	$mcMasterSolution = $problemObject->mcmastersolution;
+	//echo "</br>Uri[".$i."] = ".$uri;
+//	$found = FALSE;
+	if ($mcMasterSolution != '' && $principleUri != ''){
+		unset($allProblems[$i]);
 	}
-}else{
-	$noQuestionMsg = 'All problems have owned thire principle. There are no more problems to assign principle!';
 }
 
+$totalResults = sizeof($allProblems);
+//echo "</br>size of totalResults = ".sizeof($allProblems);
 
-//grabbing all the formulas from disk
-$priciples = glob(dirname(__FILE__) . '/../../../Principles/*');
-$priciples = array_filter($priciples, 'is_file');
-$principleCounter=0;
-for ($i=0; $i<sizeof($priciples); $i++){
-	$curPath = $priciples[$i];
-	$curPath = substr($curPath, strrpos($curPath, '/Principles'));
-	$priciples[$i] = $curPath;
+if ($totalResults != 0){
+	for ($i=0; $i< sizeof($allProblems); $i++){
+		$problemObject = new Problem();
+		$problemObject = $allProblems[$i];
+		$problems[$i] = $problemObject->path;
+		//echo "</br>parablms PAth = " . $problemObject->path;
+		$problemsURIs[$i] = $problemObject->uri;
+	}
+}
+
+$query = 'type:Principle';
+$allPrinciples = $rooloClient->search($query, 'metadata', 'latest');
+//echo "</br>size of all principles = ".sizeof($allPrinciples);
+
+for($i=0; $i< sizeof($allPrinciples); $i++){
+		$principleObject = new Principle();
+		$principleObject = $allPrinciples[$i];
+		$principlesPath[$i] = $principleObject->path;
+		//echo "</br>principlesPath = ". $principleObject->path;
+		$principlesURIs[$i] = $principleObject->uri;
+		$principles[$principleObject->path] = $principleObject->uri;
 }
 ?>
 
@@ -92,18 +89,15 @@ for ($i=0; $i<sizeof($priciples); $i++){
 
 	// an array that keeps all questions path
 	var problems = new Array('<?= implode('\', \'', $problems)?>');
-
 	var problemsURIs = new Array('<?= implode('\', \'', $problemsURIs)?>');
+
+	var principlesPath = new Array('<?= implode('\', \'', $principlesPath)?>');
+	var principlesURIs = new Array ('<?= implode('\', \'', $principlesURIs)?>');
 
 	var numProblem = problems.length;
 	var curProblemNum = 1;
 
-	// an array keeps values all checked check boxes
-//	var checkedValues = [];
-
 	$(document).ready(function(){
-
-//		$('#principleTable td:first').css({'padding-right' : '20px'});
 
 		$('#curProblem').attr('src', problems[0]);
 
@@ -120,21 +114,17 @@ for ($i=0; $i<sizeof($priciples); $i++){
 		if ('<?= $totalResults ?>' == 0){
 
 			$('#imgDiv').remove();
-			$('#tagProblemDiv').remove();
-			$('#categoryDiv').remove();
+			$('#problemDiv').remove();
 
 			$('#greetingDiv').html('<?= $greetingMsg?>');
 
 			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
 
-//			if ('<?= $_SESSION['role']?>' == 'teacher'){
-				groupingMsg = "<h2 style='width: 100%; float: left'>" + '<?= $noQuestionMsg ?>' + "</h2>";
-//			}else{
-//				groupingMsg = "<h2 style='width: 100%; float: left'> Please wait for the system to send you to a group</h2>";
-//				groupingMsg += "<input id='getGroupButton' type='button' value='What is my group' onClick='checkGroup()'/>";
-//			}	
+			groupingMsg = "<h2 style='width: 100%; float: left'>" + '<?= $noMoreProblemMsg ?>' + "</h2>";
+
 			$('#groupingMsgDiv').html(groupingMsg);
 			$('#curProblemNumDiv').html('');
+			delay();
 		}else{
 			
 			$('#curProblem').attr('src', problems[0]);
@@ -142,112 +132,59 @@ for ($i=0; $i<sizeof($priciples); $i++){
 			$('#curProblemNumDiv').html('<h2> Problem ' + curProblemNum + '/' + numProblem + '</h2>');
 	
 			$('div.categoryCount').html('<h3> 0 </h3>');
-			$('.droppable').corner();
 		}
-
-		$('.droppable').corner();
-
-		// DRAG and DROP functionality
-		$(".draggable").draggable({
-
-//			helper: 'original',
-//			revertDuration: 1000,
-//			snap: '.droppable',
-
-			revert: 'invalid',
-			opacity: '0.80',
-			cursor: 'move',
-			cursorAt: { top: 0, left: 0 },
-			helper: 'clone'
-//			helper: function(event) {
-//				return $('<div style="background-color: #333333; color: white; border: 1px solid white; width: 100px; height: 20px; text-align: center"> Formula ' + curProblemNum + '</div>');
-//			}
-		});
-		
-
-		$(".droppable").droppable({
-
-			tolerance: 'touch',
-			accept: '.draggable',
-			hoverClass: 'droppable-hover',
-			drop: function(ev, ui) {
-
-//				 category = $(this).find('h4').html();
-//				 categoryCount = $(this).find('h3').html();
-//				 categoryCount ++;
-//			     $(this).html("<h4>" + category + "</h4>" + "<div class='categoryCount'><h3>" + categoryCount + "</h3></div>").fadeIn('slow');
-
-				 // Get the formula's path on disk
-			 	 chosenPrinciplePath = $(ui.draggable).find('img').attr('src');
-			
-			     // **** parameter should be taken out if we don't want drag and drop
-//			     nextProblem(category);
-				 nextProblem(chosenPrinciplePath);
-
-			     //Do your AJAX stuff in here.
-			}
-		});
 	});
 
+	function delay (){
+			setTimeout ("loginPage()", 5000);
+	 }
+
+	 function loginPage(){
+		window.location = "/src/php/pages/";
+	 } 
 </script>
+
 <script type='text/javascript'>
 
-	function nextProblem(chosenPrinciplePath){
+	function nextProblem(chosenPrincipleUri){
 
 		//disable the submit button
-		$('#submit').attr('disabled', 'disabled');
+		//$('#submit').attr('disabled', 'disabled');
 
 		var counter = $('#counter').val();
+		var selectedChoice = $("input[name='choice']:checked").val();
 
-		//gets all checked checkboxes and serializes it
-//	    checkedValues = $(':checkbox:checked').serialize();
-//	    checkedValues = $('.categoryChoice:checked').val();
-
-	    //Ajax call to send username, uriOwner, masterSolution, checkedValues
-		$.get("/src/php/ajaxServices/postPrincipleToProblem.php",
-				{author:"<?= $_SESSION['username']?>",
-				masterSolution:"<?= $_SESSION['masterSolution']?>",
-				formulaURI: chosenPrinciplePath,
-				ownerURI:problemsURIs[counter],
-			 	role:"<?= $_SESSION['role']?>"},
-		  		function(returned_data){
-			  		// We don't need to do anything in the call-back function
-			    }
+		//Ajax call to send username, problemUri, chosenPrincipleUri, selectedChoice
+		$.get("/src/php/ajaxServices/savePrincipleProblemsMasterSolution.php",
+			{ username:"<?= $_SESSION['username']?>",
+			  masterSolution:selectedChoice,
+			  principleUri: chosenPrincipleUri,
+			  problemUri:problemsURIs[counter]
+			},
+	  		function(returned_data){
+		  		// We don't need to do anything in the call-back function
+			}
 		);
-
-		// This is to show a checkMark icon to show that the formula is accepted
-//		$('#ProblemSectionDiv').append('<img id="checkMark" width="60px" height="60px" src="/resources/check-mark.jpg" style="margin-top: 0px; float: left"/>');
-//		$('#problemSectionDiv img#checkMark').fadeIn(8000);
-//		$('#problemSectionDiv img#checkMark').fadeOut(2000);
-//		$('#problemSectionDiv').remove('img#checkMark');
-					
-		$('.categoryChoice').attr('checked', false);
 
 		//changes the problem if it is not the last problem
 		if ( counter < problems.length - 1 ){
 			counter++;
 			$('#counter').val(counter);
-			$('#curproblem').attr('src', problems[counter]);
+
+			$('#curProblem').attr('src', problems[counter]);
+			$("input[name='choice']:checked").attr("checked", false);
+			$("#laws").val(0);
 				
 		} else{
-			$('#imgDiv').html('');
 			$('#imgDiv').remove();
-
-			$('#categoryDiv').html('');
-			$('#categoryDiv').remove();
-
-			$('#tagproblemDiv').remove();
-
+			$('#problemDiv').remove();
 			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
 
-			if ('<?= $_SESSION['role']?>' == 'teacher'){
-				groupingMsg = "<h2 style='width: 100%; float: left'> All problems have been taged. There are no more problems to be taged! </h2>";
-			}else{
-				groupingMsg = "<h2 style='width: 100%; float: left'> Please wait for the system to send you to a group</h2>";
-				groupingMsg += "<input id='getGroupButton' type='button' value='What is my group' onClick='checkGroup()'/>";
-			}	
+			groupingMsg = "<h2 style='width: 100%; float: left'>" + '<?= $noMoreProblemMsg ?>' + "</h2>";
+
 			$('#groupingMsgDiv').html(groupingMsg);
 			$('#curProblemNumDiv').html('');
+			delay();
 		}
 
 		// increment the current number of the Problem
@@ -257,14 +194,21 @@ for ($i=0; $i<sizeof($priciples); $i++){
 		}
 	}
 
-	function checkGroup(){
-
-		$('#groupDiv').css({'height' : '10%'});
-		$('#groupDiv').hide();
-		$('#groupDiv').html('').fadeOut("slow");
-		$('#groupDiv').html('<p>The system has not yet calculated which group you belong to. This might be because some people are still tagging problems</p>').fadeIn("slow");
-	}
+	function submit(){
 		
+		// Get the principle's uri
+		chosenPrincipleUri = $('#laws').find(':selected').attr('principleUri');
+
+ 	 	//** is Multiple choice MasterSolution answer has selected
+	 	sc = $("input[name:'choice']:checked").val();
+	 	if ( sc == "A" || sc == "B" || sc == "C" || sc == "D" ){
+			$('#mcTitleDiv').css('color','black');
+		 	nextProblem(chosenPrincipleUri);
+		}else{
+			//alert ("select A B C or D");
+			$('#mcTitleDiv').css('color','red');
+		}	 
+	}	
 </script>
 
 <style type='text/css'>
@@ -275,177 +219,117 @@ for ($i=0; $i<sizeof($priciples); $i++){
 		font-size: 14px; 
 		color: #444444;
 	}
+
+	#greetingDiv {
+		width: 100%;
+		margin: 2% 1% 0 2%; 
+		font-size: 20px;
+		float: left;
+	}
+	
+	#curProblemNumDiv {
+		width: 100%;
+		text-align: left; 
+		margin-left: 2%;
+	}
+	
+	#leftDiv {
+		width: 40%;
+		float: left;
+		margin-left: 3%;
+	}
 	
 	#imgDiv {
 		width: 40%;
 		height: 170px;
 		float: left;
 	}
-	
-	div#tagProblemDiv{
-		width: 100%;
-		height: 100%;
+
+	#answerDiv {
+		width: 40%;
+		height: 170px;
+		float: left;
+		margin-left: 10%;
+		margin-top: 0%;
 	}
 
-	#problemSectionDiv {
-		width: 40%;
-		float: left;
-		margin-left: 100px;
-	}
-	
-	#categoryDiv {
-		width: 40%;
-		float: left;
-		margin-left: 1%;
-		margin-top: 30px;
-	
-	}
-	
-	#greetingDiv {
-		width: 50%;
-		margin: 2% 0 0 1%; 
-		font-size: 20px;
-		float: left;
-	}
-	
-	#getGroupButton {
-		width: 200px;
-	}
-	
-	#groupDiv {
-		width: 40%;
-		margin-top: 2%;
-	}
-	
-	.categoryDiv {
-		
-		font-family: Georgia,"Trebuchet MS",Arial,Helvetica,sans-serif;
-		font-weight: normal;
-		font-size: 20px; 
-		color: #444444;	
-	
-		border: 1px solid #6699CC;
-		background-color: #6699CC;
-		color: white;
-		width: 39%;
-		margin-bottom: 10%;
-		height: 110px;
-		text-align: center;
-		vertical-align: middle;
-		float: left;
-	}
-	
-	
-	.categoryDivLeft {
-		margin-right: 10%;
-	}
-	
-	.categoryDivRight {
+	.titleDiv {
+		width: 100%;
+		height: 15%;
+		margin-top: 1%;
+		font:13px verdana,sans-serif;
+	}		
+
+	#choiceDiv {
+		width: 80%;
 		margin-left: 10%;
+		margin-bottom: 7%; 
 	}
 	
-	.categoryDiv h4{
-		margin-bottom: 0;
+	#principleDiv{
+		width: 80%;
+		margin-left: 5%;
+		margin-top: 5%; 
 	}
 	
-	.categoryCount {
-		margin-top: 0;
+	
+	#principleTable td{
+		padding: 2px;
+		border: 1px solid #333333;
 	}
-	
-	
+
+	#submitDiv{
+		width: 100%;
+		margin: 4% 0% 0% 70%;
+	}
+
 	.droppable-hover {
 	     border: 1px solid #669900;
 	}
-	
-	#principleTable td{
-		padding: 10px;
-		border: 1px solid #333333;
-	}
-	
-	
 </style>
 
-<div id='greetingDiv'>
+<div id='greetingDiv'></div>
 
-</div>
+<div id='curProblemNumDiv'></div>
 
-<div id='curProblemNumDiv' style='text-align: left; float: right; margin-right: 40px; width: 43%'>
-		
-		</div>
+<div id='groupingMsgDiv'></div>
 
+<div id='groupDiv'></div>
 
-<div id='groupingMsgDiv'>
-</div>
-
-<div id='groupDiv'>
-</div>
-
-
-
-<!--<div id='tagQuestionDiv'>-->
-
-	<div id='categoryDiv'>
-			<font size="3px"> Drag the formula you need to use to solve the given problem, onto the problem </font><br/><br/>
-			
-			<table id='principleTable'>
-				<tbody>
-
-					<tr>				
-					<?php 
-						for ($i=0; $i < sizeof($priciples); $i++){
-							if ($i % 2 == 0 && $i != 0){
-								
-							?>
-								</tr>
-								<tr>
-							<?php 
-							}
-							?>	
-								<td class='draggable'> <img width="200px" height="50px" src='<?= $priciples[$i]?>'/> </td>
-							<?php 
-						}
-					
-					?>
-					</tr>
-				</tbody>
-			</table>
-	 </div>
-	 
-	 <div id='problemSectionDiv'>
-		 
-		 
+<div id='problemDiv'>
+	<div id='leftDiv'>
 		 <div id='imgDiv'>
 			<img id='curProblem' src=""  class='droppable'/>
-		 </div>
-	 </div>
-	 
-	 <label><input type='hidden' id='counter' name='counter' value="0"/>
-	 
+	 	</div>
+	</div>
+	<div id='answerDiv'>
+		<div id='mcTitleDiv' class='titleDiv'>
+			<font size='3px'> 1_ Select the correct answer! </font><br/><br/>
+		</div>
+		<div id='choiceDiv'>
+			<input type="radio" name="choice" value="A"><b>A</b><br>
+			<input type="radio" name="choice" value="B"><b>B</b><br>
+			<input type="radio" name="choice" value="C"><b>C</b><br>
+			<input type="radio" name="choice" value="D"><b>D</b><br>
+		</div>
+		<div id='principleTitleDiv' class='titleDiv'>
+			<font size="3px"> 2_ Select the principle for the given problem! </font><br/><br/>
+		</div>
+		<div id='principleDiv'>
+		    <select name="laws" id="laws">
+	        	<option value="law1" principleUri='<?= $principlesURIs[0]?>'>Newton's First Law</option>
+	        	<option value="law2" principleUri='<?= $principlesURIs[1]?>'>Newton's second Law</option>
+	        	<option value="law3" principleUri='<?= $principlesURIs[2]?>'>Newton's third Law</option>
+    		</select>
+		</div>
+		<div id='submitDiv'>
+			<input type="button" value='Submit' onClick='submit();'>
+		</div>
 		
-<!--			<div id='geometricCatDiv' class='categoryDiv categoryDivLeft droppable'>-->
-<!--				<h4> Geometry </h4> -->
-<!--				<div id='geometryCount' class='categoryCount'> </div>-->
-<!--			</div>-->
-<!--			-->
-<!--			<div id='exponentialCatDiv' class='categoryDiv categoryDivRight droppable'>-->
-<!--				<h4> Exponential </h4> -->
-<!--				<div id='exponentialCount' class='categoryCount'> </div>-->
-<!--			</div>-->
-<!--			-->
-<!--			<div id='trigonametricCatDiv' class='categoryDiv categoryDivLeft droppable'>-->
-<!--				<h4> Trigonometry </h4> -->
-<!--				<div id='trigonametricCount' class='categoryCount'> </div>-->
-<!--			</div>-->
-<!--			-->
-<!--			<div id='algebraCatDiv' class='categoryDiv categoryDivRight droppable'>-->
-<!--				<h4> Algebra </h4> -->
-<!--				<div id='algebraCount' class='categoryCount'> </div>-->
-<!--			</div>-->
-<!--			<label><input type='hidden' id='counter' name='counter' value="0"/>-->
-		
-<!--</div>-->
-
-
+	</div>
+ </div>
+ 
+ <label><input type='hidden' id='counter' name='counter' value="0"/>
 <?php 
 
 require_once './footer.php';
