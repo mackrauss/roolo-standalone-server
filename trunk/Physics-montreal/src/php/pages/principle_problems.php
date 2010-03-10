@@ -299,7 +299,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 <div id='problemDiv'>
 	<div id='leftDiv'>
 		 <div id='imgDiv'>
-			<img id='curProblem' src=""  class='droppable'/>
+			<img height="350px" class='problem' id='curProblem' src=""  class='droppable'/>
 	 	</div>
 	</div>
 	<div id='answerDiv'>
@@ -323,7 +323,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
     		</select>
 		</div>
 		<div id='submitDiv'>
-			<input type="button" value='Submit' onClick='submit();'>
+			<input class='btn' type="button" value='Submit' onClick='submit();'>
 		</div>
 		
 	</div>

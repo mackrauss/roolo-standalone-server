@@ -4,7 +4,7 @@ session_start();
 $_SESSION['username'] = $_POST['username'];
 $_SESSION['password'] = $_POST['password'];
 
-$url = "http://localhost:8080/webapp/j_acegi_security_check";
+$url = "http://localhost:8070/webapp/j_acegi_security_check";
 $msg = "The username or password you entered is incorrect.";
 
 // create a new cURL resource
