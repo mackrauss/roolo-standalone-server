@@ -34,7 +34,7 @@ class Solution extends Elo {
 	 * 	The SPECIFIC variable $name for getter & seter this DataModel
 	 *
 	 * 	$name="owneruri"            Problem URI related to this Object
-	 * 	$name="solutionpath"        path to stored place of the master solution of the problem object
+	 * 	$name="solutionpath"        path to the master solution of the problem object
 	 *	$name="solutionpathtype"    type of solution
 	 * 					  			(e.g. "Multiplechoice", "Written", "Uploaded")
 	 * 					  			inested of assigning one of these strings as value for "solutionpath"
@@ -42,7 +42,7 @@ class Solution extends Elo {
  	 *                    			for example 0 for "multipleChoice", 
  	 *                    			 			1 for "written" and
  	 * 								 			2 for "uploaded"
-	 * 	$name="selectedchoice"      in Multiplechoce problems keeps the se;ected choice (e.g. "A", "B", "c", ...)
+	 * 	$name="selectedchoice"      in Multiplechoce problems keeps the selected choice (e.g. "A", "B", "c", ...)
 	 * 	$name="content"             get/set the "rationale" from/in content
 	 * 	 	    
 	 */	

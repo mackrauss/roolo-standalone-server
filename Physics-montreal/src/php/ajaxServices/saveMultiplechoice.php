@@ -7,10 +7,11 @@ require_once '../dataModels/Elo.php';
 require_once '../dataModels/Solution.php';
 require_once '../graphML/GraphML.php';
 
-$username = trim($_GET['username']);
-$selectedChoice = trim($_GET['choice']);
-$ownerURI = trim($_GET['ownerURI']);
-$rationaleText = trim($_GET['rationale']);
+$username = trim($_REQUEST['username']);
+$selectedChoice = trim($_REQUEST['choice']);
+$ownerURI = trim($_REQUEST['ownerURI']);
+$rationaleText = trim($_REQUEST['rationale']);
+$principleURI = trim($_REQUEST['principleURI']);
 
 //$graphML = new GraphML();
 $rooloClient = new RooloClient();
@@ -21,12 +22,13 @@ $solutionObject = new Solution();
 $solutionObject->solutiontype = 0; // 0 means multipleChoice
 $solutionObject->author = $username;
 $solutionObject->selectedchoice = $selectedChoice;
+$solutionObject->principleuri = $principleURI;
 $solutionObject->owneruri = $ownerURI;
 
 $rationaleTag = $solutionObject->buildContentElement($rationaleText, "rationale");
 $solutionObject->content = $rationaleTag;
 
-$solutionObject->title = "Solution-Maltiplechoice"; 
+$solutionObject->title = "Solution-Multiplechoice"; 
 $results = $rooloClient->addElo($solutionObject);
 
 //

@@ -28,7 +28,7 @@ $results = array();
 
 $query = 'type:Problem';
 //$allProblems = $rooloClient->search($query, 'metadata', 'latest');
-$allProblems = $rooloClient->search($query, 'metadata');
+$allProblems = $rooloClient->search($query, 'metadata', 'latest');
 
 $query = "type:Solution AND author:" . $_SESSION['username'];
 $authorSolutions = $rooloClient->search($query, 'metadata');
@@ -55,6 +55,9 @@ for($i=0; $i<sizeof($allProblems); $i++){
 
 $totalResults = sizeof($results);
 
+$problems = array();
+$problemsURI = array();
+
 if ($totalResults != 0){
 	for ($i=0; $i< sizeof($results); $i++){
 		$problemObject = new Problem();
@@ -65,6 +68,18 @@ if ($totalResults != 0){
 //}else{
 //	$noMoreProblemMsg = 'You have finished answering all the questions. Please wait for your teacher to assign you to a super group!';
 }
+
+$query = 'type:Principle';
+$allPrinciples = $rooloClient->search($query, 'metadata', 'latest');
+$principlesURIs = array();
+
+for($i=0; $i< sizeof($allPrinciples); $i++){
+		$principleObject = $allPrinciples[$i];
+		$principlesURIs[$i] = $principleObject->uri;
+}
+?>
+
+
 ?>
 
 <script type='text/javascript' src="/src/js/jquery.corner.js"/></script>
@@ -107,8 +122,10 @@ if ($totalResults != 0){
 			
 			$('#curQuestion').attr('src', questions[randomIndex]);
 			$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
-			$('#countDown').text( "Time Left " + minutes + ":" + seconds );
-			$('#charLeftStr').text( rationaleTextMax + " characters left");
+			$('#timerValue').text( minutes + ":" + seconds );
+			$('#charLeftStr').text( rationaleTextMax + " characters left");
+			$('#signout').show();
+			$('#timer').show();
 			countDown(); 
 		}
 
@@ -146,9 +163,9 @@ if ($totalResults != 0){
 			seconds -= 1;
 		} 
 		if (seconds < 10)
-			$('#countDown').text( "Time Left " + minutes + ":0" + seconds ); 
+			$('#timerValue').text( minutes + ":0" + seconds ); 
 		else
-			$('#countDown').text( "Time Left " + minutes + ":" + seconds ); 
+			$('#timerValue').text( minutes + ":" + seconds ); 
 		setTimeout("countDown()",1000); 
 	 }
 
@@ -168,17 +185,18 @@ if ($totalResults != 0){
 		$('#submitBtn').attr('disabled', 'disabled');
 
 		var counter = $('#counter').val();
-
 		var rationale = $('#rationaleTextarea').val();
-		
 		var selectedChoice = $("input[name='choice']:checked").val();
+		var chosenPrincipleUri = $('#laws').find(':selected').attr('principleUri');
+		
 
 	    //Ajax call to send group, selectedChoice, Owneruri, rationale
 		$.get("/src/php/ajaxServices/saveMultiplechoice.php",
 				{username:"<?= $_SESSION['username']?>",
 				 choice: selectedChoice,
 				 ownerURI:questionsURI[counter],
-				 rationale: rationale
+				 rationale: rationale,
+				 principleURI:  chosenPrincipleUri
 				},
 		  		function(returned_data){
 			  		// We don't need to do anything in the call-back function
@@ -198,7 +216,7 @@ if ($totalResults != 0){
 			$('#curQuestion').attr('src', questions[counter]);
 
 			$('#rationaleTextarea').val('');
-			$('#charLeftStr').text( rationaleTextMax + " characters left");
+			$('#charLeftStr').text( rationaleTextMax + " characters left");
 
 			$("input[name='choice']:checked").attr("checked", false);
 
@@ -238,88 +256,6 @@ if ($totalResults != 0){
 	
 </script>
 
-<style type='text/css'>
-
-	body {
-		font-family: Georgia,"Trebuchet MS",Arial,Helvetica,sans-serif;
-		font-weight: normal;
-		font-size: 14px; 
-		color: #444444;
-	}
-	
-	#greetingDiv {
-		width: 100%;
-		margin: 2% 0 0 1%; 
-		font-size: 20px;
-		float: left;
-	}
-	
-	#curQuestionNumDiv {
-		width: 100%;
-		text-align: left; 
-		margin-left: 1%;
-	}
-
-	#questionDiv {
-		width: 100%;
-		float: left;
-		margin-left: 1%;
-		margin-top: 2%;
-	
-	}
-	#countDown {
-		width: 100%;
-		float: left;
-		margin-left: 30%;
-		margin-top: 0%;
-	}	
-	#imgDiv {
-		width: 40%;
-		height: 170px;
-		float: left;
-	}
-	
-	#answerDiv {
-		width: 40%;
-		height: 170px;
-		float: left;
-		margin-left: 10%;
-		margin-top: 0%;
-		
-	}
-	.title {
-		width: 100%;
-		height: 15%;
-		margin-top: 1%;
-		font:13px verdana,sans-serif;
-	}
-
-	#choiceDiv {
-		width: 80%;
-		margin-left: 3%;
-		margin-bottom: 7%; 
-	}
-
-    #charLeftStr {
-    	color:	#736F6E;
-    	text-align: right;
-    	//font-style: italic;
-    	font-weight: bold;
-    	font-size: 10px;
-    	font-family:"Lucida Console", Lucida Console, serif;
-    	margin-left = 2%;
-    }
-	#submitDiv {
-	 	float: left;
-	 	margin-left: 74%;
-	 	width: 20%; 
-	}
-	
-	#submitBtn{
-		margin-top: 10%;
-		margin-left: 20%
-	}
-</style>
 
 <div id='greetingDiv'></div>
 
@@ -327,38 +263,65 @@ if ($totalResults != 0){
 
 <div id='groupDiv'></div>
 
-<div id='curQuestionNumDiv'></div>
 
-
-<div id='questionDiv'>
-	<div id="countDown">
-	</div>
+<div id="questionSection">
+	<div class="basicFont" id='curQuestionNumDiv'></div>
 	<div id='imgDiv'>
-		<img id='curQuestion' src="" />
+		<img class='problem' height="350px" id='curQuestion' src="" />
 	</div>
-	<div id='answerDiv'>
-		<div id='moltiplecchoiceTitleDiv' class='title'>
-			<font size='3px'> Select Correct answer </font><br/><br/>
-		</div>
-		<div id='choiceDiv'>
-			<input type="radio" name="choice" value="A"><b>A</b><br>
-			<input type="radio" name="choice" value="B"><b>B</b><br>
-			<input type="radio" name="choice" value="C"><b>C</b><br>
-			<input type="radio" name="choice" value="D"><b>D</b><br>
-<!--			<input type="radio" name="choice" value="E"><b>E</b><br>-->
-		</div>
-		<div id='rationaleDiv'>
-			<div id='textareaTitleDiv' class='title'>
-				<font size='3px'>Add Rationale</font>
-				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-				<span id="charLeftStr" ></span>
-			</div>
-			<textarea id='rationaleTextarea' rows='5' cols='50'	white-space='nowrap'></textarea>
-		</div>
-		<div id='submitDiv'>
-			<input id='submitBtn' type="button" value='Submit' onClick='nextQuestion()'>
-		</div>
-	</div>
+</div>
+<div id="answerSection">
+	<form id="round1" name="form1" method="post" action="feedback.php">
+		<dl>
+			<dt>CHOOSE ONE OF THE FOLLOWING:</dt>
+		    <dd><label class="radioButton"><input type="radio" name="choice" value="A"/>A</label>
+		 		<label class="radioButton"><input type="radio" name="choice" value="B"/>B</label>
+		  		<label class="radioButton"><input type="radio" name="choice" value="C"/>C</label>
+		  		<label class="radioButton"><input type="radio" name="choice" value="D"/>D</label>
+		  		<label class="radioButton"><input type="radio" name="choice" value="E"/>E</label>
+		  	</dd>
+<!--		  <dt>WHICH PRINCIPLE BEST APPLIES TO THIS QUESTION?</dt>-->
+<!--		  <dd>-->
+<!--		  <select name="principle">-->
+<!--		    <option value="1" selected="selected">Newton's 1st law</option>-->
+<!--		    <option value="2">Newton's 2nd law</option>-->
+<!--		    <option value="3">Newton's 3rd law</option>-->
+<!--		  </select>-->
+<!--		  </dd>-->
+
+			 <select name="laws" id="laws">
+	        	<option value="law1" principleUri='<?= $principlesURIs[0]?>'>Newton's First Law</option>
+	        	<option value="law2" principleUri='<?= $principlesURIs[1]?>'>Newton's second Law</option>
+	        	<option value="law3" principleUri='<?= $principlesURIs[2]?>'>Newton's third Law</option>
+	   		</select>
+		  <dt style='width: 50%; float: left'>RATIONALE</dt>
+		  <dt id="charLeftStr" style='width: 49%; float: right; text-align: right' ></dt>
+		  <dd><textarea id="rationaleTextarea" name="" cols="40" rows="12"></textarea></dd>
+		  <input name="submit" type="button" value="SUBMIT" class="btn" onClick="nextQuestion()" style='margin-left: 250px; margin-top: 20px'/>
+	</form>
+
+<!--		<div id='moltiplecchoiceTitleDiv' class='title'>-->
+<!--			<font size='3px'> Select Correct answer </font><br/><br/>-->
+<!--		</div>-->
+
+<!--		<div id='choiceDiv'>-->
+<!--			<input class='radioButton' type="radio" name="choice" value="A"><b>A</b><br>-->
+<!--			<input class='radioButton' type="radio" name="choice" value="B"><b>B</b><br>-->
+<!--			<input class='radioButton' type="radio" name="choice" value="C"><b>C</b><br>-->
+<!--			<input class='radioButton' type="radio" name="choice" value="D"><b>D</b><br>-->
+<!--			<input class='radioButton' type="radio" name="choice" value="E"><b>E</b><br>-->
+<!--		</div>-->
+<!--		<div id='rationaleDiv'>-->
+<!--			<div id='textareaTitleDiv' class='title'>-->
+<!--				<font size='3px'>Add Rationale</font>-->
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+<!--				<span id="charLeftStr" ></span>-->
+<!--			</div>-->
+<!--			<textarea id='rationaleTextarea' rows='5' cols='20'	white-space='nowrap'></textarea>-->
+<!--		</div>-->
+<!--		<div id='submitDiv'>-->
+<!--			<input class='btn' id='submitBtn' type="button" value='Submit' onClick='nextQuestion()'>-->
+<!--		</div>-->
 </div>
 
 <div id='questionSectionDiv'></div>

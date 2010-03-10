@@ -7,10 +7,10 @@ require_once '../dataModels/Problem.php';
 
 $rooloClient = new RooloClient();
 
-$username = trim($_GET['username']);
-$multipleChoiceMasterSolution = trim($_GET['masterSolution']);
-$principleUri = trim($_GET['principleUri']);
-$problemUri = trim($_GET['problemUri']);
+$username = trim($_REQUEST['username']);
+$multipleChoiceMasterSolution = trim($_REQUEST['masterSolution']);
+$principleUri = trim($_REQUEST['principleUri']);
+$problemUri = trim($_REQUEST['problemUri']);
 
 $problemObject = new Problem();
 $problemObject = $rooloClient->retrieveElo($problemUri);

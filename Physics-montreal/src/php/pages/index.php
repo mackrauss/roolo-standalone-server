@@ -21,31 +21,18 @@ if(empty($_SESSION['msg'])){
 
 <style type='text/css'>
 
-	body {
-		font-family: Georgia,"Trebuchet MS",Arial,Helvetica,sans-serif;
-		font-weight: normal;
-		font-size: 14px; 
-		color: #444444;
-	}
 
-	#msgDiv {
-		width: 100%;
-		margin: 2% 1% 0 7%; 
-		font-size: 20px;
-		float: left;
-	}
-	
 	#subMsgDiv {
 		width: 100%;
 		margin: 10% 0% 0 27%; 
 		font-size: 14px;
 		float: left;
+		margin-bottom: 20px;
 	}
 	#mainDiv {
 		width: 100%;
 		text-align: left; 
 		margin-left: 25%;
-		margin-top: 20%
 	}
 	
 	#loginDiv {
@@ -72,7 +59,6 @@ if(empty($_SESSION['msg'])){
 	
 </style>
 
-<div id='msgDiv'> Welcome !!!</div>
 <div id='subMsgDiv'><?= $_SESSION['msg']?></div>
 
 <div id='mainDiv'>
@@ -84,7 +70,7 @@ if(empty($_SESSION['msg'])){
 		<div class='box'><input type="password" name="password" size="30"></div><br/>
 	
 		<div id='submitDiv'>
-			<input type="submit" value='Sign In' ><br/>
+			<input class='btn' type="submit" style='margin-left: 30px' value='Sign In' ><br/>
 		</div>
 	</form>	
 
