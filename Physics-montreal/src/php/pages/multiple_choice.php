@@ -10,7 +10,7 @@ if (!$_SESSION['loggedIn'])
 	header("Location:/src/php/pages/");
 $_SESSION['loggedIn'] = FALSE;	
 $_SESSION['msg'] = "";
-$greetingMsg = "Hello " . $_SESSION['username'];
+$greetingMsg = $_SESSION['username'];
 $noMoreProblemMsg = 'You have finished answering all the questions. Please wait for your teacher to assign you to a super group!';
 
 //if(isset($_GET['username'])){
@@ -80,7 +80,6 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 ?>
 
 
-?>
 
 <script type='text/javascript' src="/src/js/jquery.corner.js"/></script>
 
@@ -257,7 +256,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 </script>
 
 
-<div id='greetingDiv'></div>
+<!--<div id='greetingDiv'></div>-->
 
 <div id='groupingMsgDiv'></div>
 
@@ -280,7 +279,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		  		<label class="radioButton"><input type="radio" name="choice" value="D"/>D</label>
 		  		<label class="radioButton"><input type="radio" name="choice" value="E"/>E</label>
 		  	</dd>
-<!--		  <dt>WHICH PRINCIPLE BEST APPLIES TO THIS QUESTION?</dt>-->
+		  <dt>WHICH PRINCIPLE BEST APPLIES TO THIS QUESTION?</dt>
 <!--		  <dd>-->
 <!--		  <select name="principle">-->
 <!--		    <option value="1" selected="selected">Newton's 1st law</option>-->
@@ -289,7 +288,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 <!--		  </select>-->
 <!--		  </dd>-->
 
-			 <select name="laws" id="laws">
+			 <select name="laws" id="laws" style='margin-top: 10px'>
 	        	<option value="law1" principleUri='<?= $principlesURIs[0]?>'>Newton's First Law</option>
 	        	<option value="law2" principleUri='<?= $principlesURIs[1]?>'>Newton's second Law</option>
 	        	<option value="law3" principleUri='<?= $principlesURIs[2]?>'>Newton's third Law</option>
