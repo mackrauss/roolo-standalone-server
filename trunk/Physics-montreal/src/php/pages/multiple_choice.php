@@ -101,8 +101,9 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 
 	$(document).ready(function(){
 
-		randomIndex = randonCounter();
-		$('#counter').val(randomIndex);
+//		randomIndex = randomCounter();
+//		$('#counter').val(randomIndex);
+		curQuestion = questions.splice(0,1);
 
 		$('#greetingDiv').html('<?= $greetingMsg?>');
 
@@ -116,10 +117,13 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 			groupingMsg = "<h2 style='width: 100%; float: left'> '<?= $noMoreProblemMsg ?>'</h2>";
 			$('#groupingMsgDiv').html(groupingMsg);
 			$('#curQuestionNumDiv').html('');
+			$('#answerSection').html('');
+			$('#questionSection').html('');
 			delay();
 		}else{
 			
-			$('#curQuestion').attr('src', questions[randomIndex]);
+//			$('#curQuestion').attr('src', questions[randomIndex]);
+			$('#curQuestion').attr('src', curQuestion);
 			$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
 			$('#timerValue').text( minutes + ":" + seconds );
 			$('#charLeftStr').text( rationaleTextMax + " characters left");
@@ -183,7 +187,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		//disable the submit button
 		$('#submitBtn').attr('disabled', 'disabled');
 
-		var counter = $('#counter').val();
+//		var counter = $('#counter').val();
 		var rationale = $('#rationaleTextarea').val();
 		var selectedChoice = $("input[name='choice']:checked").val();
 		var chosenPrincipleUri = $('#laws').find(':selected').attr('principleUri');
@@ -202,17 +206,20 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 			    }
 		);
 					
-		// Delete the showed question and its URI from arraies
-		questions.splice(counter,1);
-		questionsURI.splice(counter,1);
+		// Delete the shown question and its URI from arraies
+//		questions.splice(counter,1);
+//		questionsURI.splice(counter,1);
+		// The above 2 lines would get a question by random, but we've changed to logic to give each group the same question
+		curQuestion = questions.splice(0, 1);
+		curQuestionURI = questionsURI.splice(0, 1);
 		
 		//changes the question if it is not the last question
 		if ( questions.length > 0 ){
 
-			counter = randonCounter();
-			
-			$('#counter').val(counter);
-			$('#curQuestion').attr('src', questions[counter]);
+//			counter = randomCounter();
+//			$('#counter').val(counter);
+//			$('#curQuestion').attr('src', questions[counter]);
+			$('#curQuestion').attr('src', curQuestion);
 
 			$('#rationaleTextarea').val('');
 			$('#charLeftStr').text( rationaleTextMax + " characters left");
@@ -248,7 +255,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 
 	//function generate the counter value (the index of curent question in 
 	//questions and questionsURI arraies)
-	function randonCounter(){
+	function randomCounter(){
 		adjustedHigh = questions.length;
         return Math.floor(Math.random()*adjustedHigh);
 	}		
