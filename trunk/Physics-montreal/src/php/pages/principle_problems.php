@@ -13,7 +13,7 @@ if (!$_SESSION['loggedIn']){
 }
 $_SESSION['loggedIn'] = FALSE;
 $_SESSION['msg'] = "";
-$greetingMsg = "Hello " . $_SESSION['username'];
+$greetingMsg = $_SESSION['username'] . " (teacher)";
 
 //// check username variable has been sent
 //if(isset($_GET['username'])){
@@ -100,6 +100,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 	$(document).ready(function(){
 
 		$('#curProblem').attr('src', problems[0]);
+		$('#greetingDiv').css({'margin-left' : '50%', 'padding-top' : '40px'});
 
 		$('#greetingDiv').html('<?= $greetingMsg?>');
 
@@ -130,6 +131,8 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 			$('#curProblem').attr('src', problems[0]);
 			$('#greetingDiv').html('<?= $greetingMsg?>');
 			$('#curProblemNumDiv').html('<h2> Problem ' + curProblemNum + '/' + numProblem + '</h2>');
+
+			$('#signout').show();
 	
 			$('div.categoryCount').html('<h3> 0 </h3>');
 		}
@@ -220,13 +223,6 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		color: #444444;
 	}
 
-	#greetingDiv {
-		width: 100%;
-		margin: 2% 1% 0 2%; 
-		font-size: 20px;
-		float: left;
-	}
-	
 	#curProblemNumDiv {
 		width: 100%;
 		text-align: left; 
@@ -288,7 +284,6 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 	}
 </style>
 
-<div id='greetingDiv'></div>
 
 <div id='curProblemNumDiv'></div>
 
