@@ -39,7 +39,7 @@ class Question extends Elo {
 	 * @return the master soulution of this question
 	 */
 	public function get_masterSolution(){
-		return parent::getMetadata('mastersolution');
+		return parent::getMetadata('masterSolution');
 	}
 	
 	/**
@@ -47,6 +47,22 @@ class Question extends Elo {
 	 */
 	public function set_masterSoulution($masterSolution){
 		parent::addMetadata('masterSolution', $masterSolution);
+	}
+	
+	public function get_tags(){
+		return parent::getMetadata('tags');
+	}
+	
+	public function set_tags($tags){
+		parent::addMetadata('tags', $tags);
+	}
+	
+	public function get_numTags(){
+		return parent::getMetadata('numtags');
+	}
+	
+	public function set_numTags($numTags){
+		parent::addMetadata('numtags', $numTags);
 	}
 	
 }
