@@ -5,6 +5,9 @@ $_SESSION['username'] = $_POST['username'];
 $_SESSION['password'] = $_POST['password'];
 
 $url = "http://localhost:8070/webapp/j_acegi_security_check";
+//$url = "http://192.168.1.102:8070/webapp/j_acegi_security_check";
+//$url = "http://142.150.101.159:8070/webapp/j_acegi_security_check";
+//$url = "http://localhost:8080/webapp/j_acegi_security_check";
 $msg = "The username or password you entered is incorrect.";
 
 // create a new cURL resource
@@ -19,21 +22,23 @@ $result = curl_exec($ch);
 curl_close($ch);
 
 $notMember = strstr($result, "failed=true");
+//TODO
+// chek if server is down send suitable message
+//if (strstr($result,"Failed to load source" )){
+//	$_SESSION['msg'] = "Server is Down!";
+//	header("Location:/src/php/pages/");
+//}
 
 if($notMember){
 	$_SESSION['msg'] = $msg;
 	header("Location:/src/php/pages/");
 }else{
-//	$_SESSION['loggedIn'] = TRUE;
-//	if (strstr($_SESSION['username'], "SuperGroup")){
-//		//TODO
-//		//should go to special page for super group
-//		header("Location:/src/php/pages/Super_choice.php");
-//	}elseif (strstr($_SESSION['username'], "Group")){
-//		header("Location:/src/php/pages/multiple_choice.php");
-//	}else{
-//		header("Location:/src/php/pages/principle_problems.php");
-//	}
-	header('Location:/src/php/pages/tag_question_yes_no.php?username=' . $_SESSION['username']);
+	$_SESSION['loggedIn'] = TRUE;
+	if (strstr($_SESSION['username'], "group")){
+		header('Location:/src/php/pages/upload_solution.php?username=' . $_SESSION['username']);
+		//header('Location:/src/php/pages/upload_solution.php');
+	}else{
+		header('Location:/src/php/pages/tag_question_yes_no.php?username=' . $_SESSION['username']);
+	}
 }
 ?>

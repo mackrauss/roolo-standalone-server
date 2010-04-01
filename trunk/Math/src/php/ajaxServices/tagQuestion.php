@@ -38,7 +38,7 @@ if($role == 'teacher'){
 //	die();
 }else{
 	if ($role == 'student'){
-		$results = '';
+		$unansweredQuestions = '';
 		//create a questionCategory Object
 		$questionCategory = new QuestionCategory();
 		$questionCategory->set_author($author);
@@ -48,7 +48,7 @@ if($role == 'teacher'){
 //		}
 //		$questionCategory->set_questionPath($path);
 		$questionCategory->set_ownerUri($ownerURI);
-		$results .= $rooloClient->addElo($questionCategory);
+		$unansweredQuestions .= $rooloClient->addElo($questionCategory);
 	}else{
 		echo "The user is not teacher or student!!!!!";
 	}
