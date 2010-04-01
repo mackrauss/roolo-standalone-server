@@ -36,60 +36,67 @@ $answer = $_REQUEST['answer'];
 
 $fileName = basename($path);
 
-// We need to get the question and update its tags and the total number of tags
-// it has.
-$question = $rooloClient->retrieveElo($ownerURI);
-$curTags = $question->get_tags();
-if ($curTags == null){
-	$curTags = '';
-}
-$curNumTags = $question->get_numTags();
-if (strstr($curTags, $group) == false){
-	$curTags .= ' ' . $group;
-	$question->set_tags($curTags);
-	$question->set_numTags($curNumTags+1);
-	$rooloClient->updateElo($question);
-}
-
-
-//user is a teacher
-if($role == 'teacher'){
-	$question = $rooloClient->retrieveElo($ownerURI);
-	$question->set_author($author);
-	$question->set_title($fileName);
-	$question->set_masterSoulution($group);
-	
-	$result = $rooloClient->updateElo($question);
-}else{
-	if ($role == 'student'){
-		$results = '';
-		//create a questionCategory Object
-		$questionCategory = new QuestionCategory();
-		$questionCategory->set_author($author);
-		$questionCategory->set_title($group);
-		$questionCategory->set_questionPath($path);
-		$questionCategory->set_ownerUri($ownerURI);
-		$results .= $rooloClient->addElo($questionCategory);
-	}else{
-		echo "The user is not teacher or student!!!!!";
-	}
-}
-
-// we need to extract the question name from the full URI
-$questionName = substr($path, strrpos($path, '/') +1);
-$questionName = substr($questionName, 0, -4);
-
-
-
-// need to extract the current node's id to add to the graphml files
-// if it's not already there
-$curNode = $graphML->buildGraphMLNode('problem', $questionName, $path);
-$curNodeDom = str_get_dom($curNode);
-$curNodeDom = $curNodeDom->find('node');
-$curNodeDom = $curNodeDom[0];
-$curNodeId = $curNodeDom->getAttribute('id');
-
 if ($answer === 'YES') {
+
+	// We need to get the question and update its tags and the total number of tags
+	// it has.
+	$question = $rooloClient->retrieveElo($ownerURI);
+	$curTags = $question->get_tags();
+	if ($curTags == null){
+		$curTags = '';
+	}
+	
+	
+	
+	$curNumTags = $question->get_numTags();
+	if (strstr($curTags, $group) == false){
+		$curTags .= ' ' . $group;
+		$question->set_tags($curTags);
+		$question->set_numTags($curNumTags+1);
+		$rooloClient->updateElo($question);
+	}
+	
+	
+	
+	
+	//user is a teacher
+	if($role == 'teacher'){
+		$question = $rooloClient->retrieveElo($ownerURI);
+		$question->set_author($author);
+		$question->set_title($fileName);
+		$question->set_masterSoulution($group);
+		
+		$result = $rooloClient->updateElo($question);
+	}else{
+		if ($role == 'student'){
+			$unansweredQuestions = '';
+			//create a questionCategory Object
+			$questionCategory = new QuestionCategory();
+			$questionCategory->set_author($author);
+			$questionCategory->set_title($group);
+			$questionCategory->set_questionPath($path);
+			$questionCategory->set_ownerUri($ownerURI);
+			$unansweredQuestions .= $rooloClient->addElo($questionCategory);
+		}else{
+			echo "The user is not teacher or student!!!!!";
+		}
+	}
+	
+	// we need to extract the question name from the full URI
+	$questionName = substr($path, strrpos($path, '/') +1);
+	$questionName = substr($questionName, 0, -4);
+	
+	
+	
+	// need to extract the current node's id to add to the graphml files
+	// if it's not already there
+	$curNode = $graphML->buildGraphMLNode('problem', $questionName, $path);
+	$curNodeDom = str_get_dom($curNode);
+	$curNodeDom = $curNodeDom->find('node');
+	$curNodeDom = $curNodeDom[0];
+	$curNodeId = $curNodeDom->getAttribute('id');
+
+
 
 	// getting the submitted edge
 	$curEdge = $graphML->buildGraphMLEdge($questionName, $group);

@@ -15,7 +15,7 @@
     if (move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $file)) {
     	  
     	echo "success";
-    	save($fileName);
+//    	save($fileName);
     	
     } else {  
         echo "error";  
@@ -23,8 +23,8 @@
 
     // create and save in repository uploadSolution Object
     function save($fileName){
-    	$author = $_POST['author'];
-		$ownerURI = $_POST['ownerURI'];
+    	$author = $_REQUEST['author'];
+		$ownerURI = $_REQUEST['ownerURI'];
 
 		//$results = '';
 		$rooloClient = new RooloClient();
