@@ -3,6 +3,13 @@ require_once dirname(__FILE__).'/Elo.php';
 
 class QuestionCategory extends Elo {
 	
+	public static $categories = array(
+		"Geometery",
+		"Exponential",
+		"Algebra",
+		"Trigonometry"
+	);
+	
 	public function __construct($xml=null){
 		parent::__construct($xml);
 		parent::addMetadata('type', 'QuestionCategory');
