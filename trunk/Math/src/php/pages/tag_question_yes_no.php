@@ -26,11 +26,11 @@ if(isset($_GET['role'])){
 // retrieve questions from repository
 $rooloClient = new RooloClient();
 $query ='';
-$results = array();
+$unansweredQuestions = array();
 
 if ($_SESSION['role'] == 'teacher'){
 	$query = 'type:Question AND masterSolution:"null"';
-	$results = $rooloClient->search($query, 'metadata', 'latest');
+	$unansweredQuestions = $rooloClient->search($query, 'metadata', 'latest');
 }else {
 	$query = 'type:Question';
 	$allQuestions = $rooloClient->search($query, 'metadata', 'latest');
@@ -55,16 +55,16 @@ if ($_SESSION['role'] == 'teacher'){
 			}
 		}
 		if (!$found){
-			array_push($results, $allQuestions[$i]);
+			array_push($unansweredQuestions, $allQuestions[$i]);
 		}
 	}
 }
-$totalResults = sizeof($results);
+$totalResults = sizeof($unansweredQuestions);
 
 if ($totalResults != 0){
-	for ($i=0; $i< sizeof($results); $i++){
+	for ($i=0; $i< sizeof($unansweredQuestions); $i++){
 		$questionObject = new Question();
-		$questionObject = $results[$i];
+		$questionObject = $unansweredQuestions[$i];
 		$questions[$i] = $questionObject->get_path();
 		$questionsURI[$i] = $questionObject->get_uri();
 		
