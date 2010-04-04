@@ -12,10 +12,15 @@ session_start();
 	</head>
 
 	<body>
-		<div style='margin-top: 4%; margin-left:20%'>
-			<font size='5' color='blue'> UTS M3 Science </font><br/>
-			<div id='signout' onClick="document.location.href='/src/php/ajaxServices/logout.php'" style='cursor:pointer; color:white; margin-left:55%; padding-top: 5px; display: none'> Sign Out </div>
-			<font size='9' onClick="document.location.href='/src/php/pages/tag_question.php?username=<?= $_SESSION['username']?>'" style='cursor:pointer;'> Mathematics </font> 
+		<div id='header' style='margin-top: 30px; margin-left: auto; margin-right: auto; width: 900px; height: 100px;'>
+			<div style='float: left; width: 50%'>
+				<font size='5' color='blue'> UTS M3 Science </font><br/>
+				<font size='9' onClick="document.location.href='/src/php/pages/tag_question.php?username=<?= $_SESSION['username']?>'" style='cursor:pointer;'> Mathematics </font> 
+			</div>
+			<div style='float: right; width: 40%;'>
+				<div id='signout' onClick="document.location.href='/src/php/ajaxServices/logout.php'" style='cursor:pointer; font-family: verdana; font-size: small; text-decoration: underline; color:white; text-align: right; padding-top: 5px; display: none'>Sign Out</div>
+			</div>
+			
 		</div>
 
-		<div id='main' style='height: 70%'> 
+		<div id='main' style='min-height: 400px;'> 
