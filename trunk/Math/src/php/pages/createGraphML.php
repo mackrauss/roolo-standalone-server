@@ -3,7 +3,7 @@
 require_once '../graphML/GraphML.php';
 
 $graphML = new GraphML();
-$groups = array('Geometry', 'Exponential', 'Trigonometry', 'Algebra');
+$groups = array('functions', 'graphing', 'trigonometry', 'algebra');
 
 $graphML->setGroups($groups);
 $graphML->createGroupGraphMLs();

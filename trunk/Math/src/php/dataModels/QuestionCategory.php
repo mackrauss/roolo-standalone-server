@@ -4,10 +4,10 @@ require_once dirname(__FILE__).'/Elo.php';
 class QuestionCategory extends Elo {
 	
 	public static $categories = array(
-		"Geometery",
-		"Exponential",
-		"Algebra",
-		"Trigonometry"
+		"functions",
+		"graphing",
+		"algebra",
+		"trigonometry"
 	);
 	
 	public function __construct($xml=null){

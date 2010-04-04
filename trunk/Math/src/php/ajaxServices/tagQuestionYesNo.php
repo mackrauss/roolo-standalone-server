@@ -19,13 +19,13 @@ $author = trim($_REQUEST['author']);
 $group = null;
 
 if (strstr($author, 'algebra') > -1){
-	$group = 'Algebra';
-}else if (strstr($author, 'exponential') > -1){
-	$group = 'Exponential';
-}else if (strstr($author, 'geometry') > -1){
-	$group = 'Geometry';
+	$group = 'algebra';
+}else if (strstr($author, 'graphing') > -1){
+	$group = 'graphing';
+}else if (strstr($author, 'functions') > -1){
+	$group = 'functions';
 }else if (strstr($author, 'trigonometry') > -1){
-	$group = 'Trigonometry';
+	$group = 'trigonometry';
 }
 
 $role = trim($_REQUEST['role']);
@@ -136,22 +136,22 @@ if ($answer === 'YES') {
 	$graphMLnum = '';
 	switch ($group){
 		
-		case 'Geometry':
+		case 'functions':
 			$graphNodeCategory = $graphML->getGraphNode('1.graphml');
 			$graphMLnum = 1;
 			break;
 	
-		case 'Trigonametry':
+		case 'trigonometry':
 			$graphNodeCategory = $graphML->getGraphNode('2.graphml');
 			$graphMLnum = 2;
 			break;
 	
-		case 'Exponential':
+		case 'graphing':
 			$graphNodeCategory = $graphML->getGraphNode('3.graphml');
 			$graphMLnum = 3;
 			break;
 	
-		case 'Algebra':
+		case 'algebra':
 			$graphNodeCategory = $graphML->getGraphNode('4.graphml');
 			$graphMLnum = 4;
 			break;
