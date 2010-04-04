@@ -30,7 +30,7 @@ foreach ($votes as $tag => $answer){
 	$vote->set_ownerUri($ownerURI);
 	$vote->set_path($path);
 	$vote->set_tag($tag);
-	if ($answer){
+	if ($answer == 'true'){
 		$vote->set_answer(1);
 	}else {
 		$vote->set_answer(0);

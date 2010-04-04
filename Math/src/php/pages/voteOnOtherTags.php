@@ -21,7 +21,7 @@ $query = "type: UploadedSolution AND author: $username";
 $answers = $rooloClient->search($query, 'metadata', 'latest');
 
 if (sizeof($answers) == 0){
-	echo "your group ($username) has not answered any questions yet!";
+	echo "<h2>your group ($username) has not answered any questions yet!</h2>Go back and answer some questions first...";
 	die();
 }
 
@@ -136,14 +136,17 @@ foreach ($questions as $curQuestion) {
 ?>
 	<div id='contentDiv<?=$i?>' class='contentDiv' style='<?= $divVisibility?>; float: left; width: 100%;'>
 		<img style='float: left;' src='<?= $curQuestion->get_path()?>' uri='<?= $curQuestion->get_uri()?>'/>
+		<div style='float: left; margin-left: 20px;'>
+			<h3 style='margin-top: 40px;'>Which categories do you agre with?</h3>
 <?php 
 	foreach ($curQuestion->get_tags() as $curTag){
 ?>
-		<input type='checkbox' value='<?= $curTag?>' > <?= $curTag?> <br/> 
+			<input type='checkbox' value='<?= $curTag?>' > <?= $curTag?> <br/> 
 <?php	
 	}
 ?>
-		<input type='button' value='I agree with these answers' onclick='submitAnswer()' />
+			<input type='button' value='I agree' style='margin-top: 20px;' onclick='submitAnswer()' />
+		</div>
 	</div>
 <?php 
 	$i++;
