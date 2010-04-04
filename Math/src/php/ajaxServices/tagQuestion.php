@@ -106,22 +106,22 @@ $graphML->updateFile('classroom.graphml', $newContentClassroom);
 $graphMLnum = '';
 switch ($category){
 	
-	case 'Geometry':
+	case 'functions':
 		$graphNodeCategory = $graphML->getGraphNode('1.graphml');
 		$graphMLnum = 1;
 		break;
 
-	case 'Trigonametry':
+	case 'trigonometry':
 		$graphNodeCategory = $graphML->getGraphNode('2.graphml');
 		$graphMLnum = 2;
 		break;
 
-	case 'Exponential':
+	case 'graphing':
 		$graphNodeCategory = $graphML->getGraphNode('3.graphml');
 		$graphMLnum = 3;
 		break;
 
-	case 'Algebra':
+	case 'algebra':
 		$graphNodeCategory = $graphML->getGraphNode('4.graphml');
 		$graphMLnum = 4;
 		break;
