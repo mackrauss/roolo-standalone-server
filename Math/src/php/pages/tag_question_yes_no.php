@@ -111,6 +111,7 @@ if ($totalResults != 0){
 			}	
 			$('#groupingMsgDiv').html(groupingMsg);
 			$('#curQuestionNumDiv').html('');
+			setTimeout("window.location.href='/src/php/pages/'", 7000);
 		}else{
 
 			$('#signout').show();
@@ -176,12 +177,13 @@ if ($totalResults != 0){
 //		alert('uri =' + questionsURI[counter]);
 	    //Ajax call to send username, uriOwner, masterSolution, checkedValues
 		$.get("/src/php/ajaxServices/tagQuestionYesNo.php",
-				{author:"<?= $_SESSION['username']?>",
-				role:"<?= $_SESSION['role']?>",
-				masterSolution:"<?= $_SESSION['masterSolution']?>",
-				path:questions[counter],
-				ownerURI:questionsURI[counter],
-				answer:category},
+				{	author:"<?= $_SESSION['username']?>",
+					role:"<?= $_SESSION['role']?>",
+					masterSolution:"<?= $_SESSION['masterSolution']?>",
+					path:questions[counter],
+					ownerURI:questionsURI[counter],
+					answer:category
+				},
 		  		function(returned_data){
 			  		// We don't need to do anything in the call-back function
 			    }

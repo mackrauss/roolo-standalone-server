@@ -7,8 +7,6 @@ require_once '../dataModels/Question.php';
 require_once '../dataModels/UploadedSolution.php';
 
 $username = $_SESSION['username'];
-//TODO: delete later!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-$username = $_REQUEST['username'];
 if (sizeof($username) == 0){
 	echo "need a username in the session or params";
 	die();
@@ -36,14 +34,28 @@ foreach ($answers as $curAnswer){
 }
 
 /*
+ * Find all questions that have already been voted on
+ */
+$query = "type:VoteOnTag AND author: $username";
+$existingVotes = $rooloClient->search($query, 'metadata', 'latest');
+
+$existingVotesURIs = array();
+foreach ($existingVotes as $curExistingVote){
+	$existingVotesURIs[$curExistingVote->get_ownerUri()] = 1;
+}
+$existingVotesURIs = array_keys($existingVotesURIs);
+$existingVotesURIs = implode(' OR ', $existingVotesURIs);
+
+/*
  * Find all questions answered by this group
  */
-$query = "type:Question AND uri:(".$rooloClient->escapeSearchTerm(implode(' OR ', $questionUris)).")";
+$exclusions = mb_strlen($existingVotesURIs) == 0 ? "" : "AND -uri:(" . $rooloClient->escapeSearchTerm($existingVotesURIs) . ")";
+$query = "type:Question AND uri:(".$rooloClient->escapeSearchTerm(implode(' OR ', $questionUris)).") ". $exclusions;
 $questions = $rooloClient->search($query, 'metadata', 'latest');
 
 
 /*
- * Find other people's tags for anwered questions
+ * Find other people's tags for answered questions
  */
 $questionTags = array();
 foreach ($questions as $curQuestion){
@@ -67,6 +79,11 @@ foreach ($questions as $curQuestion){
 ?>
 
 <script type='text/javascript'>
+
+	$(document).ready(function (){
+		$('#signout').show();
+	});
+
 	curQuestionIdx = 0;
 	numQuestions = <?= sizeof($questions)?>;
 	
@@ -80,14 +97,28 @@ foreach ($questions as $curQuestion){
 		curContentDiv.hide();
 
 		// make sure at least one checkbox was selected
-		curContentDiv.find('input[type=checkbox]:checked').size();
-		
+		votes = curContentDiv.find('input[type=checkbox]');
+		votesJson = "";
+		for (i=0; i < votes.size(); i++){
+			curVote = votes.get(i);
+			votesJson += "'" + curVote.value + "':'" + curVote.checked +"', ";
+		}
+
 		// submit answer through ajax
-//		$.ajax('/ajaxServices/');
+		$.get("/src/php/ajaxServices/VoteOnTag.php",
+		{	author:"<?= $_SESSION['username']?>",
+			path:curContentDiv.find('img').attr('src'),
+			ownerURI:curContentDiv.find('img').attr('uri'),
+			votes:votesJson},
+	  		function(returned_data){
+		  		// We don't need to do anything in the call-back function
+		    }
+		);
 		
 		curQuestionIdx++;
 		if (curQuestionIdx == numQuestions){
 			$('#endOfProgram').show();
+			setTimeout("window.location.href='/src/php/pages/'", 7000);
 		}else{
 			// show the new content div
 			newContentDiv = $('#contentDiv'+curQuestionIdx);
@@ -104,7 +135,7 @@ foreach ($questions as $curQuestion) {
 	$divVisibility = $i == 0 ? '' : 'display: none;'; 
 ?>
 	<div id='contentDiv<?=$i?>' class='contentDiv' style='<?= $divVisibility?>; float: left; width: 100%;'>
-		<img style='float: left;' src='<?= $curQuestion->get_path()?>' />
+		<img style='float: left;' src='<?= $curQuestion->get_path()?>' uri='<?= $curQuestion->get_uri()?>'/>
 <?php 
 	foreach ($curQuestion->get_tags() as $curTag){
 ?>

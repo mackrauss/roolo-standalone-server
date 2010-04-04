@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once './header.php';
 require_once '../RooloClient.php';
 require_once '../dataModels/Question.php';
@@ -40,15 +42,15 @@ if ($_SESSION['username']!= $_REQUEST['username']){
 $_SESSION['msg'] = "";
 $greetingMsg = "Hello " . $_SESSION['username'];
 
-$username = trim($_REQUEST['username']);
+$username = trim($_SESSION['username']);
 $author = trim($_SESSION['username']);
 $group = '';
 if (strstr($author, 'algebra') > -1){
 	$group = 'algebra';
-}else if (strstr($author, 'exponential') > -1){
-	$group = 'exponential';
-}else if (strstr($author, 'geometry') > -1){
-	$group = 'geometry';
+}else if (strstr($author, 'graphing') > -1){
+	$group = 'graphing';
+}else if (strstr($author, 'functions') > -1){
+	$group = 'functions';
 }else if (strstr($author, 'trigonometry') > -1){
 	$group = 'trigonometry';
 }
@@ -66,13 +68,13 @@ if (isset($_REQUEST['questionURIs'])){
 	$pathOfQuestion = array_shift($questionPaths);
 
 	//save uploaded file & create and save uploadSolution object
-	$saveUploadedSolution->set_author($_SESSION['username']);
+	$saveUploadedSolution->set_author($username);
 	$saveUploadedSolution->set_questionUri($uriOfQuestion);
 	//echo "uploadedfile = " .$_GET['uploadedfile'];
 	$saveUploadedSolution->saveUploadedFile($_FILES['uploadedfile']);
 	
 }else{
-	$queryUploadedSolutions = "type:UploadedSolution AND author:" . $_SESSION['username'];
+	$queryUploadedSolutions = "type:UploadedSolution AND author:" . $rooloClient->escapeSearchTerm($username);
 	
 	$uploadedSolutions = $rooloClient->search($queryUploadedSolutions, 'metadata');
 	
@@ -83,10 +85,11 @@ if (isset($_REQUEST['questionURIs'])){
 
 	$questionWithSolURIs = implode(' OR ', $uploadedSolutionOwnerURIs);
 	
-	if ( sizeof($uploadedSolutionOwnerURIs) == 0 )
-		$testQuery = "type:Question AND tags:" . $group;
-	else 
-		$testQuery = "type:Question AND tags:" . $group . " AND -uri:(" . $questionWithSolURIs  . ")";
+	if ( sizeof($uploadedSolutionOwnerURIs) == 0 ){
+		$testQuery = "type:Question AND tags:" . $rooloClient->escapeSearchTerm($group);
+	}else{ 
+		$testQuery = "type:Question AND tags:" . $rooloClient->escapeSearchTerm($group) . " AND -uri:(" . $questionWithSolURIs  . ")";
+	}
 	
 	$unansweredQuestions = $rooloClient->search($testQuery, 'metadata', 'latest');
 	usort(&$unansweredQuestions, "cmp");
@@ -128,8 +131,9 @@ if (isset($_REQUEST['questionURIs'])){
 	
 			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
 			
-			groupingMsg = "<h2 style='width: 100%; float: left'> There is not any question! </h2>";
+			groupingMsg = "<h2 style='width: 100%; float: left'> There are no more questions left! </h2>";
 			$('#groupingMsgDiv').html(groupingMsg);
+			setTimeout("window.location.href='/src/php/pages/'", 7000);
 		}else {
 		   $('#signout').show();
 	       $('#curQuestionImg').attr('src', questionPaths[0]);

@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-$_SESSION['username'] = $_POST['username'];
-$_SESSION['password'] = $_POST['password'];
+$_SESSION['username'] = $_REQUEST['username'];
+$_SESSION['password'] = $_REQUEST['password'];
 
 $url = "http://localhost:8070/webapp/j_acegi_security_check";
 //$url = "http://192.168.1.102:8070/webapp/j_acegi_security_check";
@@ -35,10 +35,10 @@ if($notMember){
 }else{
 	$_SESSION['loggedIn'] = TRUE;
 	if (strstr($_SESSION['username'], "group")){
-		header('Location:/src/php/pages/upload_solution.php?username=' . $_SESSION['username']);
-		//header('Location:/src/php/pages/upload_solution.php');
+		header('Location:/src/php/pages/groupHomePage.php');
 	}else{
 		header('Location:/src/php/pages/tag_question_yes_no.php?username=' . $_SESSION['username']);
 	}
 }
+
 ?>
