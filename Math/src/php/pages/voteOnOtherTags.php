@@ -7,6 +7,11 @@ require_once '../dataModels/Question.php';
 require_once '../dataModels/UploadedSolution.php';
 
 $username = $_SESSION['username'];
+
+$username = $_REQUEST['username'];
+$_SESSION['username'] = $username;
+
+
 if (sizeof($username) == 0){
 	echo "need a username in the session or params";
 	die();
@@ -47,7 +52,7 @@ $existingVotesURIs = array_keys($existingVotesURIs);
 $existingVotesURIs = implode(' OR ', $existingVotesURIs);
 
 /*
- * Find all questions answered by this group
+ * Find all questions answered by this group, whose tags have not been voted on already
  */
 $exclusions = mb_strlen($existingVotesURIs) == 0 ? "" : "AND -uri:(" . $rooloClient->escapeSearchTerm($existingVotesURIs) . ")";
 $query = "type:Question AND uri:(".$rooloClient->escapeSearchTerm(implode(' OR ', $questionUris)).") ". $exclusions;
@@ -79,14 +84,19 @@ foreach ($questions as $curQuestion){
 ?>
 
 <script type='text/javascript'>
-
-	$(document).ready(function (){
-		$('#signout').show();
-	});
-
 	curQuestionIdx = 0;
 	numQuestions = <?= sizeof($questions)?>;
 	
+	$(document).ready(function (){
+		$('#signout').show();
+
+		updateQuestionNumber();
+	});
+
+	function updateQuestionNumber(){
+		$('#curQuestionNum').html(curQuestionIdx+1);
+	}		
+
 	function submitAnswer(){
 		curContentDiv = $('#contentDiv'+curQuestionIdx); 
 		
@@ -123,21 +133,27 @@ foreach ($questions as $curQuestion){
 			// show the new content div
 			newContentDiv = $('#contentDiv'+curQuestionIdx);
 			newContentDiv.show();
+
+			updateQuestionNumber();
 		}
 		
 		
 	}
 </script>
 
+<div style='float: left; width: 100%; font-size: medium; '>
+	Question <span id='curQuestionNum'></span>/<?= sizeof($questions)?>
+</div>
 <?php
 $i=0; 
 foreach ($questions as $curQuestion) {
 	$divVisibility = $i == 0 ? '' : 'display: none;'; 
 ?>
+	
 	<div id='contentDiv<?=$i?>' class='contentDiv' style='<?= $divVisibility?>; float: left; width: 100%;'>
 		<img style='float: left;' src='<?= $curQuestion->get_path()?>' uri='<?= $curQuestion->get_uri()?>'/>
 		<div style='float: left; margin-left: 20px;'>
-			<h3 style='margin-top: 40px;'>Which categories do you agre with?</h3>
+			<h3 style='margin-top: 40px;'>Which categories do you agree with?</h3>
 <?php 
 	foreach ($curQuestion->get_tags() as $curTag){
 ?>
