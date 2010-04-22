@@ -78,6 +78,12 @@ class Problem extends Elo {
     public function get_principleName(){
     	return parent::getMetadata('principleName');
     }
+    
+    public function get_lable(){
+		$path = parent::getMetadata('path');
+    	$temp = substr($path, strrpos($path, '_') + 1);
+		return substr($temp, 0, strrpos($temp, '.'));
+    }
 }
 
 
