@@ -10,7 +10,7 @@ if (!$_SESSION['loggedIn'])
 	header("Location:/src/php/pages/");
 $_SESSION['loggedIn'] = FALSE;	
 $_SESSION['msg'] = "";
-$greetingMsg = $_SESSION['username'];
+$greetingMsg = "Hello " . $_SESSION['username'];
 $noMoreProblemMsg = 'You have finished answering all the questions. Please wait for your teacher to assign you to a super group!';
 
 //if(isset($_GET['username'])){
@@ -59,7 +59,7 @@ $problems = array();
 $problemsURI = array();
 
 if ($totalResults != 0){
-	for ($i=0; $i< sizeof($results); $i++){
+	for ($i=0; $i< $totalResults; $i++){
 		$problemObject = new Problem();
 		$problemObject = $results[$i];
 		$problems[$i] = $problemObject->path;
@@ -78,7 +78,6 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		$principlesURIs[$i] = $principleObject->uri;
 }
 ?>
-
 
 
 <script type='text/javascript' src="/src/js/jquery.corner.js"/></script>
@@ -101,29 +100,25 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 
 	$(document).ready(function(){
 
-//		randomIndex = randomCounter();
-//		$('#counter').val(randomIndex);
-		curQuestion = questions.splice(0,1);
+		randomIndex = randonCounter();
+		$('#counter').val(randomIndex);
 
 		$('#greetingDiv').html('<?= $greetingMsg?>');
 
 		if ('<?= $totalResults ?>' == 0){
 
 			$('#imgDiv').remove();
-			$('#questionDiv').remove();
+			$('#answerSection').remove();
 
 			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
 
 			groupingMsg = "<h2 style='width: 100%; float: left'> '<?= $noMoreProblemMsg ?>'</h2>";
 			$('#groupingMsgDiv').html(groupingMsg);
 			$('#curQuestionNumDiv').html('');
-			$('#answerSection').html('');
-			$('#questionSection').html('');
 			delay();
 		}else{
 			
-//			$('#curQuestion').attr('src', questions[randomIndex]);
-			$('#curQuestion').attr('src', curQuestion);
+			$('#curQuestion').attr('src', questions[randomIndex]);
 			$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
 			$('#timerValue').text( minutes + ":" + seconds );
 			$('#charLeftStr').text( rationaleTextMax + " characters left");
@@ -187,46 +182,48 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		//disable the submit button
 		$('#submitBtn').attr('disabled', 'disabled');
 
-//		var counter = $('#counter').val();
+		var counter = $('#counter').val();
 		var rationale = $('#rationaleTextarea').val();
 		var selectedChoice = $("input[name='choice']:checked").val();
-		var chosenPrincipleUri = $('#laws').find(':selected').attr('principleUri');
-		
+		var selectedCategory = new Array();
+		$("input[name='categoryArray[]']:checked").each(function() {selectedCategory.push($(this).val());});
+		var category = selectedCategory.join(', ');
 
-	    //Ajax call to send group, selectedChoice, Owneruri, rationale
+		//Ajax call to send group, selectedChoice, Owneruri, rationale
 		$.get("/src/php/ajaxServices/saveMultiplechoice.php",
 				{username:"<?= $_SESSION['username']?>",
 				 choice: selectedChoice,
 				 ownerURI:questionsURI[counter],
 				 rationale: rationale,
-				 principleURI:  chosenPrincipleUri
+				 //questionPath: questions[counter],
+				 category: category 
 				},
 		  		function(returned_data){
 			  		// We don't need to do anything in the call-back function
 			    }
 		);
 					
-		// Delete the shown question and its URI from arraies
-//		questions.splice(counter,1);
-//		questionsURI.splice(counter,1);
-		// The above 2 lines would get a question by random, but we've changed to logic to give each group the same question
-		curQuestion = questions.splice(0, 1);
-		curQuestionURI = questionsURI.splice(0, 1);
+		// Delete the showed question and its URI from arraies
+		questions.splice(counter,1);
+		questionsURI.splice(counter,1);
 		
 		//changes the question if it is not the last question
 		if ( questions.length > 0 ){
 
-//			counter = randomCounter();
-//			$('#counter').val(counter);
-//			$('#curQuestion').attr('src', questions[counter]);
-			$('#curQuestion').attr('src', curQuestion);
+			counter = randonCounter();
+			
+			$('#counter').val(counter);
+			$('#curQuestion').attr('src', questions[counter]);
 
 			$('#rationaleTextarea').val('');
 			$('#charLeftStr').text( rationaleTextMax + " characters left");
 
+			//uncheck radiobuttons
 			$("input[name='choice']:checked").attr("checked", false);
 
-       	    $('#submitBtn').removeAttr('disabled');
+			$(".box").attr('checked', false);
+
+			$('#submitBtn').removeAttr('disabled');
 
 			seconds = 30; 
 			minutes = 2; 
@@ -234,8 +231,8 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 
 		} else{
 			$('#imgDiv').remove();
-
-			$('#questionDiv').remove();
+			$('#answerSection').remove();
+			$('#timer').hide();
 
 			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
 
@@ -255,15 +252,32 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 
 	//function generate the counter value (the index of curent question in 
 	//questions and questionsURI arraies)
-	function randomCounter(){
+	function randonCounter(){
 		adjustedHigh = questions.length;
         return Math.floor(Math.random()*adjustedHigh);
+	}
+
+	function check(){
+		var choice = $("input[name='choice']:checked").val();
+		if (choice == 'A' || choice == 'B' || choice == 'C' || choice == 'D' || choice == 'E'){
+			nextQuestion();
+		}else{	
+			alert ("Please select the corect answer!");
+		}
 	}		
 	
 </script>
+<style type='text/css'>
 
+	#categoryDiv {
+		width: 70%;
+		float: left;
+		margin-left: 3%;
+		margin-top: 5%
+	}
+</style>	
 
-<!--<div id='greetingDiv'></div>-->
+<div id='greetingDiv'></div>
 
 <div id='groupingMsgDiv'></div>
 
@@ -279,55 +293,40 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 <div id="answerSection">
 	<form id="round1" name="form1" method="post" action="feedback.php">
 		<dl>
-			<dt>CHOOSE ONE OF THE FOLLOWING:</dt>
+			<dt>1.Select the corect answer:</dt>
 		    <dd><label class="radioButton"><input type="radio" name="choice" value="A"/>A</label>
 		 		<label class="radioButton"><input type="radio" name="choice" value="B"/>B</label>
 		  		<label class="radioButton"><input type="radio" name="choice" value="C"/>C</label>
 		  		<label class="radioButton"><input type="radio" name="choice" value="D"/>D</label>
 		  		<label class="radioButton"><input type="radio" name="choice" value="E"/>E</label>
 		  	</dd>
-		  <dt>WHICH PRINCIPLE BEST APPLIES TO THIS QUESTION?</dt>
-<!--		  <dd>-->
-<!--		  <select name="principle">-->
-<!--		    <option value="1" selected="selected">Newton's 1st law</option>-->
-<!--		    <option value="2">Newton's 2nd law</option>-->
-<!--		    <option value="3">Newton's 3rd law</option>-->
-<!--		  </select>-->
-<!--		  </dd>-->
 
-			 <select name="laws" id="laws" style='margin-top: 10px'>
-	        	<option value="law1" principleUri='<?= $principlesURIs[0]?>'>Newton's First Law</option>
-	        	<option value="law2" principleUri='<?= $principlesURIs[1]?>'>Newton's second Law</option>
-	        	<option value="law3" principleUri='<?= $principlesURIs[2]?>'>Newton's third Law</option>
-	   		</select>
+			<dt>2.Check the corresponding elements that are shown in the problem:</dt>
+			<div id="categoryDiv">
+				<input type="checkbox" class="box" name="categoryArray[]" value="net force">net force<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="One body problem">One body problem<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="Multiple body problem">Multiple body problem<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="Collision">Collision<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="Explosion">Explosion<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="Fast or instantaneous process">Fast or instantaneous process<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="1 dimensional">1 dimensional<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="2 dimensional">2 dimensional<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="closed system">closed system<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="open system">open system<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="conserved">conserved<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="not conserved">not conserved<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="energy">energy<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="momentum">momentum<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="impulse">impulse<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="force">force<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="displacement">displacement<br>
+				<input type="checkbox" class="box" name="categoryArray[]" value="velocity">velocity<br>
+			</div>
 		  <dt style='width: 50%; float: left'>RATIONALE</dt>
 		  <dt id="charLeftStr" style='width: 49%; float: right; text-align: right' ></dt>
 		  <dd><textarea id="rationaleTextarea" name="" cols="40" rows="12"></textarea></dd>
-		  <input name="submit" type="button" value="SUBMIT" class="btn" onClick="nextQuestion()" style='margin-left: 250px; margin-top: 20px'/>
+		  <input name="submit" type="button" value="SUBMIT" class="btn" onClick="check()" style='margin-left: 250px; margin-top: 20px'/>
 	</form>
-
-<!--		<div id='moltiplecchoiceTitleDiv' class='title'>-->
-<!--			<font size='3px'> Select Correct answer </font><br/><br/>-->
-<!--		</div>-->
-
-<!--		<div id='choiceDiv'>-->
-<!--			<input class='radioButton' type="radio" name="choice" value="A"><b>A</b><br>-->
-<!--			<input class='radioButton' type="radio" name="choice" value="B"><b>B</b><br>-->
-<!--			<input class='radioButton' type="radio" name="choice" value="C"><b>C</b><br>-->
-<!--			<input class='radioButton' type="radio" name="choice" value="D"><b>D</b><br>-->
-<!--			<input class='radioButton' type="radio" name="choice" value="E"><b>E</b><br>-->
-<!--		</div>-->
-<!--		<div id='rationaleDiv'>-->
-<!--			<div id='textareaTitleDiv' class='title'>-->
-<!--				<font size='3px'>Add Rationale</font>-->
-			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-<!--				<span id="charLeftStr" ></span>-->
-<!--			</div>-->
-<!--			<textarea id='rationaleTextarea' rows='5' cols='20'	white-space='nowrap'></textarea>-->
-<!--		</div>-->
-<!--		<div id='submitDiv'>-->
-<!--			<input class='btn' id='submitBtn' type="button" value='Submit' onClick='nextQuestion()'>-->
-<!--		</div>-->
 </div>
 
 <div id='questionSectionDiv'></div>
@@ -337,3 +336,4 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 <?php 
 
 require_once './footer.php';
+?>
