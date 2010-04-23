@@ -48,7 +48,8 @@ while (false !== ($file = readdir($sourceHandler))) {
 			$problem ->category = '';
 			//$problem ->solutionpath = '';
 			//$problem ->solutionpathtype = $problem->selectPathType(2);//select 'DISKPath' type
-			$rooloClient->addElo($problem);
+			echo $problem->toString();
+			echo $rooloClient->addElo($problem);
 			$fileSaved = $fileSaved + 1;
 		}
 		$fileCount = $fileCount + 1;
