@@ -24,14 +24,17 @@ if($notMember){
 	$_SESSION['msg'] = $msg;
 	header("Location:/src/php/pages/");
 }else{
+	
+	header("Location:/src/php/pages/multiple_choice.php");
 	$_SESSION['loggedIn'] = TRUE;
-	if (strstr($_SESSION['username'], "SuperGroup")){
-		//TODO
-		//should go to special page for super group
-		header("Location:/src/php/pages/Super_choice.php");
-	}elseif (strstr($_SESSION['username'], "Group")){
-		header("Location:/src/php/pages/multiple_choice.php");
-	}else
-		header("Location:/src/php/pages/principle_problems.php");
+//	if (strstr($_SESSION['username'], "SuperGroup")){
+//		//TODO
+//		//should go to special page for super group
+//		header("Location:/src/php/pages/Super_choice.php");
+//	}elseif (strstr($_SESSION['username'], "Group")){
+//		header("Location:/src/php/pages/multiple_choice.php");
+//	}else
+//		header("Location:/src/php/pages/principle_problems.php");
+//	}
 }
 ?>

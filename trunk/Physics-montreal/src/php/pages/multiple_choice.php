@@ -262,7 +262,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		if (choice == 'A' || choice == 'B' || choice == 'C' || choice == 'D' || choice == 'E'){
 			nextQuestion();
 		}else{	
-			alert ("Please select the corect answer!");
+			alert ("Please select an answer!");
 		}
 	}		
 	
