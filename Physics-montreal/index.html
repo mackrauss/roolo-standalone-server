@@ -2,16 +2,54 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Welcome to Dawson</title>
+<link rel="stylesheet" type="text/css" href="/src/css/style-michelle.css" />
 </head>
+
+<style type='text/css'>
+	#projectTable {
+		float: left;
+		width: 100%;
+		border-collapse: collapse;
+	}
+	
+	#projectTable tr{
+		
+	}
+	
+	#projectTable td.logo {
+		width: 200px;
+		margin: 0 auto;
+		border-bottom: 1px solid #CCCCCC;
+		padding-bottom: 10px;
+	}
+	
+	#projectTable td.desc {
+		border-bottom: 1px solid #CCCCCC;
+		padding-bottom: 10px;
+		text-align: left;
+		padding-left: 30px;
+		font-size: 16px;
+		line-height: 32px;
+	}
+	
+</style>
+
+
 <body>
-
-
-	<div style='margin: 0 auto'>
-		<h2 style='margin-bottom: 30px'> Welcom to Dawson </h2>
+	<div id="header"><span style='color: white; float: left; padding-left: 20px; margin-top: 25px; font-size: 24px'> Welcome to Dawson </span></div>
+	
+	<div id='projects' style='margin: 0 auto; width: 976px'>
+	
+		<h2 style='float: left; margin-top: 30px; width: 100%; text-align: left; padding-bottom: 5px; border-bottom: 1.5px dotted #CCCCCC'> Projects </h2>
 		
-		<a href='/src/php/pages'><img src='/resources/images/physics-button.png' style='border: none'/></a> 
-		
+		<table id='projectTable'>
+			<tr>
+				<td class='logo'> <a href='/src/php/pages'><img src='/resources/images/physics-button.png' style='border: none'/></a> </td>
+				<td class='desc'> Learn the relationship between physics problems and their underlying concepts through tagging, answering and reflecting your reasoning. </td>
+			</tr>
+		</table>
+		 
 	</div>
 
 </body>
