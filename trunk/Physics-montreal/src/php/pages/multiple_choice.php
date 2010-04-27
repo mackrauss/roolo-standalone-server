@@ -103,16 +103,16 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		randomIndex = randonCounter();
 		$('#counter').val(randomIndex);
 
-		$('#greetingDiv').html('<?= $greetingMsg?>');
+		$('#questionHeading').html('<?= $greetingMsg?>');
 
 		if ('<?= $totalResults ?>' == 0){
 
-			$('#imgDiv').remove();
-			$('#answerSection').remove();
-
-			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
-
-			groupingMsg = "<h2 style='width: 100%; float: left'> '<?= $noMoreProblemMsg ?>'</h2>";
+			$('#middle-top').remove();
+			$('#middle-center').remove();
+			
+			$('#groupingMsgDiv').css({'width' : '70%', 'height' : '18%', 'margin-left':'15%'});
+			
+			groupingMsg = "<h2 style='width: 100%; float: left; Margin-top: 10%'><?= $noMoreProblemMsg ?></h2>";
 			$('#groupingMsgDiv').html(groupingMsg);
 			$('#curQuestionNumDiv').html('');
 			delay();
@@ -221,6 +221,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 			//uncheck radiobuttons
 			$("input[name='choice']:checked").attr("checked", false);
 
+			//uncheck checkBoxes
 			$(".box").attr('checked', false);
 
 			$('#submitBtn').removeAttr('disabled');
@@ -230,13 +231,14 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 			$('#count').text( minutes + ":" + seconds + "time left"); 
 
 		} else{
-			$('#imgDiv').remove();
-			$('#answerSection').remove();
-			$('#timer').hide();
 
-			$('#groupingMsgDiv').css({'width' : '100%', 'height' : '18%'});
+			$('#middle-top').remove();
+			$('#middle-center').remove();
+			$('#signout').remove();
+			
+			$('#groupingMsgDiv').css({'width' : '70%', 'height' : '18%', 'margin-left':'15%'});
 
-			groupingMsg = "<h2 style='width: 100%; float: left'> '<?= $noMoreProblemMsg ?>' </h2>";
+			groupingMsg = "<h2 style='width: 100%; float: left; margin-top: 10%'> <?= $noMoreProblemMsg ?> </h2>";
 
 			$('#groupingMsgDiv').html(groupingMsg);
 			$('#curQuestionNumDiv').html('');
@@ -262,74 +264,72 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		if (choice == 'A' || choice == 'B' || choice == 'C' || choice == 'D' || choice == 'E'){
 			nextQuestion();
 		}else{	
-			alert ("Please select an answer!");
+			alert ("Please select the corect answer!");
 		}
 	}		
 	
 </script>
-<style type='text/css'>
 
-	#categoryDiv {
-		width: 70%;
-		float: left;
-		margin-left: 3%;
-		margin-top: 5%
-	}
-</style>	
+<div id="container2">
 
-<div id='greetingDiv'></div>
+<div id="middle-top">
+	<div id="questionHeading"><p><b></b></p></div>
+	<div id="timer" style='display: none'>
+    	<p>TIME REMAINING</p>
+    	<h1 id='timerValue'></h1>
+  	</div>
+	
+</div>
 
 <div id='groupingMsgDiv'></div>
 
-<div id='groupDiv'></div>
-
-
-<div id="questionSection">
-	<div class="basicFont" id='curQuestionNumDiv'></div>
-	<div id='imgDiv'>
-		<img class='problem' height="350px" id='curQuestion' src="" />
-	</div>
-</div>
-<div id="answerSection">
-	<form id="round1" name="form1" method="post" action="feedback.php">
-		<dl>
-			<dt>1.Select the corect answer:</dt>
-		    <dd><label class="radioButton"><input type="radio" name="choice" value="A"/>A</label>
-		 		<label class="radioButton"><input type="radio" name="choice" value="B"/>B</label>
-		  		<label class="radioButton"><input type="radio" name="choice" value="C"/>C</label>
-		  		<label class="radioButton"><input type="radio" name="choice" value="D"/>D</label>
-		  		<label class="radioButton"><input type="radio" name="choice" value="E"/>E</label>
-		  	</dd>
-
-			<dt>2.Check the corresponding elements that are shown in the problem:</dt>
-			<div id="categoryDiv">
-				<input type="checkbox" class="box" name="categoryArray[]" value="net force">net force<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="One body problem">One body problem<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="Multiple body problem">Multiple body problem<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="Collision">Collision<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="Explosion">Explosion<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="Fast or instantaneous process">Fast or instantaneous process<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="1 dimensional">1 dimensional<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="2 dimensional">2 dimensional<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="closed system">closed system<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="open system">open system<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="conserved">conserved<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="not conserved">not conserved<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="energy">energy<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="momentum">momentum<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="impulse">impulse<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="force">force<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="displacement">displacement<br>
-				<input type="checkbox" class="box" name="categoryArray[]" value="velocity">velocity<br>
-			</div>
-		  <dt style='width: 50%; float: left'>RATIONALE</dt>
-		  <dt id="charLeftStr" style='width: 49%; float: right; text-align: right' ></dt>
-		  <dd><textarea id="rationaleTextarea" name="" cols="40" rows="12"></textarea></dd>
-		  <input name="submit" type="button" value="SUBMIT" class="btn" onClick="check()" style='margin-left: 250px; margin-top: 20px'/>
-	</form>
-</div>
-
-<div id='questionSectionDiv'></div>
+<div id="middle-center">
+    <div id="questionSection">
+    	<div class="basicFont" id='curQuestionNumDiv'></div>
+    	<img id='curQuestion' src="" width="454" height="320" class="problem" />
+  	</div>
+	<div id="answerSection">
+		<form id="round1" name="form1" method="post" action="feedback.php">
+			<dl>
+				<dt>1.Select the corect answer:</dt>
+			    <dd><label class="radioButton"><input type="radio" name="choice" value="A"/>A</label>
+			 		<label class="radioButton"><input type="radio" name="choice" value="B"/>B</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="C"/>C</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="D"/>D</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="E"/>E</label>
+			  	</dd>
+	
+				<dt>2.Check the corresponding elements that are shown in the problem:</dt>
+			  	<dd>
+			  		<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="net force"/>Net force</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="One body problem"/>One body problem</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Multiple body problem"/>Multiple body problem</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Collision"/>Collision</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Explosion"/>Explosion</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Fast or instantaneous process"/>Fast or instantaneous process</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="1 dimensional"/>1 dimensional</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="2 dimensional"/>2 dimensional</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="closed system"/>Closed system</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="open system"/>Open system</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="conserved"/>Conserved</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="not conserved"/>Not conserved</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="energy"/>Energy</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="momentum"/>Momentum</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="impulse"/>Impulse</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="force"/>Force</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="displacement"/>Displacement</label><br/>
+					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="velocity"/>Velocity</label><br/>
+			  	</dd>
+			  
+			   	<dt>3. Write a rationale explaining why you selected the elements above.</dt>
+			  	<dd><textarea id="rationaleTextarea" name="" cols="35" rows="12"></textarea></dd>
+				<p id="charLeftStr" ></p>
+			  	<input name="submit" type="button" value="SUBMIT" class="btn" onClick="check()" />
+			</dl>			  	
+		</form>
+	</div> <!-- id="answerSection" -->
+</div><!-- id="middle-center"> -->	
+<div id="middle-bottom"></div>
  
 <label><input type='hidden' id='counter' name='counter' value=""/>
 
