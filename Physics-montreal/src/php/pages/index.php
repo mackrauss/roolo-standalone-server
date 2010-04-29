@@ -13,7 +13,6 @@ error_reporting(E_STRICT);
 //}
 
 if(empty($_SESSION['msg'])){
-    $_SESSION['msg'] =  "Please Login! Username & Password Are Case Sensitive!";
     $_SESSION['username']= "";
 }
 
@@ -39,7 +38,6 @@ if(empty($_SESSION['msg'])){
 	<div id="logo"></div>  
 	<div id="login">
 		<form id="loginForm" name="loginForm" action="/src/php/ajaxServices/securityCheck.php" method="post">
-			<div id='subMsgDiv'><?= $_SESSION['msg']?></div>
 			<label>Username</label><input name="username" type="text" value='<?= $_SESSION['username'] ?>'><br/>
 			<label>Password</label><input name="password" type="password" /><br/>
 			<input name="submit" type="submit" value="LOGIN" class="btn" />
