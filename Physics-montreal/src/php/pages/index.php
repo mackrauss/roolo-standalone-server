@@ -30,8 +30,8 @@ if(empty($_SESSION['msg'])){
 		height: 140px;
 		float: left;
 		text-align: left; 
-		margin-left: 28%;
-		margin-top: 50px;
+		margin-left: 70%;
+		margin-top: -520px;
 	}
 </style>
 
