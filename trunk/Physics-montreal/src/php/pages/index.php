@@ -48,7 +48,7 @@ if(empty($_SESSION['msg'])){
 </div>
 
 <div id='instructions'>
-	<fieldset style='border: 3px solid #669900'>
+	<fieldset style='border: 3px solid #6699CC'>
 		<legend style='color: black; font-size: 18px;'>Instructions</legend>
 		<p> Please use one of the following user/pass to login </p>
 	
