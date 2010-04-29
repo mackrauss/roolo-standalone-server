@@ -24,6 +24,17 @@ if(empty($_SESSION['msg'])){
 //}
 ?>
 
+<style type='text/css'>
+	#instructions {
+		width: 380px;
+		height: 140px;
+		float: left;
+		text-align: left; 
+		margin-left: 28%;
+		margin-top: 50px;
+	}
+</style>
+
 <div id="container">
 	<div id="logo"></div>  
 	<div id="login">
@@ -34,6 +45,22 @@ if(empty($_SESSION['msg'])){
 			<input name="submit" type="submit" value="LOGIN" class="btn" />
 		</form>	
 	</div>
+</div>
+
+<div id='instructions'>
+	<fieldset style='border: 3px solid #669900'>
+		<legend style='color: black; font-size: 18px;'>Instructions</legend>
+		<p> Please use one of the following user/pass to login </p>
+	
+		<ul>
+			<li>student111/dawson</li>
+			<li>student211/dawson</li>
+			<li>student311/dawson</li>
+		</ul>
+		
+		<p> If you notice that when you log in, there are no more questions to be answered, just click <a href='./resetRoolo.php'>Reset</a> and wait a little bit.</p>
+	</fieldset>
+
 </div>
 <?php 
 require_once './footer.php';
