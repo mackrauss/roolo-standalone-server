@@ -16,9 +16,9 @@ session_start();
 	<div id="topContainer">
 	<div id="headerContainer">
 		<div id="header">
-<!--			<div id="logo" onClick="document.location.href='/src/php/pages/index.php'">-->
+				<div id="signIn" onClick="document.location.href='/src/php/ajaxServices/logout.php'"> </div>
 		</div>
-		    <div id='signout' onClick="document.location.href='/src/php/ajaxServices/logout.php'" style='cursor:pointer; color:#1E7EC8; margin-left:68%; padding-top: 5px; display: none'><b> Log Out</b></div>    
+<!--		    <div id='signout' onClick="document.location.href='/src/php/ajaxServices/logout.php'" style='cursor:pointer; color:#1E7EC8; margin-left:68%; padding-top: 5px; display: none'><b> Log Out</b></div>    -->
 	</div>
 	  <!-- end #header -->
 
