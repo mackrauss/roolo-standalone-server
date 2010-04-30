@@ -17,6 +17,7 @@ $leftoverProblems = $numProblems % $numPrinciples;
 echo "Found $numProblems problems <br/>";
 echo "Found $numPrinciples principles <br/>";
 echo "So we have $problemsPerPrinciple problems per principle, with $leftoverProblems leftovers <br/>";
+echo "Warning: skipping leftovers!!!";
 
 echo "<br/>";
 echo "<br/>";

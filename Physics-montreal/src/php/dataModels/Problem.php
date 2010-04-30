@@ -64,19 +64,19 @@ class Problem extends Elo {
     }
     
     public function set_principleUri($uri){
-    	parent::addMetadata('principleUri', $uri);
+    	parent::addMetadata('principleuri', $uri);
     }
     
     public  function get_principleUri(){
-    	return parent::getMetadata('principleUri');
+    	return parent::getMetadata('principleuri');
     }
     
     public function set_principleName($name){
-    	parent::addMetadata('principleName', $name);
+    	parent::addMetadata('principlename', $name);
     }
     
     public function get_principleName(){
-    	return parent::getMetadata('principleName');
+    	return parent::getMetadata('principlename');
     }
     
     public function get_lable(){
