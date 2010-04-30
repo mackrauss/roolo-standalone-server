@@ -6,6 +6,8 @@ require_once '../dataModels/Principle.php';
 require_once '../dataModels/SuperSummary.php';
 require_once '../Application.php';
 
+error_reporting(E_ALL | E_STRICT);
+
 $roolo = new RooloClient();
 
 /*
