@@ -10,7 +10,7 @@ if (!$_SESSION['loggedIn'])
 	header("Location:/src/php/pages/");
 $_SESSION['loggedIn'] = FALSE;	
 $_SESSION['msg'] = "";
-$greetingMsg = "Hello " . $_SESSION['username'];
+$greetingMsg = "Signed in as <b> " . $_SESSION['username'] . "</b>";
 $noMoreProblemMsg = 'You have finished answering all the questions. Please wait for your teacher to assign you to a super group!';
 
 //if(isset($_GET['username'])){
@@ -103,7 +103,8 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		randomIndex = randonCounter();
 		$('#counter').val(randomIndex);
 
-		$('#questionHeading').html('<?= $greetingMsg?>');
+		signOutLink = '<a onClick="document.location.href=\'/src/php/ajaxServices/logout.php\'" style="cursor:pointer;"> Sign Out </a>';
+		$('#signIn').html('<?= $greetingMsg?>' + " | " + signOutLink);
 
 		if ('<?= $totalResults ?>' == 0){
 
@@ -114,15 +115,15 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 			
 			groupingMsg = "<h2 style='width: 100%; float: left; Margin-top: 10%'><?= $noMoreProblemMsg ?></h2>";
 			$('#groupingMsgDiv').html(groupingMsg);
-			$('#curQuestionNumDiv').html('');
+			$('#questionHeading').html();
 			delay();
 		}else{
 			
 			$('#curQuestion').attr('src', questions[randomIndex]);
-			$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
+			$('#questionHeading').html('Question ' + curQuestionNum + ' of ' + numQuestion);
 			$('#timerValue').text( minutes + ":" + seconds );
 			$('#charLeftStr').text( rationaleTextMax + " characters left");
-			$('#signout').show();
+			$('#signin').show();
 			$('#timer').show();
 			countDown(); 
 		}
@@ -234,21 +235,22 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 
 			$('#middle-top').remove();
 			$('#middle-center').remove();
-			$('#signout').remove();
+			$('#signin').remove();
 			
 			$('#groupingMsgDiv').css({'width' : '70%', 'height' : '18%', 'margin-left':'15%'});
 
 			groupingMsg = "<h2 style='width: 100%; float: left; margin-top: 10%'> <?= $noMoreProblemMsg ?> </h2>";
 
 			$('#groupingMsgDiv').html(groupingMsg);
-			$('#curQuestionNumDiv').html('');
+			$('#questionHeading').html('');
+			$('#signIn').html('');
 			delay();
 		}
 
 		// increment the current number of the question
 		curQuestionNum++;
 		if (curQuestionNum <= numQuestion) {
-			$('#curQuestionNumDiv').html('<h2> Question ' + curQuestionNum + '/' + numQuestion + '</h2>');
+			$('#questionHeading').html('Question ' + curQuestionNum + ' of ' + numQuestion);
 		}
 	}
 
@@ -270,6 +272,17 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 	
 </script>
 
+<style tyle='text/css'>
+	div#signIn {
+		position:absolute;
+		right:16px;
+		font-family:Arial, Helvetica, sans-serif;
+		color:#CCC;
+		padding-top: 20px;
+	} 
+
+</style>
+
 <div id="container2">
 
 <div id="middle-top">
@@ -285,8 +298,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 
 <div id="middle-center">
     <div id="questionSection">
-    	<div class="basicFont" id='curQuestionNumDiv'></div>
-    	<img id='curQuestion' src="" width="454" height="320" class="problem" style='border: none'/>
+    	<img id='curQuestion' src="" width="454" height="320" class="problem" style='border: medium solid #666666'/>
   	</div>
 	<div id="answerSection">
 		<form id="round1" name="form1" method="post" action="feedback.php">
