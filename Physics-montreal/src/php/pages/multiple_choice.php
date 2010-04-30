@@ -120,7 +120,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		}else{
 			
 			$('#curQuestion').attr('src', questions[randomIndex]);
-			$('#questionHeading').html('Question ' + curQuestionNum + ' of ' + numQuestion);
+			$('#questionHeading').html('<p><b>Question ' + curQuestionNum + ' of ' + numQuestion + '</b></p>');
 			$('#timerValue').text( minutes + ":" + seconds );
 			$('#charLeftStr').text( rationaleTextMax + " characters left");
 			$('#signin').show();
@@ -250,7 +250,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		// increment the current number of the question
 		curQuestionNum++;
 		if (curQuestionNum <= numQuestion) {
-			$('#questionHeading').html('Question ' + curQuestionNum + ' of ' + numQuestion);
+			$('#questionHeading').html('<p><b>Question ' + curQuestionNum + ' of ' + numQuestion + '</b></p>');
 		}
 	}
 
@@ -279,6 +279,17 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		font-family:Arial, Helvetica, sans-serif;
 		color:#CCC;
 		padding-top: 20px;
+	} 
+	
+	div#questionHeading {
+		height: 50px;
+		width: 300px;
+		margin:0;
+		padding-top:30px;
+		padding-left:40px;
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:x-large;
+		color:#1E7EC8;
 	} 
 
 </style>
