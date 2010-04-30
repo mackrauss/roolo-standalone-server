@@ -9,6 +9,26 @@ class Application {
 	public static $numPrinciples = 3;
 	public static $numProblemsForPhaseB = 3;
 	public static $numChoicesPerProblem = 4;
-	public static $problemChoices = array("a", "b", "c", "d");	
+	public static $problemChoices = array("a", "b", "c", "d", "e");
+	public static $problemCategories = array(
+		"net force",
+		"One body problem",
+		"Multiple body problem",
+		"Collision",
+		"Explosion",
+		"Fast or instantaneous process",
+		"1 dimensional",
+		"2 dimensional",
+		"closed system",
+		"open system",
+		"conserved",
+		"not conserved",
+		"energy",
+		"momentum",
+		"impulse",
+		"force",
+		"displacement",
+		"velocity"
+	);	
 }
 ?>
