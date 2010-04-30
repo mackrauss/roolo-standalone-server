@@ -298,7 +298,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 
 <div id="middle-center">
     <div id="questionSection">
-    	<img id='curQuestion' src="" width="454" height="320" class="problem" style='border: medium solid #666666'/>
+    	<img id='curQuestion' src="" width="454" height="320" class="problem" style='border: none'/>
   	</div>
 	<div id="answerSection">
 		<form id="round1" name="form1" method="post" action="feedback.php">
