@@ -65,7 +65,10 @@ div#footer {
 	margin:0;
 	background-image:url('/resources/images/footer.png');
 	background-repeat:repeat-x;
-	text-align:center; background-position-y:50%
+	text-align:center; 
+	background-position-y:50%;
+	float: left; 
+	width: 100%;
 }
 div#footer p {
 	padding-top: 60px;
