@@ -97,6 +97,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 	var seconds = 31; 
 	var minutes = 2;  
 	var rationaleTextMax = 140; //Max length for rationale string in texarea 
+	var flag = "false";
 
 	$(document).ready(function(){
 
@@ -197,7 +198,8 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 				 ownerURI:questionsURI[counter],
 				 rationale: rationale,
 				 //questionPath: questions[counter],
-				 category: category 
+				 category: category,
+				 flag: flag
 				},
 		  		function(returned_data){
 			  		// We don't need to do anything in the call-back function
@@ -207,6 +209,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 		// Delete the showed question and its URI from arraies
 		questions.splice(counter,1);
 		questionsURI.splice(counter,1);
+		flag = "false";
 		
 		//changes the question if it is not the last question
 		if ( questions.length > 0 ){
@@ -227,7 +230,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 
 			$('#submitBtn').removeAttr('disabled');
 
-			seconds = 30; 
+			seconds = 31; 
 			minutes = 2; 
 			$('#count').text( minutes + ":" + seconds + "time left"); 
 
@@ -264,6 +267,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 	function check(){
 		var choice = $("input[name='choice']:checked").val();
 		if (choice == 'A' || choice == 'B' || choice == 'C' || choice == 'D' || choice == 'E'){
+			flag = "true";
 			nextQuestion();
 		}else{	
 			alert ("Please select the corect answer!");
