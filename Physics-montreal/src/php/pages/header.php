@@ -9,7 +9,7 @@ session_start();
 		
 <!--		<link rel="stylesheet" type="text/css" href="/src/css/main.css" />-->
 		<link rel="stylesheet" type="text/css" href="/src/css/style-michelle.css" />
-		<link rel="stylesheet" type="text/css" href="/src/css/ui-lightness/jquery-ui-1.7.2.custom.css" />
+<!--		<link rel="stylesheet" type="text/css" href="/src/css/ui-lightness/jquery-ui-1.7.2.custom.css" />-->
 	</head>
 
 	<body class="oneColElsCtrHdr">
