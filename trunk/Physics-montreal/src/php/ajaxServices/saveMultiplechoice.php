@@ -8,31 +8,32 @@ require_once '../dataModels/Solution.php';
 require_once '../dataModels/Concept.php';
 require_once '../graphML/GraphML.php';
 
-$username = trim($_REQUEST['username']);
-$selectedChoice = trim($_REQUEST['choice']);
-$ownerURI = trim($_REQUEST['ownerURI']);
-$rationaleText = trim($_REQUEST['rationale']);
-$problemPath = trim($_REQUEST['questionPath'])	;
-$category = $_REQUEST['category'];
-
-$rooloClient = new RooloClient();
-
-//create solution Object
-$solutionObject = new Solution();
-
-$solutionObject->solutiontype = 0; // 0 means multipleChoice
-$solutionObject->author = $username;
-$solutionObject->selectedchoice = $selectedChoice;
-$solutionObject->owneruri = $ownerURI;
-
-$rationaleTag = $solutionObject->buildContentElement($rationaleText, "rationale");
-$solutionObject->content = $rationaleTag;
-
-$solutionObject->title = "Solution-Multiplechoice";
-$solutionObject->category = $category;
-
-$results = $rooloClient->addElo($solutionObject);
-
+if ( trim($_REQUEST['flag']) === "true" ){
+	$username = trim($_REQUEST['username']);
+	$selectedChoice = trim($_REQUEST['choice']);
+	$ownerURI = trim($_REQUEST['ownerURI']);
+	$rationaleText = trim($_REQUEST['rationale']);
+	$problemPath = trim($_REQUEST['questionPath'])	;
+	$category = $_REQUEST['category'];
+	
+	$rooloClient = new RooloClient();
+	
+	//create solution Object
+	$solutionObject = new Solution();
+	
+	$solutionObject->solutiontype = 0; // 0 means multipleChoice
+	$solutionObject->author = $username;
+	$solutionObject->selectedchoice = $selectedChoice;
+	$solutionObject->owneruri = $ownerURI;
+	
+	$rationaleTag = $solutionObject->buildContentElement($rationaleText, "rationale");
+	$solutionObject->content = $rationaleTag;
+	
+	$solutionObject->title = "Solution-Multiplechoice";
+	$solutionObject->category = $category;
+	
+	$results = $rooloClient->addElo($solutionObject);
+}
 ////create concept Object
 //$conceptObject = new Concept();
 //
