@@ -351,7 +351,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 			   	<dt>3. Write a rationale explaining why you selected the elements above.</dt>
 			  	<dd><textarea id="rationaleTextarea" name="" cols="35" rows="12"></textarea></dd>
 				<p id="charLeftStr" ></p>
-			  	<input name="submit" type="button" value="SUBMIT" class="btn" onClick="check()" />
+			  	<input name="submit" type="button" value="SUBMIT" class="btn" onClick="check(); scroll(0,0);" />
 			</dl>			  	
 		</form>
 	</div> <!-- id="answerSection" -->
