@@ -148,7 +148,7 @@ foreach ($questions as $curQuestion){
 	
 	<div style='float: left; width: 45%;  border: 8px solid #AAAAAA;  margin-bottom: 20px;' id='mcVis'></div>
 	<div style='float: right; width: 422px; border: 1px solid black; margin-bottom: 20px; margin-right: 10px;'>
-		<img src='<?= $question->path ?>' />
+		<img width="420px" src='<?= $question->path ?>' />
 	</div>
 	<div style='float: left; width: 875px; border: 8px solid #AAAAAA; margin-bottom: 20px;' id='catVis'></div>
 	
