@@ -11,7 +11,7 @@ error_reporting(E_STRICT);
 if (!$_SESSION['loggedIn']){
 	header("Location:/src/php/pages/");
 }
-$_SESSION['loggedIn'] = FALSE;
+//$_SESSION['loggedIn'] = FALSE;
 $_SESSION['msg'] = "";
 $greetingMsg = $_SESSION['username'] . " (teacher)";
 
