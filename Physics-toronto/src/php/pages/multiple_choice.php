@@ -8,7 +8,8 @@ require_once '../dataModels/Solution.php';
 error_reporting(E_STRICT);
 if (!$_SESSION['loggedIn'])
 	header("Location:/src/php/pages/");
-$_SESSION['loggedIn'] = FALSE;	
+
+//$_SESSION['loggedIn'] = FALSE;
 $_SESSION['msg'] = "";
 $greetingMsg = "Signed in as <b> " . $_SESSION['username'] . "</b>";
 $noMoreProblemMsg = 'You have finished answering all the questions. Please wait for your teacher to assign you to a super group!';

@@ -4,8 +4,8 @@ session_start();
 $_SESSION['username'] = $_POST['username'];
 $_SESSION['password'] = $_POST['password'];
 
-$url = "http://iitp.dawsoncollege.qc.ca:8080/webapp/j_acegi_security_check";
-// $url = "http://localhost:8070/webapp/j_acegi_security_check";
+//$url = "http://iitp.dawsoncollege.qc.ca:8080/webapp/j_acegi_security_check";
+ $url = "http://localhost:8070/webapp/j_acegi_security_check";
 $msg = "The username or password you entered is incorrect.";
 
 // create a new cURL resource
@@ -25,9 +25,9 @@ if($notMember){
 	$_SESSION['msg'] = $msg;
 	header("Location:/src/php/pages/");
 }else{
-	
-	header("Location:/src/php/pages/multiple_choice.php");
 	$_SESSION['loggedIn'] = TRUE;
+	header("Location:/src/php/pages/multiple_choice.php");
+	
 //	if (strstr($_SESSION['username'], "SuperGroup")){
 //		//TODO
 //		//should go to special page for super group

@@ -58,9 +58,13 @@ class Problem extends Elo {
 		}
     	parent::addMetadata($name, $value);
 	}
-		
+	
     public function __get($name) {
 		return parent::getMetadata($name);
+    }
+    
+    public function set_uniqueQuestionId($id){
+    	parent::addMetadata('uniquequestionid', $id);
     }
     
     public function set_principleUri($uri){

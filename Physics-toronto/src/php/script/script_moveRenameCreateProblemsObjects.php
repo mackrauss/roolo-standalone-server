@@ -25,7 +25,7 @@ date_default_timezone_set('Canada/Eastern');
 
 $fileCount = "0";
 $fileSaved = "0";
-
+$uniqueProblemId = 1;
 while (false !== ($file = readdir($sourceHandler))) {
 	if ($file != "." && $file != "..") { 
 		//take milliseconds
@@ -44,8 +44,9 @@ while (false !== ($file = readdir($sourceHandler))) {
 			$curPath = substr($destinationPath, strrpos($destinationPath, '/Problems'));
 			$problem->path = $curPath;
 			$problem->pathtype = 2;//select 'diskPath' type
-			$problem ->title = 'Problem.'.$fileName;
-			$problem ->category = '';
+			$problem->title = 'Problem.'.$fileName;
+			$problem->category = '';
+			$problem->set_uniqueQuestionId($uniqueProblemId);
 			//$problem ->solutionpath = '';
 			//$problem ->solutionpathtype = $problem->selectPathType(2);//select 'DISKPath' type
 			echo $problem->toString();
@@ -53,8 +54,9 @@ while (false !== ($file = readdir($sourceHandler))) {
 			$fileSaved = $fileSaved + 1;
 		}
 		$fileCount = $fileCount + 1;
-		
+		$uniqueProblemId++;
 	}
+	
 }
 	print 'The files have been saved are <b>' . $fileSaved . " / " . $fileCount . '</b><br>'; 
 		
