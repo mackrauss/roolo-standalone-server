@@ -45,21 +45,21 @@ if(empty($_SESSION['msg'])){
 	</div>
 </div>
 
-<div id='instructions'>
-	<fieldset style='border: 3px solid #6699CC'>
-		<legend style='color: black; font-size: 18px;'>Instructions</legend>
-		<p> Please use one of the following user/pass to login </p>
-	
-		<ul>
-			<li>student111/dawson</li>
-			<li>student211/dawson</li>
-			<li>student311/dawson</li>
-		</ul>
-		
-		<p> If you notice that when you log in, there are no more questions to be answered, just click <a href='./resetRoolo.php'>Reset</a> and wait a little bit.</p>
-	</fieldset>
-
-</div>
+<!--<div id='instructions'>-->
+<!--	<fieldset style='border: 3px solid #6699CC'>-->
+<!--		<legend style='color: black; font-size: 18px;'>Instructions</legend>-->
+<!--		<p> Please use one of the following user/pass to login </p>-->
+<!--	-->
+<!--		<ul>-->
+<!--			<li>student111/dawson</li>-->
+<!--			<li>student211/dawson</li>-->
+<!--			<li>student311/dawson</li>-->
+<!--		</ul>-->
+<!--		-->
+<!--		<p> If you notice that when you log in, there are no more questions to be answered, just click <a href='./resetRoolo.php'>Reset</a> and wait a little bit.</p>-->
+<!--	</fieldset>-->
+<!---->
+<!--</div>-->
 <?php 
 require_once './footer.php';
 ?>
