@@ -1,9 +1,9 @@
 @charset "UTF-8";
 html{ 
 	height: 100%; 
-	border: 0px none; 
+	border: 0; 
 	padding: 0; 
-	margin: 0 
+	margin: 0; 
 }
 body {
 	height:100%;
@@ -20,9 +20,9 @@ div#header {
 	height: 71px;
 	width: 942px;
 	z-index:1000;
-	background-image:url('/resources/images/header.png');
-	background-position: center 50%;
-	background-repeat:no-repeat
+	background-image:url(../../resources/images/header.png);
+	background-position:center;
+	background-repeat:no-repeat;
 }
 div#logo { 
 	position:absolute;
@@ -30,16 +30,17 @@ div#logo {
 	left: 0;
 	width: 417px;
 	height: 465px;
-	background-image:url('/resources/images/watermark.png');
-	padding: 0  
+	background-image:url(../../resources/images/watermark.png);
+	padding: 0;  
 }
 div#login { 
 	position:absolute;
 	top: 140px;
 	width: 524px;
 	height: 400px;
-	background-image:url('/resources/images/login.png');
-	background-repeat:no-repeat; background-position-y:50%  
+	background-image:url(../../resources/images/login.png);
+	background-position:top;
+	background-repeat:no-repeat;  
 }
 div#container {
 	width: 524px;
@@ -63,9 +64,10 @@ div#footer {
 	height:170px;
 	padding:0;
 	margin:0;
-	background-image:url('/resources/images/footer.png');
+	background-image:url(../../resources/images/footer.png);
 	background-repeat:repeat-x;
-	text-align:center; background-position-y:50%
+	background-position: top;
+	text-align:center;
 }
 div#footer p {
 	padding-top: 60px;
@@ -78,12 +80,12 @@ div#footerLogo {
 	top:50px;
 	width:100%;
 	height:62px;
-	background-image:url('/resources/images/footerLogo.jpg');
-	background-position: center 50%;
+	background-image:url(../../resources/images/footerLogo.jpg);
+	background-position:center;
 	background-repeat:no-repeat;
-	margin-top: 20px
+	margin-top: 20px;
 }
-/*tag page*/
+/*step 1 page*/
 div#container2 {
 	width: 917px;  
 	margin: 0 auto; 
@@ -101,8 +103,8 @@ div#middle-top{
 	position:relative;
 	width:917px;
 	height:117px;
-	background-image:url('/resources/images/middle_top.png');
-	text-align:left
+	background-image:url(../../resources/images/middle_top.png);
+	text-align:left;
 }
 div#questionHeading {
 	height: 50px;
@@ -117,15 +119,16 @@ div#questionHeading {
 div#middle-center{
 	height:1000px;
 	width:917px;
-	background-image:url('/resources/images/middle_center.png');
+	background-image:url(../../resources/images/middle_center.png);
 	background-repeat:repeat-y;
-	text-align:left
+	text-align:left;
 }
 div#middle-bottom{
 	height:200px;
 	width:917px;
-	background-image:url('images/middle_bottom.png');
-	background-repeat:no-repeat; background-position-y:50%
+	background-image:url(../../resources/images/middle_bottom.png);
+	background-position:top;
+	background-repeat:no-repeat;
 }
 div#timer { 
 	position:absolute;
@@ -133,10 +136,10 @@ div#timer {
 	left: 700px;
 	width: 178px;
 	height: 232px;
-	background-image:url('/resources/images/timer.png');
+	background-image:url(../../resources/images/timer.png);
 	padding: 0;
 	float:left;
-	clear:both
+	clear:both;
 }
 div#timer h1 {
 	font-family:Arial, Helvetica, sans-serif;
@@ -178,27 +181,100 @@ div#signIn {
 	font-family:Arial, Helvetica, sans-serif;
 	color:#CCC;
 }
+/*step2 page*/
+div#middle-center2{
+	height:1700px;
+	width:917px;
+	background-image:url(../../resources/images/middle_center.png);
+	background-repeat:repeat-y;
+	text-align:left;
+}
+div#mcReport {
+	position:relative;
+	float:left;
+	background-image:url(../../resources/images/mcreport.jpg);
+	border: #666 dotted thick;
+	width:350px;
+	height:300px;
+	top:100px;
+	margin-left: 60px;
+}
+div#elementsReport {
+	position:relative;
+	float:left;
+	background:url(../../resources/images/elementsreport.jpg);
+	border: #666 dotted thick;
+	width:820px;
+	height:300px;
+	top: 40px;
+	left: 40px;
+}
+div#answerSection2 {
+	position:relative;
+	float:left;
+	top:40px;
+	width: 300px;
+	left: 50px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	font-style:normal;
+	letter-spacing:1px;
+	color:#333;
+}
+/*step 3*/
+div#conceptQuestion {
+	position:relative;
+	float:left;
+	width:320px;
+	height:800px;
+	background-color:#CCC;
+	left:90px;
+}
+/*step 4*/
+div#conceptQuestion2 {
+	position:relative;
+	float:left;
+	width:320px;
+	height:300px;
+	background-color:#CCC;
+	left:90px;
+	text-align:center;
+	top:20px;
+	margin-bottom: 40px;
+}
+div#answerSection4 {
+	position:relative;
+	float:left;
+	top:40px;
+	width: 600px;
+	left: 50px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	font-style:normal;
+	letter-spacing:1px;
+	color:#333;
+}
 input.btn{
 	width: 97px;
 	height: 37px;
 	margin-left: 120px;
 	margin-top: 20px;
-	background-image:url('/resources/images/button.png');
+	background-image:url(../../resources/images/button.png);
 	background-color:#FFF;
 	border: 1px solid #FFF;
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:small;
 	font-weight:bold;
-	color:#4D4D4D
+	color:#4D4D4D;
 }
 input.btn_long{
 	width: 88px;
 	height: 45px;
 	margin-left: 350px;
 	margin-top: 20px;
-	background-image:url('/resources/images/button.png');
+	background-image:url(../../resources/images/button.png);
 	background-color:#FFF;
-	border: 1px solid #FFF
+	border: 1px solid #FFF;
 }
 img.problem {
 	border-color:#666;
@@ -245,4 +321,10 @@ form#round1 p{
 	margin-top:2px;
 	margin-left:20px;
 	font-size:x-small;
+}
+form#step3 label{
+	margin-left: 20px;
+}
+form#step3 {
+	margin-top: 10px;
 }
