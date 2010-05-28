@@ -76,6 +76,37 @@ class Solution extends Elo {
     	}
 		return $value;
     }
+    
+    /**
+     * adding a new string to content should make a tag of that string. 
+     * making a tag should add "<tag name>" as prifix and "</tag name>" as sufix of the string
+     * in this method 
+     *                 $text is new string for adding to content and
+     *                 $tag is just the tag name without "<" , "</" and ">" characters  
+	 *
+	 * @param $text a string as Element Text
+	 * @param $tag  a string as tag withoot "<" and ">"
+	 */
+    public function buildContentElement($text, $tag){
+    	$element  = "<" . $tag . ">";
+    	$element .= $text;
+    	$element .= "</" .$tag . ">";
+    	return $element;
+    }
+    
+    /**
+	 * Given the content and tag, remove
+	 * the text of specific tag in the content section
+	 *
+	 * @param $content a string as all content 
+	 * @param $tag  a string as tag withoot "<" and ">"
+	 */
+    public function removeSubElementFromContent($content, $tag){
+    	$start = strpos($content, "<".$tag.">" ) - strlen($tag) + 2;
+    	$end = strrpos($content,"</".$tag.">");
+    	$len = $end - $start;
+		return substr($content, $start, $len );
+    }
 }
 
 ?>
