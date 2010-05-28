@@ -52,9 +52,9 @@ while (false !== ($file = readdir($sourceHandler))) {
 			echo $problem->toString();
 			echo $rooloClient->addElo($problem);
 			$fileSaved = $fileSaved + 1;
+			$uniqueProblemId++;
 		}
 		$fileCount = $fileCount + 1;
-		$uniqueProblemId++;
 	}
 	
 }
