@@ -95,7 +95,9 @@ if (count($existingLongAnswers) == 0){
  */
 else {
 ?>
-You've already answered your last question. If you believe this is an error, please let your teacher know! Otherwise, please log out. 
+	<script type="text/javascript"> 
+		window.location.href="/src/php/pages/longAnswer.php";
+	</script> 
 <?php
 }
 ?>

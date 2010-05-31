@@ -33,6 +33,19 @@ div#logo {
 	background-image:url(../../resources/images/watermark.png);
 	padding: 0;  
 }
+
+div#signOut {
+	position:absolute;
+	right:16px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#CCC;
+	padding-top: 20px;
+}
+
+div#signOut a{
+	color:#CCC;
+} 
+
 div#login { 
 	position:absolute;
 	top: 140px;

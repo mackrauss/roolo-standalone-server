@@ -154,27 +154,39 @@ class Application {
 	 * Relationship betweeen a Group and their Long Question for Step 4
 	 */
 	public static $groupLongQuestions = array(
-		"physicsGroup111" => "1",
-		"physicsGroup211" => "2",
-		"physicsGroup311" => "3",
-		"physicsGroup411" => "4"
+		"physicsGroup111" => "17",
+		"physicsGroup211" => "18",
+		"physicsGroup311" => "19",
+		"physicsGroup411" => "20"
 	);
 	
 	/*
 	 * Relationship between a Long Question and its ConcetpQuestions for Step 4 
 	 */
 	public static $longQuestionConceptQuestions = array(
-		"1" => array(
+		"17" => array(
 			"2",
 			"3",
 			"4",
 			"5"
 		), 
-		"2" => array(
+		"18" => array(
 			"1",
 			"6",
 			"7",
 			"8"
+		),
+		"19" => array(
+			"2",
+			"3",
+			"4",
+			"5"
+		),
+		"20" => array(
+			"2",
+			"3",
+			"4",
+			"5"
 		)
 	);
 

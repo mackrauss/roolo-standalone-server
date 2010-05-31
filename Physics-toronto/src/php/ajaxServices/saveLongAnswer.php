@@ -32,6 +32,7 @@ $longAnswer->set_formulas($formulas);
 $longAnswer->set_conceptQuestionUri($conceptProblemUri);
 $longAnswer->set_ownerUri($longProblemUri);
 $longAnswer->set_questionPath($longProblemPath);
+$longAnswer->setContent($longAnswer->buildContentElement($rationale, "rationale"));
 
 $roolo->addElo($longAnswer);
 

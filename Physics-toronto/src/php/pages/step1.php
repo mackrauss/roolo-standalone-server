@@ -93,9 +93,6 @@ if ($totalResults != 0){
 //		randomIndex = randonCounter();
 		$('#counter').val(randomIndex);
 
-		signOutLink = '<a onClick="document.location.href=\'/src/php/ajaxServices/logout.php\'" style="cursor:pointer;"> Sign Out </a>';
-		$('#signIn').html('<?= $greetingMsg?>' + " | " + signOutLink);
-
 		if ('<?= $totalResults ?>' == 0){
 
 			$('#middle-top').remove();
@@ -114,7 +111,6 @@ if ($totalResults != 0){
 			$('#curQuestion').attr('src', questions[randomIndex]);
 			$('#questionHeading').html('<p><b>Question ' + curQuestionNum + ' of ' + numQuestion + '</b></p>');
 			$('#timerValue').text( minutes + ":" + seconds );
-			$('#signin').show();
 			$('#timer').show();
 //			countDown(); 
 		}
@@ -148,7 +144,7 @@ if ($totalResults != 0){
 	 }
 
 	 function loginPage(){
-		window.location = "/src/php/pages/";
+		window.location = "/src/php/ajaxServices/logout.php";
 	 } 
 </script>
 <script type='text/javascript'>
@@ -177,6 +173,12 @@ if ($totalResults != 0){
 			  		// We don't need to do anything in the call-back function
 			    }
 		);
+
+		//uncheck radiobuttons
+		$("input[name='choice']:checked").attr("checked", false);
+
+		//uncheck checkBoxes
+		$(".box").attr('checked', false);
 					
 		// Delete the question which was shown and its URI from the arrays
 		questions.splice(counter,1);
@@ -209,7 +211,7 @@ if ($totalResults != 0){
 			$('#middle-top').remove();
 			$('#middle-center').remove();
 			$('#middle-bottom').remove();
-			$('#signin').remove();
+			$('#signOut').remove();
 			
 			$('#groupingMsgDiv').css({'width' : '70%', 'height' : '18%', 'margin-left':'15%'});
 
@@ -218,7 +220,7 @@ if ($totalResults != 0){
 
 			$('#groupingMsgDiv').html(groupingMsg);
 			$('#questionHeading').html('');
-			$('#signIn').html('');
+			$('#signOut').html('');
 			delay();
 		}
 
@@ -238,7 +240,7 @@ if ($totalResults != 0){
 
 	function check(){
 		var choice = $("input[name='choice']:checked").val();
-		if (choice == 'A' || choice == 'B' || choice == 'C' || choice == 'D' || choice == 'E'){
+		if (choice.length != 0){
 			flag = "true";
 			nextQuestion();
 		}else{	
@@ -249,13 +251,7 @@ if ($totalResults != 0){
 </script>
 
 <style tyle='text/css'>
-	div#signIn {
-		position:absolute;
-		right:16px;
-		font-family:Arial, Helvetica, sans-serif;
-		color:#CCC;
-		padding-top: 20px;
-	} 
+	
 	
 	div#questionHeading {
 		height: 50px;
@@ -306,7 +302,7 @@ if ($totalResults != 0){
 			  		<?php 
 						foreach (Application::$problemCategories as $curProblemCategory) {
 					?>
-						  		<label><input type="checkbox" name="problemCategory" value="<?= $curProblemCategory?>" /><?= $curProblemCategory?></label><br/>
+						  		<label><input class="box" type="checkbox" name="categoryArray[]" value="<?= $curProblemCategory?>" /><?= $curProblemCategory?></label><br/>
 					<?php 
 						}
 					?>
