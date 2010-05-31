@@ -271,7 +271,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 			flag = "true";
 			nextQuestion();
 		}else{	
-			alert ("Please select the corect answer!");
+			alert ("Please select the correct answer!");
 		}
 	}		
 	
@@ -319,7 +319,7 @@ for($i=0; $i< sizeof($allPrinciples); $i++){
 	<div id="answerSection">
 		<form id="round1" name="form1" method="post" action="feedback.php">
 			<dl>
-				<dt>1.Select the corect answer:</dt>
+				<dt>1.Select the correct answer:</dt>
 			    <dd><label class="radioButton"><input type="radio" name="choice" value="A"/>A</label>
 			 		<label class="radioButton"><input type="radio" name="choice" value="B"/>B</label>
 			  		<label class="radioButton"><input type="radio" name="choice" value="C"/>C</label>

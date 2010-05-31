@@ -3,11 +3,6 @@ require_once './header.php';
 error_reporting(E_STRICT | E_ALL);
 
 
-// ONLY TEST CODE, REMOVE LATER
-$_SESSION['loggedIn'] = true;
-$_SESSION['username'] = 'group2';
-// END OF TEST CODE. 
-
 if (!isset($_SESSION['loggedIn']) || !$_SESSION['loggedIn']){
 	header("Location:/src/php/pages/");
 }
@@ -36,15 +31,13 @@ if (count($existingLongAnswers) == 0){
 	 * Determine which long Problem they should answer and get it from roolo
 	 */
 	$longProblemIID = Application::$groupLongQuestions[$username];
-//	echo $longProblemIID;
-	$longProblemURL = "roolo://scy.collide.info/scy-collide-server/$longProblemIID.Problem";
 	
-	$query = "uri:".$roolo->escapeSearchTerm($longProblemURL);
+	$query = "type:Problem AND uniquequestionid:".$longProblemIID;
 	$longProblemSearchResults = $roolo->search($query, 'metadata', 'latest');
 	
 	$longProblem = null;
 	if (count($longProblemSearchResults) != 1){
-		echo "ERROR: Couldn't find the longAnswer with the given URL: ".$longProblemURL;
+		echo "ERROR: Couldn't find the longAnswer with the given internal ID: ".$longProblemIID;
 		die();
 	}
 	
@@ -54,15 +47,8 @@ if (count($existingLongAnswers) == 0){
 	 * Determine which concept Problems should be presented and get them from roolo
 	 */
 	$conceptProblemIIDs = Application::$longQuestionConceptQuestions[$longProblemIID];
-//	print_r($conceptProblemIIDs);
-	$conceptProblemUris = array(
-		"roolo://scy.collide.info/scy-collide-server/".$conceptProblemIIDs[0].".Problem",
-		"roolo://scy.collide.info/scy-collide-server/".$conceptProblemIIDs[1].".Problem",
-		"roolo://scy.collide.info/scy-collide-server/".$conceptProblemIIDs[2].".Problem",
-		"roolo://scy.collide.info/scy-collide-server/".$conceptProblemIIDs[3].".Problem"
-	);
-	$conceptProblemUrisStr = "(" . implode(" OR ", $roolo->escapeUri($conceptProblemUris)) . ")";
-	$query = "uri:".$conceptProblemUrisStr;
+	$conceptProblemIDsStr = "(" . implode(" OR ", $roolo->escapeUri($conceptProblemIIDs)) . ")";
+	$query = "type:Problem AND uniquequestionid:".$conceptProblemIDsStr;
 	$conceptProblems = $roolo->search($query, 'metadata', 'latest');
 	
 	/*

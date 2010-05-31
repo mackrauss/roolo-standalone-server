@@ -12,24 +12,23 @@ class Application {
 	public static $problemChoices = array("a", "b", "c", "d", "e", "f", "g", "h");
 	public static $problemCategories = array(
 		"Net Force",
-		"One body problem",
-		"Multiple body problem",
 		"Collision",
-		"Explosion",
-		"Fast or instantaneous process",
-		"1 dimensional",
-		"2 dimensional",
-		"Closed system",
-		"Open system",
-		"Conserved",
-		"Not conserved",
-		"Energy",
-		"Momentum",
-		"Impulse",
+		"1 Dimentional",
+		"2 Dimentional",
+		"Conservation of Energy",
+		"Conservation of Moemntum",
+		"Work",
+		"Linear Accelaration",
+		"Centripetal acceleration",
+		"Elastic Potential Energy",
+		"Gravitational Potential Energy",
+		"Kinetic Energy",
+		"Friction",
 		"Force",
 		"Displacement",
-		"Velocity"
-	);
+		"Velocity",
+		"Centre of Mass");
+	
 
 	public static $forumulas = array(
 	"Constant acceleration, changing velocity" => array(
@@ -157,8 +156,8 @@ class Application {
 	public static $groupLongQuestions = array(
 		"physicsGroup111" => "1",
 		"physicsGroup211" => "2",
-		"physicsGroup311" => "2",
-		"physicsGroup411" => "2"
+		"physicsGroup311" => "3",
+		"physicsGroup411" => "4"
 	);
 	
 	/*

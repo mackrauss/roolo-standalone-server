@@ -11,17 +11,21 @@ error_reporting(E_ALL | E_STRICT);
 
 if (!$_SESSION['loggedIn'])
 	header("Location:/src/php/pages/");
-$_SESSION['loggedIn'] = FALSE;	
 $_SESSION['msg'] = "";
-$greetingMsg = "Signed in as <b> " . $_SESSION['username'] . "</b>";
-$noMoreProblemMsg = 'You have finished answering all the questions.';
+$username = $_SESSION['username'];
+$greetingMsg = "Signed in as <b> " . $username . "</b>";
+$noMoreProblemMsg = 'You have finished answering all the questions. You will be logged out in 10 seconds.';
 
 
 $roolo = new RooloClient();
 /*
  * Extract all the questions
  */
-$allQuestions = $roolo->search('type:Problem', 'metadata', 'latest');
+
+$uniqueQuestionIds = Application::$groupQuestions[$username];
+$uniqueQuestionIdStr = implode(' OR ', $uniqueQuestionIds);
+$query = "type:Problem AND uniquequestionid:(" . $uniqueQuestionIdStr . ")";
+$allQuestions = $roolo->search($query, 'metadata', 'latest');
 
 $solurinQuery = "type:Solution AND author:" . $_SESSION['username'];
 $authorSolutions = $roolo->search($solurinQuery, 'metadata');
@@ -112,7 +116,7 @@ if ( $totalResults != 0){
 			width: 820, 
 			height: 300, 
 			is3D: true, 
-			title: 'Category Report'});
+			title: 'Elements Report'});
 	}
 
 	function check(){
@@ -120,7 +124,7 @@ if ( $totalResults != 0){
 		if (choice == 'A' || choice == 'B' || choice == 'C' || choice == 'D' || choice == 'E'){
 			nextQuestion();
 		}else{	
-			alert ("Please select the corect answer!");
+			alert ("Please select the correct answer!");
 		}
 	}		
 
@@ -205,7 +209,7 @@ if ( $totalResults != 0){
 							width: 820, 
 							height: 300, 
 							is3D: true, 
-							title: 'Category Report'});
+							title: 'Elements Report'});
 					}
 				);
 	
@@ -369,34 +373,26 @@ if ( $totalResults != 0){
 		<div id="answerSection2">
 			<form id="round1" name="form1" method="post" action="feedback.php">
 				<dl>
-					<dt>1.Select the corect answer:</dt>
+					<dt>1.Select the correct answer:</dt>
 				    <dd><label class="radioButton"><input type="radio" name="choice" value="A"/>A</label>
 				 		<label class="radioButton"><input type="radio" name="choice" value="B"/>B</label>
 				  		<label class="radioButton"><input type="radio" name="choice" value="C"/>C</label>
 				  		<label class="radioButton"><input type="radio" name="choice" value="D"/>D</label>
 				  		<label class="radioButton"><input type="radio" name="choice" value="E"/>E</label>
+				  		<label class="radioButton"><input type="radio" name="choice" value="F"/>F</label>
+				  		<label class="radioButton"><input type="radio" name="choice" value="G"/>G</label>
+				  		<label class="radioButton"><input type="radio" name="choice" value="H"/>H</label>
 				  	</dd>
 		
 					<dt>2.Check the corresponding elements that are shown in the problem:</dt>
 				  	<dd>
-				  		<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="net force"/>Net force</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="One body problem"/>One body problem</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Multiple body problem"/>Multiple body problem</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Collision"/>Collision</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Explosion"/>Explosion</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Fast or instantaneous process"/>Fast or instantaneous process</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="1 dimensional"/>1 dimensional</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="2 dimensional"/>2 dimensional</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="closed system"/>Closed system</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="open system"/>Open system</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="conserved"/>Conserved</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="not conserved"/>Not conserved</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="energy"/>Energy</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="momentum"/>Momentum</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="impulse"/>Impulse</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="force"/>Force</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="displacement"/>Displacement</label><br/>
-						<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="velocity"/>Velocity</label><br/>
+				  		<?php 
+							foreach (Application::$problemCategories as $curProblemCategory) {
+						?>
+							  		<label><input type="checkbox" name="problemCategory" value="<?= $curProblemCategory?>" /><?= $curProblemCategory?></label><br/>
+						<?php 
+							}
+						?>
 				  	</dd>
 				  
 				   	<dt>3. Write a rationale explaining why you selected the elements above.</dt>

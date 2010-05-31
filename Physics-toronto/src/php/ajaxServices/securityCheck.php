@@ -27,7 +27,7 @@ if($notMember){
 	header("Location:/src/php/pages/");
 }else{
 	$_SESSION['loggedIn'] = TRUE;
-	if (strstr($_SESSION['username'], "Group")){
+	if (strstr($_SESSION['username'], "physicsGroup")){
 		//should go to special page login with group name
 		header("Location:/src/php/pages/step2.php");
 	}else{

@@ -3,11 +3,6 @@ require_once './header.php';
 error_reporting(E_STRICT | E_ALL);
 
 
-// ONLY TEST CODE, REMOVE LATER
-$_SESSION['loggedIn'] = true;
-$_SESSION['username'] = 'group2';
-// END OF TEST CODE. 
-
 if (!isset($_SESSION['loggedIn']) || !$_SESSION['loggedIn']){
 	header("Location:/src/php/pages/");
 }
@@ -37,9 +32,9 @@ if (count($existingLongAnswers) == 0){
 	 */
 	$longProblemIID = Application::$groupLongQuestions[$username];
 //	echo $longProblemIID;
-	$longProblemURL = "roolo://scy.collide.info/scy-collide-server/$longProblemIID.Problem";
+//	$longProblemURL = "roolo://scy.collide.info/scy-collide-server/$longProblemIID.Problem";
 	
-	$query = "uri:".$roolo->escapeSearchTerm($longProblemURL);
+	$query = "type:Problem AND uniquequestionid:".$longProblemIID;
 	$longProblemSearchResults = $roolo->search($query, 'metadata', 'latest');
 	
 	$longProblem = null;

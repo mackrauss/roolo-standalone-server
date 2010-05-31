@@ -4,15 +4,16 @@ require_once './header.php';
 require_once '../RooloClient.php';
 require_once '../dataModels/Problem.php';
 require_once '../dataModels/Solution.php';
+require_once '../Application.php';
 
 error_reporting(E_STRICT);
 if (!$_SESSION['loggedIn'])
 	header("Location:/src/php/pages/");
-$_SESSION['loggedIn'] = FALSE;	
 $_SESSION['msg'] = "";
-$greetingMsg = "Signed in as <b> " . $_SESSION['username'] . "</b>";
+$username = $_SESSION['username'];
+$greetingMsg = "Signed in as <b> " . $username . "</b>";
 $noMoreProblemMsg1 = 'Great job completing step 1!';
-$noMoreProblemMsg2 = 'Please sign out then log in again with your group ID.';
+$noMoreProblemMsg2 = 'You will be logged out in 10 seconds. Please log in again with your group ID.';
 
 //if(isset($_GET['username'])){
 //	$_SESSION['username'] = $_GET['username'];
@@ -28,11 +29,13 @@ $query ='';
 $results = array();
 
 //Retrieve all problems object
-$query = 'type:Problem';
+$uniqueQuestionIds = Application::$studentQuestions[$username];
+$uniqueQuestionIdStr = implode(' OR ', $uniqueQuestionIds);
+$query = "type:Problem AND uniquequestionid:(" . $uniqueQuestionIdStr . ")";
 $allProblems = $rooloClient->search($query, 'metadata', 'latest');
 
-//Determine all questions object without solutions
-$query = "type:Solution AND author:" . $_SESSION['username'];
+//Determine all questions object without solutions for the specific user
+$query = "type:Solution AND author:" . $username;
 $authorSolutions = $rooloClient->search($query, 'metadata');
 $solutionObject = new Solution();
 $problemObject = new Problem();
@@ -87,7 +90,7 @@ if ($totalResults != 0){
 
 	$(document).ready(function(){
 
-		randomIndex = randonCounter();
+//		randomIndex = randonCounter();
 		$('#counter').val(randomIndex);
 
 		signOutLink = '<a onClick="document.location.href=\'/src/php/ajaxServices/logout.php\'" style="cursor:pointer;"> Sign Out </a>';
@@ -107,7 +110,7 @@ if ($totalResults != 0){
 			$('#questionHeading').html();
 			delay();
 		}else{
-			
+
 			$('#curQuestion').attr('src', questions[randomIndex]);
 			$('#questionHeading').html('<p><b>Question ' + curQuestionNum + ' of ' + numQuestion + '</b></p>');
 			$('#timerValue').text( minutes + ":" + seconds );
@@ -175,7 +178,7 @@ if ($totalResults != 0){
 			    }
 		);
 					
-		// Delete the showed question and its URI from arraies
+		// Delete the question which was shown and its URI from the arrays
 		questions.splice(counter,1);
 		questionsURI.splice(counter,1);
 		flag = "false";
@@ -183,7 +186,8 @@ if ($totalResults != 0){
 		//changes the question if it is not the last question
 		if ( questions.length > 0 ){
 
-			counter = randonCounter();
+//			counter = randonCounter();
+			counter = 0;
 			
 			$('#counter').val(counter);
 			$('#curQuestion').attr('src', questions[counter]);
@@ -238,7 +242,7 @@ if ($totalResults != 0){
 			flag = "true";
 			nextQuestion();
 		}else{	
-			alert ("Please select the corect answer!");
+			alert ("Please select the correct answer!");
 		}
 	}		
 	
@@ -281,39 +285,31 @@ if ($totalResults != 0){
 
 <div id="middle-center">
     <div id="questionSection">
-    	<img id='curQuestion' src="" width="454" height="320" class="problem" style='border: none'/>
+    	<img id='curQuestion' src="" width="454" height="320" class="problem"/>
   	</div>
 	<div id="answerSection">
 		<form id="round1" name="form1" method="post" action="feedback.php">
 			<dl>
-				<dt>1.Select the corect answer:</dt>
+				<dt>1.Select the correct answer:</dt>
 			    <dd><label class="radioButton"><input type="radio" name="choice" value="A"/>A</label>
 			 		<label class="radioButton"><input type="radio" name="choice" value="B"/>B</label>
 			  		<label class="radioButton"><input type="radio" name="choice" value="C"/>C</label>
 			  		<label class="radioButton"><input type="radio" name="choice" value="D"/>D</label>
 			  		<label class="radioButton"><input type="radio" name="choice" value="E"/>E</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="F"/>F</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="G"/>G</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="H"/>H</label>
 			  	</dd>
 	
 				<dt>2.Check the corresponding elements that are shown in the problem:</dt>
 			  	<dd>
-			  		<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="net force"/>Net force</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="One body problem"/>One body problem</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Multiple body problem"/>Multiple body problem</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Collision"/>Collision</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Explosion"/>Explosion</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="Fast or instantaneous process"/>Fast or instantaneous process</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="1 dimensional"/>1 dimensional</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="2 dimensional"/>2 dimensional</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="closed system"/>Closed system</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="open system"/>Open system</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="conserved"/>Conserved</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="not conserved"/>Not conserved</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="energy"/>Energy</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="momentum"/>Momentum</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="impulse"/>Impulse</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="force"/>Force</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="displacement"/>Displacement</label><br/>
-					<label><input type="checkbox" class="box" name="categoryArray[]" id="" value="velocity"/>Velocity</label><br/>
+			  		<?php 
+						foreach (Application::$problemCategories as $curProblemCategory) {
+					?>
+						  		<label><input type="checkbox" name="problemCategory" value="<?= $curProblemCategory?>" /><?= $curProblemCategory?></label><br/>
+					<?php 
+						}
+					?>
 			  	</dd>
 			  
 			  	<input name="submit" type="button" value="SUBMIT" class="btn" onClick="check(); scroll(0,0);" />
