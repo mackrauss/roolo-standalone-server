@@ -26,7 +26,7 @@ require_once '../graphML/GraphML.php';
 	$solutionObject->selectedchoice = $selectedChoice;
 	$solutionObject->owneruri = $ownerURI;
 	
-	$reasonTag = $solutionObject->buildContentElement($reasonText, "reason");
+	$reasonTag = $solutionObject->buildContentElement($reasonText, "rationale");
 	$solutionObject->content = $reasonTag;
 	
 	$solutionObject->title = "Solution-Multiplechoice";

@@ -14,7 +14,6 @@ if (!$_SESSION['loggedIn'])
 $_SESSION['msg'] = "";
 $username = $_SESSION['username'];
 $greetingMsg = "Signed in as <b> " . $username . "</b>";
-$noMoreProblemMsg = 'You have finished answering all the questions. You will be logged out in 10 seconds.';
 
 
 $roolo = new RooloClient();
@@ -121,7 +120,7 @@ if ( $totalResults != 0){
 
 	function check(){
 		var choice = $("input[name='choice']:checked").val();
-		if (choice == 'A' || choice == 'B' || choice == 'C' || choice == 'D' || choice == 'E'){
+		if (choice.length != 0){
 			nextQuestion();
 		}else{	
 			alert ("Please select the correct answer!");
@@ -140,7 +139,7 @@ if ( $totalResults != 0){
 		$("input[name='categoryArray[]']:checked").each(function() {selectedCategory.push($(this).val());});
 		var category = selectedCategory.join(', ');
 					
-		// Delete the showed question and its URI from arraies
+		// Delete the shown question and its URI from arraies
 		questions.splice(0,1);
 		questionsURI.splice(0,1);
 
@@ -159,15 +158,10 @@ if ( $totalResults != 0){
 				// delete last graphs
 				$('#mcReport').html('');
 				$('#elementsReport').html('');
-				// delete content of resone 
+				// delete content of response 
 				$('#resonTextarea').val('');
 				$('#charLeftStr').text( reasonTextMax + " characters left");
 		
-				//uncheck radiobuttons
-				$("input[name='choice']:checked").attr("checked", false);
-		
-				//uncheck checkBoxes
-				$(".box").attr('checked', false);
 		
 				//****************************** draw graph for question
 				//Ajax call to send problemUri and deaw graph for this question
@@ -236,22 +230,16 @@ if ( $totalResults != 0){
 				  		// We don't need to do anything in the call-back function
 				    }
 			);
+
+			//uncheck radiobuttons
+			$("input[name='choice']:checked").attr("checked", false);
+	
+			//uncheck checkBoxes
+			$(".box").attr('checked', false);
 				
 		}
 		if (questions.length == 0){
-		
-				$('#middle-top').remove();
-				$('#middle-center2').remove();
-				$('#middle-bottom').remove();
-				
-				$('#groupingMsgDiv').css({'width' : '70%', 'height' : '18%', 'margin-left':'15%'});
-		
-				groupingMsg = "<h2 style='width: 100%; float: left; margin-top: 10%'> <?= $noMoreProblemMsg ?> </h2>";
-		
-				$('#groupingMsgDiv').html(groupingMsg);
-				$('#questionHeading').html('');
-				$('#signIn').html('');
-				delay();
+			window.location.href = "/src/php/pages/longAnswerConceptChoice.php";
 		}
 	
 		// increment the current number of the question
@@ -280,27 +268,13 @@ if ( $totalResults != 0){
 
 	$(document).ready(function(){
 		
-		signOutLink = '<a onClick="document.location.href=\'/src/php/ajaxServices/logout.php\'" style="cursor:pointer;"> Sign Out </a>';
-		$('#signIn').html('<?= $greetingMsg?>' + " | " + signOutLink);
-
 		if ('<?= $totalResults ?>' == 0){
-
-			$('#middle-top').remove();
-			$('#middle-center2').remove();
-			$('#middle-bottom').remove();
-			
-			$('#groupingMsgDiv').css({'width' : '70%', 'height' : '18%', 'margin-left':'15%'});
-			
-			groupingMsg = "<h2 style='width: 100%; float: left; Margin-top: 10%'><?= $noMoreProblemMsg ?></h2>";
-			$('#groupingMsgDiv').html(groupingMsg);
-			$('#questionHeading').html();
-			delay();
+			window.location.href= "/src/php/pages/longAnswerConceptChoice.php";
 		}else {
 			$('#curQuestion').attr('src', questions[0]);
 			$('#questionHeading').html('<p><b>Question ' + curQuestionNum + ' of ' + numQuestion + '</b></p>');
 			$('#timerValue').text( minutes + ":" + seconds );
 			$('#charLeftStr').text( reasonTextMax + " characters left");
-			$('#signin').show();
 			$('#timer').show();
 //			countDown(); 
 		}
@@ -344,14 +318,14 @@ if ( $totalResults != 0){
 //			$('#timerValue').text( minutes + ":" + seconds ); 
 //		setTimeout("countDown()",1000); 
 //	 }
-
-	 function delay (){
-		setTimeout ("loginPage()", 10000);
-	 }
-
-	 function loginPage(){
-		window.location = "/src/php/pages/";
-	 } 
+//
+//	 function delay (){
+//		setTimeout ("loginPage()", 10000);
+//	 }
+//
+//	 function loginPage(){
+//		 window.location = "/src/php/ajaxServices/logout.php";
+//	 } 
 </script>
 	
 
@@ -389,7 +363,7 @@ if ( $totalResults != 0){
 				  		<?php 
 							foreach (Application::$problemCategories as $curProblemCategory) {
 						?>
-							  		<label><input type="checkbox" name="problemCategory" value="<?= $curProblemCategory?>" /><?= $curProblemCategory?></label><br/>
+							  		<label><input class="box" type="checkbox" name="categoryArray[]" value="<?= $curProblemCategory?>" /><?= $curProblemCategory?></label><br/>
 						<?php 
 							}
 						?>

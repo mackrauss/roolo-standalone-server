@@ -16,7 +16,13 @@ session_start();
 	<div id="topContainer">
 	<div id="headerContainer">
 		<div id="header">
-				<div id="signIn" onClick="document.location.href='/src/php/ajaxServices/logout.php'"> </div>
+				<?php 
+					if ($_SESSION['loggedIn']){
+				?>
+						<div id="signOut" onClick="document.location.href='/src/php/ajaxServices/logout.php'"> Signed in as <b> <?= $_SESSION['username'] ?> </b> | <a href="/src/php/ajaxServices/logout.php"> Sign out</a></div>
+				<?php 
+					}
+				?>
 		</div>
 <!--		    <div id='signout' onClick="document.location.href='/src/php/ajaxServices/logout.php'" style='cursor:pointer; color:#1E7EC8; margin-left:68%; padding-top: 5px; display: none'><b> Log Out</b></div>    -->
 	</div>

@@ -17,11 +17,119 @@ require_once '../dataModels/Solution.php';
 $username = $_SESSION['username'];
 $roolo = new RooloClient();
 
+$noMoreProblemMsg = 'You have finished answering all the questions. You will be logged out in 10 seconds.';
+
 /*
  * check if this user has done a LongAnswer already
  */
 $query = "type:LongAnswer AND author:".$username;
 $existingLongAnswers = $roolo->search($query, 'metadata', 'latest');
+
+?>
+
+
+<script type="text/javascript">
+
+	function submitLongAnswer(){
+		// get the multiple choice answer
+		var selectedMultipleChoice = $('[name=multipleChoice]:checked');
+		if (selectedMultipleChoice.length == 0){
+			alert('You must choose an answer for question 1');
+			return;
+		}
+		var multipleChoice = selectedMultipleChoice.val();
+	
+		// get the categories chosen
+		var selectedCategories = $('[name=problemCategory]:checked');
+		if (selectedCategories.length == 0){
+			alert('You must choose at least one principle in question 2');
+			return;
+		}
+		
+		var categories = new Array();
+		selectedCategories.each(function(i,selected){
+			categories[i] = $(selected).val();
+		});
+		categories = categories.join(', ');
+	
+		// get the formulas chosen
+		var selectedFormulas = $('[name=formula]:checked');
+		if (selectedFormulas.length == 0){
+			alert('You must choose at least one formula in question 3');
+			return;
+		}
+	
+		var formulas = new Array();
+		selectedFormulas.each(function(i,selected){
+			formulas[i] = $(selected).val();
+		});
+		formulas = formulas.join(', ');
+	
+		// get the rationale
+		var rationale = $('[name=rationale]').val().trim();
+		if (rationale.length == 0){
+			alert('Please write a rationle in question 4');
+			return;
+		}else if (rationale.length > 300){
+			alert('Please make sure your rationale is not longer than 300 characters');
+			return;
+		}
+	
+		// disable submit button
+		$('#submitBtn').attr("disabled", true);
+		
+		// call the Ajax service to record the LongAnswer submitted
+		$.post('/src/php/ajaxServices/saveLongAnswer.php', 
+			{
+				'longProblemUri': longProblemUri,
+				'longProblemPath': longProblemPath,
+				'conceptProblemUri': conceptProblemUri,
+				'multipleChoice': multipleChoice, 
+				'categories': categories,
+				'formulas': formulas,
+				'rationale': rationale
+			}, function(response){
+				console.log(response);
+			}
+		);
+	
+	
+		$('#middle-top').remove();
+		$('#middle-center2').remove();
+		$('#middle-bottom').remove();
+		
+		$('#groupingMsgDiv').css({'width' : '70%', 'height' : '18%', 'margin-left':'15%'});
+	
+		groupingMsg = "<h2 style='width: 100%; float: left; margin-top: 10%'> <?= $noMoreProblemMsg ?> </h2>";
+	
+		$('#groupingMsgDiv').html(groupingMsg);
+		$('#questionHeading').html('');
+		$('#signOut').html('');
+		delay();
+	}
+	
+	function delay (){
+		setTimeout ("loginPage()", 10000);
+	}
+	
+	function loginPage(){
+		window.location = "/src/php/ajaxServices/logout.php";
+	} 
+	
+	function rationaleChanged(){
+		$('#numRationaleCharsLeft').html(300 - $('[name=rationale]').val().length);
+	}
+
+</script>
+
+
+
+
+
+
+
+
+<?php
 
 /*
  * If user has not answered a LongAnswer before, 
@@ -68,79 +176,11 @@ if (count($existingLongAnswers) == 0){
 	 * render view
 	 */
 ?>
+
 <script type="text/javascript">
-conceptProblemUri = "<?= $conceptProblemUri ?>";
-longProblemUri = "<?= $longProblem->uri?>";
-longProblemPath = "<?= $longProblem->path?>";
-
-function submitLongAnswer(){
-	// get the multiple choice answer
-	var selectedMultipleChoice = $('[name=multipleChoice]:checked');
-	if (selectedMultipleChoice.length == 0){
-		alert('You must choose an answer for question 1');
-		return;
-	}
-	var multipleChoice = selectedMultipleChoice.val();
-
-	// get the categories chosen
-	var selectedCategories = $('[name=problemCategory]:checked');
-	if (selectedCategories.length == 0){
-		alert('You must choose at least one principle in question 2');
-		return;
-	}
-	
-	var categories = new Array();
-	selectedCategories.each(function(i,selected){
-		categories[i] = $(selected).val();
-	});
-	categories = categories.join(', ');
-
-	// get the formulas chosen
-	var selectedFormulas = $('[name=formula]:checked');
-	if (selectedFormulas.length == 0){
-		alert('You must choose at least one formula in question 3');
-		return;
-	}
-
-	var formulas = new Array();
-	selectedFormulas.each(function(i,selected){
-		formulas[i] = $(selected).val();
-	});
-	formulas = formulas.join(', ');
-
-	// get the rationale
-	var rationale = $('[name=rationale]').val().trim();
-	if (rationale.length == 0){
-		alert('Please write a rationle in question 4');
-		return;
-	}else if (rationale.length > 300){
-		alert('Please make sure your rationale is not longer than 300 characters');
-		return;
-	}
-
-	// disable submit button
-	$('#submitBtn').attr("disabled", true);
-	
-	// call the Ajax service to record the LongAnswer submitted
-	$.post('/src/php/ajaxServices/saveLongAnswer.php', 
-		{
-			'longProblemUri': longProblemUri,
-			'longProblemPath': longProblemPath,
-			'conceptProblemUri': conceptProblemUri,
-			'multipleChoice': multipleChoice, 
-			'categories': categories,
-			'formulas': formulas,
-			'rationale': rationale
-		}, function(response){
-			console.log(response);
-		}
-	);
-	
-}
-
-function rationaleChanged(){
-	$('#numRationaleCharsLeft').html(300 - $('[name=rationale]').val().length);
-}
+	conceptProblemUri = "<?= $conceptProblemUri ?>";
+	longProblemUri = "<?= $longProblem->uri?>";
+	longProblemPath = "<?= $longProblem->path?>";
 </script>
 
 <style type="text/css">
@@ -175,6 +215,10 @@ function rationaleChanged(){
 	 		<label class="radioButton"><input type="radio" name="multipleChoice" value="B"/>B</label>
 	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="C"/>C</label>
 	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="D"/>D</label>
+	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="E"/>E</label>
+	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="F"/>F</label>
+	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="G"/>G</label>
+	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="H"/>H</label>
 	  	</dd>
 	 	<dt>2. Check the corresponding elements that are shown in the LONG problem:</dt>
 	  	<dd>
@@ -224,13 +268,15 @@ function rationaleChanged(){
  */
 else {
 ?>
-You"ve already answered your last question. If you believe this is an error, please let your teacher know! Otherwise, please log out. 
+<h2 style="width: 60%; height: 18%; margin-left: 20%"> You've already answered your last question. <br/><br/> If you believe this is an error, please let your teacher know! Otherwise, please log out. </h2> 
+<script type="text/javascript"> 
+	delay();
+</script>
 <?php
 }
 ?>
 
-
-
+<div id="groupingMsgDiv"> </div>
 
 <?php 
 require_once './footer.php';
