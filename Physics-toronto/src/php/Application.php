@@ -9,7 +9,7 @@ class Application {
 	public static $numPrinciples = 3;
 	public static $numProblemsForPhaseB = 3;
 	public static $numChoicesPerProblem = 4;
-	public static $problemChoices = array("a", "b", "c", "d", "e");
+	public static $problemChoices = array("a", "b", "c", "d", "e", "f", "g", "h");
 	public static $problemCategories = array(
 		"Net Force",
 		"One body problem",
@@ -114,26 +114,51 @@ class Application {
 	)
 	);
 	
+	
+	/*
+	 * Relationship between students and the set of questions they have to answer. The numbers correspond to each question's unique id
+	 */
+	public static $studentQuestions = array(
+		"physics111" => array("1", "2", "3", "4", "5", "6"),
+		"physics211" => array("5", "6", "7", "8", "9", "10"),
+		"physics311" => array("9", "10", "11", "12", "13", "14"),
+		"physics411" => array("13", "14", "15", "16"),
+
+		"physics511" => array("1", "2", "3", "4", "5", "6"),
+		"physics611" => array("5", "6", "7", "8", "9", "10"),
+		"physics711" => array("9", "10", "11", "12", "13", "14"),
+		"physics811" => array("13", "14", "15", "16"),
+	
+		"physics911" => array("1", "2", "3", "4", "5", "6"),
+		"physics111a" => array("5", "6", "7", "8", "9", "10"),
+		"physics111b" => array("9", "10", "11", "12", "13", "14"),
+		"physics111c" => array("13", "14", "15", "16"),
+	
+		"physics111d" => array("1", "2", "3", "4", "5", "6"),
+		"physics111e" => array("5", "6", "7", "8", "9", "10"),
+		"physics111f" => array("9", "10", "11", "12", "13", "14"),
+		"physics111g" => array("13", "14", "15", "16")
+	);
+
+	
 	/*
 	 * Relationship between Groups and Questions assigned to them 
 	 */
 	public static $groupQuestions = array(
-		"group1" => array(
-			"",
-			""
-		),
-		"group2" => array(
-			"",
-			""
-		)
+		"physicsGroup111" => array("5", "6", "7", "8"),
+		"physicsGroup211" => array("1", "2", "3", "4"),
+		"physicsGroup311" => array("13", "14", "15", "16"),
+		"physicsGroup411" => array("9", "10", "11", "12")
 	);
 	
 	/*
 	 * Relationship betweeen a Group and their Long Question for Step 4
 	 */
 	public static $groupLongQuestions = array(
-		"group1" => "1",
-		"group2" => "2"
+		"physicsGroup111" => "1",
+		"physicsGroup211" => "2",
+		"physicsGroup311" => "2",
+		"physicsGroup411" => "2"
 	);
 	
 	/*
@@ -153,8 +178,6 @@ class Application {
 			"8"
 		)
 	);
-	
-
 
 }
 ?>
