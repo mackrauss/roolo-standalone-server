@@ -142,7 +142,7 @@ foreach ($questions as $curQuestion){
 				width: 875, 
 				height: 300, 
 				is3D: true, 
-				title: 'Category Report'});
+				title: 'Elements Report'});
 		}
 	</script>
 	
