@@ -20,7 +20,7 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, "j_username=".$_SESSION['username']."&j_pas
 $result = curl_exec($ch);
 curl_close($ch);
 
-$notMember = strstr($result, "failed=true");
+$notMember = strstr($result, "failed=true") || trim($result) == '';
 
 if($notMember){
 	$_SESSION['msg'] = $msg;
