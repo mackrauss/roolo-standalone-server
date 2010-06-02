@@ -11,15 +11,18 @@ class Application {
 	public static $numChoicesPerProblem = 4;
 	public static $problemChoices = array("a", "b", "c", "d", "e", "f", "g", "h");
 	public static $problemCategories = array(
+		"Newton First Law",
+		"Newton Second Law",
+		"Newton Third Law",
 		"Net Force",
 		"Collision",
-		"1 Dimentional",
-		"2 Dimentional",
+		"1 Dimensional",
+		"2 Dimensional",
 		"Conservation of Energy",
-		"Conservation of Moemntum",
+		"Conservation of Momentum",
 		"Work",
-		"Linear Accelaration",
-		"Centripetal acceleration",
+		"Linear Acceleration",
+		"Centripetal Acceleration",
 		"Elastic Potential Energy",
 		"Gravitational Potential Energy",
 		"Kinetic Energy",
@@ -27,7 +30,7 @@ class Application {
 		"Force",
 		"Displacement",
 		"Velocity",
-		"Centre of Mass");
+		"Center of Mass");
 	
 
 	public static $forumulas = array(
@@ -118,25 +121,25 @@ class Application {
 	 * Relationship between students and the set of questions they have to answer. The numbers correspond to each question's unique id
 	 */
 	public static $studentQuestions = array(
-		"physics111" => array("1", "2", "3", "4", "5", "6"),
-		"physics211" => array("5", "6", "7", "8", "9", "10"),
-		"physics311" => array("9", "10", "11", "12", "13", "14"),
-		"physics411" => array("13", "14", "15", "16"),
+		"physics111" => array("1", "5", "9", "13"),
+		"physics211" => array("2", "6", "10", "14"),
+		"physics311" => array("3", "7", "11", "15"),
+		"physics411" => array("4", "8", "12", "16"),
 
-		"physics511" => array("1", "2", "3", "4", "5", "6"),
-		"physics611" => array("5", "6", "7", "8", "9", "10"),
-		"physics711" => array("9", "10", "11", "12", "13", "14"),
-		"physics811" => array("13", "14", "15", "16"),
+		"physics511" => array("1", "5", "9", "13"),
+		"physics611" => array("2", "6", "10", "14"),
+		"physics711" => array("3", "7", "11", "15"),
+		"physics811" => array("4", "8", "12", "16"),
 	
-		"physics911" => array("1", "2", "3", "4", "5", "6"),
-		"physics111a" => array("5", "6", "7", "8", "9", "10"),
-		"physics111b" => array("9", "10", "11", "12", "13", "14"),
-		"physics111c" => array("13", "14", "15", "16"),
+		"physics911" => array("1", "5", "9", "13"),
+		"physics111a" => array("2", "6", "10", "14"),
+		"physics111b" => array("3", "7", "11", "15"),
+		"physics111c" => array("4", "8", "12", "16"),
 	
-		"physics111d" => array("1", "2", "3", "4", "5", "6"),
-		"physics111e" => array("5", "6", "7", "8", "9", "10"),
-		"physics111f" => array("9", "10", "11", "12", "13", "14"),
-		"physics111g" => array("13", "14", "15", "16")
+		"physics111d" => array("1", "5", "9", "13"),
+		"physics111e" => array("2", "6", "10", "14"),
+		"physics111f" => array("3", "7", "11", "15"),
+		"physics111g" => array("4", "8", "12", "16")
 	);
 
 	
@@ -154,10 +157,10 @@ class Application {
 	 * Relationship betweeen a Group and their Long Question for Step 4
 	 */
 	public static $groupLongQuestions = array(
-		"physicsGroup111" => "17",
-		"physicsGroup211" => "18",
-		"physicsGroup311" => "19",
-		"physicsGroup411" => "20"
+		"physicsGroup111" => "19",
+		"physicsGroup211" => "20",
+		"physicsGroup311" => "18",
+		"physicsGroup411" => "17"
 	);
 	
 	/*
@@ -165,28 +168,28 @@ class Application {
 	 */
 	public static $longQuestionConceptQuestions = array(
 		"17" => array(
-			"2",
-			"3",
-			"4",
-			"5"
+			"9",
+			"10",
+			"11",
+			"12"
 		), 
 		"18" => array(
-			"1",
+			"13",
+			"14",
+			"15",
+			"16"
+		),
+		"19" => array(
+			"5",
 			"6",
 			"7",
 			"8"
 		),
-		"19" => array(
-			"2",
-			"3",
-			"4",
-			"5"
-		),
 		"20" => array(
+			"1",
 			"2",
 			"3",
-			"4",
-			"5"
+			"4"
 		)
 	);
 

@@ -32,12 +32,12 @@ $existingLongAnswers = $roolo->search($query, 'metadata', 'latest');
 
 	function submitLongAnswer(){
 		// get the multiple choice answer
-		var selectedMultipleChoice = $('[name=multipleChoice]:checked');
-		if (selectedMultipleChoice.length == 0){
-			alert('You must choose an answer for question 1');
-			return;
-		}
-		var multipleChoice = selectedMultipleChoice.val();
+//		var selectedMultipleChoice = $('[name=multipleChoice]:checked');
+//		if (selectedMultipleChoice.length == 0){
+//			alert('You must choose an answer for question 1');
+//			return;
+//		}
+//		var multipleChoice = selectedMultipleChoice.val();
 	
 		// get the categories chosen
 		var selectedCategories = $('[name=problemCategory]:checked');
@@ -84,7 +84,7 @@ $existingLongAnswers = $roolo->search($query, 'metadata', 'latest');
 				'longProblemUri': longProblemUri,
 				'longProblemPath': longProblemPath,
 				'conceptProblemUri': conceptProblemUri,
-				'multipleChoice': multipleChoice, 
+//				'multipleChoice': multipleChoice, 
 				'categories': categories,
 				'formulas': formulas,
 				'rationale': rationale
@@ -209,18 +209,18 @@ if (count($existingLongAnswers) == 0){
 	    
     <div id="answerSection4">
 	  	<form id="round1" name="form1" method="post" action="feedback.php">
-	  	<dt>1. Select the correct answer to the LONG problem:</dt>
-	    <dd>
-	    	<label class="radioButton"><input type="radio" name="multipleChoice" value="A"/>A</label>
-	 		<label class="radioButton"><input type="radio" name="multipleChoice" value="B"/>B</label>
-	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="C"/>C</label>
-	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="D"/>D</label>
-	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="E"/>E</label>
-	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="F"/>F</label>
-	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="G"/>G</label>
-	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="H"/>H</label>
-	  	</dd>
-	 	<dt>2. Check the corresponding elements that are shown in the LONG problem:</dt>
+<!--	  	<dt>1. Select the correct answer to the LONG problem:</dt>-->
+<!--	    <dd>-->
+<!--	    	<label class="radioButton"><input type="radio" name="multipleChoice" value="A"/>A</label>-->
+<!--	 		<label class="radioButton"><input type="radio" name="multipleChoice" value="B"/>B</label>-->
+<!--	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="C"/>C</label>-->
+<!--	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="D"/>D</label>-->
+<!--	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="E"/>E</label>-->
+<!--	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="F"/>F</label>-->
+<!--	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="G"/>G</label>-->
+<!--	  		<label class="radioButton"><input type="radio" name="multipleChoice" value="H"/>H</label>-->
+<!--	  	</dd>-->
+	 	<dt>1. Check the corresponding elements that are shown in the LONG problem:</dt>
 	  	<dd>
 <?php 
 	foreach ($problemCategories as $curProblemCategory) {
@@ -230,7 +230,7 @@ if (count($existingLongAnswers) == 0){
 	}
 ?>
 	  	</dd>
-	    <dt>3. Check off the corresponding formulas that you would use to solve the LONG problem.</dt>
+	    <dt>2. Check off the corresponding formulas that you would use to solve the LONG problem.</dt>
 	    <dd>
 <?php 
 	foreach ($formulas as $curFormulaName => $curFormula){
@@ -249,7 +249,7 @@ if (count($existingLongAnswers) == 0){
 	}
 ?>
 	    </dd>
-	    <dt>4. Tell us why you chose the formulas you chose and how you would use those formulas to solve the problem.</dt>
+	    <dt>3. Tell us why you chose the formulas you chose and how you would use those formulas to solve the problem.</dt>
 	  	<dd><textarea name="rationale" cols="60" rows="12" onKeyUp='rationaleChanged();'></textarea></dd>
 	
 	  	<p><span id='numRationaleCharsLeft'>300</span> characters left</p>
