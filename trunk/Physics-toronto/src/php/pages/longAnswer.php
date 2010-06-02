@@ -173,14 +173,68 @@ if (count($existingLongAnswers) == 0){
 	$problemCategories = Application::$problemCategories;
 
 	/*
+	 * Extract category count
+	 */
+	// Find all the solutions created by groups only
+	$solutions = $roolo->search('type:Solution AND author:(physicsGroup111 OR physicsGroup211 OR physicsGroup311 OR physicsGroup411) AND owneruri:'.$roolo->escapeSearchTerm($conceptProblemUri), 'metadata', 'latest');
+	$catCounter = array();
+	foreach (Application::$problemCategories as $curCat){
+		$catCounter[$curCat] = 0;
+	}
+	foreach ($solutions as $curSolution){
+		if (trim($curSolution->category) != ''){
+			//$curCats = explode(",", trim(mb_strtolower($curSolution->category)));
+			$curCats = explode(",", trim($curSolution->category));
+			foreach ($curCats as $curCat){
+				$curCat = trim($curCat);
+				
+				$catCounter[$curCat] += 1;	
+			}
+		}
+	}
+	
+	$catCounterJson = json_encode($catCounter);
+	
+	
+	/*
 	 * render view
 	 */
 ?>
-
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
 	conceptProblemUri = "<?= $conceptProblemUri ?>";
 	longProblemUri = "<?= $longProblem->uri?>";
 	longProblemPath = "<?= $longProblem->path?>";
+catCounter = eval('('+"<?= addslashes($catCounterJson) ?>"+')');
+
+//Load the Visualization API and the piechart package.
+google.load('visualization', '1', {'packages':['columnchart']});
+
+	// Set a callback to run when the Google Visualization API is loaded.
+google.setOnLoadCallback(drawChart);
+
+//Callback that creates and populates a data table, 
+// instantiates the pie chart, passes in the data and
+// draws it.
+function drawChart() {
+	// Create our data table.
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Category');
+	data.addColumn('number', '# of Times Selected');
+	
+	for (var key in catCounter){
+	data.addRow([key, catCounter[key]]);
+	}
+	
+	// Instantiate and draw our chart, passing in some options.
+	var chart = new google.visualization.ColumnChart(document.getElementById('elementsReport'));
+	chart.draw(data, {
+		width: 820, 
+		height: 300, 
+		is3D: true, 
+		title: 'Elements Report'});
+}
+
 </script>
 
 <style type="text/css">
@@ -206,7 +260,11 @@ if (count($existingLongAnswers) == 0){
    		<p>Selected Concept Problem</p>
 	    <img src="<?= $selectedConceptProblem->path ?>" width="250" height="190"/><br/>
     </div>
-	    
+    <div style='float: left; width: 100%; padding-left: 50px; padding-top: 40px;'>
+    	Review the Elements Report for the selected Concept Problem and then answer the questions below.
+    </div>
+	<div id='elementsReport'>
+	</div>
     <div id="answerSection4">
 	  	<form id="round1" name="form1" method="post" action="feedback.php">
 <!--	  	<dt>1. Select the correct answer to the LONG problem:</dt>-->
