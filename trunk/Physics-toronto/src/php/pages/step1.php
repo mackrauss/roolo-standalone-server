@@ -7,8 +7,12 @@ require_once '../dataModels/Solution.php';
 require_once '../Application.php';
 
 error_reporting(E_STRICT);
-if (!$_SESSION['loggedIn'])
+if (!$_SESSION['loggedIn']){
 	header("Location:/src/php/pages/");
+//	$_SESSION['loggedIn'] = true;
+//	$_SESSION['username'] = $_REQUEST['username'];
+}
+
 $_SESSION['msg'] = "";
 $username = $_SESSION['username'];
 $greetingMsg = "Signed in as <b> " . $username . "</b>";

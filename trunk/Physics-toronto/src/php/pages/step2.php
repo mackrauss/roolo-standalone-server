@@ -9,8 +9,12 @@ require_once '../dataModels/Solution.php';
 
 error_reporting(E_ALL | E_STRICT);
 
-if (!$_SESSION['loggedIn'])
+if (!$_SESSION['loggedIn']){
 	header("Location:/src/php/pages/");
+//	$_SESSION['loggedIn'] = true;
+//	$_SESSION['username'] = $_REQUEST['username'];
+}
+
 $_SESSION['msg'] = "";
 $username = $_SESSION['username'];
 $greetingMsg = "Signed in as <b> " . $username . "</b>";
@@ -119,7 +123,7 @@ if ( $totalResults != 0){
 	}
 
 	function check(){
-		var choice = $("input[name='choice']:checked").val();
+		var choice = $("input[name=choice]:checked");
 		if (choice.length != 0){
 			nextQuestion();
 		}else{	
@@ -133,7 +137,7 @@ if ( $totalResults != 0){
 		$('#submitBtn').attr('disabled', 'disabled');
 	
 		var reason = $('#resonTextarea').val();
-		var selectedChoice = $("input[name='choice']:checked").val();
+		var selectedChoice = $("input[name=choice]:checked").val();
 		var questionUri = questionsURI[0];
 		var selectedCategory = new Array();
 		$("input[name='categoryArray[]']:checked").each(function() {selectedCategory.push($(this).val());});
@@ -232,7 +236,7 @@ if ( $totalResults != 0){
 			);
 
 			//uncheck radiobuttons
-			$("input[name='choice']:checked").attr("checked", false);
+			$("input[name=choice]:checked").attr("checked", false);
 	
 			//uncheck checkBoxes
 			$(".box").attr('checked', false);
