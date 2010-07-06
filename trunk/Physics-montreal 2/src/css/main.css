@@ -1,0 +1,94 @@
+body {
+	background-image: url(/resources/images/header_background.jpg);
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-color: #76C4E9;
+}
+
+#main {
+	font-family: Verdana;
+	font-size: 13px; 
+	
+	margin-left: auto;
+	margin-right: auto;
+	border:1px solid grey;
+	background-color: #F9FFFE;
+	
+	-moz-border-radius-topleft: 50px; 
+	-moz-border-radius-topright: 50px; 
+	-moz-border-radius-bottomleft: 50px; 
+	-moz-border-radius-bottomright: 50px;
+	
+	width: 70%;
+	margin-top: 1%;
+	padding-top: 2%;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+input {
+	font-size: 13px;
+}
+.small_info{
+	font-size: x-small; 
+}
+
+.BigButton { 
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 30px; 
+	background-color: #bcffaf;
+	margin-top: 2%;
+	margin-left: 10%; 
+	padding: 2px; 
+	height: 50px; 
+	width: 200px; 
+	border: 1px solid #000000;
+	-moz-border-radius-topleft: 50px; 
+	-moz-border-radius-topright: 50px; 
+	-moz-border-radius-bottomleft: 50px; 
+	-moz-border-radius-bottomright: 50px; 
+}
+
+.SmallButton {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 14px; 
+	background-color: #bcffaf;
+	padding: 2px;  
+	border: 1px solid #000000;
+	-moz-border-radius-topleft: 5px; 
+	-moz-border-radius-topright: 5px; 
+	-moz-border-radius-bottomleft: 5px; 
+	-moz-border-radius-bottomright: 5px; 
+}
+
+textarea {
+	font-family: Verdana;
+	font-size: 13px; 
+}
+
+.tag {
+	border: 1px solid darkgrey;
+	font-size: x-small;
+	padding-right: 7px; 
+	padding-left:  7px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	color: white;
+	background-color: 6699CC;
+	margin-right: 10px;
+	
+	-moz-border-radius-topleft: 10px; 
+	-moz-border-radius-topright: 10px; 
+	-moz-border-radius-bottomleft: 10px; 
+	-moz-border-radius-bottomright: 10px; 
+}
+
+.tagImage {
+	text-decoration:none; 
+	border:0 none; 
+	background:transparent none repeat scroll 0 0;
+	
+	outline-color:-moz-use-text-color;
+	outline-style:none;
+	outline-width:0;
+}
