@@ -215,7 +215,7 @@ div#mcReport {
 div#elementsReport {
 	position:relative;
 	float:left;
-	background:url(../../resources/images/elementsreport.jpg);
+	/*background:url(../../resources/images/elementsreport.jpg);*/
 	border: #666 dotted thick;
 	width:820px;
 	height:300px;
@@ -339,15 +339,4 @@ form#step3 label{
 }
 form#step3 {
 	margin-top: 10px;
-}
-
-div #multipleChoiceSelection {
-	float: right;
-	width: 200px;
-	margin-top: 100px;
-}
-
-div #multipleChoiceSelection div{
-	width: 100%;
-	margin-bottom: 5px;
 }
