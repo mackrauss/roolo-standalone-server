@@ -9,7 +9,7 @@ class Application {
 	public static $numPrinciples = 3;
 	public static $numProblemsForPhaseB = 3;
 	public static $numChoicesPerProblem = 4;
-	public static $problemChoices = array("A", "B", "C", "D", "E", "F", "G", "H");
+	public static $problemChoices = array("a", "b", "c", "d", "e", "f", "g", "h");
 	public static $problemCategories = array(
 		"Newton First Law",
 		"Newton Second Law",
