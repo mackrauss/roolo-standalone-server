@@ -159,11 +159,11 @@ if ($totalResults != 0){
 		$('#submitBtn').attr('disabled', 'disabled');
 
 		var counter = $('#counter').val();
-		var rationale = $('#rationaleTextarea').val();
 		var selectedChoice = $("input[name='choice']:checked").val();
 		var selectedCategory = new Array();
 		$("input[name='categoryArray[]']:checked").each(function() {selectedCategory.push($(this).val());});
 		var category = selectedCategory.join(', ');
+		var reason = $('#rationale').val();
 
 		//Ajax call to send group, selectedChoice, Owneruri, rationale
 		$.get("/src/php/ajaxServices/saveMultiplechoice.php",
@@ -171,12 +171,15 @@ if ($totalResults != 0){
 				 choice: selectedChoice,
 				 ownerURI:questionsURI[counter],
 				 flag: flag,
-				 category: category
+				 category: category,
+				 reason: reason				 
 				},
 		  		function(returned_data){
 			  		// We don't need to do anything in the call-back function
 			    }
 		);
+
+		logout();
 
 		//uncheck radiobuttons
 		$("input[name='choice']:checked").attr("checked", false);
@@ -212,20 +215,7 @@ if ($totalResults != 0){
 
 		} else{
 
-			$('#middle-top').remove();
-			$('#middle-center').remove();
-			$('#middle-bottom').remove();
-			$('#signOut').remove();
-			
-			$('#groupingMsgDiv').css({'width' : '70%', 'height' : '18%', 'margin-left':'15%'});
-
-			groupingMsg = "<h2 style='width: 100%; float: center; Margin-top: 10%'><?= $noMoreProblemMsg1 ?></h2>";
-			groupingMsg += "<h2 style='width: 100%; float: center'><?= $noMoreProblemMsg2 ?></h2>";
-
-			$('#groupingMsgDiv').html(groupingMsg);
-			$('#questionHeading').html('');
-			$('#signOut').html('');
-			delay();
+			logout();
 		}
 
 		// increment the current number of the question
@@ -233,6 +223,23 @@ if ($totalResults != 0){
 		if (curQuestionNum <= numQuestion) {
 			$('#questionHeading').html('<p><b>Question ' + curQuestionNum + ' of ' + numQuestion + '</b></p>');
 		}
+	}
+
+	function logout () {
+		$('#middle-top').remove();
+		$('#middle-center').remove();
+		$('#middle-bottom').remove();
+		$('#signOut').remove();
+		
+		$('#groupingMsgDiv').css({'width' : '70%', 'height' : '18%', 'margin-left':'15%'});
+
+		groupingMsg = "<h2 style='width: 100%; float: center; Margin-top: 10%'><?= $noMoreProblemMsg1 ?></h2>";
+		groupingMsg += "<h2 style='width: 100%; float: center'><?= $noMoreProblemMsg2 ?></h2>";
+
+		$('#groupingMsgDiv').html(groupingMsg);
+		$('#questionHeading').html('');
+		$('#signOut').html('');
+		delay();
 	}
 
 	//function generate the counter value (the index of curent question in 
@@ -311,9 +318,11 @@ if ($totalResults != 0){
 						}
 					?>
 			  	</dd>
-			  
+			  	
+				<dt> 3. Write your rationale </dt>			  	
+				<textarea id="rationale" rows="20" cols="40"></textarea>		  
 			  	<input name="submit" type="button" value="SUBMIT" class="btn" onClick="check(); scroll(0,0);" />
-			</dl>			  	
+			</dl>
 		</form>
 	</div> <!-- id="answerSection" -->
 </div><!-- id="middle-center"> -->	
