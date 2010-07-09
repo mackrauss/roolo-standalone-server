@@ -259,7 +259,7 @@ for($i=0; $i<sizeof($allProblems); $i++){
 
 <div id='groupingMsgDiv'></div>
 
-<div id="middle-center">
+<div id="middle-center2">
 
 	<div id='mainQuestion'>
     	<img class="problem" src="<?= $longProblemPath ?>" />
