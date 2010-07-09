@@ -340,3 +340,14 @@ form#step3 label{
 form#step3 {
 	margin-top: 10px;
 }
+
+div #multipleChoiceSelection {
+	float: right;
+	width: 200px;
+	margin-top: 100px;
+}
+
+div #multipleChoiceSelection div{
+	width: 100%;
+	margin-bottom: 5px;
+}
