@@ -1,7 +1,21 @@
 <?php
 class Application {
-	public static $groups = array("group1", "group2", "group3", "group4", "group5", "group6");
-	public static $superGroups = array("superGroup1", "superGroup2", "superGroup3");
+	public static $groups = array(
+		"physics111", 
+		"physics211", 
+		"physics311", 
+		"physics411", 
+		"physics511", 
+		"physics611"
+	);
+	
+	public static $superGroups = array(
+		"physicsGroup111", 
+		"physicsGroup211",
+		"physicsGroup311", 
+		"physicsGroup411"
+	);
+	
 	public static $superGroupSpecialties = array(	"superGroup1" => "First",
 													"superGroup2" => "Second",
 													"superGroup3" => "Third");
@@ -157,7 +171,8 @@ class Application {
 		"physicsGroup111" => array("1", "2", "3", "4"),
 		"physicsGroup211" => array("1", "2", "3", "4"),
 		"physicsGroup311" => array("1", "2", "3", "4"),
-		"physicsGroup411" => array("1", "2", "3", "4")
+		"physicsGroup411" => array("1", "2", "3", "4"),
+		"teacher" 		  => array("1", "2", "3", "4")
 	);
 	
 	/*

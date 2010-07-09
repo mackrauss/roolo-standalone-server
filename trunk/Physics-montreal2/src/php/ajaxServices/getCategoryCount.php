@@ -11,6 +11,8 @@ $curentSolution = new Solution();
 
 $questionUri = '';
 $mcChoice = '';
+$mode = 'GROUP';
+
 /*
  * get problemUri param
  */
@@ -29,10 +31,26 @@ if (isset($_REQUEST['mcChoice'])){
 	return "ERROR: mcChoice param not provided";
 }
 
+/*
+ * Get mode param (GROUP or SUPERGROUP)
+ */
+if (isset($_REQUEST['mode'])){
+	$mode = $_REQUEST['mode'];
+}
+
 /**
  * Find all the solutions 
  */
-$solutions = $rooloClient->search('type:Solution AND owneruri:'.$rooloClient->escapeSearchTerm($questionUri).' AND selectedchoice:'.$rooloClient->escapeSearchTerm($mcChoice), 'metadata', 'latest');
+$authors = NULL;
+$authorsStr = '';
+if ($mode == 'GROUP'){
+	$authors = Application::$groups;
+}elseif ($mode == 'SUPERGROUP'){
+	$authors = Application::$superGroups;
+}
+$authorsStr = implode(' OR ', $authors);
+$query = 'type:Solution AND owneruri:'.$rooloClient->escapeSearchTerm($questionUri).' AND selectedchoice:'.$rooloClient->escapeSearchTerm($mcChoice).' AND author:('.$authorsStr.')';
+$solutions = $rooloClient->search($query, 'metadata', 'latest');
 
 /*
  * Extract category count

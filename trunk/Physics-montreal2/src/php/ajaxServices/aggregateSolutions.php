@@ -21,10 +21,26 @@ if (isset($_REQUEST['problemUri'])){
 	$firstTime = true;
 }
 
+/*
+ * Decide which mode we're operating in: GROUP or SUPERGROUP
+ */
+$mode = $aggregateSolutionsMode;
+
+
 /**
  * Find all the solutions 
  */
-$solutions = $rooloClient->search('type:Solution AND owneruri:'.$rooloClient->escapeSearchTerm($questionUri), 'metadata', 'latest');
+$authors = NULL;
+$authorsStr = '';
+if ($mode == 'GROUP'){
+	$authors = Application::$groups;
+}elseif ($mode == 'SUPERGROUP'){
+	$authors = Application::$superGroups;
+}
+$authorsStr = implode(' OR ', $authors);
+
+$query = 'type:Solution AND owneruri:'.$rooloClient->escapeSearchTerm($questionUri).' AND author:('.$rooloClient->escapeSearchTerm($authorsStr).')';
+$solutions = $rooloClient->search($query, 'metadata', 'latest');
 
 /*
  * Extract multiple choice count

@@ -59,19 +59,23 @@ $totalResults = sizeof($questions);
 $mcCounterJson = '';
 
 $problems = array();
+$problemMasterSolutions = array();
 $problemsURI = array();
 
-if ( $totalResults != 0){
+if ( $totalResults != 0 ){
 	for ($i=0; $i< $totalResults; $i++){
 		$problemObject = new Problem();
 		$problemObject = $questions[$i];
 		$problems[$i] = $problemObject->path;
+		$problemMasterSolutions[$i] = $problemObject->get_mcmastersolution();
 		$problemsURI[$i] = $problemObject->uri;
 	}
-	$aggregateSolutionsMode = 'GROUP';
+	$aggregateSolutionsMode = 'SUPERGROUP';
 	// Find all the solutions and return suitable data 
 	require_once '../ajaxServices/aggregateSolutions.php';
 }
+
+
 ?>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -123,7 +127,8 @@ if ( $totalResults != 0){
 			$.get(	"/src/php/ajaxServices/getCategoryCount.php",
 					{
 						problemUri:questionUri,
-						mcChoice:selectedMc
+						mcChoice:selectedMc,
+						mode:'SUPERGROUP'
 					},
 			  		function(data){
 						recreateCatChart(eval('('+data+')'));
@@ -229,7 +234,7 @@ if ( $totalResults != 0){
 	var questions = new Array('<?= implode('\', \'', $problems)?>');
 	var questionsURI = new Array('<?= implode('\', \'', $problemsURI)?>');
 	var numQuestion = questions.length;
-
+	var mcMasterSolution = '<?= $problemMasterSolutions[0] ?>';
 	var curQuestionNum = 1;
 
 	var curQuestionIndex = 0;
@@ -267,6 +272,10 @@ if ( $totalResults != 0){
             $('#charLeftStr').text(msg);
         });
 	});
+
+	function showMcMasterSolution(){
+		$('#mcMasterSolutionContainer').html(mcMasterSolution);
+	}
 </script>
 	
 
@@ -285,40 +294,13 @@ if ( $totalResults != 0){
 		</div>
 		<div id='elementsReport'>
 			Please click on a Multiple Choice bar first
-		</div>	
-		<div id="answerSection2">
-			<form id="round1" name="form1" method="post" action="feedback.php">
-				<dl>
-					<dt>1.Select the correct answer:</dt>
-				    <dd><label class="radioButton"><input type="radio" name="choice" value="a"/>A</label>
-				 		<label class="radioButton"><input type="radio" name="choice" value="b"/>B</label>
-				  		<label class="radioButton"><input type="radio" name="choice" value="c"/>C</label>
-				  		<label class="radioButton"><input type="radio" name="choice" value="d"/>D</label>
-				  		<label class="radioButton"><input type="radio" name="choice" value="e"/>E</label>
-				  		<label class="radioButton"><input type="radio" name="choice" value="f"/>F</label>
-				  		<label class="radioButton"><input type="radio" name="choice" value="g"/>G</label>
-				  		<label class="radioButton"><input type="radio" name="choice" value="h"/>H</label>
-				  	</dd>
-		
-					<dt>2.Check the corresponding elements that are shown in the problem:</dt>
-				  	<dd>
-				  		<?php 
-							foreach (Application::$problemCategories as $curProblemCategory) {
-						?>
-							  		<label><input class="box" type="checkbox" name="categoryArray[]" value="<?= $curProblemCategory?>" /><?= $curProblemCategory?></label><br/>
-						<?php 
-							}
-						?>
-				  	</dd>
-				  
-				   	<dt>3. Write a rationale explaining why you selected the elements above.</dt>
-				  	<dd><textarea id="resonTextarea" name="" cols="35" rows="12"></textarea></dd>
-					<p id="charLeftStr" ></p>
-				  	<input name="submit" type="button" value="SUBMIT" class="btn" onClick="check(); scroll(0,0);" />
-				</dl>
-				<input type='hidden' id='' name='counter' value=""/>			  	
-			</form>
-		</div> <!-- id="answerSection2" -->
+		</div>
+		<div style='float: left; width: 100%; margin-top: 60px;	 margin-left: 60px;'>
+			<input type='button' onclick='showMcMasterSolution()' value='Show Correct Answer' />
+			<div id='mcMasterSolutionContainer' style='width: 120px; height: 40px; border: 3px solid red; vertical-align: middle; text-align: center; font-size: 30px; margin-top: 15px;'>
+				
+			</div>
+		</div>
 	</div> <!-- id='middle-center2' -->
 	<div id='middle-bottom'>
 	</div>
