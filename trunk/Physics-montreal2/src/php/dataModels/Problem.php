@@ -83,6 +83,14 @@ class Problem extends Elo {
     	return parent::getMetadata('principleName');
     }
     
+    public function set_mcmastersolution ($correctAnswer){
+    	parent::addMetadata('mcmastersolution', $correctAnswer);
+    }
+    
+    public function get_mcmastersolution(){
+    	return parent::getMetadata('mcmastersolution');
+    }
+    
     public function get_lable(){
 		$path = parent::getMetadata('path');
     	$temp = substr($path, strrpos($path, '_') + 1);
