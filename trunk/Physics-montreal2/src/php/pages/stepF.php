@@ -91,7 +91,7 @@ for($i=0; $i<sizeof($allProblems); $i++){
 
 <script type="text/javascript">
 //$(document).ready(function(){
-	var catCounterArray = new Array[4];
+	var catCounterArray = new Array(4);
 		
 	catCounterArray[0] = eval(<?= $catCounterJsonArray[0] ?>);
 	catCounterArray[1] = eval(<?= $catCounterJsonArray[1] ?>);
@@ -108,7 +108,7 @@ for($i=0; $i<sizeof($allProblems); $i++){
 	// instantiates the pie chart, passes in the data and
 	// draws it.
 	function drawChart() {
-	  
+
 	    ////////////////////////////////////// Create data table for first question.
 		var data_1 = new google.visualization.DataTable();
 		data_1.addColumn('string', 'Category');
@@ -137,7 +137,7 @@ for($i=0; $i<sizeof($allProblems); $i++){
 		
 		// Instantiate and draw chart, passing in some options.
 		var chart_2 = new google.visualization.ColumnChart(document.getElementById('categoryReport1'));
-		chart.draw(data_2, {
+		chart_2.draw(data_2, {
 			width: 820, 
 			height: 300, 
 			is3D: true, 
@@ -154,7 +154,7 @@ for($i=0; $i<sizeof($allProblems); $i++){
 		
 		// Instantiate and draw chart, passing in some options.
 		var chart_3 = new google.visualization.ColumnChart(document.getElementById('categoryReport2'));
-		chart.draw(data_3, {
+		chart_3.draw(data_3, {
 			width: 820, 
 			height: 300, 
 			is3D: true, 
@@ -171,7 +171,7 @@ for($i=0; $i<sizeof($allProblems); $i++){
 		
 		// Instantiate and draw chart, passing in some options.
 		var chart_4 = new google.visualization.ColumnChart(document.getElementById('categoryReport3'));
-		chart.draw(data_4, {
+		chart_4.draw(data_4, {
 			width: 820, 
 			height: 300, 
 			is3D: true, 
@@ -192,7 +192,8 @@ for($i=0; $i<sizeof($allProblems); $i++){
 		left:40px;
 		position:relative;
 		top:20px;
-		width:700px;
+		width:100%;
+		margin-bottom: 15px;
 	}
 	label.answer {
 		float:left;
@@ -211,6 +212,31 @@ for($i=0; $i<sizeof($allProblems); $i++){
 		width:300px;
 	
 	}
+	
+	div.conceptQuestionDiv {
+		width: 100%;
+		float: left;
+		margin-top: 20px;
+	}
+	
+	p.conceptQuestionLabel {
+		margin-left: 40px;
+	}
+	
+	div.questionSection {
+		width: 100%;
+		margin-left: 40px;
+		float: left;
+	}
+	
+	div.answerSection {
+		width: 100%;
+		float: left;
+		margin-left: 40px;
+		margin-top: 30px;
+	}
+	
+	
 //	div#questionHeading {
 //		height: 50px;
 //		width: 300px;
@@ -236,44 +262,52 @@ for($i=0; $i<sizeof($allProblems); $i++){
 <div id="middle-center">
 
 	<div id='mainQuestion'>
-    	<img  src="<?= $longProblemPath ?>" />
+    	<img class="problem" src="<?= $longProblemPath ?>" />
 	</div>							 
-	<div id='q1'>
-	    <div id="questionSection">
-	    	<img src="<?= $problemsArray[0] ?>" width="454" height="320" class="problem"/>
+	<div class='conceptQuestionDiv' id='q1'>
+		<p class='conceptQuestionLabel'>
+			<b> Concept Question 1 </b> (Answer: <?= $selectedChoiceArrey[0] ?>)
+		</p>
+	    <div class="questionSection">
+	    	<img src="<?= $problemsArray[0] ?>" class="problem"/>
 	  	</div>
-		<div id="answerSection">
-			<label class='answer'><b>Answer :</b> "<?= $selectedChoiceArrey[0] ?>" </label>
+		<div class="answerSection">
 			<div id='categoryReport0'>
 			</div>	
 		</div>
 	</div>							 
-	<div id='q2'>
+	<div class='conceptQuestionDiv' id='q2'>
+		<p class='conceptQuestionLabel'>
+			<b> Concept Question 2 </b> (Answer: <?= $selectedChoiceArrey[1] ?>)
+		</p>
 	    <div id="questionSection">
-	    	<img src="<?= $problemsArray[1] ?>" width="454" height="320" class="problem"/>
+	    	<img src="<?= $problemsArray[1] ?>" class="problem"/>
 	  	</div>
-		<div id="answerSection">
-			<label class='answer'><b>Answer : </b>"<?= $selectedChoiceArrey[1] ?>" </label>
+		<div class="answerSection">
 			<div id='categoryReport1'>
 			</div>	
 		</div>
 	</div>							 
-	<div id='q3'>
+	<div class='conceptQuestionDiv' id='q3'>
+		<p class='conceptQuestionLabel'>
+			<b> Concept Question 3 </b> (Answer: <?= $selectedChoiceArrey[2] ?>)
+		</p>
 	    <div id="questionSection">
-	    	<img src="<?= $problemsArray[2] ?>" width="454" height="320" class="problem"/>
+	    	<img src="<?= $problemsArray[2] ?>" class="problem"/>
 	  	</div>
-		<div id="answerSection">
-			<label class='answer'><b>Answer : </b>"<?= $selectedChoiceArrey[2] ?>" </label>
+		<div class="answerSection">
 			<div id='categoryReport2'>
 			</div>	
 		</div>
 	</div>							 
-	<div id='q4'>
+	<div class='conceptQuestionDiv' id='q4'>
+		<p class='conceptQuestionLabel'>
+			<b> Concept Question 4 </b> (Answer: <?= $selectedChoiceArrey[3] ?>)
+		</p>
 	    <div id="questionSection">
-	    	<img src="<?= $problemsArray[3] ?>" width="454" height="320" class="problem"/>
+	    	<img src="<?= $problemsArray[3] ?>" class="problem"/>
 	  	</div>
-		<div id="answerSection">
-			<label class='answer'><b>Answer : </b>"<?= $selectedChoiceArrey[3] ?>" </label>
+		<div class="answerSection">
 			<div id='categoryReport3'>
 			</div>	
 		</div>
