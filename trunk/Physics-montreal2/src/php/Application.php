@@ -117,6 +117,13 @@ class Application {
 	);
 	
 	
+	public static $correctAnswers = array (
+		"1" => "a",
+		"2" => "c",
+		"3" => "c",
+		"4" => "d"
+	);
+	
 	/*
 	 * Relationship between students and the set of questions they have to answer. The numbers correspond to each question's unique id
 	 */
