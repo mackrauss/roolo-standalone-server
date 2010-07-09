@@ -298,14 +298,14 @@ if ($totalResults != 0){
 		<form id="round1" name="form1" method="post" action="feedback.php">
 			<dl>
 				<dt>1.Select the correct answer:</dt>
-			    <dd><label class="radioButton"><input type="radio" name="choice" value="A"/>A</label>
-			 		<label class="radioButton"><input type="radio" name="choice" value="B"/>B</label>
-			  		<label class="radioButton"><input type="radio" name="choice" value="C"/>C</label>
-			  		<label class="radioButton"><input type="radio" name="choice" value="D"/>D</label>
-			  		<label class="radioButton"><input type="radio" name="choice" value="E"/>E</label>
-			  		<label class="radioButton"><input type="radio" name="choice" value="F"/>F</label>
-			  		<label class="radioButton"><input type="radio" name="choice" value="G"/>G</label>
-			  		<label class="radioButton"><input type="radio" name="choice" value="H"/>H</label>
+			    <dd><label class="radioButton"><input type="radio" name="choice" value="a"/>A</label>
+			 		<label class="radioButton"><input type="radio" name="choice" value="b"/>B</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="c"/>C</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="d"/>D</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="e"/>E</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="f"/>F</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="g"/>G</label>
+			  		<label class="radioButton"><input type="radio" name="choice" value="h"/>H</label>
 			  	</dd>
 	
 				<dt>2.Check the corresponding elements that are shown in the problem:</dt>
