@@ -7,6 +7,7 @@
 
 require_once '../RooloClient.php';
 require_once '../dataModels/Problem.php';
+require_once '../Application.php';
 $rooloClient = new RooloClient();
 $problem = new Problem();
 
@@ -47,6 +48,7 @@ while (false !== ($file = readdir($sourceHandler))) {
 			$problem->title = 'Problem.'.$fileName;
 			$problem->category = '';
 			$problem->set_uniqueQuestionId($uniqueProblemId);
+			$problem->set_mcmastersolution(Application::$correctAnswers[$uniqueProblemId]);
 			//$problem ->solutionpath = '';
 			//$problem ->solutionpathtype = $problem->selectPathType(2);//select 'DISKPath' type
 			echo $problem->toString();
