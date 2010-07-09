@@ -121,10 +121,10 @@ class Application {
 	 * Relationship between students and the set of questions they have to answer. The numbers correspond to each question's unique id
 	 */
 	public static $studentQuestions = array(
-		"physics111" => array("1", "5", "9", "13"),
-		"physics211" => array("2", "6", "10", "14"),
-		"physics311" => array("3", "7", "11", "15"),
-		"physics411" => array("4", "8", "12", "16"),
+		"physics111" => array("1", "2", "3", "4"),
+		"physics211" => array("1", "2", "3", "4"),
+		"physics311" => array("1", "2", "3", "4"),
+		"physics411" => array("1", "2", "3", "4"),
 
 		"physics511" => array("1", "5", "9", "13"),
 		"physics611" => array("2", "6", "10", "14"),
@@ -147,10 +147,10 @@ class Application {
 	 * Relationship between Groups and Questions assigned to them 
 	 */
 	public static $groupQuestions = array(
-		"physicsGroup111" => array("1", "6", "11", "16"),
-		"physicsGroup211" => array("2", "7", "12", "13"),
-		"physicsGroup311" => array("3", "8", "9", "14"),
-		"physicsGroup411" => array("4", "5", "10", "15")
+		"physicsGroup111" => array("1", "2", "3", "4"),
+		"physicsGroup211" => array("1", "2", "3", "4"),
+		"physicsGroup311" => array("1", "2", "3", "4"),
+		"physicsGroup411" => array("1", "2", "3", "4")
 	);
 	
 	/*
@@ -193,5 +193,16 @@ class Application {
 		)
 	);
 
+	/*
+	 * The below static questions arrays have been deffined for step seven. That is 
+	 * a single page contains a long question and all 4 concept questions
+	 * the currect result  
+	 */
+	public static $shortQuestions = array("1", "2", "3", "4");
+
+	public static $longQuestion = "5";
+	
+	public static $authors = array("physicsGroup111", "physicsGroup211", "physicsGroup311", "physicsGroup411");
+	
 }
 ?>
