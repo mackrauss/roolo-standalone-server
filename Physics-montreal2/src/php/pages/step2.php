@@ -76,6 +76,8 @@ if ( $totalResults != 0){
 
 	catCounter = eval(<?= $catCounterJson?>);
 	mcCounter  = eval(<?= $mcCounterJson?>);
+	catChart = null;
+	mcChart = null;
 
   	// Load the Visualization API and the piechart package.
 	google.load('visualization', '1', {'packages':['columnchart']});
@@ -96,13 +98,38 @@ if ( $totalResults != 0){
 			data.addRow([key, mcCounter[key]]);
 		}
 		// Instantiate and draw our chart, passing in some options.
-//		var chart = new google.visualization.ColumnChart(document.getElementById('mcReport'));
-//		chart.draw(data, {
-//			width: 350, 
-//			height: 300, 
-//			is3D: true, 
-//			title: 'Multiple Choice Report'});
-	  
+		mcChart = new google.visualization.ColumnChart(document.getElementById('mcReport'));
+		mcChart.draw(data, {
+			width: 350, 
+			height: 300, 
+			is3D: true, 
+			title: 'Multiple Choice Report'});
+		google.visualization.events.addListener(mcChart, 'select', function(event){
+			var selectionObject = mcChart.getSelection();
+			var selectedIndex = selectionObject[0].row;
+			var curIndex = 0;
+			var selectedMc = '';
+			var questionUri = questionsURI[0];
+			
+			for (var mcChoice in mcCounter){
+				if (curIndex == selectedIndex){
+					selectedMc = mcChoice;
+					break;
+				}
+				curIndex++;
+			}
+
+			$.get(	"/src/php/ajaxServices/getCategoryCount.php",
+					{
+						problemUri:questionUri,
+						mcChoice:selectedMc
+					},
+			  		function(data){
+						console.log(data);
+					});
+		});
+
+		  
 		//////////////////////////////////////// CATEGOREIES ///////////////////////////////////////////////
 	    // Create our data table.
 		var data = new google.visualization.DataTable();
@@ -110,16 +137,17 @@ if ( $totalResults != 0){
 		data.addColumn('number', '# of Times Selected');
 		
 		for (var key in catCounter){
-		data.addRow([key, catCounter[key]]);
+			data.addRow([key, catCounter[key]]);
 		}
 		
 		// Instantiate and draw our chart, passing in some options.
-		var chart = new google.visualization.ColumnChart(document.getElementById('elementsReport'));
-		chart.draw(data, {
-			width: 820, 
-			height: 300, 
-			is3D: true, 
-			title: 'Elements Report'});
+//		catChart = new google.visualization.ColumnChart(document.getElementById('elementsReport'));
+//		catChart.draw(data, {
+//			width: 820, 
+//			height: 300, 
+//			is3D: true, 
+//			title: 'Elements Report'}
+//		);
 	}
 
 	function check(){
@@ -160,8 +188,8 @@ if ( $totalResults != 0){
 				$('#curQuestion').attr('src', questions[0]);
 		
 				// delete last graphs
-//				$('#mcReport').html('');
-				$('#elementsReport').html('');
+				$('#mcReport').html('');
+//				$('#elementsReport').html('');
 				// delete content of response 
 				$('#resonTextarea').val('');
 				$('#charLeftStr').text( reasonTextMax + " characters left");
@@ -202,12 +230,13 @@ if ( $totalResults != 0){
 						}
 						
 						// Instantiate and draw our chart, passing in some options.
-						var chart = new google.visualization.ColumnChart(document.getElementById('elementsReport'));
-						chart.draw(data, {
-							width: 820, 
-							height: 300, 
-							is3D: true, 
-							title: 'Elements Report'});
+//						var chart = new google.visualization.ColumnChart(document.getElementById('elementsReport'));
+//						chart.draw(data, {
+//							width: 820, 
+//							height: 300, 
+//							is3D: true, 
+//							title: 'Elements Report'}
+//						);
 					}
 				);
 	
@@ -339,25 +368,15 @@ if ( $totalResults != 0){
 	</div>
 	<div id='groupingMsgDiv'></div>
 	<div id='middle-center2'>
-		<div id="multipleChoiceSelection">
-			<?php 
-				foreach (Application::$problemChoices as $choice) {
-					$query = "type:Solution AND selectedchoice:".$choice;
-					$selectionCount = $rooloClient->search($query);
-					$selectionCount = sizeof($selectionCount);
-					echo "<div> " . $choice . " ( " . $selectionCount . " ) </div>";
-				}			
-			?>
-		</div>
 		<div id='questionSection'>
 			<p>Below are the multiple choice report and elements report for this question.
 		       Review this information and discuss as a group submitting your answers.</p>
 			<img class='problem' id='curQuestion' height="320" width="454" src='' />
 		</div>
-<!--		<div id='mcReport'>-->
-<!--		</div>-->
-		
+		<div id='mcReport'>
+		</div>
 		<div id='elementsReport'>
+			Please click on a Multiple Choice bar first
 		</div>	
 		<div id="answerSection2">
 			<form id="round1" name="form1" method="post" action="feedback.php">
