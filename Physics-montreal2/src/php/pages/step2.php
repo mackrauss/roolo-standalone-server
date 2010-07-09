@@ -96,12 +96,12 @@ if ( $totalResults != 0){
 			data.addRow([key, mcCounter[key]]);
 		}
 		// Instantiate and draw our chart, passing in some options.
-		var chart = new google.visualization.ColumnChart(document.getElementById('mcReport'));
-		chart.draw(data, {
-			width: 350, 
-			height: 300, 
-			is3D: true, 
-			title: 'Multiple Choice Report'});
+//		var chart = new google.visualization.ColumnChart(document.getElementById('mcReport'));
+//		chart.draw(data, {
+//			width: 350, 
+//			height: 300, 
+//			is3D: true, 
+//			title: 'Multiple Choice Report'});
 	  
 		//////////////////////////////////////// CATEGOREIES ///////////////////////////////////////////////
 	    // Create our data table.
@@ -160,7 +160,7 @@ if ( $totalResults != 0){
 				$('#curQuestion').attr('src', questions[0]);
 		
 				// delete last graphs
-				$('#mcReport').html('');
+//				$('#mcReport').html('');
 				$('#elementsReport').html('');
 				// delete content of response 
 				$('#resonTextarea').val('');
@@ -339,13 +339,24 @@ if ( $totalResults != 0){
 	</div>
 	<div id='groupingMsgDiv'></div>
 	<div id='middle-center2'>
+		<div id="multipleChoiceSelection">
+			<?php 
+				foreach (Application::$problemChoices as $choice) {
+					$query = "type:Solution AND selectedchoice:".$choice;
+					$selectionCount = $rooloClient->search($query);
+					$selectionCount = sizeof($selectionCount);
+					echo "<div> " . $choice . " ( " . $selectionCount . " ) </div>";
+				}			
+			?>
+		</div>
 		<div id='questionSection'>
 			<p>Below are the multiple choice report and elements report for this question.
 		       Review this information and discuss as a group submitting your answers.</p>
 			<img class='problem' id='curQuestion' height="320" width="454" src='' />
 		</div>
-		<div id='mcReport'>
-		</div>
+<!--		<div id='mcReport'>-->
+<!--		</div>-->
+		
 		<div id='elementsReport'>
 		</div>	
 		<div id="answerSection2">
