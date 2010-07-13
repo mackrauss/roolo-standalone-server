@@ -23,6 +23,6 @@ $savedTpXml = $roolo->addElo($tp);
 echo $savedTpXml;
 ?>
 
-<!--<script type='text/javascript'>-->
-<!--	window.location.href = '/src/php/pages';-->
-<!--</script>-->
+<script type='text/javascript'>
+	window.location.href = '/src/php/pages';
+</script>
