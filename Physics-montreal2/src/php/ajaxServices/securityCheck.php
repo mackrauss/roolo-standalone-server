@@ -9,7 +9,6 @@ $url = "http://localhost:8070/webapp/j_acegi_security_check";
 //$url = "http://iitp.dawsoncollege.qc.ca:8080/webapp/j_acegi_security_check"; 
 $msg = "The username or password you entered is incorrect.";
 
-/*
 // create a new cURL resource
 $ch = curl_init($url);
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -22,8 +21,6 @@ $result = curl_exec($ch);
 curl_close($ch);
 
 $notMember = strstr($result, "failed=true") || trim($result) == '';
-*/
-$notMember = false;
 
 if($notMember){
 	$_SESSION['msg'] = $msg;
