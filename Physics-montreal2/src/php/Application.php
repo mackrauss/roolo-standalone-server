@@ -172,7 +172,7 @@ class Application {
 		"physicsGroup211" => array("1", "2", "3", "4"),
 		"physicsGroup311" => array("1", "2", "3", "4"),
 		"physicsGroup411" => array("1", "2", "3", "4"),
-		"teacher" 		  => array("1", "2", "3", "4")
+		"teach11" 		  => array("1", "2", "3", "4")
 	);
 	
 	/*
