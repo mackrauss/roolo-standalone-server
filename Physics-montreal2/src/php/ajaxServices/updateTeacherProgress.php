@@ -31,7 +31,7 @@ if (!isset($results[0])){
 $teacherProgress = $results[0];
 
 $progressStr = $teacherProgress->get_progress();
-if (mb_strlen($progressStr) == 0){
+if (strlen($progressStr) == 0){
 	$separator = '';
 }else{
 	$separator = ',';
