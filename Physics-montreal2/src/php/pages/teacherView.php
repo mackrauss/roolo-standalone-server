@@ -27,10 +27,8 @@ $roolo = new RooloClient();
 $uniqueQuestionIds = Application::$groupQuestions[$username];
 $uniqueQuestionIdStr = implode(' OR ', $uniqueQuestionIds);
 $query = "type:Problem AND uniquequestionid:(" . $uniqueQuestionIdStr . ")";
-echo $query;
 $allQuestions = $roolo->search($query, 'metadata', 'latest');
 
-print_r($allQuestions);
 /*
  * Get TeacherProgress up to this point
  */
