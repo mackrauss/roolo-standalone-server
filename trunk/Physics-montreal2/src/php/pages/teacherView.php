@@ -29,11 +29,19 @@ $uniqueQuestionIdStr = implode(' OR ', $uniqueQuestionIds);
 $query = "type:Problem AND uniquequestionid:(" . $uniqueQuestionIdStr . ")";
 $allQuestions = $roolo->search($query, 'metadata', 'latest');
 
-$solurinQuery = "type:Solution AND author:" . $_SESSION['username'];
-$authorSolutions = $roolo->search($solurinQuery, 'metadata');
+/*
+ * Get TeacherProgress up to this point
+ */
+$results = $roolo->search('type:TeacherProgress', 'metadata', 'latest');
+if (!isset($results[0])){
+	echo "ERROR: TeacherProgress object doesn't exist in DB";
+	die();
+}
+$teacherProgress = $results[0];
+$teacherProgressUris = explode(',',$teacherProgress->get_progress());
 
 $noMoreProblemMsg1 = 'Thanks!';
-$noMoreProblemMsg2 = 'You will be logged out in 10 seconds. Please wait for instructions...';
+$noMoreProblemMsg2 = 'You will be logged out momentarily.';
 
 $solutionObject = new Solution();
 $QuestionObject = new Problem();
@@ -43,10 +51,9 @@ for($i=0; $i<sizeof($allQuestions); $i++){
 	$QuestionObject = $allQuestions[$i];
 	$uri = $QuestionObject->uri;
 	$found = FALSE;
-	for($j=0; $j<sizeof($authorSolutions); $j++){
-		$solutionObject = $authorSolutions[$j];
-		$ownerURI = $solutionObject->owneruri;
-		if ($ownerURI == $uri){
+	for($j=0; $j<sizeof($teacherProgressUris); $j++){
+		$curProgressUri = $teacherProgressUris[$j];
+		if ($curProgressUri == $uri){
 			$found = TRUE;
 		}
 	}
@@ -276,6 +283,20 @@ if ( $totalResults != 0 ){
 	function showMcMasterSolution(){
 		$('#mcMasterSolutionContainer').html(mcMasterSolution);
 	}
+
+	function updateTeacherProgress(){
+		var questionUri = questionsURI[0];
+		$.get(	'/src/php/ajaxServices/updateTeacherProgress.php', 
+				{
+					'questionUri':questionUri
+				},
+				function(response){
+					
+				}
+		);
+
+		logout();
+	}
 </script>
 	
 
@@ -295,11 +316,14 @@ if ( $totalResults != 0 ){
 		<div id='elementsReport'>
 			Please click on a Multiple Choice bar first
 		</div>
-		<div style='float: left; width: 100%; margin-top: 60px;	 margin-left: 60px;'>
+		<div style='float: left; width: 60%; margin-top: 60px;	 margin-left: 60px;'>
 			<input type='button' onclick='showMcMasterSolution()' value='Show Correct Answer' />
 			<div id='mcMasterSolutionContainer' style='width: 120px; height: 40px; border: 3px solid red; vertical-align: middle; text-align: center; font-size: 30px; margin-top: 15px;'>
 				
 			</div>
+		</div>
+		<div style='float: left; width: 20%; margin-top: 60px;	 margin-left: 80px;'>
+			<input type='button' onclick='updateTeacherProgress()' value='Done with this question' />
 		</div>
 	</div> <!-- id='middle-center2' -->
 	<div id='middle-bottom'>

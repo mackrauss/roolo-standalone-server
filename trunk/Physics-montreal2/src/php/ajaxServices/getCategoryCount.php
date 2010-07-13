@@ -19,7 +19,8 @@ $mode = 'GROUP';
 if (isset($_REQUEST['problemUri'])){
 	$questionUri = $_REQUEST['problemUri'];
 }else{
-	return "ERROR: problemUri param not provided";
+	echo "ERROR: problemUri param not provided";
+	die();
 }
 
 /*
@@ -28,7 +29,8 @@ if (isset($_REQUEST['problemUri'])){
 if (isset($_REQUEST['mcChoice'])){
 	$mcChoice = $_REQUEST['mcChoice'];
 }else{
-	return "ERROR: mcChoice param not provided";
+	echo "ERROR: mcChoice param not provided";
+	die();
 }
 
 /*
