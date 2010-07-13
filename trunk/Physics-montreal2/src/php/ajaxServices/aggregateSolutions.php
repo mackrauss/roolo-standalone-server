@@ -51,7 +51,7 @@ foreach (Application::$problemChoices as $curChoice){
 }
 
 foreach ($solutions as $curSolution){
-	$curMc = trim(mb_strtolower($curSolution->selectedchoice));
+	$curMc = trim(strtolower($curSolution->selectedchoice));
 	
 	if ($curMc != '' and $curMc != 'undefined'){
 		$mcCounter[$curMc] += 1;
