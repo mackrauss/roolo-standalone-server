@@ -27,8 +27,10 @@ $roolo = new RooloClient();
 $uniqueQuestionIds = Application::$groupQuestions[$username];
 $uniqueQuestionIdStr = implode(' OR ', $uniqueQuestionIds);
 $query = "type:Problem AND uniquequestionid:(" . $uniqueQuestionIdStr . ")";
+echo $query;
 $allQuestions = $roolo->search($query, 'metadata', 'latest');
 
+print_r($allQuestions);
 /*
  * Get TeacherProgress up to this point
  */
@@ -254,7 +256,7 @@ if ( $totalResults != 0 ){
 	$(document).ready(function(){
 		
 		if ('<?= $totalResults ?>' == 0){
-			window.location.href= "/src/php/pages/longAnswerConceptChoice.php";
+			alert('no questions!');
 		}else {
 			$('#curQuestion').attr('src', questions[0]);
 			$('#questionHeading').html('<p><b>Question ' + curQuestionNum + ' of ' + numQuestion + '</b></p>');
