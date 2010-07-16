@@ -126,11 +126,40 @@ if ( $totalResults != 0){
 						mcChoice:selectedMc
 					},
 			  		function(data){
-						recreateCatChart(eval('('+data+')'));
+				  		data = eval('('+data+')');
+				  		
+				  		var rationales = data.rationales;
+				  		var catCounter = data.catCounter;
+				  		 
+						recreateCatChart(catCounter);
+						renderRationales(rationales);
 					});
+			
 		});
 
 		  
+	}
+
+	function renderRationales(rationales){
+		var mainDiv = $('#rationalesReport');
+
+		//clear the report div
+		mainDiv.html('');
+
+		//header
+		var headerDiv = "<div id='rationalesReportHeader'>Other teams' rationales for choosing this answer</div>";
+		mainDiv.append(headerDiv);
+		
+		for (var i=0;i<rationales.length;i++){
+			curRationale = rationales[i];
+			rationaleDiv = 	"<div style='float: left; width: 80%; margin-bottom: 5px;'>"+ 
+							curRationale.text +
+							"<span style='margin-left: 5px; font-size: 10;'> -"+
+							curRationale.author +
+							"</span></div>";
+
+			mainDiv.append(rationaleDiv);
+		}
 	}
 
 	function recreateCatChart(catCounter){
@@ -285,6 +314,9 @@ if ( $totalResults != 0){
 		</div>
 		<div id='elementsReport'>
 			Please click on a Multiple Choice bar first
+		</div>
+		<div id='rationalesReport'>
+			
 		</div>	
 		<div id="answerSection2">
 			<form id="round1" name="form1" method="post" action="feedback.php">
@@ -300,7 +332,7 @@ if ( $totalResults != 0){
 				  		<label class="radioButton"><input type="radio" name="choice" value="h"/>H</label>
 				  	</dd>
 		
-					<dt>2.Check the corresponding elements that are shown in the problem:</dt>
+					<dt>2. Check the corresponding elements that you thought were important in answering the question:</dt>
 				  	<dd>
 				  		<?php 
 							foreach (Application::$problemCategories as $curProblemCategory) {

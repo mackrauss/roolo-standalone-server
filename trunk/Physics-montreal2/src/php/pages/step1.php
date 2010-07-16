@@ -308,7 +308,7 @@ if ($totalResults != 0){
 			  		<label class="radioButton"><input type="radio" name="choice" value="h"/>H</label>
 			  	</dd>
 	
-				<dt>2.Check the corresponding elements that are shown in the problem:</dt>
+				<dt>2. Check the corresponding elements that you thought were important in answering the question:</dt>
 			  	<dd>
 			  		<?php 
 						foreach (Application::$problemCategories as $curProblemCategory) {
@@ -319,7 +319,7 @@ if ($totalResults != 0){
 					?>
 			  	</dd>
 			  	
-				<dt> 3. Write your rationale </dt>			  	
+				<dt> 3. Provide a reasoning for the answer that you chose above: </dt>			  	
 				<textarea id="rationale" rows="20" cols="40"></textarea>		  
 			  	<input name="submit" type="button" value="SUBMIT" class="btn" onClick="check(); scroll(0,0);" />
 			</dl>
