@@ -71,6 +71,12 @@ class Solution extends Elo {
     		case 'content':
         		$value = parent::getContent();
         		break;
+    		case 'rationale':
+    			$contentDom = str_get_dom($this->getContent());
+				$content = $contentDom->find('rationale');
+				$content = $content[0];
+				$value = $content->innertext;
+    			break;
         	default:
 			   	$value = parent::getMetadata($name);
     	}
