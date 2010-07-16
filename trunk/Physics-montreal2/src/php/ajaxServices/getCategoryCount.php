@@ -58,10 +58,14 @@ $solutions = $rooloClient->search($query, 'metadata', 'latest');
  * Extract category count
  */
 $catCounter = array();
+$rationales = array();
 foreach (Application::$problemCategories as $curCat){
 	$catCounter[$curCat] = 0;
 }
 foreach ($solutions as $curSolution){
+	/*
+	 * Get category count
+	 */
 	if (trim($curSolution->category) != ''){
 		$curCats = explode(",", trim($curSolution->category));
 		foreach ($curCats as $curCat){
@@ -70,9 +74,21 @@ foreach ($solutions as $curSolution){
 			$catCounter[$curCat] += 1;	
 		}
 	}
+	
+	/*
+	 * Get rationales
+	 */
+	$cleanedRationale = $curSolution->rationale;
+	
+	$rationales[] = array(
+		'author' => $curSolution->get_author(),
+		'text' => $cleanedRationale 
+	);
 }
 
 $catCounterJson = json_encode($catCounter);
+$rationalesJson = json_encode($rationales);
 
-echo $catCounterJson;
+$finalJson = "{'rationales': $rationalesJson, 'catCounter': $catCounterJson}";
+echo $finalJson;
 ?>

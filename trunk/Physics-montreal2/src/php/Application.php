@@ -147,20 +147,20 @@ class Application {
 		"physics311" => array("1", "2", "3", "4"),
 		"physics411" => array("1", "2", "3", "4"),
 
-		"physics511" => array("1", "5", "9", "13"),
-		"physics611" => array("2", "6", "10", "14"),
-		"physics711" => array("3", "7", "11", "15"),
-		"physics811" => array("4", "8", "12", "16"),
+		"physics511" => array("1", "2", "3", "4"),
+		"physics611" => array("1", "2", "3", "4"),
+		"physics711" => array("1", "2", "3", "4"),
+		"physics811" => array("1", "2", "3", "4"),
 	
-		"physics911" => array("1", "5", "9", "13"),
-		"physics111a" => array("2", "6", "10", "14"),
-		"physics111b" => array("3", "7", "11", "15"),
-		"physics111c" => array("4", "8", "12", "16"),
+		"physics911" => array("1", "2", "3", "4"),
+		"physics111a" => array("1", "2", "3", "4"),
+		"physics111b" => array("1", "2", "3", "4"),
+		"physics111c" => array("1", "2", "3", "4"),
 	
-		"physics111d" => array("1", "5", "9", "13"),
-		"physics111e" => array("2", "6", "10", "14"),
-		"physics111f" => array("3", "7", "11", "15"),
-		"physics111g" => array("4", "8", "12", "16")
+		"physics111d" => array("1", "2", "3", "4"),
+		"physics111e" => array("1", "2", "3", "4"),
+		"physics111f" => array("1", "2", "3", "4"),
+		"physics111g" => array("1", "2", "3", "4")
 	);
 
 	
