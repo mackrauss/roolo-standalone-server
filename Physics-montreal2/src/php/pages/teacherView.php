@@ -135,14 +135,42 @@ if ( $totalResults != 0 ){
 					{
 						problemUri:questionUri,
 						mcChoice:selectedMc,
-						mode:'SUPERGROUP'
+						mode: 'SUPERGROUP'
 					},
 			  		function(data){
-						recreateCatChart(eval('('+data+')'));
+				  		data = eval('('+data+')');
+				  		
+				  		var rationales = data.rationales;
+				  		var catCounter = data.catCounter;
+				  		 
+						recreateCatChart(catCounter);
+						renderRationales(rationales);
 					});
 		});
 
 		  
+	}
+	
+	function renderRationales(rationales){
+		var mainDiv = $('#rationalesReport');
+
+		//clear the report div
+		mainDiv.html('');
+
+		//header
+		var headerDiv = "<div id='rationalesReportHeader'>Other teams' rationales for choosing this answer</div>";
+		mainDiv.append(headerDiv);
+		
+		for (var i=0;i<rationales.length;i++){
+			curRationale = rationales[i];
+			rationaleDiv = 	"<div style='float: left; width: 80%; margin-bottom: 5px;'>"+ 
+							curRationale.text +
+							"<span style='margin-left: 5px; font-size: 10;'> -"+
+							curRationale.author +
+							"</span></div>";
+
+			mainDiv.append(rationaleDiv);
+		}
 	}
 
 	function recreateCatChart(catCounter){
@@ -316,6 +344,9 @@ if ( $totalResults != 0 ){
 		<div id='elementsReport'>
 			Please click on a Multiple Choice bar first
 		</div>
+		<div id='rationalesReport'>
+			
+		</div>	
 		<div style='float: left; width: 60%; margin-top: 60px;	 margin-left: 60px;'>
 			<input type='button' onclick='showMcMasterSolution()' value='Show Correct Answer' />
 			<div id='mcMasterSolutionContainer' style='width: 120px; height: 40px; border: 3px solid red; vertical-align: middle; text-align: center; font-size: 30px; margin-top: 15px;'>
