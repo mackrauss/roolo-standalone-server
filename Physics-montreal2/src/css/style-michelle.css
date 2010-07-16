@@ -196,7 +196,7 @@ div#signIn {
 }
 /*step2 page*/
 div#middle-center2{
-	height:3200px;
+	height:3400px;
 	width:917px;
 	background-image:url(../../resources/images/middle_center.png);
 	background-repeat:repeat-y;
@@ -339,4 +339,21 @@ form#step3 label{
 }
 form#step3 {
 	margin-top: 10px;
+}
+
+div #multipleChoiceSelection {
+	float: right;
+	width: 200px;
+	margin-top: 100px;
+}
+
+div #multipleChoiceSelection div{
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+#rationalesReport{
+	float: left;
+	width: 90%;
+	margin-left: 20px;
 }
