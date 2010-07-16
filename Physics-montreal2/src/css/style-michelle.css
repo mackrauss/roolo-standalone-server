@@ -355,5 +355,14 @@ div #multipleChoiceSelection div{
 #rationalesReport{
 	float: left;
 	width: 90%;
-	margin-left: 20px;
+	margin-left: 50px;
+	margin-top: 60px;
+}
+
+#rationalesReportHeader{
+	float: left;
+	width: 100%;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
 }
