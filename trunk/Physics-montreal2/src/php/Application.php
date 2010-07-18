@@ -175,10 +175,9 @@ class Application {
 	
 	
 	public static $correctAnswers = array (
-		"1" => "a",
-		"2" => "c",
-		"3" => "c",
-		"4" => "d"
+		"1" => "f",
+		"2" => "e",
+		"3" => "f"	
 	);
 	
 	/*
