@@ -1,19 +1,62 @@
 <?php
 class Application {
+//	public static $groups = array(
+//		"physics111", 
+//		"physics211", 
+//		"physics311", 
+//		"physics411", 
+//		"physics511", 
+//		"physics611"
+//	);
 	public static $groups = array(
-		"physics111", 
-		"physics211", 
-		"physics311", 
-		"physics411", 
-		"physics511", 
-		"physics611"
+		"student111", 
+		"student211", 
+		"student311", 
+		"student411", 
+		"student511", 
+		"student611",
+		"student711",
+		"student811",
+		"student911",
+		"student1011",
+		"student1111",
+		"student1211",
+		"student1311",
+		"student1411",
+		"student1511",
+		"student1611",
+		"student1711",
+		"student1811",
+		"student1911",
+		"student2011",
+		"student2111",
+		"student2211",
+		"student2311",
+		"student2411",
+		"student2511",
+		"student2611",
+		"student2711",
+		"student2811",
+		"student1911",
+		"student3011"
 	);
 	
 	public static $superGroups = array(
-		"physicsGroup111", 
-		"physicsGroup211",
-		"physicsGroup311", 
-		"physicsGroup411"
+		"physicsgroup111", 
+		"physicsgroup211",
+		"physicsgroup311", 
+		"physicsgroup411",
+		"physicsgroup511",
+		"physicsgroup611",
+		"physicsgroup711",
+		"physicsgroup811",
+		"physicsgroup911",
+		"physicsgroup1011",
+		"physicsgroup1111",
+		"physicsgroup1211",
+		"physicsgroup1311",
+		"physicsgroup1411",
+		"physicsgroup1511"
 	);
 	
 	public static $superGroupSpecialties = array(	"superGroup1" => "First",
@@ -142,25 +185,36 @@ class Application {
 	 * Relationship between students and the set of questions they have to answer. The numbers correspond to each question's unique id
 	 */
 	public static $studentQuestions = array(
-		"physics111" => array("1", "2", "3", "4"),
-		"physics211" => array("1", "2", "3", "4"),
-		"physics311" => array("1", "2", "3", "4"),
-		"physics411" => array("1", "2", "3", "4"),
-
-		"physics511" => array("1", "2", "3", "4"),
-		"physics611" => array("1", "2", "3", "4"),
-		"physics711" => array("1", "2", "3", "4"),
-		"physics811" => array("1", "2", "3", "4"),
-	
-		"physics911" => array("1", "2", "3", "4"),
-		"physics111a" => array("1", "2", "3", "4"),
-		"physics111b" => array("1", "2", "3", "4"),
-		"physics111c" => array("1", "2", "3", "4"),
-	
-		"physics111d" => array("1", "2", "3", "4"),
-		"physics111e" => array("1", "2", "3", "4"),
-		"physics111f" => array("1", "2", "3", "4"),
-		"physics111g" => array("1", "2", "3", "4")
+		"student111" => array("1", "2", "3", "4"),
+		"student211" => array("1", "2", "3", "4"),
+		"student311" => array("1", "2", "3", "4"),
+		"student411" => array("1", "2", "3", "4"),
+		"student511" => array("1", "2", "3", "4"),
+		"student611" => array("1", "2", "3", "4"),
+		"student711" => array("1", "2", "3", "4"),
+		"student811" => array("1", "2", "3", "4"),
+		"student911" => array("1", "2", "3", "4"),
+		"student1011" => array("1", "2", "3", "4"),
+		"student1111" => array("1", "2", "3", "4"),
+		"student1211" => array("1", "2", "3", "4"),
+		"student1311" => array("1", "2", "3", "4"),
+		"student1411" => array("1", "2", "3", "4"),
+		"student1511" => array("1", "2", "3", "4"),
+		"student1611" => array("1", "2", "3", "4"),
+		"student1711" => array("1", "2", "3", "4"),
+		"student1811" => array("1", "2", "3", "4"),
+		"student1911" => array("1", "2", "3", "4"),
+		"student2011" => array("1", "2", "3", "4"),
+		"student2111" => array("1", "2", "3", "4"),
+		"student2211" => array("1", "2", "3", "4"),
+		"student2311" => array("1", "2", "3", "4"),
+		"student2411" => array("1", "2", "3", "4"),
+		"student2511" => array("1", "2", "3", "4"),
+		"student2611" => array("1", "2", "3", "4"),
+		"student2711" => array("1", "2", "3", "4"),
+		"student2811" => array("1", "2", "3", "4"),
+		"student2911" => array("1", "2", "3", "4"),
+		"student3011" => array("1", "2", "3", "4")
 	);
 
 	
@@ -168,10 +222,21 @@ class Application {
 	 * Relationship between Groups and Questions assigned to them 
 	 */
 	public static $groupQuestions = array(
-		"physicsGroup111" => array("1", "2", "3", "4"),
-		"physicsGroup211" => array("1", "2", "3", "4"),
-		"physicsGroup311" => array("1", "2", "3", "4"),
-		"physicsGroup411" => array("1", "2", "3", "4"),
+		"physicsgroup111" => array("1", "2", "3", "4"),
+		"physicsgroup211" => array("1", "2", "3", "4"),
+		"physicsgroup311" => array("1", "2", "3", "4"),
+		"physicsgroup411" => array("1", "2", "3", "4"),
+		"physicsgroup511" => array("1", "2", "3", "4"),
+		"physicsgroup611" => array("1", "2", "3", "4"),
+		"physicsgroup711" => array("1", "2", "3", "4"),
+		"physicsgroup811" => array("1", "2", "3", "4"),
+		"physicsgroup911" => array("1", "2", "3", "4"),
+		"physicsgroup1011" => array("1", "2", "3", "4"),
+		"physicsgroup1111" => array("1", "2", "3", "4"),
+		"physicsgroup1211" => array("1", "2", "3", "4"),
+		"physicsgroup1311" => array("1", "2", "3", "4"),
+		"physicsgroup1411" => array("1", "2", "3", "4"),
+		"physicsgroup1511" => array("1", "2", "3", "4"),
 		"teach11" 		  => array("1", "2", "3", "4")
 	);
 	
@@ -179,10 +244,10 @@ class Application {
 	 * Relationship betweeen a Group and their Long Question for Step 4
 	 */
 	public static $groupLongQuestions = array(
-		"physicsGroup111" => "19",
-		"physicsGroup211" => "20",
-		"physicsGroup311" => "18",
-		"physicsGroup411" => "17"
+		"physicsgroup111" => "19",
+		"physicsgroup211" => "20",
+		"physicsgroup311" => "18",
+		"physicsgroup411" => "17"
 	);
 	
 	/*
@@ -224,7 +289,23 @@ class Application {
 
 	public static $longQuestion = "5";
 	
-	public static $authors = array("physicsGroup111", "physicsGroup211", "physicsGroup311", "physicsGroup411");
+	public static $authors = array(
+		"physicsgroup111", 
+		"physicsgroup211", 
+		"physicsgroup311", 
+		"physicsgroup411",
+		"physicsgroup511",
+		"physicsgroup611",
+		"physicsgroup711",
+		"physicsgroup811",
+		"physicsgroup911",
+		"physicsgroup1011",
+		"physicsgroup1111",
+		"physicsgroup1211",
+		"physicsgroup1311",
+		"physicsgroup1411",
+		"physicsgroup1511"
+	);
 	
 }
 ?>
