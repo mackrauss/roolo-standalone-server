@@ -262,14 +262,14 @@ for($i=0; $i<sizeof($allProblems); $i++){
 <div id="middle-center2">
 
 	<div id='mainQuestion'>
-    	<img class="problem" src="<?= $longProblemPath ?>" />
+    	<img height="300px" class="problem" src="<?= $longProblemPath ?>" />
 	</div>							 
 	<div class='conceptQuestionDiv' id='q1'>
 		<p class='conceptQuestionLabel'>
 			<b> Concept Question 1 </b> (Answer: <?= $selectedChoiceArrey[0] ?>)
 		</p>
 	    <div class="questionSection">
-	    	<img src="<?= $problemsArray[0] ?>" class="problem"/>
+	    	<img height="300px" src="<?= $problemsArray[0] ?>" class="problem"/>
 	  	</div>
 		<div class="answerSection">
 			<div id='categoryReport0'>
@@ -281,7 +281,7 @@ for($i=0; $i<sizeof($allProblems); $i++){
 			<b> Concept Question 2 </b> (Answer: <?= $selectedChoiceArrey[1] ?>)
 		</p>
 	    <div id="questionSection">
-	    	<img src="<?= $problemsArray[1] ?>" class="problem"/>
+	    	<img height="300px" src="<?= $problemsArray[1] ?>" class="problem"/>
 	  	</div>
 		<div class="answerSection">
 			<div id='categoryReport1'>
@@ -293,22 +293,10 @@ for($i=0; $i<sizeof($allProblems); $i++){
 			<b> Concept Question 3 </b> (Answer: <?= $selectedChoiceArrey[2] ?>)
 		</p>
 	    <div id="questionSection">
-	    	<img src="<?= $problemsArray[2] ?>" class="problem"/>
+	    	<img height="300px" src="<?= $problemsArray[2] ?>" class="problem"/>
 	  	</div>
 		<div class="answerSection">
 			<div id='categoryReport2'>
-			</div>	
-		</div>
-	</div>							 
-	<div class='conceptQuestionDiv' id='q4'>
-		<p class='conceptQuestionLabel'>
-			<b> Concept Question 4 </b> (Answer: <?= $selectedChoiceArrey[3] ?>)
-		</p>
-	    <div id="questionSection">
-	    	<img src="<?= $problemsArray[3] ?>" class="problem"/>
-	  	</div>
-		<div class="answerSection">
-			<div id='categoryReport3'>
 			</div>	
 		</div>
 	</div>							 
