@@ -305,7 +305,6 @@ if ($totalResults != 0){
 			  		<label class="radioButton"><input type="radio" name="choice" value="e"/>E</label>
 			  		<label class="radioButton"><input type="radio" name="choice" value="f"/>F</label>
 			  		<label class="radioButton"><input type="radio" name="choice" value="g"/>G</label>
-			  		<label class="radioButton"><input type="radio" name="choice" value="h"/>H</label>
 			  	</dd>
 	
 				<dt>2. Check the corresponding elements that you thought were important in answering the question:</dt>
