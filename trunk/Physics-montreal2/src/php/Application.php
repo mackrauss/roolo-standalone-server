@@ -286,7 +286,7 @@ class Application {
 	 */
 	public static $shortQuestions = array("1", "2", "3");
 
-	public static $longQuestion = "5";
+	public static $longQuestion = "4";
 	
 	public static $authors = array(
 		"physicsgroup111", 
