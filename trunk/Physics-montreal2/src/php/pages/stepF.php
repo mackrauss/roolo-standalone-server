@@ -37,6 +37,9 @@ $catCounterJsonArray = array();
 
 //$authors = Application::$authors;
 
+//mcmastersolution  -- problem's correct answer
+// selectedchoice   -- the selected answer in solution
+
 for($i=0; $i<sizeof($allProblems); $i++){
 	$problemObject = $allProblems[$i];
 	$problemsArray[$i] = $problemObject->path;
@@ -52,31 +55,37 @@ for($i=0; $i<sizeof($allProblems); $i++){
 	
 	//Find all solutions Object for specific problem Object;
 	foreach (Application::$authors as $authorSolution){
+		
+		$curCorrectAnswer = $selectedChoiceArrey[$i];
 	
-		// Find ll the solutions and return suitable data 
+		// Find all the solutions and return suitable data 
 		//require_once '../ajaxServices/retrieveCategories.php';
 		
 		$solution = $rooloClient->search('type:Solution AND author:'.$authorSolution.' AND owneruri:'.$rooloClient->escapeSearchTerm($solutionOwnerUri), 'metadata', 'latest');
 		$curSolution = $solution[0];
 		
-		// Extract category count
-		$catCounter = array();
-		foreach (Application::$problemCategories as $curCat){
-			$catCounter[$curCat] = 0;
-		}
-
-		if (trim($curSolution->category) != ''){
-			$curCats = explode(",", trim($curSolution->category));
-			foreach ($curCats as $curCat){
-				$curCat = trim($curCat);
-				
-				$catCounter[$curCat] += 1;	
+		// This is to only select the tags associated to solutions submitted by super groups who answered the question correctly
+		if ($curSolution->selectedchoice == $curCorrectAnswer){
+		
+			// Extract category count
+			$catCounter = array();
+			foreach (Application::$problemCategories as $curCat){
+				$catCounter[$curCat] = 0;
 			}
-		}
-
-		//add all categories of soecific problem
-		foreach (Application::$problemCategories as $curCat){
-			$allCatCounter[$curCat] = $allCatCounter[$curCat] + $catCounter[$curCat] ;
+	
+			if (trim($curSolution->category) != ''){
+				$curCats = explode(",", trim($curSolution->category));
+				foreach ($curCats as $curCat){
+					$curCat = trim($curCat);
+					
+					$catCounter[$curCat] += 1;	
+				}
+			}
+	
+			//add all categories of specific problem
+			foreach (Application::$problemCategories as $curCat){
+				$allCatCounter[$curCat] = $allCatCounter[$curCat] + $catCounter[$curCat] ;
+			}
 		}
 	}
 	// Make json 
@@ -92,11 +101,16 @@ for($i=0; $i<sizeof($allProblems); $i++){
 <script type="text/javascript">
 //$(document).ready(function(){
 	var catCounterArray = new Array(4);
-		
-	catCounterArray[0] = eval(<?= $catCounterJsonArray[0] ?>);
-	catCounterArray[1] = eval(<?= $catCounterJsonArray[1] ?>);
-	catCounterArray[2] = eval(<?= $catCounterJsonArray[2] ?>);
-	catCounterArray[3] = eval(<?= $catCounterJsonArray[3] ?>);
+
+
+	<?php 
+	
+		for ($i=0; $i<= sizeof ($catCounterJsonArray); $i++) {
+	?>
+			catCounterArray[<?= $i ?>] = eval (<?= $catCounterJsonArray[$i] ?>);
+	<?php 
+		}
+	?>
 
   	// Load the Visualization API and the piechart package.
 	google.load('visualization', '1', {'packages':['columnchart']});
