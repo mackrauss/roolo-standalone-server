@@ -31,7 +31,9 @@ $srcProblemPaths = scandir($sourceDir);
 
 //while (false !== ($file = readdir($sourceHandler))) {
 foreach ($srcProblemPaths as $file){
-	if ($file != "." && $file != "..") { 
+	if ($file != "." && $file != "..") {
+
+		echo "HANDLING>>>>>>>>>>>>".$file."<br/>";
 		//take milliseconds
 		list( $msecs, $secs ) = split( ' ', microtime());
 		$threeDigitofmsecs = substr(number_format($msecs, 5),2);
