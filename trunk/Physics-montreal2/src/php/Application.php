@@ -166,23 +166,23 @@ class Application {
 	);
 	
 	
-//	/*
-//	 * Question set 1
-//	 */
-//	public static $correctAnswers = array (
-//		"1" => "f",
-//		"2" => "e",
-//		"3" => "f"	
-//	);
-//	
 	/*
-	 * Question set 2
+	 * Question set 1
 	 */
 	public static $correctAnswers = array (
-		"1" => "a",
-		"2" => "b",
-		"3" => "c"	
+		"1" => "f",
+		"2" => "e",
+		"3" => "f"	
 	);
+	
+//	/*
+//	 * Question set 2
+//	 */
+//	public static $correctAnswers = array (
+//		"1" => "a",
+//		"2" => "b",
+//		"3" => "c"	
+//	);
 	
 	/*
 	 * Relationship between students and the set of questions they have to answer. The numbers correspond to each question's unique id
