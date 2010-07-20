@@ -27,7 +27,10 @@ date_default_timezone_set('Canada/Eastern');
 $fileCount = "0";
 $fileSaved = "0";
 $uniqueProblemId = 1;
-while (false !== ($file = readdir($sourceHandler))) {
+$srcProblemPaths = scandir($sourceDir);
+
+//while (false !== ($file = readdir($sourceHandler))) {
+foreach ($srcProblemPaths as $file){
 	if ($file != "." && $file != "..") { 
 		//take milliseconds
 		list( $msecs, $secs ) = split( ' ', microtime());
@@ -62,5 +65,5 @@ while (false !== ($file = readdir($sourceHandler))) {
 }
 	print 'The files have been saved are <b>' . $fileSaved . " / " . $fileCount . '</b><br>'; 
 		
-	closedir($sourceHandler);
+//	closedir($sourceHandler);
 ?>
