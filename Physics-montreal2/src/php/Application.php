@@ -1,13 +1,5 @@
 <?php
 class Application {
-//	public static $groups = array(
-//		"physics111", 
-//		"physics211", 
-//		"physics311", 
-//		"physics411", 
-//		"physics511", 
-//		"physics611"
-//	);
 	public static $groups = array(
 		"student111", 
 		"student211", 
@@ -174,11 +166,23 @@ class Application {
 	);
 	
 	
+	/*
+	 * Question set 1
+	 */
 	public static $correctAnswers = array (
 		"1" => "f",
 		"2" => "e",
 		"3" => "f"	
 	);
+	
+//	/*
+//	 * Question set 2
+//	 */
+//	public static $correctAnswers = array (
+//		"1" => "f",
+//		"2" => "e",
+//		"3" => "f"	
+//	);
 	
 	/*
 	 * Relationship between students and the set of questions they have to answer. The numbers correspond to each question's unique id
