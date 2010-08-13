@@ -1,0 +1,368 @@
+@charset "UTF-8";
+html{ 
+	height: 100%; 
+	border: 0; 
+	padding: 0; 
+	margin: 0; 
+}
+body {
+	height:100%;
+	margin: 0; 
+	padding: 0;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+	font-style:normal;
+	background: #E8F3FA;
+	text-align: center;
+}
+div#header { 
+	position:relative;
+	height: 71px;
+	width: 942px;
+	z-index:1000;
+	background-image:url(../../resources/images/header.png);
+	background-position:center;
+	background-repeat:no-repeat;
+}
+div#logo { 
+	position:absolute;
+	top: 32px;
+	left: 0;
+	width: 417px;
+	height: 465px;
+	background-image:url(../../resources/images/watermark.png);
+	padding: 0;  
+}
+
+div#signOut {
+	position:absolute;
+	right:16px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#CCC;
+	padding-top: 20px;
+}
+
+div#signOut a{
+	color:#CCC;
+} 
+
+div#login { 
+	position:absolute;
+	top: 140px;
+	width: 524px;
+	height: 400px;
+	background-image:url(../../resources/images/login.png);
+	background-position:top;
+	background-repeat:no-repeat;  
+}
+div#container {
+	width: 524px;
+	height: 600px;
+	margin: 0 auto; 
+	text-align: center; 
+}
+div#topContainer {
+	min-height: 100%;
+	margin-bottom: -170px;
+	position: relative;
+}
+div#clearFooter {
+	margin: 0;
+	padding: 0;
+	height: 170px;
+   	clear: both;
+}
+div#footer {
+	position:relative;
+	height:170px;
+	padding:0;
+	margin:0;
+	background-image:url(../../resources/images/footer.png);
+	background-repeat:repeat-x;
+	background-position: top;
+	text-align:center;
+}
+div#footer p {
+	padding-top: 60px;
+	color: #666;
+	font-size: x-small;
+	text-align:center;
+}
+div#footerLogo {
+	position:relative;
+	top:50px;
+	width:100%;
+	height:62px;
+	background-image:url(../../resources/images/footerLogo.jpg);
+	background-position:center;
+	background-repeat:no-repeat;
+	margin-top: 20px;
+}
+/*step 1 page*/
+div#container2 {
+	width: 917px;  
+	margin: 0 auto; 
+	text-align:center; 
+}
+div#headerContainer {
+	width: 942px;  
+	margin: 0 auto; 
+	text-align:center; 
+}
+div#middle {
+	width: 917px;  
+}
+div#middle-top{
+	position:relative;
+	width:917px;
+	height:117px;
+	background-image:url(../../resources/images/middle_top.png);
+	text-align:left;
+}
+div#questionHeading {
+	height: 50px;
+	width: 300px;
+	margin:0;
+	padding-top:30px;
+	padding-left:40px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:x-large;
+	color:#1E7EC8;
+}
+div#middle-center{
+	height:1100px;
+	width:917px;
+	background-image:url(../../resources/images/middle_center.png);
+	background-repeat:repeat-y;
+	text-align:left;
+}
+div#middle-bottom{
+	height:200px;
+	width:917px;
+	background-image:url(../../resources/images/middle_bottom.png);
+	background-position:top;
+	background-repeat:no-repeat;
+}
+div#timer { 
+	position:absolute;
+	top: 20px;
+	left: 700px;
+	width: 178px;
+	height: 232px;
+	background-image:url(../../resources/images/timer.png);
+	padding: 0;
+	float:left;
+	clear:both;
+}
+div#timer h1 {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:42px;
+	font-weight:bold;
+	line-height:0px;
+	text-align:center;
+}
+div#timer p {
+	padding-top:50px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:10px;
+	letter-spacing: 1px;
+	color:#666;
+	text-align:center;
+}
+div#questionSection {
+	position:relative;
+	top: 20px;
+	left: 40px;
+	width: 454px;
+	float:left;
+}
+div#answerSection {
+	position:relative;
+	top:20px;
+	left:70px;
+	width: 300px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	font-style:normal;
+	letter-spacing:1px;
+	color:#333;
+	float:left;
+}
+div#signIn {
+	position:absolute;
+	right:16px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#CCC;
+}
+/*step2 page*/
+div#middle-center2{
+	height:3400px;
+	width:917px;
+	background-image:url(../../resources/images/middle_center.png);
+	background-repeat:repeat-y;
+	text-align:left;
+}
+div#mcReport {
+	position:relative;
+	float:left;
+	background-image:url(../../resources/images/mcreport.jpg);
+	border: #666 dotted thick;
+	width:350px;
+	height:300px;
+	top:100px;
+	margin-left: 60px;
+}
+div#elementsReport {
+	position:relative;
+	float:left;
+	/*background:url(../../resources/images/elementsreport.jpg);*/
+	border: #666 dotted thick;
+	width:820px;
+	height:300px;
+	top: 40px;
+	left: 40px;
+}
+div#answerSection2 {
+	position:relative;
+	float:left;
+	top:40px;
+	width: 300px;
+	left: 50px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	font-style:normal;
+	letter-spacing:1px;
+	color:#333;
+}
+/*step 3*/
+div#conceptQuestion {
+	position:relative;
+	float:left;
+	width:320px;
+	height:800px;
+	background-color:#CCC;
+	left:90px;
+}
+/*step 4*/
+div#conceptQuestion2 {
+	position:relative;
+	float:left;
+	width:320px;
+	height:300px;
+	background-color:#CCC;
+	left:90px;
+	text-align:center;
+	top:20px;
+	margin-bottom: 40px;
+}
+div#answerSection4 {
+	position:relative;
+	float:left;
+	top:40px;
+	left: 50px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:small;
+	font-style:normal;
+	letter-spacing:1px;
+	color:#333;
+}
+input.btn{
+	width: 97px;
+	height: 37px;
+	margin-left: 120px;
+	margin-top: 20px;
+	background-image:url(../../resources/images/button.png);
+	background-color:#FFF;
+	border: 1px solid #FFF;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:small;
+	font-weight:bold;
+	color:#4D4D4D;
+}
+input.btn_long{
+	width: 88px;
+	height: 45px;
+	margin-left: 350px;
+	margin-top: 20px;
+	background-image:url(../../resources/images/button.png);
+	background-color:#FFF;
+	border: 1px solid #FFF;
+}
+img.problem {
+	border-color:#666;
+	border-width:medium;
+	border-style:solid;
+}
+/*form style*/
+form#loginForm {
+	margin-top: 120px;
+	margin-left:50px;
+	width: 400px;
+	height: 200px;
+	text-align:right;
+}
+form#loginForm label{
+	color:#1E7EC8;
+	font-weight:bold;
+}
+form#loginForm input{
+	margin-left: 20px;
+	margin-right: 80px;
+	margin-top: 30px;
+}
+form#loginForm input.btn{
+	margin-right: 110px;
+}
+form#round1 label{
+	color:#1E7EC8;
+	font-size:small;
+	font-weight:bold;
+	line-height:24px;
+}
+form#round1 select{
+	margin-top: 0;
+}
+form#round1 dt{
+	margin-top: 30px;
+}
+form#round1 dd{
+	margin-top: 10px;
+	margin-left: 10px;
+}
+form#round1 p{
+	margin-top:2px;
+	margin-left:20px;
+	font-size:x-small;
+}
+form#step3 label{
+	margin-left: 20px;
+}
+form#step3 {
+	margin-top: 10px;
+}
+
+div #multipleChoiceSelection {
+	float: right;
+	width: 200px;
+	margin-top: 100px;
+}
+
+div #multipleChoiceSelection div{
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+#rationalesReport{
+	float: left;
+	width: 90%;
+	margin-left: 50px;
+	margin-top: 60px;
+}
+
+#rationalesReportHeader{
+	float: left;
+	width: 100%;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
