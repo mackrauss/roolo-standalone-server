@@ -29,13 +29,16 @@ if($notMember){
 	header("Location:/src/php/pages/");
 }else{
 	$_SESSION['loggedIn'] = TRUE;
-	if (strstr($_SESSION['username'], "physicsgroup")){
-		//should go to special page login with group name
-		header("Location:/src/php/pages/step2.php");
-	}else if ($_SESSION['username'] == 'teach11'){
-		header("Location:/src/php/pages/teacherView.php");
-	}else{
-		header("Location:/src/php/pages/step1.php");
-	}
+	header("Location:/src/php/pages/runAuthoring.php");
+//	if (strstr($_SESSION['username'], "physicsgroup")){
+//		//should go to special page login with group name
+//		header("Location:/src/php/pages/step2.php");
+//	}else if ($_SESSION['username'] == 'teach11'){
+//		header("Location:/src/php/pages/teacherView.php");
+//	}else if ($_SESSION['username'] == 'teacher'){
+//		header("Location:/src/php/pages/runAuthoring.php");
+//	}else{
+//		header("Location:/src/php/pages/step1.php");
+//	}
 }
 ?>
