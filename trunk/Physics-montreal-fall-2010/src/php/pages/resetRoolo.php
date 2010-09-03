@@ -32,8 +32,16 @@ $savedRcXml = $roolo->addElo($rc);
 
 echo $savedRcXml;
 
+
+$rc = new RunConfig();
+$rc->runid = 'v2-c1';
+$rc->runchoicelimit = "A, B, C, D, E, F";
+$savedRcXml = $roolo->addElo($rc);
+
+echo $savedRcXml;
+
 ?>
 
 <script type='text/javascript'>
-	//window.location.href = '/src/php/pages';
+	window.location.href = '/src/php/pages';
 </script>
