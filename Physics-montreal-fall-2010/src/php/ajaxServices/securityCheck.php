@@ -30,15 +30,21 @@ if($notMember){
 }else{
 	$_SESSION['loggedIn'] = TRUE;
 	header("Location:/src/php/pages/runAuthoring.php");
-//	if (strstr($_SESSION['username'], "physicsgroup")){
-//		//should go to special page login with group name
-//		header("Location:/src/php/pages/step2.php");
-//	}else if ($_SESSION['username'] == 'teach11'){
-//		header("Location:/src/php/pages/teacherView.php");
-//	}else if ($_SESSION['username'] == 'teacher'){
-//		header("Location:/src/php/pages/runAuthoring.php");
-//	}else{
-//		header("Location:/src/php/pages/step1.php");
+//	if (strstr($_SESSION['runId'], "v1-c1")){
+//		if (strstr($_SESSION['username'], "teacher")){
+//			//should go to special page for teachers
+//			header("Location:/src/php/pages/teacherView.php");
+//		}else if (strstr($_SESSION['username'], "physicsgroup")){
+//			//should go to special page login with group name
+//			/*
+//			 * TODO change the name to version2D.php
+//			 */
+//			header("Location:/src/php/pages/version2B.php");
+//		}else {
+//			header("Location:/src/php/pages/version2B.php");
+//		}
+//	}else {
+//		header("Location:/src/php/pages/");
 //	}
 }
 ?>
