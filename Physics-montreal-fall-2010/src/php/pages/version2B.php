@@ -1,6 +1,6 @@
 <?php
 /*
- * Version #2 (dual mode – starts as homework and continues with in-class group work) (Very similar to Version #1)
+ * Version #2 (dual mode ï¿½ starts as homework and continues with in-class group work) (Very similar to Version #1)
  *
  * B)Students will be given a set of questions pre-set by the instructor on the Teacher Upload/Administer page
  *    Order of steps for students:
@@ -335,7 +335,7 @@ if ($totalResults != 0){
 
 	function check(){
 		var choice = $("input[name='choice']:checked").val();
-		if (choice.length != 0){
+		if (choice != null && choice.length != 0){
 			flag = "true";
 			$('#mc').hide('slow');
 			$('#elements').show('slow');
