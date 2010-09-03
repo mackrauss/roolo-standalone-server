@@ -10,11 +10,14 @@ require_once '../graphML/GraphML.php';
 
 //if ( trim($_REQUEST['flag']) === "true" ){
 	$username = trim($_REQUEST['username']);
+	$runId = trim($_REQUEST['runId']);
 	$selectedChoice = trim($_REQUEST['choice']);
 	$ownerURI = trim($_REQUEST['ownerURI']);
 	$reasonText = trim($_REQUEST['reason']);
 	$problemPath = trim($_REQUEST['questionPath'])	;
 	$category = $_REQUEST['category'];
+	$options = $_REQUEST['options'];
+	$categoryAndOptions = $_REQUEST['categoryAndOptions'];
 	
 	$rooloClient = new RooloClient();
 	
@@ -30,8 +33,16 @@ require_once '../graphML/GraphML.php';
 	$solutionObject->content = $reasonTag;
 	
 	$solutionObject->title = "Solution-Multiplechoice";
-	$solutionObject->category = $category;
+//	$solutionObject->category = $category;
+//	$solutionObject->category = $category + ' ,' + $options;
+	$solutionObject->category = $categoryAndOptions;
 	
+	$solutionObject->runid = $runId;
+	
+//	echo "category = " + category;
+//	echo "both = " + $category + " ," + $options;
+//	die();
+//	
 	echo $results = $rooloClient->addElo($solutionObject);
 //}
 ////create concept Object
