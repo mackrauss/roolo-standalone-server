@@ -14,6 +14,7 @@ error_reporting(E_STRICT);
 
 if(empty($_SESSION['msg'])){
     $_SESSION['username']= "";
+    $_SESSION['runId']= "";
 }
 
 //if (!file_exists('../graphML/classroom.graphml')){
@@ -38,6 +39,7 @@ if(empty($_SESSION['msg'])){
 	<div id="logo"></div>  
 	<div id="login">
 		<form id="loginForm" name="loginForm" action="/src/php/ajaxServices/securityCheck.php" method="post">
+			<label>Run ID</label><input name="runId" type="text" value='<?= $_SESSION['runId'] ?>'/><br/>
 			<label>Username</label><input name="username" type="text" value='<?= $_SESSION['username'] ?>'><br/>
 			<label>Password</label><input name="password" type="password" /><br/>
 			<input name="submit" type="submit" value="LOGIN" class="btn" />
