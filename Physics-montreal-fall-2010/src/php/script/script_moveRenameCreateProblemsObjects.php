@@ -7,9 +7,11 @@
 
 require_once '../RooloClient.php';
 require_once '../dataModels/Problem.php';
+require_once '../dataModels/LongProblem.php';
 require_once '../Application.php';
 $rooloClient = new RooloClient();
 $problem = new Problem();
+$longProblem = new LongProblem();
 
 //the directory of source questions
 //$sourceDir = str_replace('//','/',dirname(__FILE__)."/../../../ProblemsSource");
@@ -40,21 +42,41 @@ while (false !== ($file = readdir($sourceHandler))) {
 		$destinationPath = $destinationDir.$newFileName;
 
 		if (!copy($sourcePath, $destinationPath)) {
-			echo "failed to move" . $file . "...\n";
+			echo "failed to move" . $file . "...\n</br>";
 		}else{
 			$curPath = substr($destinationPath, strrpos($destinationPath, '/Problems'));
-			$problem->path = $curPath;
-			$problem->pathtype = 2;//select 'diskPath' type
-			$problem->title = 'Problem.'.$fileName;
-			$problem->category = '';
-			$problem->set_uniqueQuestionId($uniqueProblemId);
-			$problem->set_mcmastersolution(Application::$correctAnswers[$uniqueProblemId]);
-			//$problem ->solutionpath = '';
-			//$problem ->solutionpathtype = $problem->selectPathType(2);//select 'DISKPath' type
-			echo $problem->toString();
-			echo $rooloClient->addElo($problem);
-			$fileSaved = $fileSaved + 1;
-			$uniqueProblemId++;
+			//to find longProblem
+			if (!(strstr( $file, "long"))){
+				$problem->runid = 'v1-c1';
+				$problem->path = $curPath;
+				$problem->pathtype = 2;//select 'diskPath' type
+				$problem->title = 'Problem.'.$fileName;
+				$problem->category = '';
+				$problem->set_uniqueQuestionId($uniqueProblemId);
+				$problem->set_mcmastersolution(Application::$correctAnswers[$uniqueProblemId]);
+				//$problem ->solutionpath = '';
+				//$problem ->solutionpathtype = $problem->selectPathType(2);//select 'DISKPath' type
+				echo "</br>".$problem->toString();
+				echo "</br>".$rooloClient->addElo($problem);
+				$fileSaved = $fileSaved + 1;
+				$uniqueProblemId++;
+			}else {
+				$longProblem->runid = 'v1-c1';
+				$longProblem->path = $curPath;
+				$longProblem->pathtype = 2;//select 'diskPath' type
+				$longProblem->title = 'LongProblem.'.$fileName;
+				$longProblem->category = '';
+				$longProblem->set_uniqueQuestionId($uniqueProblemId);
+				//$longProblem->set_mcmastersolution(Application::$correctAnswers[$uniqueProblemId]);
+				//$problem ->solutionpath = '';
+				//$problem ->solutionpathtype = $problem->selectPathType(2);//select 'DISKPath' type
+				echo "<br/><b>Long Problem =</b>" . $longProblem->toString();
+				echo "<br/><b>response =</b>" . $rooloClient->addElo($longProblem);
+				$fileSaved = $fileSaved + 1;
+				$uniqueProblemId++;
+				
+			}
+			
 		}
 		$fileCount = $fileCount + 1;
 	}
