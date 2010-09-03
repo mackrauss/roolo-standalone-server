@@ -1,9 +1,10 @@
 <?php
 session_start();
 
-$_SESSION['username'] = $_POST['username'];
-$_SESSION['password'] = $_POST['password'];
-$_SESSION['runId'] = $_POST['runId'];
+$_SESSION['username'] = $_REQUEST['username'];
+$_SESSION['password'] = $_REQUEST['password'];
+$_SESSION['runId'] = $_REQUEST['runId'];
+$runId = $_SESSION['runId'];
 
 $url = "http://localhost:8070/webapp/j_acegi_security_check";
 //$url = "http://localhost:8080/webapp/j_acegi_security_check";
@@ -24,6 +25,7 @@ $msg = "The username or password you entered is incorrect.";
 //
 //$notMember = strstr($result, "failed=true") || trim($result) == '';
 
+
 $notMember = false;
 
 if($notMember){
@@ -31,18 +33,20 @@ if($notMember){
 	header("Location:/src/php/pages/");
 }else{
 	$_SESSION['loggedIn'] = TRUE;
-//	header("Location:/src/php/pages/runAuthoring.php");
-	if (strstr($_SESSION['runId'], "v1-c1")){
-		if (strstr($_SESSION['username'], "teacher")){
-			//should go to special page for teachers
-			header("Location:/src/php/pages/teacherView.php");
-		}else if (strstr($_SESSION['username'], "physicsgroup")){
+	if (strstr($_SESSION['username'], "teacher")){
+		header("Location:/src/php/pages/runAuthoring.php");
+	}
+	
+	if ($runId !== null && $runId !== "" && strlen($runId) == 5){
+		if (strstr($_SESSION['username'], "physicsgroup")){
 			//should go to special page login with group name
 			/*
 			 * TODO change the name to version2D.php
 			 */
 			header("Location:/src/php/pages/version2B.php");
-		}else {
+		}else if (substr($runId,0,2) == 'v1'){
+			header("Location:/src/php/pages/version1B.php");
+		}else if (substr($runId,0,2) == 'v2'){
 			header("Location:/src/php/pages/version2B.php");
 		}
 	}else {
