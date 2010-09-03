@@ -175,16 +175,16 @@ class Application {
 	
 	
 	public static $correctAnswers = array (
-		"1" => "f",
-		"2" => "e",
-		"3" => "f"	
+		"1" => "c",
+		"2" => "a",
+		"3" => "d",
+		"4" => "b"		
 	);
 	
 	/*
 	 * Relationship between students and the set of questions they have to answer. The numbers correspond to each question's unique id
 	 */
 	public static $studentQuestions = array(
-		"student111" => array("1", "2", "3"),
 		"student211" => array("1", "2", "3"),
 		"student311" => array("1", "2", "3"),
 		"student411" => array("1", "2", "3"),
@@ -221,6 +221,7 @@ class Application {
 	 * Relationship between Groups and Questions assigned to them 
 	 */
 	public static $groupQuestions = array(
+		"g1" => array("1", "2", "3", "4"),
 		"physicsgroup111" => array("1", "2", "3"),
 		"physicsgroup211" => array("1", "2", "3"),
 		"physicsgroup311" => array("1", "2", "3"),
@@ -305,6 +306,12 @@ class Application {
 		"physicsgroup1411",
 		"physicsgroup1511"
 	);
+	public static $dropdownsItems = array(
+		'relationship' => array('Select one item', 'Linear Relationship', 'Quadratic Relationship', 'Inverse Relationship'),
+		'force' => array('Select one item', 'Forces on a slop', 'Braking and Friction'),
+		'movement' => array('Select one item', 'Velocity', 'Acceleration', 'Free Fall')
+	);
+	
 	
 }
 ?>
