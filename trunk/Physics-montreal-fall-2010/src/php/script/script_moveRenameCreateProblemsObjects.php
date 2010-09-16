@@ -58,7 +58,12 @@ while (false !== ($file = readdir($sourceHandler))) {
 				//$problem ->solutionpathtype = $problem->selectPathType(2);//select 'DISKPath' type
 				echo "</br>".$problem->toString();
 				echo "</br>".$rooloClient->addElo($problem);
-				$fileSaved = $fileSaved + 1;
+
+				// add a problem for Version2
+				$problem->runid = 'v2-c1';
+				echo "</br>".$problem->toString();
+				echo "</br>".$rooloClient->addElo($problem);
+				$fileSaved = $fileSaved + 2;
 				$uniqueProblemId++;
 			}else {
 				$longProblem->runid = 'v1-c1';
@@ -72,7 +77,12 @@ while (false !== ($file = readdir($sourceHandler))) {
 				//$problem ->solutionpathtype = $problem->selectPathType(2);//select 'DISKPath' type
 				echo "<br/><b>Long Problem =</b>" . $longProblem->toString();
 				echo "<br/><b>response =</b>" . $rooloClient->addElo($longProblem);
-				$fileSaved = $fileSaved + 1;
+
+				// add a problem for Version2
+				$longProblem->runid = 'v2-c1';
+				echo "<br/><b>Long Problem =</b>" . $longProblem->toString();
+				echo "<br/><b>response =</b>" . $rooloClient->addElo($longProblem);
+				$fileSaved = $fileSaved + 2;
 				$uniqueProblemId++;
 				
 			}
