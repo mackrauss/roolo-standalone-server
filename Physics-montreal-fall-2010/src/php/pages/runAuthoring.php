@@ -14,7 +14,7 @@ require_once '../dataModels/Solution.php';
 error_reporting(E_ALL | E_STRICT);
 
 $_SESSION['msg'] = "";
-$username = $_SESSION['username'];
+$username = @$_SESSION['username'];
 
 $rooloClient = new RooloClient();
 
@@ -29,9 +29,11 @@ $runConfigs = $rooloClient->search($query, 'metadata', 'latest');
 <style type="text/css">
 /*                     funky table                 **/
 #currentRunsTable {
-	width: 700px;
+	width: 800px;
 	padding: 0;
 	margin: 0;
+	margin-left: 300px;
+	margin-bottom: 20px;
 }
 
 caption {
@@ -133,17 +135,32 @@ a {
 function publishRun(element){
 	var runId = $(element).attr('runId');
 }
+
+function resetApplication(){
+	var resetConfirmed = confirm('Are you sure you want to delete the whole contents of the application?');
+	if (resetConfirmed){
+		$.get('/src/php/ajaxServices/resetApplication.php', {}, function(data){
+			window.location.reload();
+		});
+	}
+}
+
+function setupTestEnvironment(){
+	$.get('/src/php/ajaxServices/setupTestEnvironment.php', {}, function(data){
+		window.location.reload();
+	});
+}
 </script>
 
 <h2>Current Runs</h2>
 <table id='currentRunsTable'>
 	<tr>
 		<th class='nobg'>ID</th>
-		<th class='nobg'>Class</th>
 		<th class='nobg'>Version</th>
+		<th class='nobg'>Class</th>
 		<th class='nobg'>Created On</th>
 		<th class='nobg'>Status</th>
-		<th class='nobg'>Actions</th>
+		<th class='nobg' style='width: 300px;'>Actions</th>
 	</tr>
 <?php
 // columns: runId, runVersion, runClass, created on, actions (edit, delete, publish, export data)
@@ -155,23 +172,23 @@ foreach ($runConfigs as $curRunConfig){
 	$isPublished = $curRunConfig->runpublished == 1;
 	$runStatus = $isPublished ? 'Published' : 'Awaiting Publication';
 	
-	$editAction = "<a href='/src/php/pages/runEdit.php?runId=$runId'>edit</a> ";
-	$publishAction = "<a onclick='publishRun(this);' runId='$runId'>publish</a> ";
-	$deleteAction = "<a onclick='deleteRun(this)' runId='$runId'>delete</a> ";
-	$exportAction = "<a onclick='exportRunData(this)' runId='$runId'>export data</a> ";
-	$seeVisAction = "<a href='#'>see visual report</a> ";
+	$editAction = "<a href='/src/php/pages/runEdit.php?runId=$runId'>edit</a>";
+	$publishAction = "<a onclick='publishRun(this);' runId='$runId'>publish</a>";
+	$deleteAction = "<a onclick='deleteRun(this)' runId='$runId'>delete</a>";
+	$exportAction = "<a onclick='exportRunData(this)' runId='$runId'>export data</a>";
+	$seeVisAction = "<a href='#'>see report</a>";
 	
 	$actions = "";
 	if (!$isPublished){
-		$actions .= $editAction . $publishAction;
+		$actions .= $editAction .' | '. $publishAction .' | ';
 	}
-	$actions .= $deleteAction . $exportAction . $seeVisAction;
+	$actions .= $deleteAction .' | '. $exportAction .' | '. $seeVisAction;
 	
 	echo 
 	"<tr>
 		<td>$runId</td>
-		<td>$runClass</td>
 		<td>$runVersion</td>
+		<td>$runClass</td>
 		<td>$createdOn</td>
 		<td>$runStatus</td>
 		<td>$actions</td>
@@ -182,7 +199,9 @@ foreach ($runConfigs as $curRunConfig){
 
 </table>
 
-<a class='round' onclick="window.location.href='/src/php/pages/runCreate.php';">Create New Run</a>
+<input type='button' onclick="window.location.href='/src/php/pages/runCreate.php';" value='Create New Run' />
+<input type='button' onclick="resetApplication();" value='Reset Application' />
+<input type='button' onclick="setupTestEnvironment();" value='Setup Test Environment'/>
 
 <?php 
 require_once './footer.php';

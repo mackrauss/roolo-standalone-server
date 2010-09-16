@@ -1,5 +1,5 @@
 <?php 
-session_start();
+@session_start();
 
 require_once '../RooloClient.php';
 require_once '../dataModels/RunConfig.php';
@@ -38,7 +38,7 @@ $runConfig->runClass = $runClass;
 $runConfig->runId = $generatedRunId;
 $runConfig->runChoiceLimit = $runChoices;
 $runConfig->runPublished = 0;
-$runConfig->author = $_SESSION['username'];
+$runConfig->author = @$_SESSION['username'];
 
 
 $rooloClient->addElo($runConfig);
