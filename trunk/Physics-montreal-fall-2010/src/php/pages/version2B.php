@@ -1,6 +1,6 @@
 <?php
 /*
- * Version #2 (dual mode � starts as homework and continues with in-class group work) (Very similar to Version #1)
+ * Version #2 (dual mode _ starts as homework and continues with in-class group work) (Very similar to Version #1)
  *
  * B)Students will be given a set of questions pre-set by the instructor on the Teacher Upload/Administer page
  *    Order of steps for students:
