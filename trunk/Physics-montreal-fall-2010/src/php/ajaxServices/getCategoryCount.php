@@ -5,13 +5,15 @@ require_once '../Application.php';
 
 error_reporting(E_ALL | E_STRICT);
 
+
 $rooloClient = new RooloClient();
 $curentSolution = new Solution();
+$solutionObject = new Solution();
 
 
 $questionUri = '';
 $mcChoice = '';
-$mode = 'GROUP';
+$mode = 'group';
 
 /*
  * get problemUri param
@@ -40,28 +42,63 @@ if (isset($_REQUEST['mode'])){
 	$mode = $_REQUEST['mode'];
 }
 
-/**
- * Find all the solutions 
+/*
+ * get runId param
  */
-$authors = NULL;
-$authorsStr = '';
-if ($mode == 'GROUP'){
-	$authors = Application::$groups;
-}elseif ($mode == 'SUPERGROUP'){
-	$authors = Application::$superGroups;
+if (isset($_REQUEST['runId'])){
+	$runId = $_REQUEST['runId'];
+}else{
+	echo "ERROR: runId param not provided";
+	die();
 }
-$authorsStr = implode(' OR ', $authors);
-$query = 'type:Solution AND owneruri:'.$rooloClient->escapeSearchTerm($questionUri).' AND selectedchoice:'.$rooloClient->escapeSearchTerm($mcChoice).' AND author:('.$authorsStr.')';
-$solutions = $rooloClient->search($query, 'metadata', 'latest');
 
+///**
+// * Find all the solutions 
+// */
+//$authors = NULL;
+//$authorsStr = '';
+//if ($mode == 'GROUP'){
+//	$authors = Application::$groups;
+//}elseif ($mode == 'SUPERGROUP'){
+//	$authors = Application::$superGroups;
+//}
+//$authorsStr = implode(' OR ', $authors);
+
+//$query = 'type:Solution AND owneruri:'.$rooloClient->escapeSearchTerm($questionUri).' AND selectedchoice:'.$rooloClient->escapeSearchTerm($mcChoice).' AND author:('.$authorsStr.')';
+
+// Retrieve all solutions belong to this runId
+$query = 'type:Solution AND owneruri:'.$rooloClient->escapeSearchTerm($questionUri).' AND selectedchoice:'.$rooloClient->escapeSearchTerm($mcChoice).' AND runid:('.$runId.')';
+$allSolutions = $rooloClient->search($query, 'metadata', 'latest');
+
+$solutions = array();
+
+//Retrieve all eligible solutions for element histogram
+for($i=0; $i<sizeof($allSolutions); $i++){
+	$solutionObject = $allSolutions[$i];
+	$author = strtolower($solutionObject->author);
+	if (strstr($author , $mode) === FALSE){
+		array_push($solutions, $allSolutions[$i]);
+	}
+}
 /*
  * Extract category count
  */
 $catCounter = array();
 $rationales = array();
+
+// An array for storing all solutions categories of specific problem Object
+$allCatCounter = array();
 foreach (Application::$problemCategories as $curCat){
 	$catCounter[$curCat] = 0;
 }
+
+// Add dropDown options to the categories array;
+foreach (Application::$dropdownsItems as $items){
+    for($idx = 1; $idx < sizeof($items);$idx++){
+    	$catCounter[$items[$idx]] = 0;
+    }
+}
+
 foreach ($solutions as $curSolution){
 	/*
 	 * Get category count
