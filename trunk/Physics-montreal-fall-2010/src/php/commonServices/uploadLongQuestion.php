@@ -2,15 +2,14 @@
 session_start();
 
 require_once '../RooloClient.php';
-require_once '../dataModels/Problem.php';
+require_once '../dataModels/LongProblem.php';
 
 $runId = $_REQUEST['runId'];
-$correctAnswer = $_REQUEST['mcQuestionAnswer'];
 $redirectTo = $_REQUEST['redirectTo'];
 
 $appPath = dirname(__FILE__).'/../../..';
 
-$uploadedFileName = $_FILES['mcQuestionFile']['name'];
+$uploadedFileName = $_FILES['longQuestionFile']['name'];
 $uploadedFileExtension = substr($uploadedFileName, strrpos($uploadedFileName, '.') + 1);
 
 $roolo = new RooloClient();
@@ -18,7 +17,7 @@ $roolo = new RooloClient();
 /*
  * Find the current number of questions on disk
  */
-$target_dir = $appPath.'/problems/'.$runId.'/mc';
+$target_dir = $appPath.'/problems/'.$runId.'/lq';
 $pattern="(\.jpg$)|(\.png$)|(\.jpeg$)|(\.gif$)";
 $files = array(); 
 $numImages=0;
@@ -38,20 +37,19 @@ $newFileName = $numImages+1;
  */
 $target_path = $target_dir.'/'.$newFileName.'.'.$uploadedFileExtension;
 
-if(move_uploaded_file($_FILES['mcQuestionFile']['tmp_name'], $target_path)) {
+if(move_uploaded_file($_FILES['longQuestionFile']['tmp_name'], $target_path)) {
 	
 } else{
     echo "There was an error uploading the file, please try again!";
 }
 
 /*
- * Create ELO for MC problem
+ * Create ELO for Long problem
  */
-$problem = new Problem();
+$problem = new LongProblem();
 $problem->set_author($_SESSION['username']);
 $problem->set_runId($runId);
-$problem->path = '/problems/'.$runId.'/mc/'.$newFileName.'.'.$uploadedFileExtension;
-$problem->set_mcmastersolution($correctAnswer);
+$problem->path = '/problems/'.$runId.'/lq/'.$newFileName.'.'.$uploadedFileExtension;
 $roolo->addElo($problem);
 
 ?>

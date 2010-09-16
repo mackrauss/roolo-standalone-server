@@ -228,6 +228,10 @@ class Elo implements XMLSupported{
 		return $this->getMetadata('type');
 	}
 	
+	public function get_runId(){
+		return $this->getMetadata('runid');
+	}
+	
 	/**
 	 * @return unknown
 	 */
@@ -281,6 +285,10 @@ class Elo implements XMLSupported{
 	 */
 	protected function set_type($_type) {
 		$this->addMetadata('type', $_type);
+	}
+	
+	public function set_runId($runId){
+		$this->addMetadata('runid', $runId);
 	}
 	
 	/**
