@@ -39,11 +39,7 @@ if($notMember){
 	
 	if ($runId !== null && $runId !== "" && strlen($runId) == 5){
 		if (strstr($_SESSION['username'], "physicsgroup")){
-			//should go to special page login with group name
-			/*
-			 * TODO change the name to version2D.php
-			 */
-			header("Location:/src/php/pages/version2B.php");
+			header("Location:/src/php/pages/version2D.php");
 		}else if (substr($runId,0,2) == 'v1'){
 			header("Location:/src/php/pages/version1B.php");
 		}else if (substr($runId,0,2) == 'v2'){
