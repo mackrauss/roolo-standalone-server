@@ -309,7 +309,7 @@ class Application {
 	public static $dropdownsItems = array(
 		'relationship' => array('Select one item', 'Linear Relationship', 'Quadratic Relationship', 'Inverse Relationship'),
 		'force' => array('Select one item', 'Forces on a slop', 'Braking and Friction'),
-		'movement' => array('Select one item', 'Velocity', 'Acceleration', 'Free Fall')
+		'movement' => array('Select one item', 'Velocity 2', 'Acceleration', 'Free Fall')
 	);
 	
 	
