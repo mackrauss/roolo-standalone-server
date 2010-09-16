@@ -29,6 +29,14 @@ if ($_REQUEST['runId']){
 }else{
 	$runId = $_SESSION['runId'];
 }
+/*
+ * Get mode param (GROUP or SUPERGROUP) for future
+ */
+if (isset($_SESSION['mode'])){
+	$mode = $_SESSION['mode'];
+}else {
+	$mode = 'group';
+}
 
 
 $rooloClient = new RooloClient();
@@ -86,9 +94,9 @@ for($i=0; $i<sizeof($allProblems); $i++){
 	for($k=0; $k< sizeof($solutionsArray); $k++){
 		
 		$curSolutionObject = $solutionsArray[$k];
-		$author = trim($curSolutionObject->get_author());
+		$author = strtolower(trim($curSolutionObject->get_author()));
 		
-		if ( strstr($author, 'group') ){
+		if ( strstr($author, $mode) ){
 			// An array for storing solutions categories of specific problem Object
 			$catCounter = array();
 			foreach (Application::$problemCategories as $curCat){
