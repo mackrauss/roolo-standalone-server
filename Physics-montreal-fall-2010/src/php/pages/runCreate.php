@@ -1,4 +1,8 @@
 <?php
+//if (!$_SESSION['loggedIn']){
+//	header("Location:/src/php/pages/");
+//}
+
 require_once './header.php';
 require_once '../RooloClient.php';
 require_once '../dataModels/Problem.php';
@@ -9,10 +13,6 @@ require_once '../Application.php';
 require_once '../dataModels/Solution.php';
 
 error_reporting(E_ALL | E_STRICT);
-
-if (!$_SESSION['loggedIn']){
-	header("Location:/src/php/pages/");
-}
 
 $_SESSION['msg'] = "";
 $username = $_SESSION['username'];
@@ -27,8 +27,11 @@ function createNewRun(){
 
 	$.getJSON('/src/php/ajaxServices/createNewRun.php', {runVersion: runVersion, runClass:runClass, runChoices: runChoices}, function(data){
 		var generatedRunId = data.runId;
-
-		window.location.href = '/src/php/pages/runEdit.php?runId='+generatedRunId;
+		if (generatedRunId != null){
+			window.location.href = '/src/php/pages/runEdit.php?runId='+generatedRunId;
+		}else{
+			alert(data.error);
+		}
 	});
 }
 </script>

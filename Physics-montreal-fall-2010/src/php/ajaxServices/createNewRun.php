@@ -13,13 +13,29 @@ $runVersion = $_REQUEST['runVersion'];
 $runClass = $_REQUEST['runClass'];
 $runChoices = $_REQUEST['runChoices'];
 
+$generatedRunId = 'v'.$runVersion.'_c'.$runClass;
+
+$response = array();
+
+/*
+ * First check to make sure a run with the same RunId doesn't exist. 
+ * If it does, send an error.
+ */
+$query = 'type:RunConfig AND runid:'.$generatedRunId;
+$existingRuns = $rooloClient->search($query, 'metadata', 'latest');
+if (count($existingRuns) != 0){
+	$response['error'] = 'A run with the same configuration alread exists. Please delete that one first!';
+	echo json_encode($response);
+	die();
+}
+
 /*
  * Create new run configuration ELO
  */
 $runConfig = new RunConfig();
 $runConfig->runVersion = $runVersion;
 $runConfig->runClass = $runClass;
-$runConfig->runId = 'v'.$runVersion.'_c'.$runClass;
+$runConfig->runId = $generatedRunId;
 $runConfig->runChoiceLimit = $runChoices;
 $runConfig->runPublished = 0;
 $runConfig->author = $_SESSION['username'];
@@ -51,7 +67,6 @@ if (!is_dir($projectRoot.'/graphml/'.$runId)){
 /*
  * Send back runId
  */
-$response = array();
 $response['runId'] = $runId; 
 
 echo json_encode($response);

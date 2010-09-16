@@ -175,16 +175,16 @@ class Application {
 	
 	
 	public static $correctAnswers = array (
-		"1" => "c",
-		"2" => "a",
-		"3" => "d",
-		"4" => "b"		
+		"1" => "f",
+		"2" => "e",
+		"3" => "f"	
 	);
 	
 	/*
 	 * Relationship between students and the set of questions they have to answer. The numbers correspond to each question's unique id
 	 */
 	public static $studentQuestions = array(
+		"student111" => array("1", "2", "3"),
 		"student211" => array("1", "2", "3"),
 		"student311" => array("1", "2", "3"),
 		"student411" => array("1", "2", "3"),
@@ -221,7 +221,6 @@ class Application {
 	 * Relationship between Groups and Questions assigned to them 
 	 */
 	public static $groupQuestions = array(
-		"g1" => array("1", "2", "3", "4"),
 		"physicsgroup111" => array("1", "2", "3"),
 		"physicsgroup211" => array("1", "2", "3"),
 		"physicsgroup311" => array("1", "2", "3"),
@@ -313,5 +312,6 @@ class Application {
 	);
 	
 	
+	public static $letters = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","W","X","Y","Z");
 }
 ?>
