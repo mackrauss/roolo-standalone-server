@@ -140,13 +140,36 @@ function resetApplication(){
 	var resetConfirmed = confirm('Are you sure you want to delete the whole contents of the application?');
 	if (resetConfirmed){
 		$.get('/src/php/ajaxServices/resetApplication.php', {}, function(data){
-			window.location.reload();
+//			window.location.reload();
 		});
 	}
 }
 
 function setupTestEnvironment(){
 	$.get('/src/php/ajaxServices/setupTestEnvironment.php', {}, function(data){
+		window.location.reload();
+	});
+}
+
+function exportRunData(exportLink){
+	var runId = $(exportLink).attr('runId');
+	
+}
+
+function publishRun(publishLink){
+	var runId = $(publishLink).attr('runId');
+
+	$.get('/src/php/ajaxServices/publishRun.php', {runId: runId}, function(data){
+		window.location.reload();
+	});
+}
+
+function deleteRun(deleteLink){
+	var runId = $(deleteLink).attr('runId');
+
+	alert(runId);
+
+	$.get('/src/php/ajaxServices/deleteRun.php', {runId: runId}, function(data){
 		window.location.reload();
 	});
 }
