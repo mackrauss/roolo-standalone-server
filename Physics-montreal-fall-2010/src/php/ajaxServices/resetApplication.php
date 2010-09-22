@@ -1,5 +1,6 @@
 <?php
 include_once '../RooloClient.php';
+include_once '../CommonFunctions.php';
 
 /*
  * Setup variables
@@ -14,11 +15,12 @@ $roolo->deleteAll();
 /*
  * Empty /problems
  */
-`rm -rf ../../../problems/*`;
+//`rm -rf ../../../problems/*`;
+deleteDirContents('../../../problems');
 
 /*
  * Empty /graphml
  */
-`rm -rf ../../../graphml/*`;
-
+//`rm -rf ../../../graphml/*`;
+deleteDirContents('../../../graphml');
 ?>
