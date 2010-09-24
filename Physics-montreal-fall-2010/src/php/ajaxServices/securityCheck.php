@@ -38,12 +38,12 @@ if($notMember){
 	}
 	
 	if ($runId !== null && $runId !== "" && strlen($runId) == 5){
-		if (strstr($_SESSION['username'], "physicsgroup")){
+		if (strstr($_SESSION['username'], "group")){
 			header("Location:/src/php/pages/version2D.php");
-		}else if (substr($runId,0,2) == 'v1'){
+		}else if (strstr($_SESSION['username'], "pair")){
 			header("Location:/src/php/pages/version1B.php");
-		}else if (substr($runId,0,2) == 'v2'){
-			header("Location:/src/php/pages/version2B.php");
+		}else {
+			header("Location:/src/php/pages/version1B.php");
 		}
 	}else {
 		header("Location:/src/php/pages/");
