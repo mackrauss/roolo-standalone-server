@@ -402,7 +402,7 @@ if ($totalResults != 0){
 
 <div id="nextQuestionMsgDiv" style="display:none">
 
-	<label><h3>Please listen to your teacher !!! </label>
+	<label><h3>Please wait for instructions from your teacher.</label>
 	<input name="nextQuestion" value="Next Question" type="button" onClick="nextQuestion(); scroll(0,0);" />
 </div>
 
