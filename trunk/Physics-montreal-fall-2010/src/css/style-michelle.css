@@ -15,6 +15,11 @@ body {
 	background: #E8F3FA;
 	text-align: center;
 }
+div#contentFrame {
+	width: 940px;
+	margin-left: auto;
+	margin-right: auto;
+}
 div#header { 
 	position:relative;
 	height: 71px;
@@ -292,6 +297,7 @@ img.problem {
 	border-color:#666;
 	border-width:medium;
 	border-style:solid;
+	width: 800px;
 }
 /*form style*/
 form#loginForm {
@@ -327,7 +333,6 @@ form#round1 label{
 	line-height:24px;
 }
 form#round1 select{
-	margin-top: 20;
 }
 form#round1 dt{
 	margin-top: 30px;
