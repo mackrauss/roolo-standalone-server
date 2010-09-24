@@ -140,14 +140,14 @@ function resetApplication(){
 	var resetConfirmed = confirm('Are you sure you want to delete the whole contents of the application?');
 	if (resetConfirmed){
 		$.get('/src/php/ajaxServices/resetApplication.php', {}, function(data){
-			window.location.reload();
+//			window.location.reload();
 		});
 	}
 }
 
 function setupTestEnvironment(){
 	$.get('/src/php/ajaxServices/setupTestEnvironment.php', {}, function(data){
-		window.location.reload();
+//		window.location.reload();
 	});
 }
 
