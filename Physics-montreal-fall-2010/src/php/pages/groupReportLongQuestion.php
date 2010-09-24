@@ -264,6 +264,7 @@ for($i=0; $i<sizeof($allProblems); $i++){
 //		color:#1E7EC8;
 //	} 
 
+
 </style>
 
 <div id="container2">
@@ -278,7 +279,7 @@ for($i=0; $i<sizeof($allProblems); $i++){
 <div id="middle-center2">
 
 	<div id='mainQuestion'>
-    	<img height="300px" class="problem" src="<?= $longProblemPath ?>" />
+    	<img width="800px" class="problem" src="<?= $longProblemPath ?>" />
 	</div>							 
   	<dd>
   		<?php 
@@ -289,7 +290,7 @@ for($i=0; $i<sizeof($allProblems); $i++){
 					<b> Concept Question <?= $i + 1 ?> </b> (Answer: <?= $selectedChoiceArrey[$i] ?>)
 				</p>
 			    <div class="questionSection">
-			    	<img height="300px" src="<?= $problemsPathArray[$i] ?>" class="problem"/>
+			    	<img width="800px" src="<?= $problemsPathArray[$i] ?>" class="problem"/>
 			  	</div>
 				<div class="answerSection">
 					<div id='categoryReport<?= $i ?>'>
