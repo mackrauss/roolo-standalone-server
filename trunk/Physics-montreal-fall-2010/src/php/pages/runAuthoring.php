@@ -140,7 +140,7 @@ function resetApplication(){
 	var resetConfirmed = confirm('Are you sure you want to delete the whole contents of the application?');
 	if (resetConfirmed){
 		$.get('/src/php/ajaxServices/resetApplication.php', {}, function(data){
-//			window.location.reload();
+			window.location.reload();
 		});
 	}
 }
@@ -153,7 +153,12 @@ function setupTestEnvironment(){
 
 function exportRunData(exportLink){
 	var runId = $(exportLink).attr('runId');
-	
+
+	email = prompt("Please enter an email address that the data package will be sent to");
+
+	$.get('/src/php/ajaxServices/exportRunData.php', {runId: runId, email: email}, function(data){
+		window.location.reload();
+	});
 }
 
 function publishRun(publishLink){
@@ -166,8 +171,6 @@ function publishRun(publishLink){
 
 function deleteRun(deleteLink){
 	var runId = $(deleteLink).attr('runId');
-
-	alert(runId);
 
 	$.get('/src/php/ajaxServices/deleteRun.php', {runId: runId}, function(data){
 		window.location.reload();

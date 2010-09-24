@@ -33,11 +33,11 @@ if (count($runs) != 0){
 	 * Delete problems directory
 	 */
 //	`rm -rf ../../../problems/$runId`;
-	deleteDirContents("../../../problems/$runId");
+	delete_directory("../../../problems/$runId");
 	
 	/*
 	 * Delete graphml directory
 	 */
 //	`rm -rf ../../../graphml/$runId`;
-	deleteDirContents("../../../graphml/$runId");
+	delete_directory("../../../graphml/$runId");
 }

@@ -310,6 +310,13 @@ form#loginForm input{
 	margin-right: 80px;
 	margin-top: 30px;
 }
+form#loginForm select {
+	margin-left: 20px;
+	margin-right: 80px;
+	margin-top: 30px;
+	width: 155px;	
+}
+
 form#loginForm input.btn{
 	margin-right: 110px;
 }
