@@ -33,8 +33,9 @@ if($notMember){
 	header("Location:/src/php/pages/");
 }else{
 	$_SESSION['loggedIn'] = TRUE;
-	if (strstr($_SESSION['username'], "teacher")){
+	if ($_SESSION['username'] === "teacher"){
 		header("Location:/src/php/pages/runAuthoring.php");
+		die();
 	}
 	
 	if ($runId !== null && $runId !== "" && strlen($runId) == 5){
