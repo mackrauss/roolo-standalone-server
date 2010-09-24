@@ -175,9 +175,10 @@ class Application {
 	
 	
 	public static $correctAnswers = array (
-		"1" => "f",
-		"2" => "e",
-		"3" => "f"	
+		"1" => "c",
+		"2" => "a",
+		"3" => "d",
+		"4" => "b"		
 	);
 	
 	/*
@@ -307,7 +308,7 @@ class Application {
 	);
 	public static $dropdownsItems = array(
 		'relationship' => array('Select one item', 'Linear Relationship', 'Quadratic Relationship', 'Inverse Relationship'),
-		'force' => array('Select one item', 'Forces on a slop', 'Braking and Friction'),
+		'force' => array('Select one item', 'Forces on a slope', 'Breaking and Friction'),
 		'movement' => array('Select one item', 'Velocity 2', 'Acceleration', 'Free Fall')
 	);
 	

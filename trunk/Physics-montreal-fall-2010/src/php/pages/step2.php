@@ -24,7 +24,8 @@ $roolo = new RooloClient();
 /*
  * Extract all the questions
  */
-$uniqueQuestionIds = Application::$groupQuestions[$username];
+//$uniqueQuestionIds = Application::$groupQuestions[$username];
+$uniqueQuestionIds = array(1, 2);
 $uniqueQuestionIdStr = implode(' OR ', $uniqueQuestionIds);
 $query = "type:Problem AND uniquequestionid:(" . $uniqueQuestionIdStr . ")";
 $allQuestions = $roolo->search($query, 'metadata', 'latest');
