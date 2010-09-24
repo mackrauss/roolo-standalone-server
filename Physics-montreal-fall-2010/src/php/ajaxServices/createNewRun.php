@@ -32,11 +32,19 @@ if (count($existingRuns) != 0){
 /*
  * Create new run configuration ELO
  */
+// Make runChoices
+$allChoices = '';
+$idx = array_search($runChoices, Application::$letters);
+for($i=0; $i < $idx; $i++){
+	$allChoices .= Application::$letters[$i].', ';
+}
+$allChoices .= Application::$letters[$idx];
 $runConfig = new RunConfig();
 $runConfig->runVersion = $runVersion;
 $runConfig->runClass = $runClass;
 $runConfig->runId = $generatedRunId;
-$runConfig->runChoiceLimit = $runChoices;
+//$runConfig->runChoiceLimit = $runChoices;
+$runConfig->runChoiceLimit = $allChoices;
 $runConfig->runPublished = 0;
 $runConfig->author = @$_SESSION['username'];
 
