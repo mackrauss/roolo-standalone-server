@@ -558,7 +558,7 @@ for($i=0; $i<sizeof($problems); $i++){
 
 <div id="nextQuestionMsgDiv" style="display:none">
 
-	<label><h3>Please listen to your teacher !!! </label>
+	<label><h3>Please listen for instructions from your teacher. </label>
 	<input name="nextQuestion" value="Next Question" type="button" onClick="nextQuestion(); scroll(0,0);" />
 </div>
 

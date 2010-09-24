@@ -39,11 +39,11 @@ if($notMember){
 	
 	if ($runId !== null && $runId !== "" && strlen($runId) == 5){
 		if (strstr($_SESSION['username'], "group")){
-			header("Location:/src/php/pages/version2D.php");
+			header("Location:/src/php/pages/groupAnswering.php");
 		}else if (strstr($_SESSION['username'], "pair")){
-			header("Location:/src/php/pages/version1B.php");
+			header("Location:/src/php/pages/singleStudentAnswering.php");
 		}else {
-			header("Location:/src/php/pages/version1B.php");
+			header("Location:/src/php/pages/singleStudentAnswering.php");
 		}
 	}else {
 		header("Location:/src/php/pages/");
