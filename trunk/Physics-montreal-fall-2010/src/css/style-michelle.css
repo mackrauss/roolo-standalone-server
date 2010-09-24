@@ -297,7 +297,6 @@ img.problem {
 	border-color:#666;
 	border-width:medium;
 	border-style:solid;
-	width: 800px;
 }
 /*form style*/
 form#loginForm {
@@ -332,7 +331,7 @@ form#round1 label{
 	font-weight:bold;
 	line-height:24px;
 }
-form#round1 select{
+form#round1 select{‰
 }
 form#round1 dt{
 	margin-top: 30px;
