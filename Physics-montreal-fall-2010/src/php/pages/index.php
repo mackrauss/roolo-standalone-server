@@ -17,6 +17,10 @@ if(empty($_SESSION['msg'])){
     $_SESSION['runId']= "";
 }
 
+$roolo = new RooloClient();
+$runConfigs = $roolo->search('type:RunConfig AND runpublished: 1', 'metadata', 'latest');
+
+
 //if (!file_exists('../graphML/classroom.graphml')){
 //	$graphML = new GraphML();
 //	//creates Graph XML file with header and footer
@@ -39,7 +43,16 @@ if(empty($_SESSION['msg'])){
 	<div id="logo"></div>  
 	<div id="login">
 		<form id="loginForm" name="loginForm" action="/src/php/ajaxServices/securityCheck.php" method="post">
-			<label>Run ID</label><input name="runId" type="text" value='<?= $_SESSION['runId'] ?>'/><br/>
+			<label>Run</label><!-- <input name="runId" type="text" value='<?= $_SESSION['runId'] ?>'/>-->
+			<select name='runId' id='runId'>
+			<?php 
+			foreach ($runConfigs as $curRunConfig){
+				$curRunId = $curRunConfig->runid;
+				echo "<option value='$curRunId'>$curRunId</option>";
+			}
+			?>
+			</select>
+			<br/>
 			<label>Username</label><input name="username" type="text" value='<?= $_SESSION['username'] ?>'><br/>
 			<label>Password</label><input name="password" type="password" /><br/>
 			<input name="submit" type="submit" value="LOGIN" class="btn" />
