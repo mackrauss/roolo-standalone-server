@@ -45,6 +45,7 @@ $runConfigs = $roolo->search('type:RunConfig AND runpublished: 1', 'metadata', '
 		<form id="loginForm" name="loginForm" action="/src/php/ajaxServices/securityCheck.php" method="post">
 			<label>Run</label><!-- <input name="runId" type="text" value='<?= $_SESSION['runId'] ?>'/>-->
 			<select name='runId' id='runId'>
+				<option value=''>Select a run</option>
 			<?php 
 			foreach ($runConfigs as $curRunConfig){
 				$curRunId = $curRunConfig->runid;
