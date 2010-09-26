@@ -202,13 +202,14 @@ foreach ($runConfigs as $curRunConfig){
 	$publishAction = "<a onclick='publishRun(this);' runId='$runId'>publish</a>";
 	$deleteAction = "<a onclick='deleteRun(this)' runId='$runId'>delete</a>";
 	$exportAction = "<a onclick='exportRunData(this)' runId='$runId'>export data</a>";
-	$seeVisAction = "<a href='#'>see report</a>";
+	$seeIndVisAction = "<a href='/src/php/graphmlServices/generateDataGraphml.php?runId=".$runId."&scope=ind'>individual report</a>"; 
+	$seeGrpVisAction = "<a href='/src/php/graphmlServices/generateDataGraphml.php?runId=".$runId."&scope=grp'>group report</a>";
 	
 	$actions = "";
 	if (!$isPublished){
 		$actions .= $editAction .' | '. $publishAction .' | ';
 	}
-	$actions .= $deleteAction .' | '. $exportAction .' | '. $seeVisAction;
+	$actions .= $deleteAction .' | '. $exportAction .'<br/>'. $seeIndVisAction . ' | ' . $seeGrpVisAction;
 	
 	echo 
 	"<tr>
