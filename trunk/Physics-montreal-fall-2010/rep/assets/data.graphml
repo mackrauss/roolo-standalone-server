@@ -1,0 +1,229 @@
+                                                                 
+<graphml xmlns='http://graphml.graphdrawing.org/xmlns' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd'>
+
+	<key id='dn0' for='node' attr.name='type' attr.type='string' />
+	<key id='dn1' for='node' attr.name='group' attr.type='string' />
+	<key id='dn2' for='node' attr.name='category' attr.type='string' />
+	<key id='dn3' for='node' attr.name='tags' attr.type='int' />
+	<key id='dn4' for='node' attr.name='img' attr.type='string' />
+	<key id='de0' for='edge' attr.name='group' attr.type='string' />
+	<key id='de1' for='edge' attr.name='agree' attr.type='int'> 
+
+		<default>0</default>
+
+	</key>
+	<key id='de2' for='edge' attr.name='disagree' attr.type='int'>
+		<default>0</default>
+	</key>
+	<graph id='G' edgedefault='undirected'>
+		<node id='problems'>
+			<data key='dn0'>root</data>
+			<data key='dn1'>problems</data>
+
+			<data key='dn2'></data>
+		</node>
+
+<!-- Generating the problem nodes -->
+<node id='q1'>
+	<data key='dn0'>problem</data>
+	<data key='dn1'>q1</data>
+	<data key='dn2'>1</data>
+	<data key='dn3'>0</data>
+
+	<data key='dn4'>q1.png</data>
+</node>
+<node id='q2'>
+	<data key='dn0'>problem</data>
+	<data key='dn1'>q2</data>
+	<data key='dn2'>1</data>
+	<data key='dn3'>0</data>
+
+	<data key='dn4'>q2.png</data>
+</node>
+
+<!-- Generating the problem edges to the root Problem node -->
+<edge id='q1-problems' source='q1' target='problems'>
+	<data key='de0'></data>
+	<data key='de1'></data>
+	<data key='de2'></data>
+</edge> 
+<edge id='q2-problems' source='q2' target='problems'>
+	<data key='de0'></data>
+
+	<data key='de1'></data>
+	<data key='de2'></data>
+</edge> 
+
+<!-- Generating all the elements nodes -->
+<node id='newtonfirstlaw'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Newton First Law</data>
+	<data key='dn2'></data>
+</node>     
+<node id='newtonsecondlaw'>
+
+	<data key='dn0'>group</data>
+	<data key='dn1'>Newton Second Law</data>
+	<data key='dn2'></data>
+</node>     
+<node id='newtonthirdlaw'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Newton Third Law</data>
+	<data key='dn2'></data>
+
+</node>     
+<node id='netforce'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Net Force</data>
+	<data key='dn2'></data>
+</node>     
+<node id='collision'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Collision</data>
+
+	<data key='dn2'></data>
+</node>     
+<node id='1dimensional'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>1 Dimensional</data>
+	<data key='dn2'></data>
+</node>     
+<node id='2dimensional'>
+	<data key='dn0'>group</data>
+
+	<data key='dn1'>2 Dimensional</data>
+	<data key='dn2'></data>
+</node>     
+<node id='conservationofenergy'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Conservation of Energy</data>
+	<data key='dn2'></data>
+</node>     
+<node id='conservationofmomentum'>
+
+	<data key='dn0'>group</data>
+	<data key='dn1'>Conservation of Momentum</data>
+	<data key='dn2'></data>
+</node>     
+<node id='work'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Work</data>
+	<data key='dn2'></data>
+
+</node>     
+<node id='linearacceleration'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Linear Acceleration</data>
+	<data key='dn2'></data>
+</node>     
+<node id='centripetalacceleration'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Centripetal Acceleration</data>
+
+	<data key='dn2'></data>
+</node>     
+<node id='elasticpotentialenergy'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Elastic Potential Energy</data>
+	<data key='dn2'></data>
+</node>     
+<node id='gravitationalpotentialenergy'>
+	<data key='dn0'>group</data>
+
+	<data key='dn1'>Gravitational Potential Energy</data>
+	<data key='dn2'></data>
+</node>     
+<node id='kineticenergy'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Kinetic Energy</data>
+	<data key='dn2'></data>
+</node>     
+<node id='friction'>
+
+	<data key='dn0'>group</data>
+	<data key='dn1'>Friction</data>
+	<data key='dn2'></data>
+</node>     
+<node id='force'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Force</data>
+	<data key='dn2'></data>
+
+</node>     
+<node id='displacement'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Displacement</data>
+	<data key='dn2'></data>
+</node>     
+<node id='velocity'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Velocity</data>
+
+	<data key='dn2'></data>
+</node>     
+<node id='centerofmass'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Center of Mass</data>
+	<data key='dn2'></data>
+</node>     
+<node id='linearrelationship'>
+	<data key='dn0'>group</data>
+
+	<data key='dn1'>Linear Relationship</data>
+	<data key='dn2'></data>
+</node>     
+<node id='quadraticrelationship'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Quadratic Relationship</data>
+	<data key='dn2'></data>
+</node>     
+<node id='inverserelationship'>
+
+	<data key='dn0'>group</data>
+	<data key='dn1'>Inverse Relationship</data>
+	<data key='dn2'></data>
+</node>     
+<node id='forcesonaslope'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Forces on a slope</data>
+	<data key='dn2'></data>
+
+</node>     
+<node id='breakingandfriction'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Breaking and Friction</data>
+	<data key='dn2'></data>
+</node>     
+<node id='velocity2'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Velocity 2</data>
+
+	<data key='dn2'></data>
+</node>     
+<node id='acceleration'>
+	<data key='dn0'>group</data>
+	<data key='dn1'>Acceleration</data>
+	<data key='dn2'></data>
+</node>     
+<node id='freefall'>
+	<data key='dn0'>group</data>
+
+	<data key='dn1'>Free Fall</data>
+	<data key='dn2'></data>
+</node>     
+
+<!-- Generating all the edges between problems and their respective elements -->
+<edge id='q1-newtonsecondlaw' source='q1' target='newtonsecondlaw'>
+	<data key='de0'></data>
+	<data key='de1'>1</data>
+	<data key='de2'>0</data>
+</edge>
+
+
+<edge id='q2-newtonsecondlaw' source='q2' target='newtonsecondlaw'>
+	<data key='de0'></data>
+	<data key='de1'>1</data>
+	<data key='de2'>0</data>
+</edge>
+	</graph>
+</graphml>
