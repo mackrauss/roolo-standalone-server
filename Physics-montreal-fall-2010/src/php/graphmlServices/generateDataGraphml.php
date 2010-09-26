@@ -75,30 +75,7 @@ for ($i=0; $i < sizeof($problems); $i++){
 }
 ?>
 
-<!-- Generating all the elements nodes -->
-<?php 
-$elements = Application::$problemCategories;
-$dropdownElements = Application::$dropdownsItems;
-foreach ($dropdownElements as $curDropdownName => $curDropdownElements){
-	unset($curDropdownElements[0]);
-	$elements = array_merge($elements, $curDropdownElements);
-}
-
-foreach ($elements as $curElement){
-	$elementNodeId = convertToId($curElement); 
-?>
-<!-- 
-<node id='<?= $elementNodeId ?>'>
-	<data key='dn0'>group</data>
-	<data key='dn1'><?= $curElement ?></data>
-	<data key='dn2'></data>
-</node>
- -->     
-<?php 
-}
-?>
-
-<!-- Generating all the edges between problems and their respective elements -->
+<!-- Generating all the edges between problems and their respective elements. Each edge also gets a unique element node-->
 <?php 
 /*
  * We're going to iterate through all problems in this run, and for each,  
