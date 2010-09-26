@@ -6,7 +6,6 @@ require_once '../domLib/simple_html_dom.php';
 require_once '../dataModels/Elo.php';
 require_once '../dataModels/Solution.php';
 require_once '../dataModels/Concept.php';
-require_once '../graphML/GraphML.php';
 
 //if ( trim($_REQUEST['flag']) === "true" ){
 	$username = trim($_REQUEST['username']);

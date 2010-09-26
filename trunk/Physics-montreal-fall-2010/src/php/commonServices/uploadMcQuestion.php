@@ -31,7 +31,7 @@ if($handle = opendir($target_dir)) {
 	}
 } 
 
-$newFileName = $numImages+1;
+$newFileName = "q" . ($numImages+1);
 
 /*
  * Upload the problem
