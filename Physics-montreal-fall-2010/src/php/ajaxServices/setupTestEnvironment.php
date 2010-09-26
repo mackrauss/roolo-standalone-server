@@ -86,7 +86,7 @@ function createMcProblem($runId, $imagePath, $correctAnswer, $roolo){
 	
 	$numImages = getNumImagesInDir($imageDestDiskDir);
 	$imageExtension = getFileExtension($imagePath);
-	$imageNewName = ($numImages+1).'.'.$imageExtension;
+	$imageNewName = "q" . ($numImages+1).'.'.$imageExtension;
 	
 	// copy problem image to right place
 //	$copyCommand = "cp $imagePath ".$imageDestDiskDir.'/'.$imageNewName;
@@ -112,7 +112,7 @@ function createLongProblem($runId, $imagePath, $roolo){
 	
 	$numImages = getNumImagesInDir($imageDestDiskDir);
 	$imageExtension = getFileExtension($imagePath);
-	$imageNewName = ($numImages+1).'.'.$imageExtension;
+	$imageNewName = "q" . ($numImages+1).'.'.$imageExtension;
 	
 	// copy problem image to right place
 //	$copyCommand = "cp $imagePath ".$imageDestDiskDir.'/'.$imageNewName;

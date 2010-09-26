@@ -23,4 +23,22 @@ function delete_directory($dirname) {
    rmdir($dirname);
    return true;
 }
+
+function convertToId($name){
+	
+	
+	// remove all non-alphanumeric chars
+	$cleanStr = preg_replace('/\W/u', '', $name);
+	
+	// trim spaces at beginning or end of string
+	$cleanStr = trim($cleanStr);
+	
+	// collapse each sequenece of whitespace to a single space and replace all spaces by a dash(-)
+//	$cleanStr = preg_replace('/\s+/u', '-', $cleanStr);
+	
+	// ensure everything's in lowercase
+	$cleanStr = mb_strtolower($cleanStr);
+	
+	return $cleanStr;
+}
 ?>

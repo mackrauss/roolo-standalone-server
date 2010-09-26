@@ -2,7 +2,7 @@
 
 require_once './header.php';
 require_once '../RooloClient.php';
-require_once '../graphML/GraphML.php';
+require_once '../graphmlServices/GraphML.php';
 
 error_reporting(E_STRICT);
 
