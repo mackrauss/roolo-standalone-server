@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetadataKeys>
+	<MetadataKey class="roolo.elo.metadata.keys.UriMetadataKey">
+		<id 		value="uri" />
+		<xPath 		value="/uri" />
+		<i18n 		value="UNIVERSAL" />
+		<count		value="SINGLE" />
+		<tokenized	value="UNTOKENIZED" />
+		<validator	value="null" />
+	</MetadataKey>
+	<MetadataKey class="roolo.elo.metadata.keys.StringMetadataKey">
+		<id 		value="type" />
+		<xPath 		value="/type" />
+		<i18n 		value="UNIVERSAL" />
+		<count		value="SINGLE" />
+		<tokenized	value="UNTOKENIZED" />
+		<validator	value="null" />
+	</MetadataKey>
+	<MetadataKey class="roolo.elo.metadata.keys.LongMetadataKey">
+		<id 		value="datecreated" />
+		<xPath 		value="/datecreated" />
+		<i18n 		value="UNIVERSAL" />
+		<count		value="SINGLE" />
+		<tokenized	value="UNTOKENIZED" />
+		<validator	value="null" />
+	</MetadataKey>
+	<MetadataKey class="roolo.elo.metadata.keys.LongMetadataKey">
+		<id 		value="datelastmodified" />
+		<xPath 		value="/datelastmodified" />
+		<i18n 		value="UNIVERSAL" />
+		<count		value="SINGLE" />
+		<tokenized	value="UNTOKENIZED" />
+		<validator	value="null" />
+	</MetadataKey>
+	<MetadataKey class="roolo.elo.metadata.keys.StringMetadataKey">
+		<id 		value="version" />
+		<xPath 		value="/version" />
+		<i18n 		value="UNIVERSAL" />
+		<count		value="SINGLE" />
+		<tokenized	value="UNTOKENIZED" />
+		<validator	value="null" />
+	</MetadataKey>
+	<MetadataKey class="roolo.elo.metadata.keys.StringMetadataKey">
+		<id 		value="title" />
+		<xPath 		value="/title" />
+		<i18n 		value="UNIVERSAL" />
+		<count		value="SINGLE" />
+		<tokenized	value="TOKENIZED" />
+		<validator	value="null" />
+	</MetadataKey>
+	<MetadataKey class="roolo.elo.metadata.keys.StringMetadataKey">
+		<id 		value="author" />
+		<xPath 		value="/author" />
+		<i18n 		value="UNIVERSAL" />
+		<count		value="SINGLE" />
+		<tokenized	value="UNTOKENIZED" />
+		<validator	value="null" />
+	</MetadataKey>
+	<MetadataKey class="roolo.elo.metadata.keys.StringMetadataKey">
+		<id 		value="choice" />
+		<xPath 		value="/choice" />
+		<i18n 		value="UNIVERSAL" />
+		<count		value="SINGLE" />
+		<tokenized	value="UNTOKENIZED" />
+		<validator	value="null" />
+	</MetadataKey>
+</MetadataKeys>
