@@ -133,6 +133,7 @@ if ($totalResults != 0){
 
 	//to reset setTimeOut
 	var timer;
+	var timer_is_On = true;
 
 	$(document).ready(function(){
 
@@ -173,6 +174,8 @@ if ($totalResults != 0){
 			if (minutes <= -1){ 
 			    seconds = 0; 
 			    minutes += 1; 
+				timer_is_On = false;
+			    clearTimeout(timer); 
 			    saveQuestion();
 			}
 		}else{ 
@@ -182,7 +185,8 @@ if ($totalResults != 0){
 			$('#timerValue').text( minutes + ":0" + seconds ); 
 		else
 			$('#timerValue').text( minutes + ":" + seconds ); 
-		timer = setTimeout("countDown()",1000); 
+		if (timer_is_On)
+			timer = setTimeout("countDown()",1000); 
 	 }
 
 	 function delay (){
@@ -207,7 +211,7 @@ if ($totalResults != 0){
 		$('#middle-bottom').hide();
 //		$('#questionHeading').html('');
 		$('#nextQuestionMsgDiv').show();
-		clearTimeout(timer);
+//		clearTimeout(timer);
 
 		//select the selected item in dropdowns
 		var selectTagLength = $("#selectPart").find("select").length;
@@ -362,6 +366,7 @@ if ($totalResults != 0){
 		$('#mc').show('slow');
 	
 		//set the clock for next question
+		timer_is_On = true;
 		seconds = 01; 
 		minutes = 4; 
 		$('#count').text( minutes + ":" + seconds + "time left"); 
