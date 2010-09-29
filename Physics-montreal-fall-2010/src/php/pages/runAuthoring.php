@@ -202,8 +202,8 @@ foreach ($runConfigs as $curRunConfig){
 	$publishAction = "<a onclick='publishRun(this);' runId='$runId'>publish</a>";
 	$deleteAction = "<a onclick='deleteRun(this)' runId='$runId'>delete</a>";
 	$exportAction = "<a onclick='exportRunData(this)' runId='$runId'>export data</a>";
-	$seeIndVisAction = "<a href='/src/php/graphmlServices/generateDataGraphml.php?runId=".$runId."&scope=ind'>individual report</a>"; 
-	$seeGrpVisAction = "<a href='/src/php/graphmlServices/generateDataGraphml.php?runId=".$runId."&scope=grp'>group report</a>";
+	$seeIndVisAction = "<a href='/src/php/pages/runReport.php?runId=".$runId."&scope=ind'>individual report</a>"; 
+	$seeGrpVisAction = "<a href='/src/php/pages/runReport.php?runId=".$runId."&scope=grp'>group report</a>";
 	
 	$actions = "";
 	if (!$isPublished){
