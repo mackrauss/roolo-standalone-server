@@ -37,7 +37,7 @@ $scope = $_REQUEST['scope'];
 	attributes.align = "middle";
 	swfobject.embedSWF(
 		"/rep/PhysicsVis.swf", "flashContent", 
-		"100%", "1024", 
+		"1024", "1024", 
 		swfVersionStr, xiSwfUrlStr, 
 		flashvars, params, attributes
 	);
@@ -56,14 +56,14 @@ $scope = $_REQUEST['scope'];
 		</script> 
 </div>
     	<noscript>
-         <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="1024" id="PhysicsVis">
+         <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1024" height="1024" id="PhysicsVis">
              <param name="movie" value="PhysicsVis.swf" />
              <param name="quality" value="high" />
              <param name="bgcolor" value="#ffffff" />
              <param name="allowScriptAccess" value="sameDomain" />
              <param name="allowFullScreen" value="true" />
              <!--[if !IE]>-->
-        <object type="application/x-shockwave-flash" data="PhysicsVis.swf" width="100%" height="1024">
+        <object type="application/x-shockwave-flash" data="PhysicsVis.swf" width="1024" height="1024">
             <param name="quality" value="high" />
             <param name="bgcolor" value="#ffffff" />
             <param name="allowScriptAccess" value="sameDomain" />
