@@ -48,7 +48,6 @@ foreach ($solutions as $curSolution){
  */
 $correctAnswerLetter = $problem->mcmastersolution;
 ?>
-
 <graphml xmlns='http://graphml.graphdrawing.org/xmlns' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd'>
 	<key id='dn0' for='node' attr.name='answer' attr.type='string' />
 	<key id='dn1' for='node' attr.name='frequency' attr.type='int' />
@@ -58,12 +57,14 @@ $correctAnswerLetter = $problem->mcmastersolution;
 
 <?php 
 $loopCount = 1;
-foreach ($answerMap as $answerLetter => $answerCount){
-	$answerIsCorrect = $correctAnswerLetter == $answerLetter ? '1' : '0';  
+$letters = array('A', 'B', 'C', 'D', 'E');
+foreach ($letters as $curLetter){
+	$answerCount = isset($answerMap[$curLetter]) ? $answerMap[$curLetter] : 0;
+	$answerIsCorrect = $correctAnswerLetter == $curLetter ? '1' : '0';
 ?>
 
 	<node id='<?= $loopCount ?>'>
-		<data key='dn0'><?= $answerLetter ?></data>
+		<data key='dn0'><?= $curLetter ?></data>
 		<data key='dn1'><?= $answerCount?></data>
 		<data key='dn2'><?= $answerIsCorrect?></data>
 	</node>
@@ -75,3 +76,7 @@ foreach ($answerMap as $answerLetter => $answerCount){
 
 	</graph>
 </graphml>
+
+
+
+

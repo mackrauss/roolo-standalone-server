@@ -52,7 +52,8 @@ foreach ($elements as $curElement){
 											'A' => 0, 
 											'B' => 0,
 											'C' => 0,
-											'D' => 0);
+											'D' => 0,
+											'E' => 0);
 }
 
 foreach ($solutions as $curSolution){
@@ -71,6 +72,7 @@ foreach ($solutions as $curSolution){
 	<key id='dn2' for='node' attr.name='B' attr.type='int'/>
 	<key id='dn3' for='node' attr.name='C' attr.type='int'/>
 	<key id='dn4' for='node' attr.name='D' attr.type='int'/>
+	<key id='dn5' for='node' attr.name='E' attr.type='int'/>
 		
 	<graph id='G' edgedefault='undirected'>
 <?php
@@ -83,6 +85,7 @@ foreach ($elementAnswersMap as $elementName => $answerLetterMap){
 		<data key='dn2'><?= $answerLetterMap['B']?></data>
 		<data key='dn3'><?= $answerLetterMap['C']?></data>
 		<data key='dn4'><?= $answerLetterMap['D']?></data>
+		<data key='dn5'><?= $answerLetterMap['E']?></data>
 	</node>	
 <?php
 	$loopCount++;

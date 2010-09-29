@@ -101,17 +101,24 @@ foreach ($problems as $curProblem){
 		 
 		foreach ($curElements as $curElement){
 			$convertedElementId = convertToId($curElement);
-			$elementsCountMap[$convertedElementId] = isset($elementsCountMap[$convertedElementId]) ? $elementsCountMap[$convertedElementId] + 1 : 1;
+			
+			if (!isset($elementsCountMap[$convertedElementId])){
+				$elementsCountMap[$convertedElementId] = array('count' => 1, 'name' => trim($curElement));
+			}else{
+				$elementsCountMap[$convertedElementId]['count']++;
+			}
 		}
 	}
 	
-	foreach ($elementsCountMap as $elementId => $elementCount){
+	foreach ($elementsCountMap as $elementId => $elementData){
+		$elementCount = $elementData['count'];
+		$elementName = $elementData['name'];
 		$elementNodeId = $elementId.$problemIdx;
 		$edgeId = $curProblemNodeId.'-'.$elementNodeId;
 ?>
 <node id='<?= $elementNodeId ?>'>
 	<data key='dn0'>group</data>
-	<data key='dn1'><?= $curElement ?></data>
+	<data key='dn1'><?= $elementName ?></data>
 	<data key='dn2'></data>
 </node>
 
