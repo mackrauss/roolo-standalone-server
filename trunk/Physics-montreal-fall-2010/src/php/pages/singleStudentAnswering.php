@@ -460,7 +460,7 @@ if ($totalResults != 0){
 										<?php 
 											}
 										?>		 								
-								</select>
+								</select><br/>
 					<?php 
 						}
 					?>
