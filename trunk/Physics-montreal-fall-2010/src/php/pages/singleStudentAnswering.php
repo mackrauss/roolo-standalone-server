@@ -43,7 +43,7 @@ $username = $_SESSION['username'];
 $runId = $_SESSION['runId'];
 $greetingMsg = "Signed in as <b> " . $username . "</b>";
 $noMoreProblemMsg1 = 'Great job completing this step!';
-$noMoreProblemMsg2 = 'You will be logged out in 10 seconds. Please log in again with your group ID.';
+$noMoreProblemMsg2 = 'You will be logged out in 10 seconds.';
 
 //if(isset($_GET['username'])){
 //	$_SESSION['username'] = $_GET['username'];
@@ -371,6 +371,7 @@ if ($totalResults != 0){
 		minutes = 4; 
 		$('#count').text( minutes + ":" + seconds + "time left"); 
 		$('#timer').show();
+		clearTimeout(timer);
 		countDown(); 
 	}		
 	
@@ -407,7 +408,7 @@ if ($totalResults != 0){
 
 <div id="nextQuestionMsgDiv" style="display:none">
 
-	<label><h3>Please wait for instructions from your teacher.</label>
+	<label><h3>Please continue to the next question when you're ready.</label>
 	<input name="nextQuestion" value="Next Question" type="button" onClick="nextQuestion(); scroll(0,0);" />
 </div>
 
