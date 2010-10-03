@@ -36,46 +36,53 @@ function createNewRun(){
 }
 </script>
 
-<h2>Create New Run</h2>
-
-<table>
-	<tr>
-		<td>Run Version</td>
-		<td>
-			<select id='runVersion'>
-				<option value='1'>1</option>
-				<option value='2'>2</option>
-				<option value='3'>3</option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>Run Class</td>
-		<td>
-			<select id='runClass'>
-				<option value='1'>1</option>
-				<option value='2'>2</option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>Available choices up to</td>
-		<td>
-			<select id='runChoices'>
-				<option value='A'>A</option>
-				<option value='B'>B</option>
-				<option value='C'>C</option>
-				<option value='D'>D</option>
-				<option value='E'>E</option>
-				<option value='F'>F</option>
-				<option value='G'>G</option>
-				<option value='H'>H</option>
-			</select>
-		</td>
-	</tr>
-</table>
-
-<input type='button' value='Create Run' onclick='createNewRun()' /> 
+<div id='contentFrame'>
+	<div style='float: left; width: 100%; font-size: 14px; margin-bottom: 10px;'>
+		<a href='/src/php/pages/runAuthoring.php'>&lt; Back to main page</a>
+	</div>
+	
+	<h2>Create New Run</h2>
+	
+	<table>
+		<tr>
+			<td>Run Version</td>
+			<td>
+				<select id='runVersion'>
+					<option value='1'>1</option>
+					<option value='2'>2</option>
+					<option value='3'>3</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Run Class</td>
+			<td>
+				<select id='runClass'>
+					<option value='1'>1</option>
+					<option value='2'>2</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Available choices up to</td>
+			<td>
+				<select id='runChoices'>
+					<option value='A'>A</option>
+					<option value='B'>B</option>
+					<option value='C'>C</option>
+					<option value='D'>D</option>
+					<option value='E'>E</option>
+					<option value='F'>F</option>
+					<option value='G'>G</option>
+					<option value='H'>H</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	
+	<input type='button' value='Create Run' onclick='createNewRun()' />
+</div>
+ 
 <?php 
 require_once './footer.php';
 ?>
