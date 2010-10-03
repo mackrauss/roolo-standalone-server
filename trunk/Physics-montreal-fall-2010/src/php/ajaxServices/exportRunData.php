@@ -127,5 +127,6 @@ $msg->Attach($csvPath, 'text/plain');
 $msg->Attach($xmlPath, 'text/xml');
 
 $SendSuccess = $msg->Send();
+echo $SendSuccess;
 
 echo "SUCCESS";
