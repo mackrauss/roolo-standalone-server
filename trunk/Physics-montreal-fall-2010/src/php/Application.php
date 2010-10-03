@@ -68,26 +68,12 @@ class Application {
 	public static $numChoicesPerProblem = 4;
 	public static $problemChoices = array("a", "b", "c", "d", "e", "f", "g");
 	public static $problemCategories = array(
-		"Newton First Law",
-		"Newton Second Law",
-		"Newton Third Law",
-		"Net Force",
-		"Collision",
-		"1 Dimensional",
-		"2 Dimensional",
-		"Conservation of Energy",
-		"Conservation of Momentum",
-		"Work",
-		"Linear Acceleration",
-		"Centripetal Acceleration",
-		"Elastic Potential Energy",
-		"Gravitational Potential Energy",
-		"Kinetic Energy",
-		"Friction",
-		"Force",
-		"Displacement",
-		"Velocity",
-		"Center of Mass");
+		"Newton 1st Law",
+		"Newton 2nd Law",
+		"Newton 3rd Law",
+		"One body problem",
+		"Multiple body problem"
+	);
 	
 
 	public static $forumulas = array(
@@ -306,10 +292,53 @@ class Application {
 		"physicsgroup1411",
 		"physicsgroup1511"
 	);
+	
+	
+	public static $studentCredentials = array (
+		"MelissaA",
+		"ElmehdiB",
+		"SammyB",
+		"EllaB",
+		"LisaB",
+		"MichaelD",
+		"GabrielleD",
+		"YasmineD",
+		"SophyD",
+		"AlexandreD",
+		"GabrielleE",
+		"ShannonE",
+		"HannahF",
+		"YuxiaG",
+		"JonathanI",
+		"XavierJ",
+		"JoelleK",
+		"AaronK",
+		"JessicaM",
+		"JenniferM",
+		"MassimoM",
+		"MikhailM",
+		"Elyssa-MariaN",
+		"MyleneP",
+		"NathanielP",
+		"CassandraP",
+		"EkaterinaR",
+		"JathushaS",
+		"RainierS",
+		"LaurenS",
+		"NoamS",
+		"BachirS",
+		"VictorS",
+		"VictorT",
+		"YannickT",
+		"CoryW"
+	);
+	
+
+	
 	public static $dropdownsItems = array(
-		'relationship' => array('Select one item', 'Linear Relationship', 'Quadratic Relationship', 'Inverse Relationship'),
-		'force' => array('Select one item', 'Forces on a slope', 'Breaking and Friction'),
-		'movement' => array('Select one item', 'Velocity 2', 'Acceleration', 'Free Fall')
+		'Acceleration' => array('Acceleration', 'Zero', 'Non-zero constant', 'Non-constant'),
+		'Net force' => array('Net force', 'Fnet=0', 'Fnet=non-zero constant', 'Fnet = non-constant'),
+		'Forces' => array('Forces', 'Weight', 'Normal', 'Static friction', 'Kinetic friction', 'Tension', 'Other')
 	);
 	
 	

@@ -6,6 +6,8 @@ $_SESSION['password'] = $_REQUEST['password'];
 $_SESSION['runId'] = $_REQUEST['runId'];
 $runId = $_SESSION['runId'];
 
+require_once '../Application.php';
+
 $url = "http://localhost:8070/webapp/j_acegi_security_check";
 //$url = "http://localhost:8080/webapp/j_acegi_security_check";
 //$url = "http://iitp.dawsoncollege.qc.ca:8080/webapp/j_acegi_security_check"; 
@@ -25,8 +27,11 @@ $msg = "The username or password you entered is incorrect.";
 //
 //$notMember = strstr($result, "failed=true") || trim($result) == '';
 
-
-$notMember = false;
+if (!in_array($_SESSION['username'], Application::$studentCredentials) || $_SESSION['password'] !== "dawson"){
+	$notMember = true;
+}else {
+	$notMember = false;
+}
 
 if($notMember){
 	$_SESSION['msg'] = $msg;
