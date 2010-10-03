@@ -2,13 +2,18 @@
 session_start();
 
 header('Content-type: text/xml');
-$runId = $_REQUEST['runId'];
-$scope = $_REQUEST['scope'];
-$problemName = $_REQUEST['qId'];
 
 require_once '../RooloClient.php';
 require_once '../Application.php';
 require_once '../CommonFunctions.php';
+
+/*
+ * Get params
+ */
+$runId = $_REQUEST['runId'];
+$scope = $_REQUEST['scope'];
+$problemName = $_REQUEST['qId'];
+
 
 $rooloClient = new RooloClient();
 
