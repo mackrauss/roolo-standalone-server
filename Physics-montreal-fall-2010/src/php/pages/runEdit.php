@@ -123,11 +123,11 @@ function deleteQuestion(uri){
 			Answer: <?= $curSolution ?>
 			<br/>
 	<?php 
-		if (!$isPublished){
+			if (!$isPublished){
 	?>
 			<a onclick="deleteQuestion('<?= $curUri?>')" style='cursor:pointer;'>delete</a>
 	<?php 
-		}
+			}
 	?>
 		</div>	
 	<?php 
