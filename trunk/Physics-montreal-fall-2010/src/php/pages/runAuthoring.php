@@ -157,18 +157,11 @@ function setupTestEnvironment(){
 function exportRunData(exportLink){
 	var runId = $(exportLink).attr('runId');
 
-	email = prompt("Please enter an email address that the data package will be sent to");
+//	email = prompt("Please enter an email address that the data package will be sent to");
 
-	$.get('/src/php/ajaxServices/exportRunData.php', {runId: runId, email: email}, function(data){
+	$.get('/src/php/ajaxServices/exportRunData.php', {runId: runId}, function(data){
 		data = data.trim();
-		var message = '';
-		if (data == 'SUCCESS'){
-			message = 'Email has been sent to your inbox.';
-		}else{
-			message = 'The email could not be sent. Please consult an administrator';
-		}
-
-		alert(message);
+		window.location.href = data;
 	});
 }
 

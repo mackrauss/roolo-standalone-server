@@ -5,13 +5,14 @@ require_once '../RooloClient.php';
 require_once '../CommonFunctions.php';
 require_once '../dataModels/RunConfig.php';
 require_once '../class.Email.php';
+require_once '../pclzip.lib.php';
 
 
 /*
  * Get Params
  */
 $runId = $_REQUEST['runId'];
-$email = $_REQUEST['email'];
+//$email = $_REQUEST['email'];
 
 /*
  * Setup variables
@@ -79,9 +80,6 @@ foreach ($runElosArray as $curEloArray){
 $elosCsv = trim($elosCsv);
 $elosXml = trim($elosXml);
 
-//echo $elosCsv;
-//echo $elosXml;
-
 /*
  * Create export data directory 
  */
@@ -110,23 +108,44 @@ fwrite($fh, $elosXml);
 fclose($fh);
 
 /*
+ * Zip up all the files along with the run's problem directory 
+ */
+$zipName = "$runId.zip";
+$zipPath = $dirPath."/".$zipName;
+$zipfile = new PclZip($zipPath);
+$v_list = $zipfile->create(array(
+	$csvPath, 
+	$xmlPath, 
+	$appRoot.'/problems/'.$runId
+));
+if ($v_list == 0) {
+	die ("Error: " . $zipfile->errorInfo(true));
+}
+
+echo "/exportedData/$zipName";
+
+//header("Content-type: application/octet-stream");
+//header("Content-disposition: attachment; filename=$zipName");
+//readfile($zipPath);
+
+/*
  * Setup and send email, attaching the CSV and XML files to it
  */
-$Recipiant = $email;
-$Subject = "Exported Dawson Run Data for ".$runId;
-$Sender = 'data@dawsoncollege.qc.ca';
-$Cc = '';
-$Bcc = '';
-
-$msg = new Email($Recipiant, $Sender, $Subject); 
-$msg->Cc = $Cc;
-$msg->Bcc = $Bcc;
-$msg->TextOnly = false;
-$msg->Content = "Please find the data files attached";
-$msg->Attach($csvPath, 'text/plain');
-$msg->Attach($xmlPath, 'text/xml');
-
-$SendSuccess = $msg->Send();
-echo $SendSuccess;
-
-echo "SUCCESS";
+//$Recipiant = $email;
+//$Subject = "Exported Dawson Run Data for ".$runId;
+//$Sender = 'data@dawsoncollege.qc.ca';
+//$Cc = '';
+//$Bcc = '';
+//
+//$msg = new Email($Recipiant, $Sender, $Subject); 
+//$msg->Cc = $Cc;
+//$msg->Bcc = $Bcc;
+//$msg->TextOnly = false;
+//$msg->Content = "Please find the data files attached";
+//$msg->Attach($csvPath, 'text/plain');
+//$msg->Attach($xmlPath, 'text/xml');
+//
+//$SendSuccess = $msg->Send();
+//echo $SendSuccess;
+//
+//echo "SUCCESS";
