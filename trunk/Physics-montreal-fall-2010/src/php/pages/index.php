@@ -48,8 +48,9 @@ $runConfigs = $roolo->search('type:RunConfig AND runpublished: 1', 'metadata', '
 				<option value=''>Select a run</option>
 			<?php 
 			foreach ($runConfigs as $curRunConfig){
+				$curRunName = $curRunConfig->runName;
 				$curRunId = $curRunConfig->runid;
-				echo "<option value='$curRunId'>$curRunId</option>";
+				echo "<option value='$curRunId'>$curRunName</option>";
 			}
 			?>
 			</select>

@@ -80,6 +80,12 @@ function deleteQuestion(uri){
 	
 	<table>
 		<tr>
+			<td>Run Name</td>
+			<td>
+				<?= $runConfig->runName ?>
+			</td>
+		</tr>
+		<tr>
 			<td>Run Version</td>
 			<td>
 				<?= $runConfig->runVersion ?>

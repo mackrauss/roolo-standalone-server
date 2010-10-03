@@ -14,7 +14,8 @@ class RunConfig extends Elo {
 	 *	$name="runClass" 
 	 *	$name="runId" 
 	 *	$name="runChoiceLimit" 
-	 *	$name="runPublished" 
+	 *	$name="runPublished"
+	 *  $name="runName"
 	 */
 	public function __set($name, $value) {
 		$name = strtolower($name);

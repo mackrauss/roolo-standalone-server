@@ -28,26 +28,26 @@ $savedTpXml = $roolo->addElo($tp);
  * create Runs
  */
 /********************* V1_C1 ***********************/
-$runId = createRun(1, 1, 'C');
+$runId = createRun("TestRun 1_1", 1, 1, 'C');
 createMcProblem($runId, $testProblemsPath.'/v1_c1/v1c1_q1.png', 'B', $roolo);
 createMcProblem($runId, $testProblemsPath.'/v1_c1/v1c1_q2.png', 'C', $roolo);
 createLongProblem($runId, $testProblemsPath.'/v1_c1/v1c1_longq1.png', $roolo);
 
 /********************* V1_C2 ***********************/
-$runId = createRun(1, 2, 'D');
+$runId = createRun("TestRun 1_2", 1, 2, 'D');
 createMcProblem($runId, $testProblemsPath.'/v1_c2/v1c2_q1.png', 'D', $roolo);
 createMcProblem($runId, $testProblemsPath.'/v1_c2/v1c2_q2.png', 'A', $roolo);
 createLongProblem($runId, $testProblemsPath.'/v1_c2/v1c2_longq1.png', $roolo);
 
 /********************* V2_C1 ***********************/
-$runId = createRun(2, 1, 'E');
+$runId = createRun("TestRun 2_1", 2, 1, 'E');
 createMcProblem($runId, $testProblemsPath.'/v2_c1/v2_q1.png', 'C', $roolo);
 createMcProblem($runId, $testProblemsPath.'/v2_c1/v2_q2.png', 'E', $roolo);
 createMcProblem($runId, $testProblemsPath.'/v2_c1/v2_q3.png', 'B', $roolo);
 createLongProblem($runId, $testProblemsPath.'/v2_c1/v2_longq1.png', $roolo);
 
 /********************* V3_C1 ***********************/
-$runId = createRun(3, 1, 'F');
+$runId = createRun("TestRun 3_1", 3, 1, 'F');
 createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q1.png', 'C', $roolo);
 createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q2.png', 'C', $roolo);
 createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q3.png', 'C', $roolo);
@@ -128,7 +128,8 @@ function createLongProblem($runId, $imagePath, $roolo){
 	$roolo->addElo($problem);
 }
 
-function createRun($version, $class, $choiceLimit){
+function createRun($name, $version, $class, $choiceLimit){
+	$_REQUEST['runName'] = $name;
 	$_REQUEST['runVersion'] = $version;
 	$_REQUEST['runClass'] = $class;
 	$_REQUEST['runChoices'] = $choiceLimit;

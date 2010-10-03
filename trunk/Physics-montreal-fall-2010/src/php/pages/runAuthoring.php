@@ -194,6 +194,7 @@ function deleteRun(deleteLink){
 <table id='currentRunsTable'>
 	<tr>
 		<th class='nobg'>ID</th>
+		<th class='nobg'>NAME</th>
 		<th class='nobg'>Version</th>
 		<th class='nobg'>Class</th>
 		<th class='nobg'>Created On</th>
@@ -204,6 +205,7 @@ function deleteRun(deleteLink){
 // columns: runId, runVersion, runClass, created on, actions (edit, delete, publish, export data)
 foreach ($runConfigs as $curRunConfig){
 	$runId = $curRunConfig->runid;
+	$runName = $curRunConfig->runname;
 	$runVersion = $curRunConfig->runversion;
 	$runClass = $curRunConfig->runclass;
 	$createdOn = date("F j, Y, g:i a",$curRunConfig->datecreated/1000);//$curRunConfig->datecreated;//date("F j, Y, g:i a", 35631076);// //date("F j, Y, g:i a", );
@@ -230,6 +232,7 @@ foreach ($runConfigs as $curRunConfig){
 	echo 
 	"<tr>
 		<td>$runId</td>
+		<td>$runName</td>
 		<td>$runVersion</td>
 		<td>$runClass</td>
 		<td>$createdOn</td>

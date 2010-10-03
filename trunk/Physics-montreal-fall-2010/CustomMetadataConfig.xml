@@ -264,4 +264,12 @@
         <tokenized    value="UNTOKENIZED" />
         <validator    value="null" />
     </MetadataKey>
+    <MetadataKey class="roolo.elo.metadata.keys.StringMetadataKey">
+        <id         value="runname" />
+        <xPath         value="/runname" />
+        <i18n         value="UNIVERSAL" />
+        <count        value="SINGLE" />
+        <tokenized    value="UNTOKENIZED" />
+        <validator    value="null" />
+    </MetadataKey>
 </MetadataKeys>
