@@ -193,6 +193,15 @@ class Elo implements XMLSupported{
 		echo $this->generateXml();
 	}
 	
+	public function toArray(){
+		$returnArray = array();
+		
+		$returnArray = $this->_metadata;
+		$returnArray['content'] = $this->_content;
+		
+		return $returnArray;
+	}
+	
 	/**
 	 * @return unknown
 	 */
