@@ -142,10 +142,13 @@ function resetApplication(){
 		$.get('/src/php/ajaxServices/resetApplication.php', {}, function(data){
 			window.location.reload();
 		});
+
+		$('input[type=button]').attr("disabled", true);
 	}
 }
 
 function setupTestEnvironment(){
+	$('input[type=button]').attr("disabled", true);
 	$.get('/src/php/ajaxServices/setupTestEnvironment.php', {}, function(data){
 		window.location.reload();
 	});
@@ -157,7 +160,15 @@ function exportRunData(exportLink){
 	email = prompt("Please enter an email address that the data package will be sent to");
 
 	$.get('/src/php/ajaxServices/exportRunData.php', {runId: runId, email: email}, function(data){
-		window.location.reload();
+		data = data.trim();
+		var message = '';
+		if (data == 'SUCCESS'){
+			message = 'Email has been sent to your inbox.';
+		}else{
+			message = 'The email could not be sent. Please consult an administrator';
+		}
+
+		alert(message);
 	});
 }
 
@@ -199,17 +210,21 @@ foreach ($runConfigs as $curRunConfig){
 	$runStatus = $isPublished ? 'Published' : 'Awaiting Publication';
 	
 	$editAction = "<a href='/src/php/pages/runEdit.php?runId=$runId'>edit</a>";
+	$seeAction = "<a href='/src/php/pages/runEdit.php?runId=$runId'>see</a>";
 	$publishAction = "<a onclick='publishRun(this);' runId='$runId'>publish</a>";
 	$deleteAction = "<a onclick='deleteRun(this)' runId='$runId'>delete</a>";
 	$exportAction = "<a onclick='exportRunData(this)' runId='$runId'>export data</a>";
 	$seeIndVisAction = "<a href='/src/php/pages/runReport.php?runId=".$runId."&scope=ind'>individual report</a>"; 
 	$seeGrpVisAction = "<a href='/src/php/pages/runReport.php?runId=".$runId."&scope=grp'>group report</a>";
+	$seeLqReport = "<a href='/src/php/pages/groupReportLongQuestion.php?runId=$runId' target='_blank'>long question report</a>";
 	
 	$actions = "";
 	if (!$isPublished){
 		$actions .= $editAction .' | '. $publishAction .' | ';
+	}else{
+		$actions .= $seeAction . ' | ';
 	}
-	$actions .= $deleteAction .' | '. $exportAction .'<br/>'. $seeIndVisAction . ' | ' . $seeGrpVisAction;
+	$actions .= $deleteAction .' | '. $exportAction .'<br/>'. $seeIndVisAction . ' | ' . $seeGrpVisAction . ' | ' . $seeLqReport;
 	
 	echo 
 	"<tr>
