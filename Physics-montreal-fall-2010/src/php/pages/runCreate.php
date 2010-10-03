@@ -21,11 +21,17 @@ $username = $_SESSION['username'];
 <script type="text/javascript">
 function createNewRun(){
 	//make ajax call to create new run
+	var runName = $('#runName').val();
 	var runVersion = $('#runVersion').val();
 	var runClass = $('#runClass').val();
 	var runChoices = $('#runChoices').val();
 
-	$.getJSON('/src/php/ajaxServices/createNewRun.php', {runVersion: runVersion, runClass:runClass, runChoices: runChoices}, function(data){
+	if (runName.trim() == ''){
+		alert('Please give this run a name');
+		return;
+	}
+
+	$.getJSON('/src/php/ajaxServices/createNewRun.php', {runName: runName, runVersion: runVersion, runClass:runClass, runChoices: runChoices}, function(data){
 		var generatedRunId = data.runId;
 		if (generatedRunId != null){
 			window.location.href = '/src/php/pages/runEdit.php?runId='+generatedRunId;
@@ -44,6 +50,12 @@ function createNewRun(){
 	<h2>Create New Run</h2>
 	
 	<table>
+		<tr>
+			<td>Run Name</td>
+			<td>
+				<input type="text" id='runName' />
+			</td>
+		</tr>
 		<tr>
 			<td>Run Version</td>
 			<td>

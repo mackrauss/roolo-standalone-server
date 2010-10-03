@@ -9,6 +9,7 @@ error_reporting(E_ALL | E_STRICT);
 
 $rooloClient = new RooloClient();
 
+$runName = $_REQUEST['runName'];
 $runVersion = $_REQUEST['runVersion'];
 $runClass = $_REQUEST['runClass'];
 $runChoices = $_REQUEST['runChoices'];
@@ -40,6 +41,7 @@ for($i=0; $i < $idx; $i++){
 }
 $allChoices .= Application::$letters[$idx];
 $runConfig = new RunConfig();
+$runConfig->runName = $runName;
 $runConfig->runVersion = $runVersion;
 $runConfig->runClass = $runClass;
 $runConfig->runId = $generatedRunId;
