@@ -122,7 +122,13 @@ function deleteQuestion(uri){
 			<br/>
 			Answer: <?= $curSolution ?>
 			<br/>
+	<?php 
+		if (!$isPublished){
+	?>
 			<a onclick="deleteQuestion('<?= $curUri?>')" style='cursor:pointer;'>delete</a>
+	<?php 
+		}
+	?>
 		</div>	
 	<?php 
 		}
@@ -170,7 +176,13 @@ function deleteQuestion(uri){
 				<img width="100px" height="100px" src="<?= $curImagePath?>" problemUri="<?= $curUri?>" />
 			</a>
 			<br/> 
+	<?php 
+		if (!$isPublished){
+	?>
 			<a onclick="deleteQuestion('<?= $curUri?>')" style='cursor:pointer;'>delete</a>
+	<?php 
+		}
+	?>
 		</div>	
 	<?php 
 		}
