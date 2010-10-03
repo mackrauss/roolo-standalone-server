@@ -189,6 +189,7 @@ function deleteRun(deleteLink){
 }
 </script>
 
+<div id='mainContainer' style='height: 600px;'>
 <h2>Current Runs</h2>
 <table id='currentRunsTable'>
 	<tr>
@@ -241,10 +242,12 @@ foreach ($runConfigs as $curRunConfig){
 
 </table>
 
+
 <input type='button' onclick="window.location.href='/src/php/pages/runCreate.php';" value='Create New Run' />
 <input type='button' onclick="resetApplication();" value='Reset Application' />
 <input type='button' onclick="setupTestEnvironment();" value='Setup Test Environment'/>
 
+</div>
 <?php 
 require_once './footer.php';
 ?>
