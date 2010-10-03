@@ -6,5 +6,3 @@ interface XMLSupported {
 	
 	public function buildFromXML($eloXML=null);
 }
-
-?> 
