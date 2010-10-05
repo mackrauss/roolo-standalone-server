@@ -1,9 +1,5 @@
 <?php
-//if (!$_SESSION['loggedIn']){
-//	header("Location:/src/php/pages/");
-//}
-
-require_once './header.php';
+require_once './adminHeader.php';
 require_once '../RooloClient.php';
 require_once '../dataModels/Problem.php';
 require_once '../dataModels/Principle.php';

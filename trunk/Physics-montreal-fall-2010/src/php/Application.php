@@ -293,55 +293,74 @@ class Application {
 		"physicsgroup1511"
 	);
 	
-	
-	public static $studentCredentials = array (
-		"MelissaA",
-		"ElmehdiB",
-		"SammyB",
-		"EllaB",
-		"LisaB",
-		"MichaelD",
-		"GabrielleD",
-		"YasmineD",
-		"SophyD",
-		"AlexandreD",
-		"GabrielleE",
-		"ShannonE",
-		"HannahF",
-		"YuxiaG",
-		"JonathanI",
-		"XavierJ",
-		"JoelleK",
-		"AaronK",
-		"JessicaM",
-		"JenniferM",
-		"MassimoM",
-		"MikhailM",
-		"Elyssa-MariaN",
-		"MyleneP",
-		"NathanielP",
-		"CassandraP",
-		"EkaterinaR",
-		"JathushaS",
-		"RainierS",
-		"LaurenS",
-		"NoamS",
-		"BachirS",
-		"VictorS",
-		"VictorT",
-		"YannickT",
-		"CoryW"
-	);
-	
-
-	
 	public static $dropdownsItems = array(
-		'Acceleration' => array('Acceleration', 'Zero', 'Non-zero constant', 'Non-constant'),
-		'Net force' => array('Net force', 'Fnet=0', 'Fnet=non-zero constant', 'Fnet = non-constant'),
-		'Forces' => array('Forces', 'Weight', 'Normal', 'Static friction', 'Kinetic friction', 'Tension', 'Other')
+		'Acceleration' => array('Select one...', 'Acceleration', 'Zero', 'Non-zero constant', 'Non-constant'),
+		'Net force' => array('Select one...', 'Net force', 'Fnet=0', 'Fnet=non-zero constant', 'Fnet = non-constant'),
+		'Forces' => array('Select one...', 'Forces', 'Weight', 'Normal', 'Static friction', 'Kinetic friction', 'Tension', 'Other')
 	);
-	
 	
 	public static $letters = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","W","X","Y","Z");
+	
+	/*
+	 * username => {
+	 *     'password' => ... ,
+	 *     'class' => ... 
+	 * }
+	 */
+	public static $users = array(
+		"MelissaA" => array('password' => 'Dawson', 'class' => '1'),
+		"ElmehdiB" => array('password' => 'Dawson', 'class' => '1'),
+		"SammyB" => array('password' => 'Dawson', 'class' => '1'),
+		"EllaB" => array('password' => 'Dawson', 'class' => '1'),
+		"LisaB" => array('password' => 'Dawson', 'class' => '1'),
+		"MichaelD" => array('password' => 'Dawson', 'class' => '1'),
+		"GabrielleD" => array('password' => 'Dawson', 'class' => '1'),
+		"YasmineD" => array('password' => 'Dawson', 'class' => '1'),
+		"SophyD" => array('password' => 'Dawson', 'class' => '1'),
+		"AlexandreD" => array('password' => 'Dawson', 'class' => '1'),
+		"GabrielleE" => array('password' => 'Dawson', 'class' => '1'),
+		"ShannonE" => array('password' => 'Dawson', 'class' => '1'),
+		"HannahF" => array('password' => 'Dawson', 'class' => '1'),
+		"YuxiaG" => array('password' => 'Dawson', 'class' => '1'),
+		"JonathanI" => array('password' => 'Dawson', 'class' => '1'),
+		"XavierJ" => array('password' => 'Dawson', 'class' => '1'),
+		"JoelleK" => array('password' => 'Dawson', 'class' => '1'),
+		"AaronK" => array('password' => 'Dawson', 'class' => '1'),
+		"JessicaM" => array('password' => 'Dawson', 'class' => '1'),
+		"JenniferM" => array('password' => 'Dawson', 'class' => '1'),
+		"MassimoM" => array('password' => 'Dawson', 'class' => '1'),
+		"MikhailM" => array('password' => 'Dawson', 'class' => '1'),
+		"Elyssa-MariaN" => array('password' => 'Dawson', 'class' => '1'),
+		"MyleneP" => array('password' => 'Dawson', 'class' => '1'),
+		"NathanielP" => array('password' => 'Dawson', 'class' => '1'),
+		"CassandraP" => array('password' => 'Dawson', 'class' => '1'),
+		"EkaterinaR" => array('password' => 'Dawson', 'class' => '1'),
+		"JathushaS" => array('password' => 'Dawson', 'class' => '1'),
+		"RainierS" => array('password' => 'Dawson', 'class' => '1'),
+		"LaurenS" => array('password' => 'Dawson', 'class' => '1'),
+		"NoamS" => array('password' => 'Dawson', 'class' => '1'),
+		"BachirS" => array('password' => 'Dawson', 'class' => '1'),
+		"VictorS" => array('password' => 'Dawson', 'class' => '1'),
+		"VictorT" => array('password' => 'Dawson', 'class' => '1'),
+		"YannickT" => array('password' => 'Dawson', 'class' => '1'),
+		"CoryW" => array('password' => 'Dawson', 'class' => '1')
+	);
+	
+	public static $userGroups = array(
+		"group1" => array('password' => 'DawsonGroup', 'class' => '1'),
+		"group2" => array('password' => 'DawsonGroup', 'class' => '1'),
+		"group3" => array('password' => 'DawsonGroup', 'class' => '1'),
+		"group4" => array('password' => 'DawsonGroup', 'class' => '1'),
+		"group5" => array('password' => 'DawsonGroup', 'class' => '1'),
+		"group6" => array('password' => 'DawsonGroup', 'class' => '1'),
+		"group7" => array('password' => 'DawsonGroup', 'class' => '1'),
+		"group8" => array('password' => 'DawsonGroup', 'class' => '1'),
+		"group9" => array('password' => 'DawsonGroup', 'class' => '1'),
+		"group10" => array('password' => 'DawsonGroup', 'class' => '1')
+	);
+	
+	public static $admins = array(
+		"teacher" => array('password' => 'DawsonTeacher')
+	);
 }
 ?>
