@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['loggedIn']) || $_SESSION['memberType'] != 'admin') {
+	header("Location:/src/php/pages/");
+}
+
 
 $runId = $_REQUEST['runId'];
 $scope = $_REQUEST['scope'];

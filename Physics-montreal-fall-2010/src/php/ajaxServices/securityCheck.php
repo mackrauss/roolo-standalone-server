@@ -1,19 +1,20 @@
 <?php
 session_start();
 
+require_once '../Application.php';
+
 $_SESSION['username'] = $_REQUEST['username'];
 $_SESSION['password'] = $_REQUEST['password'];
 $_SESSION['runId'] = $_REQUEST['runId'];
-$runId = $_SESSION['runId'];
-
-require_once '../Application.php';
+$runId = $_REQUEST['runId'];
 
 $url = "http://localhost:8070/webapp/j_acegi_security_check";
 //$url = "http://localhost:8080/webapp/j_acegi_security_check";
 //$url = "http://iitp.dawsoncollege.qc.ca:8080/webapp/j_acegi_security_check"; 
 
-$msg = "The username or password you entered is incorrect.";
-
+/*
+ * Check with the portal if the user credentials are valid
+ */
 // create a new cURL resource
 //$ch = curl_init($url);
 //curl_setopt($ch, CURLOPT_POST, 1);
@@ -27,32 +28,79 @@ $msg = "The username or password you entered is incorrect.";
 //
 //$notMember = strstr($result, "failed=true") || trim($result) == '';
 
-if (!in_array($_SESSION['username'], Application::$studentCredentials) || $_SESSION['password'] !== "dawson"){
-	$notMember = true;
-}else {
-	$notMember = false;
+/*
+ * Check with Application.php if user credentials are valid
+ */
+$notMember = true;
+$memberType = '';
+
+// check if this is a valid user
+$username = $_SESSION['username'];
+if (isset(Application::$users[$username])){
+	$realPassword = Application::$users[$username]['password'];
+	if ($realPassword == $_SESSION['password']){
+		$notMember = false;
+		$memberType = 'user';
+	}
 }
 
-if($notMember){
-	$_SESSION['msg'] = $msg;
-	header("Location:/src/php/pages/");
-}else{
-	$_SESSION['loggedIn'] = TRUE;
-	if ($_SESSION['username'] === "teacher"){
-		header("Location:/src/php/pages/runAuthoring.php");
-		die();
+// if not recorgnized as a user, check if this is a valid group
+if ($notMember){
+	if (isset(Application::$userGroups[$username])){
+		$realPassword = Application::$userGroups[$username]['password'];
+		if ($realPassword == $_SESSION['password']){
+			$notMember = false;
+			$memberType = 'group';
+		}
+	}	
+}
+
+// if not recognized yet, check if this is a valid admin
+if ($notMember){
+	if (isset(Application::$admins[$username])){
+		$realPassword = Application::$admins[$username]['password'];
+		if ($realPassword == $_SESSION['password']){
+			$notMember = false;
+			$memberType = 'admin';
+		}
+	}	
+}
+
+
+$logUserIn = false;
+$forward = '';
+
+if ($memberType == 'user'){
+	if (isRunIdValid($runId)){
+		$logUserIn = true;
+		$forward = '/src/php/pages/singleStudentAnswering.php';
 	}
 	
-	if ($runId !== null && $runId !== "" && strlen($runId) == 5){
-		if (strstr($_SESSION['username'], "group")){
-			header("Location:/src/php/pages/groupAnswering.php");
-		}else if (strstr($_SESSION['username'], "pair")){
-			header("Location:/src/php/pages/singleStudentAnswering.php");
-		}else {
-			header("Location:/src/php/pages/singleStudentAnswering.php");
-		}
-	}else {
-		header("Location:/src/php/pages/");
+}elseif ($memberType == 'group'){
+	if (isRunIdValid($runId)){
+		$logUserIn = true;
+		$forward = '/src/php/pages/groupAnswering.php';
 	}
+	
+}elseif ($memberType == 'admin'){
+	$logUserIn = true;
+	$forward = '/src/php/pages/runAuthoring.php';
 }
-?>
+
+
+if ($logUserIn){
+	logInUserSession($memberType);
+	header("Location:$forward");
+}else{
+	header("Location:/src/php/pages/");
+}
+
+
+function isRunIdValid($runId){
+	return $runId !== null && $runId !== "" && strlen($runId) == 5;
+}
+
+function logInUserSession($memberType){
+	$_SESSION['loggedIn'] = TRUE;
+	$_SESSION['memberType'] = $memberType;
+}
