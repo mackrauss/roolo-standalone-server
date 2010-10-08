@@ -268,9 +268,12 @@ if ($totalResults != 0){
 		$(".box").attr('checked', false);
 					
 		//reset dropDown boxes
-		for( i=1; i <= selectTagLength; i++){
-			$("#select" + i ).val(0);
-		}
+//		for( i=1; i <= selectTagLength; i++){
+//			$("#select" + i).each(function(idx){
+//				console.log(this);
+//			});
+//		}
+		$('#round1').get(0).reset();
 
 		// Delete the question which was shown and its URI from the arrays
 		questions.splice(counter,1);
@@ -457,7 +460,7 @@ if ($totalResults != 0){
 										<?php 
 											foreach ($dropdownItems as $item) {
 										?>
-												<option><?= $item?></option>
+												<option ><?= $item?></option>
 										<?php 
 											}
 										?>		 								
