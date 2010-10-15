@@ -343,7 +343,9 @@ class Application {
 		"VictorS" => array('password' => 'Dawson', 'class' => '1'),
 		"VictorT" => array('password' => 'Dawson', 'class' => '1'),
 		"YannickT" => array('password' => 'Dawson', 'class' => '1'),
-		"CoryW" => array('password' => 'Dawson', 'class' => '1')
+		"CoryW" => array('password' => 'Dawson', 'class' => '1'),
+		"Tester1" => array('password' => 'tester', 'class' => '1'),
+		"Tester2" => array('password' => 'tester', 'class' => '1')
 	);
 	
 	public static $userGroups = array(
