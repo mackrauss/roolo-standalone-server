@@ -344,8 +344,35 @@ class Application {
 		"VictorT" => array('password' => 'Dawson', 'class' => '1'),
 		"YannickT" => array('password' => 'Dawson', 'class' => '1'),
 		"CoryW" => array('password' => 'Dawson', 'class' => '1'),
+	
 		"Tester1" => array('password' => 'tester', 'class' => '1'),
-		"Tester2" => array('password' => 'tester', 'class' => '1')
+		"Tester2" => array('password' => 'tester', 'class' => '1'),
+	
+		"test1" => array('password' => 'tester', 'class' => '1'),
+		"test2" => array('password' => 'tester', 'class' => '1'),
+		"test3" => array('password' => 'tester', 'class' => '1'),
+		"test4" => array('password' => 'tester', 'class' => '1'),
+		"test5" => array('password' => 'tester', 'class' => '1'),
+		"test6" => array('password' => 'tester', 'class' => '1'),
+		"test7" => array('password' => 'tester', 'class' => '1'),
+		"test8" => array('password' => 'tester', 'class' => '1'),
+		"test9" => array('password' => 'tester', 'class' => '1'),
+		"test10" => array('password' => 'tester', 'class' => '1'),
+		"test11" => array('password' => 'tester', 'class' => '1'),
+		"test12" => array('password' => 'tester', 'class' => '1'),
+		"test13" => array('password' => 'tester', 'class' => '1'),
+		"test14" => array('password' => 'tester', 'class' => '1'),
+		"test15" => array('password' => 'tester', 'class' => '1'),
+		"test17" => array('password' => 'tester', 'class' => '1'),
+		"test18" => array('password' => 'tester', 'class' => '1'),
+		"test19" => array('password' => 'tester', 'class' => '1'),
+		"test20" => array('password' => 'tester', 'class' => '1'),
+		"test21" => array('password' => 'tester', 'class' => '1'),
+		"test22" => array('password' => 'tester', 'class' => '1'),
+		"test23" => array('password' => 'tester', 'class' => '1'),
+		"test24" => array('password' => 'tester', 'class' => '1'),
+		"test25" => array('password' => 'tester', 'class' => '1'),
+		"test26" => array('password' => 'tester', 'class' => '1')
 	);
 	
 	public static $userGroups = array(
@@ -358,7 +385,15 @@ class Application {
 		"group7" => array('password' => 'DawsonGroup', 'class' => '1'),
 		"group8" => array('password' => 'DawsonGroup', 'class' => '1'),
 		"group9" => array('password' => 'DawsonGroup', 'class' => '1'),
-		"group10" => array('password' => 'DawsonGroup', 'class' => '1')
+		"group10" => array('password' => 'DawsonGroup', 'class' => '1'),
+		
+		"groupTest1" => array('password' => 'tester', 'class' => '1'),
+		"groupTest2" => array('password' => 'tester', 'class' => '1'),
+		"groupTest3" => array('password' => 'tester', 'class' => '1'),
+		"groupTest4" => array('password' => 'tester', 'class' => '1'),
+		"groupTest5" => array('password' => 'tester', 'class' => '1'),
+		"groupTest6" => array('password' => 'tester', 'class' => '1'),
+		"groupTest7" => array('password' => 'tester', 'class' => '1')
 	);
 	
 	public static $admins = array(
