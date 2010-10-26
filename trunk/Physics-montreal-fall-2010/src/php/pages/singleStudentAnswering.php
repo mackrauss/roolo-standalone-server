@@ -127,13 +127,13 @@ if ($totalResults != 0){
 
 	var randomIndex = 0;
 
-	var seconds = 01; 
-	var minutes = 4;  
+//	var seconds = 01; 
+//	var minutes = 4;  
 	var flag = "false";
 
-	//to reset setTimeOut
-	var timer;
-	var timer_is_On = true;
+//	//to reset setTimeOut
+//	var timer;
+//	var timer_is_On = true;
 
 	$(document).ready(function(){
 
@@ -157,37 +157,37 @@ if ($totalResults != 0){
 
 			$('#curQuestion').attr('src', questions[randomIndex]);
 			$('#questionHeading').html('<p><b>Question ' + curQuestionNum + ' of ' + numQuestion + '</b></p>');
-			$('#timerValue').text( minutes + ":" + seconds );
-			$('#timer').show();
-			countDown(); 
+//			$('#timerValue').text( minutes + ":" + seconds );
+//			$('#timer').show();
+//			countDown(); 
 		}
 	});
 
-	// this function counts the time down from 4:00 to 0:0
-	function countDown(){ 
-		if (seconds <= 0 || minutes <= -1){
-			
-			if (seconds <= 0){ 
-				    seconds = 59; 
-				    minutes -= 1; 
-			} 
-			if (minutes <= -1){ 
-			    seconds = 0; 
-			    minutes += 1; 
-				timer_is_On = false;
-			    clearTimeout(timer); 
-			    saveQuestion();
-			}
-		}else{ 
-			seconds -= 1;
-		} 
-		if (seconds < 10)
-			$('#timerValue').text( minutes + ":0" + seconds ); 
-		else
-			$('#timerValue').text( minutes + ":" + seconds ); 
-		if (timer_is_On)
-			timer = setTimeout("countDown()",1000); 
-	 }
+//	// this function counts the time down from 4:00 to 0:0
+//	function countDown(){ 
+//		if (seconds <= 0 || minutes <= -1){
+//			
+//			if (seconds <= 0){ 
+//				    seconds = 59; 
+//				    minutes -= 1; 
+//			} 
+//			if (minutes <= -1){ 
+//			    seconds = 0; 
+//			    minutes += 1; 
+//				timer_is_On = false;
+//			    clearTimeout(timer); 
+//			    saveQuestion();
+//			}
+//		}else{ 
+//			seconds -= 1;
+//		} 
+//		if (seconds < 10)
+//			$('#timerValue').text( minutes + ":0" + seconds ); 
+//		else
+//			$('#timerValue').text( minutes + ":" + seconds ); 
+//		if (timer_is_On)
+//			timer = setTimeout("countDown()",1000); 
+//	 }
 
 	 function delay (){
 		setTimeout ("loginPage()", 10000);
@@ -205,7 +205,7 @@ if ($totalResults != 0){
 		$('#submitBtn').attr('disabled', 'disabled');
 
 		//disable page and show message for next question
-		$('#timer').hide();
+//		$('#timer').hide();
 		$('#middle-top').hide();
 		$('#middle-center').hide();
 		$('#middle-bottom').hide();
@@ -303,11 +303,7 @@ if ($totalResults != 0){
 //			//hide the elements answer part and show the MC and Rarionale part 
 //			$('#mc').show('slow');
 //			$('#elements').hide('slow');
-			
-//			seconds = 01; 
-//			minutes = 4; 
-//			$('#count').text( minutes + ":" + seconds + "time left"); 
-
+		
 		} else{
 
 			logout();
@@ -368,14 +364,14 @@ if ($totalResults != 0){
 		$('#elements').hide('slow');
 		$('#mc').show('slow');
 	
-		//set the clock for next question
-		timer_is_On = true;
-		seconds = 01; 
-		minutes = 4; 
-		$('#count').text( minutes + ":" + seconds + "time left"); 
-		$('#timer').show();
-		clearTimeout(timer);
-		countDown(); 
+//		//set the clock for next question
+//		timer_is_On = true;
+//		seconds = 01; 
+//		minutes = 4; 
+//		$('#count').text( minutes + ":" + seconds + "time left"); 
+//		$('#timer').show();
+//		clearTimeout(timer);
+//		countDown(); 
 	}		
 	
 </script>
@@ -401,11 +397,10 @@ if ($totalResults != 0){
 
 <div id="middle-top">
 	<div id="questionHeading"><p><b></b></p></div>
-<!--	<div id="timer" style='display: none'>-->
-	<div id="timer">
-    	<p>TIME REMAINING</p>
-    	<h1 id='timerValue'></h1>
-  	</div>
+<!--	<div id="timer">-->
+<!--    	<p>TIME REMAINING</p>-->
+<!--    	<h1 id='timerValue'></h1>-->
+<!--  	</div>-->
 	
 </div>
 
