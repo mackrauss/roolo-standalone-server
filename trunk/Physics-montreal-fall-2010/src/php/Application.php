@@ -294,9 +294,9 @@ class Application {
 	);
 	
 	public static $dropdownsItems = array(
-		'Acceleration' => array('Select one...', 'Acceleration', 'Zero', 'Non-zero constant', 'Non-constant'),
-		'Net force' => array('Select one...', 'Net force', 'Fnet=0', 'Fnet=non-zero constant', 'Fnet = non-constant'),
-		'Forces' => array('Select one...', 'Forces', 'Weight', 'Normal', 'Static friction', 'Kinetic friction', 'Tension', 'Other')
+		'Acceleration' => array('Acceleration', 'Zero', 'Non-zero constant', 'Non-constant'),
+		'Net force' => array('Net force', 'Fnet=0', 'Fnet=non-zero constant', 'Fnet = non-constant'),
+		'Forces' => array('Forces', 'Weight', 'Normal', 'Static friction', 'Kinetic friction', 'Tension', 'Other')
 	);
 	
 	public static $letters = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","W","X","Y","Z");
