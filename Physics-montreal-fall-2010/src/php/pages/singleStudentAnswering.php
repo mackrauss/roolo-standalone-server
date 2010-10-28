@@ -214,22 +214,16 @@ if ($totalResults != 0){
 //		clearTimeout(timer);
 
 		//select the selected item in dropdowns
-		var selectTagLength = $("#selectPart").find("select").length;
-		var selectedOptions = new Array();
-		
-		for( i=1; i <= selectTagLength; i++){
-			if ($("#select" + i ).attr("selectedIndex") != 0){
-				selectedOptions.push($("#select" + i ).text($("#select" + i + " option:selected")));
-			}
-		}
-		
+		var options = $("#selectPart").find("input[type:'radio']:checked").map(function(){
+			   return $(this).val();
+		}).get().join(", ");
+
 		var counter = $('#counter').val();
 		var selectedChoice = $("input[name='choice']:checked").val();
 		var selectedCategory = new Array();
 		$("input[name='categoryArray[]']:checked").each(function() {selectedCategory.push($(this).val());});
 		var reason = $('#rationale').val();
 		var category = selectedCategory.join(', ');
-		var options = selectedOptions.join(', ');
 
 		var categoryAndOptions;
 		if (category != '' && options != '' )
@@ -260,6 +254,7 @@ if ($totalResults != 0){
 
 		//uncheck radiobuttons
 		$("input[name='choice']:checked").attr("checked", false);
+		$("input[type='radio']:checked").attr("checked", false);
 
 		//Clean the rationale textArea
 		$('#rationale').val('');
@@ -303,7 +298,11 @@ if ($totalResults != 0){
 //			//hide the elements answer part and show the MC and Rarionale part 
 //			$('#mc').show('slow');
 //			$('#elements').hide('slow');
-		
+			
+//			seconds = 01; 
+//			minutes = 4; 
+//			$('#count').text( minutes + ":" + seconds + "time left"); 
+
 		} else{
 
 			logout();
@@ -448,18 +447,18 @@ if ($totalResults != 0){
 			  	<dd id="selectPart">
 			  		<?php 
 			  			$i = 0;
-						foreach (Application::$dropdownsItems as $dropdownItems) {
+						foreach (Application::$dropdownsItems as $dropdownItemsKey => $dropdownItems) {
 								$i++;
+								echo "<b>" . $dropdownItemsKey. "</b> <br/>";
 					?>
-								<select id="select<?= $i?>"  name="<?= $dropdownsItems?>">
-										<?php 
-											foreach ($dropdownItems as $item) {
-										?>
-												<option ><?= $item?></option>
-										<?php 
-											}
-										?>		 								
-								</select><br/>
+								<?php 
+									for ($j=1; $j < sizeof($dropdownItems); $j++){
+								?>
+										<input type="radio" name="<?= $dropdownItemsKey?>" value="<?= $dropdownItems[$j]?>" /> <?= $dropdownItems[$j] ?> <br/>
+								<?php 
+									}
+								?>
+								<br/>
 					<?php 
 						}
 					?>

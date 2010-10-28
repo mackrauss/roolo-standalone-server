@@ -322,8 +322,8 @@ for($i=0; $i<sizeof($problems); $i++){
 		
 			$('#curQuestion').attr('src', questions[randomIndex]);
 			$('#questionHeading').html('<p><b>Question ' + curQuestionNum + ' of ' + numQuestion + '</b></p>');
-			$('#timerValue').text( minutes + ":" + seconds );
-			$('#timer').show();
+//			$('#timerValue').text( minutes + ":" + seconds );
+//			$('#timer').show();
 //			countDown(); 
 		}
 	});
@@ -375,14 +375,9 @@ for($i=0; $i<sizeof($problems); $i++){
 //		clearTimeout(timer);
 
 		//select the selected item in dropdowns
-		var selectTagLength = $("#selectPart").find("select").length;
-		var selectedOptions = new Array();
-		
-		for( i=1; i <= selectTagLength; i++){
-			if ($("#select" + i ).attr("selectedIndex") != 0){
-				selectedOptions.push($("#select" + i ).text($("#select" + i + " option:selected")));
-			}
-		}
+		var options = $("#selectPart").find("input[type:'radio']:checked").map(function(){
+			   return $(this).val();
+		}).get().join(", ");
 		
 		var counter = $('#counter').val();
 		var selectedChoice = $("input[name='choice']:checked").val();
@@ -390,7 +385,6 @@ for($i=0; $i<sizeof($problems); $i++){
 		$("input[name='categoryArray[]']:checked").each(function() {selectedCategory.push($(this).val());});
 		var reason = $('#rationale').val();
 		var category = selectedCategory.join(', ');
-		var options = selectedOptions.join(', ');
 
 		var categoryAndOptions;
 		if (category != '' && options != '' )
@@ -421,6 +415,7 @@ for($i=0; $i<sizeof($problems); $i++){
 
 		//uncheck radiobuttons
 		$("input[name='choice']:checked").attr("checked", false);
+		$("input[type='radio']:checked").attr("checked", false);
 
 		//Clean the rationale textArea
 		$('#rationale').val('');
@@ -429,9 +424,9 @@ for($i=0; $i<sizeof($problems); $i++){
 		$(".box").attr('checked', false);
 					
 		//reset dropDown boxes
-		for( i=1; i <= selectTagLength; i++){
-			$("#select" + i ).val(0);
-		}
+//		for( i=1; i <= selectTagLength; i++){
+//			$("#select" + i ).val(0);
+//		}
 
 		// Delete the question which was shown and its URI from the arrays
 		questions.splice(counter,1);
@@ -606,18 +601,18 @@ for($i=0; $i<sizeof($problems); $i++){
 			  	<dd id="selectPart">
 			  		<?php 
 			  			$i = 0;
-						foreach (Application::$dropdownsItems as $dropdownItems) {
+						foreach (Application::$dropdownsItems as $dropdownItemsKey => $dropdownItems) {
 								$i++;
+								echo "<b>" . $dropdownItemsKey. "</b> <br/>";
 					?>
-								<select id="select<?= $i?>" >
-										<?php 
-											foreach ($dropdownItems as $item) {
-										?>
-												<option><?= $item?></option>
-										<?php 
-											}
-										?>		 								
-								</select>
+								<?php 
+									for ($j=1; $j < sizeof($dropdownItems); $j++){
+								?>
+										<input type="radio" name="<?= $dropdownItemsKey?>" value="<?= $dropdownItems[$j]?>" /> <?= $dropdownItems[$j] ?> <br/>
+								<?php 
+									}
+								?>
+								<br/>
 					<?php 
 						}
 					?>
