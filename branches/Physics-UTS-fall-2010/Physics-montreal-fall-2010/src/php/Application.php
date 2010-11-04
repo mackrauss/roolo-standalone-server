@@ -435,7 +435,7 @@ class Application {
 	);
 	
 	public static $admins = array(
-		"teacher" => array('password' => 'DawsonTeacher')
+		"teacher" => array('password' => 'UTSTeach')
 	);
 }
 ?>
