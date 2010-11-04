@@ -617,7 +617,7 @@ for($i=0; $i<sizeof($problems); $i++){
 						}
 					?>
 			 	</dd>
-			 	<dt> 3. Provide a reasoning for the elements that you chose above: </dt>			  	
+			 	<dt> 3. Provide a reasoning for the answer that you chose above:  </dt>			  	
 				<textarea id="rationale" rows="20" cols="40"></textarea>		  
 			 	
 			  	<input name="submit2" type="button" value="SUBMIT" class="btn" onClick="check(); scroll(0,0);" />
