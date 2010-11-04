@@ -136,7 +136,7 @@ function resetApplication(){
 	var resetConfirmed = confirm('Are you sure you want to delete the whole contents of the application?');
 	if (resetConfirmed){
 		$.get('/src/php/ajaxServices/resetApplication.php', {}, function(data){
-//			window.location.reload();
+			window.location.reload();
 		});
 
 		$('input[type=button]').attr("disabled", true);
@@ -146,7 +146,7 @@ function resetApplication(){
 function setupTestEnvironment(){
 	$('input[type=button]').attr("disabled", true);
 	$.get('/src/php/ajaxServices/setupTestEnvironment.php', {}, function(data){
-//		window.location.reload();
+		window.location.reload();
 	});
 }
 
