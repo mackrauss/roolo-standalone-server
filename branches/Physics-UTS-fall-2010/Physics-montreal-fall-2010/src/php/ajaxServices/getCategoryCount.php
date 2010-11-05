@@ -118,7 +118,7 @@ foreach ($solutions as $curSolution){
 	$cleanedRationale = $curSolution->rationale;
 	
 	$rationales[] = array(
-		'author' => $curSolution->get_author(),
+		'author' => '',
 		'text' => $cleanedRationale 
 	);
 }
