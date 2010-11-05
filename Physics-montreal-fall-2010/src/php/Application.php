@@ -414,16 +414,16 @@ class Application {
 	);
 	
 	public static $userGroups = array(
-		"group1" => array('password' => 'DawsonGroup', 'class' => '1'),
-		"group2" => array('password' => 'DawsonGroup', 'class' => '1'),
-		"group3" => array('password' => 'DawsonGroup', 'class' => '1'),
-		"group4" => array('password' => 'DawsonGroup', 'class' => '1'),
-		"group5" => array('password' => 'DawsonGroup', 'class' => '1'),
-		"group6" => array('password' => 'DawsonGroup', 'class' => '1'),
-		"group7" => array('password' => 'DawsonGroup', 'class' => '1'),
-		"group8" => array('password' => 'DawsonGroup', 'class' => '1'),
-		"group9" => array('password' => 'DawsonGroup', 'class' => '1'),
-		"group10" => array('password' => 'DawsonGroup', 'class' => '1'),
+		"group1" => array('password' => 'UTStudent', 'class' => '1'),
+		"group2" => array('password' => 'UTStudent', 'class' => '1'),
+		"group3" => array('password' => 'UTStudent', 'class' => '1'),
+		"group4" => array('password' => 'UTStudent', 'class' => '1'),
+		"group5" => array('password' => 'UTStudent', 'class' => '1'),
+		"group6" => array('password' => 'UTStudent', 'class' => '1'),
+		"group7" => array('password' => 'UTStudent', 'class' => '1'),
+		"group8" => array('password' => 'UTStudent', 'class' => '1'),
+		"group9" => array('password' => 'UTStudent', 'class' => '1'),
+		"group10" => array('password' => 'UTStudent', 'class' => '1'),
 		
 		"groupTest1" => array('password' => 'tester', 'class' => '1'),
 		"groupTest2" => array('password' => 'tester', 'class' => '1'),
