@@ -270,7 +270,7 @@ for($i=0; $i<sizeof($problems); $i++){
 			curRationale = rationales[i];
 			rationaleDiv = 	"<div style='float: left; width: 80%; margin-bottom: 5px;'>"+ 
 							curRationale.text +
-							"<span style='margin-left: 5px; font-size: 10;'> -"+
+							"<span style='margin-left: 5px; font-size: 10;'>"+
 							curRationale.author +
 							"</span></div>";
 
