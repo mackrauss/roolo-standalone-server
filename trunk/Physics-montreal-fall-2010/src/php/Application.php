@@ -85,7 +85,7 @@ class Application {
 		"Kinetic energy",
 		"Gravitational potential energy",
 		"Total Work is delta K",
-		"Other Work is delta K2 plus delta U"
+		"Other Work is delta K plus delta U"
 	);
 	
 
