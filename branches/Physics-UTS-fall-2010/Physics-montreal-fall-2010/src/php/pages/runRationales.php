@@ -220,6 +220,9 @@ catChart.draw(data, {
 
 
 <div id="middle-center" >
+	<div style='float: left; width: 100%;'>
+		<a href='/src/php/pages/runAuthoring.php'> &lt; Back to main page</a>
+	</div>
 	<select name='problemSelector' id='problemSelector' onchange='selectProblem();'>
 	<?php 
 		foreach ($allProblems as $curProblem){
