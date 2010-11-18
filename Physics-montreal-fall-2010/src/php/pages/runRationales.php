@@ -54,6 +54,17 @@ $problem = $problem[0];
 $solutionQuery = "type:Solution AND owneruri:". $rooloClient->escapeSearchTerm($problemUri) ." AND runid:" . $runId;
 $solutions = $rooloClient->search($solutionQuery, 'metadata');
 
+/*
+ * Extract individual solutions 
+ */
+$filteredSolutions = array();
+foreach($solutions as $curSolution){
+	if (strstr($curSolution->author, 'group') === FALSE){
+		$filteredSolutions[] = $curSolution;
+	}
+}
+$solutions = $filteredSolutions;
+
 $mcCounter = array();
 // input all default choices (A,B,...) & set value to 0
 foreach ($choicesArray as $curChoice){
