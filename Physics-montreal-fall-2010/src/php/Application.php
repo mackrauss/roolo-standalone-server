@@ -67,12 +67,25 @@ class Application {
 	public static $numProblemsForPhaseB = 3;
 	public static $numChoicesPerProblem = 4;
 	public static $problemChoices = array("a", "b", "c", "d", "e", "f", "g");
+//	public static $problemCategories = array(
+//		"Newton 1st Law",
+//		"Newton 2nd Law",
+//		"Newton 3rd Law",
+//		"One body problem",
+//		"Multiple body problem"
+//	);
+
 	public static $problemCategories = array(
-		"Newton 1st Law",
-		"Newton 2nd Law",
-		"Newton 3rd Law",
-		"One body problem",
-		"Multiple body problem"
+		"Height",
+		"Compression - spring",
+		"Mass",
+		"Gravity",
+		"Direction",
+		"Speed",
+		"Kinetic energy",
+		"Gravitational potential energy",
+		"Total Work is delta K",
+		"Other Work is delta K2 plus delta U"
 	);
 	
 
@@ -294,9 +307,9 @@ class Application {
 	);
 	
 	public static $dropdownsItems = array(
-		'Acceleration' => array('Acceleration', 'Zero', 'Non-zero constant', 'Non-constant'),
-		'Net force' => array('Net force', 'Fnet=0', 'Fnet=non-zero constant', 'Fnet = non-constant'),
-		'Forces' => array('Forces', 'Weight', 'Normal', 'Static friction', 'Kinetic friction', 'Tension', 'Other')
+//		'Acceleration' => array('Acceleration', 'Zero', 'Non-zero constant', 'Non-constant'),
+//		'Net force' => array('Net force', 'Fnet=0', 'Fnet=non-zero constant', 'Fnet = non-constant'),
+//		'Forces' => array('Forces', 'Weight', 'Normal', 'Static friction', 'Kinetic friction', 'Tension', 'Other')
 	);
 	
 	public static $letters = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","W","X","Y","Z");
