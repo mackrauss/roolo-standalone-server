@@ -209,14 +209,14 @@ foreach ($runConfigs as $curRunConfig){
 	$seeIndVisAction = "<a href='/src/php/pages/runReport.php?runId=".$runId."&scope=ind'>individual report</a>"; 
 	$seeGrpVisAction = "<a href='/src/php/pages/runReport.php?runId=".$runId."&scope=grp'>group report</a>";
 	$seeLqReport = "<a href='/src/php/pages/groupReportLongQuestion.php?runId=$runId' target='_blank'>long question report</a>";
-	
+	$seeIndRationalesAction = "<a href='/src/php/pages/runRationales.php?runId=".$runId."&scope=ind'>Individual rationales</a>";
 	$actions = "";
 	if (!$isPublished){
 		$actions .= $editAction .' | '. $publishAction .' | ';
 	}else{
 		$actions .= $seeAction . ' | ';
 	}
-	$actions .= $deleteAction .' | '. $exportAction .'<br/>'. $seeIndVisAction . ' | ' . $seeGrpVisAction . ' | ' . $seeLqReport;
+	$actions .= $deleteAction .' | '. $exportAction .'<br/>'. $seeIndVisAction . ' | ' . $seeGrpVisAction . ' | ' . $seeLqReport . ' | ' . $seeIndRationalesAction;
 	
 	echo 
 	"<tr>
