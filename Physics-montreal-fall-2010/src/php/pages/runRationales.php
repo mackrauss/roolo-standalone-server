@@ -218,7 +218,7 @@ catChart.draw(data, {
 </style>
 
 
-<div style='float: left; width: 100%;'>
+<div style='float: left; width: 100%; margin-top: 10px; margin-bottom: 20px; '>
 	<a href='/src/php/pages/runAuthoring.php'> &lt; Back to main page</a>
 </div>
 <div id="middle-center" >
