@@ -178,13 +178,13 @@ function deleteRun(deleteLink){
 }
 </script>
 
-<div id='mainContainer' style='height: 600px;'>
+<div id='mainContainer' style='height: 1000px;'>
 <h2>Current Runs</h2>
 <table id='currentRunsTable'>
 	<tr>
 		<th class='nobg'>ID</th>
 		<th class='nobg'>NAME</th>
-		<th class='nobg'>Version</th>
+		<!-- <th class='nobg'>Version</th>  -->
 		<th class='nobg'>Class</th>
 		<th class='nobg'>Created On</th>
 		<th class='nobg'>Status</th>
@@ -209,20 +209,26 @@ foreach ($runConfigs as $curRunConfig){
 	$seeIndVisAction = "<a href='/src/php/pages/runReport.php?runId=".$runId."&scope=ind'>individual report</a>"; 
 	$seeGrpVisAction = "<a href='/src/php/pages/runReport.php?runId=".$runId."&scope=grp'>group report</a>";
 	$seeLqReport = "<a href='/src/php/pages/groupReportLongQuestion.php?runId=$runId' target='_blank'>long question report</a>";
-	$seeIndRationalesAction = "<a href='/src/php/pages/runRationales.php?runId=".$runId."&scope=ind'>Individual rationales</a>";
+	$seeIndRationalesAction = "<a href='/src/php/pages/runRationales.php?runId=".$runId."&scope=ind'>Rationales Report</a>";
+	$seeMainVizAction = "<a href='/src/php/pages/runReport.php?runId=$runId'>Main Report</a>";
+	
 	$actions = "";
 	if (!$isPublished){
 		$actions .= $editAction .' | '. $publishAction .' | ';
 	}else{
 		$actions .= $seeAction . ' | ';
 	}
-	$actions .= $deleteAction .' | '. $exportAction .'<br/>'. $seeIndVisAction . ' | ' . $seeGrpVisAction . ' | ' . $seeLqReport . ' | ' . $seeIndRationalesAction;
+	$actions .= "$deleteAction |  $exportAction <br/> 
+					<ul>
+						<li>$seeMainVizAction</li>
+						<li>$seeIndRationalesAction</li>
+					</ul>";
 	
 	echo 
 	"<tr>
 		<td>$runId</td>
 		<td>$runName</td>
-		<td>$runVersion</td>
+		<!-- <td>$runVersion</td>  -->
 		<td>$runClass</td>
 		<td>$createdOn</td>
 		<td>$runStatus</td>

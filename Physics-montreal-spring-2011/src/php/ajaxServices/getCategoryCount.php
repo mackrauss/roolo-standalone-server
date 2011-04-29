@@ -106,11 +106,15 @@ foreach ($solutions as $curSolution){
 	if (trim($curSolution->category) != ''){
 		$curCats = explode(",", trim($curSolution->category));
 		foreach ($curCats as $curCat){
+			
 			$curCat = trim($curCat);
 			
-			$catCounter[$curCat] += 1;	
+			if ($curCat != '' and $curCat != 'undefined'){
+				$catCounter[$curCat] += 1;
+			}	
 		}
 	}
+	
 	
 	/*
 	 * Get rationales

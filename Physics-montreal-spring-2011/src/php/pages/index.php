@@ -1,5 +1,7 @@
 <?php
 
+header('Location:/index.php');
+
 require_once './header.php';
 require_once '../RooloClient.php';
 require_once '../graphmlServices/GraphML.php';

@@ -81,12 +81,14 @@ function deleteQuestion(uri){
 				<?= $runConfig->runName ?>
 			</td>
 		</tr>
+		<!-- 
 		<tr>
 			<td>Run Version</td>
 			<td>
 				<?= $runConfig->runVersion ?>
 			</td>
 		</tr>
+		 -->
 		<tr>
 			<td>Run Class</td>
 			<td>
@@ -116,6 +118,7 @@ function deleteQuestion(uri){
 			$curUri = $curProblem->uri;
 			$curImagePath = $curProblem->path;
 			$curSolution = $curProblem->mcmastersolution;
+			$curBestWrongSolution = $curProblem->bestwrongsolution;
 	?>
 		<div style='float: left; margin-left: 20px;'>
 			<a href="<?= $curImagePath?>" target="_blank">
@@ -123,6 +126,8 @@ function deleteQuestion(uri){
 			</a>
 			<br/>
 			Answer: <?= $curSolution ?>
+			<br/>
+			Best Wrong Solution: <?= $curBestWrongSolution ?>
 			<br/>
 	<?php 
 			if (!$isPublished){
@@ -146,6 +151,19 @@ function deleteQuestion(uri){
 				Question: <input type="file" name="mcQuestionFile" id="mcQuestionFile" /> <br/>
 				Correct Answer: 
 				<select name="mcQuestionAnswer" id='mcQuestionAnswer'>
+	<?php
+			 $runChoiceLimit = $runConfig->runchoicelimit;
+			 $runChoices = explode(',', $runChoiceLimit);
+			 
+			 foreach ($runChoices as $letter){
+			 	echo "<option value='$letter'>$letter</option>";
+			 }
+	?>
+				</select> 
+				<br/>
+				
+				Best Wrong Answer: 
+				<select name="mcQuestionBestWrongAnswer" id='mcQuestionBestWrongAnswer'>
 	<?php
 			 $runChoiceLimit = $runConfig->runchoicelimit;
 			 $runChoices = explode(',', $runChoiceLimit);

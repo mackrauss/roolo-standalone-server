@@ -113,6 +113,14 @@
         <validator    value="null" />
     </MetadataKey>
     <MetadataKey class="roolo.elo.metadata.keys.StringMetadataKey">
+        <id        	  value="bestwrongsolution" />
+        <xPath        value="/bestwrongsolution" />
+        <i18n         value="UNIVERSAL" />
+        <count        value="SINGLE" />
+        <tokenized    value="UNTOKENIZED" />
+        <validator    value="null" />
+    </MetadataKey>
+    <MetadataKey class="roolo.elo.metadata.keys.StringMetadataKey">
         <id         value="path" />
         <xPath         value="/path" />
         <i18n         value="UNIVERSAL" />

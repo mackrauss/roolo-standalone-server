@@ -360,5 +360,26 @@ class Elo implements XMLSupported{
     	$len = $end - $start;
 		return substr($content, $start, $len );
     }
-	
+
+	public function __set($name, $value) {
+		switch($name) {
+          	case 'content': 
+        		$this->setContent($value);
+        		break;
+        	default:
+        		$this->addMetadata($name, $value);
+        }
+	}
+
+    public function __get($name) {
+    	switch ($name){
+    		case 'content':
+        		$value = $this->getContent();
+        		break;
+        	default:
+			   	$value = $this->getMetadata($name);
+    	}
+		return $value;
+    }
+    
 }

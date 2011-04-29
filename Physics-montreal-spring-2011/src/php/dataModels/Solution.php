@@ -3,8 +3,8 @@ require_once dirname(__FILE__).'/Elo.php';
 
 class Solution extends Elo {
 	
-	private $_pathTypesArray = array("urlPath", "uriPath", "diskPath");
-	private $_solutionTypesArray =  array("multipleChoice", "written", "uploaded");
+	protected $_pathTypesArray = array("urlPath", "uriPath", "diskPath");
+	protected $_solutionTypesArray =  array("multipleChoice", "written", "uploaded");
 
 	public function __construct($xml=null){
 		parent::__construct($xml);

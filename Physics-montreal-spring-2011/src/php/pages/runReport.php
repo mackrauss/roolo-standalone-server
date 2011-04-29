@@ -7,8 +7,6 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['memberType'] != 'admin') {
 
 
 $runId = $_REQUEST['runId'];
-$scope = $_REQUEST['scope'];
-
 
 ?>
 <html>
@@ -29,7 +27,7 @@ $scope = $_REQUEST['scope'];
 			params.bgcolor = "#ffffff";
 			params.allowscriptaccess = "sameDomain";
 			params.allowfullscreen = "true";
-			params.FlashVars = "graphml_url=http://<?= $_SERVER['HTTP_HOST']?>&run_id=<?= $runId ?>&scope=<?= $scope ?>";
+			params.FlashVars = "graphml_url=http://<?= $_SERVER['HTTP_HOST']?>&run_id=<?= $runId ?>";
 			var attributes = {};
 			attributes.id = "PhysicsVis";
 			attributes.name = "PhysicsVis";
@@ -62,13 +60,13 @@ $scope = $_REQUEST['scope'];
 		</div>
     	<noscript>
 		         <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1024" height="1024" id="PhysicsVis">
-		             <param name="movie" value="PhysicsVis.swf" />
+		             <param name="movie" value="PhysicsVisDemo.swf" />
 		             <param name="quality" value="high" />
 		             <param name="bgcolor" value="#ffffff" />
 		             <param name="allowScriptAccess" value="sameDomain" />
 		             <param name="allowFullScreen" value="true" />
 		             <!--[if !IE]>-->
-		        <object type="application/x-shockwave-flash" data="PhysicsVis.swf" width="1024" height="1024">
+		        <object type="application/x-shockwave-flash" data="PhysicsVisDemo.swf" width="1024" height="1024">
 		            <param name="quality" value="high" />
 		            <param name="bgcolor" value="#ffffff" />
 		            <param name="allowScriptAccess" value="sameDomain" />

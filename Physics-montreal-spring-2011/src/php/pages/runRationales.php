@@ -140,8 +140,7 @@ function drawChart() {
 		{
 			problemUri:questionUri,
 			mcChoice:selectedMc,
-			runId:"<?= $runId ?>",
-			mode:"<?= $mode ?>"
+			runId:"<?= $runId ?>"
 		},
   		function(data){
 	  		data = eval('('+data+')');
