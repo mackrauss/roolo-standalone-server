@@ -90,7 +90,7 @@ Welcome to Dawson
 						<img src='/resources/images/physics-button.png' style='border: none; cursor: pointer; margin-top: 10px; margin-bottom: 10px;'
 							onclick="startRun()"/>
 							
-						<a href="http://rollcall.proto.encorelab.org/login?destination=http://dawson/src/php/ajaxServices/securityCheck.php">I'm a teacher</a>
+						<a href="http://rollcall.proto.encorelab.org/login?destination=http://dalite.oise.utoronto.ca/src/php/ajaxServices/securityCheck.php">I'm a teacher</a>
 					</form>
 				</td>
 				<td class='desc'> Learn the relationship between physics problems and their underlying concepts through tagging, answering and reflecting on your reasoning. </td>
