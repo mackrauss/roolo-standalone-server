@@ -24,7 +24,7 @@ $runConfigs = $roolo->search('type:RunConfig AND runpublished: 1', 'metadata', '
 				return;
 			}
 
-			window.location.href = 'http://rollcall.proto.encorelab.org/login?destination=http://dawson/src/php/ajaxServices/securityCheck.php?runId='+runId; 
+			window.location.href = 'http://rollcall.proto.encorelab.org/login?destination=http://dalite.oise.utoronto.ca/src/php/ajaxServices/securityCheck.php?runId='+runId; 
 		}
 	</script>
 </head>
