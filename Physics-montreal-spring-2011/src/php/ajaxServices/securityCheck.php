@@ -3,19 +3,17 @@ session_start();
 
 require_once '../Application.php';
 
-$runId = $_REQUEST['runId'];
-
 $userToken = $_REQUEST['token'];
 
 //$userSession = json_decode(file_get_contents("http://rollcall.proto.encorelab.org/sessions/validate_token.json?dataType=json&token=$userToken"));
 $userSession = json_decode(file_get_contents("http://dalite.oise.utoronto.ca:9999/sessions/validate_token.json?dataType=json&token=$userToken"));
 
-$_SESSION['runId'] = $runId;
+if (isset($_REQUEST['runId'])){
+	$_SESSION['runId'] = $_REQUEST['runId'];	
+}
+
 $username = $userSession->session->user->username;
 $userRole = strtolower($userSession->session->user->kind);
-
-echo $userSession;
-die();
 
 $forward = '';
 $memberType = '';
