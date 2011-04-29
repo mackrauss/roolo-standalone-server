@@ -7,7 +7,8 @@ $runId = $_REQUEST['runId'];
 
 $userToken = $_REQUEST['token'];
 
-$userSession = json_decode(file_get_contents("http://rollcall.proto.encorelab.org/sessions/validate_token.json?dataType=json&token=$userToken"));
+//$userSession = json_decode(file_get_contents("http://rollcall.proto.encorelab.org/sessions/validate_token.json?dataType=json&token=$userToken"));
+$userSession = json_decode(file_get_contents("http://localhost:9999/sessions/validate_token.json?dataType=json&token=$userToken"));
 
 $_SESSION['runId'] = $runId;
 $username = $userSession->session->user->username;
