@@ -13,6 +13,9 @@ $_SESSION['runId'] = $runId;
 $username = $userSession->session->user->username;
 $userRole = strtolower($userSession->session->user->kind);
 
+echo $userRole;
+die();
+
 $forward = '';
 $memberType = '';
 if ($userRole == 'instructor' || $userRole == 'admin'){
