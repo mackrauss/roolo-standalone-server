@@ -200,7 +200,35 @@ if ($totalResults != 0){
 <script type='text/javascript'>
 
 	function saveQuestion(){
+		//select the selected item in dropdowns
+		var options = $("#selectPart").find("input[type:'radio']:checked").map(function(){
+			   return $(this).val();
+		}).get().join(", ");
 
+		var counter = $('#counter').val();
+		var selectedChoice = $("input[name='choice']:checked").val();
+		if (selectedChoice == null || selectedChoice.length == 0){
+			alert("Please choose an answer");
+			return;
+		}
+		var selectedCategory = new Array();
+		$("input[name='categoryArray[]']:checked").each(function() {selectedCategory.push($(this).val());});
+		var reason = $('#rationale').val();
+		if (reason == ''){
+			alert("Please provide a reasoning for your answer");
+			return;
+		}
+		var category = selectedCategory.join(', ');
+
+		var categoryAndOptions;
+		if (category != '' && options != '' )
+			categoryAndOptions = category + ", " + options;
+		if (category != '' && options == '' )
+			categoryAndOptions = category;
+		if (category == '' && options != '' )
+			categoryAndOptions = options;
+
+		// OK WE ARE NOW CLEAR TO SUBMIT THE ANSWER AND SHOW THE PAURSE PAGE
 		//disable the submit button
 		$('#submitBtn').attr('disabled', 'disabled');
 
@@ -213,26 +241,8 @@ if ($totalResults != 0){
 		$('#nextQuestionMsgDiv').show();
 //		clearTimeout(timer);
 
-		//select the selected item in dropdowns
-		var options = $("#selectPart").find("input[type:'radio']:checked").map(function(){
-			   return $(this).val();
-		}).get().join(", ");
 
-		var counter = $('#counter').val();
-		var selectedChoice = $("input[name='choice']:checked").val();
-		var selectedCategory = new Array();
-		$("input[name='categoryArray[]']:checked").each(function() {selectedCategory.push($(this).val());});
-		var reason = $('#rationale').val();
-		var category = selectedCategory.join(', ');
-
-		var categoryAndOptions;
-		if (category != '' && options != '' )
-			categoryAndOptions = category + ", " + options;
-		if (category != '' && options == '' )
-			categoryAndOptions = category;
-		if (category == '' && options != '' )
-			categoryAndOptions = options;
-								
+							
 		//Ajax call to send group, selectedChoice, Owneruri, rationale
 		$.get("/src/php/ajaxServices/saveMultiplechoice.php",
 				{username:"<?= $_SESSION['username']?>",
@@ -277,32 +287,12 @@ if ($totalResults != 0){
 		
 		//changes the question if it is not the last question
 		if ( questions.length > 0 ){
-
-//			counter = randonCounter();
 			counter = 0;
 			
 			$('#counter').val(counter);
 			$('#curQuestion').attr('src', questions[counter]);
-
-//			//uncheck radiobuttons
-//			$("input[name='choice']:checked").attr("checked", false);
-
-//			//Clean the rationale textArea
-//			$('#rationale').val('');
-			
-//			//uncheck checkBoxes
-//			$(".box").attr('checked', false);
-	
+				
 			$('#submitBtn').removeAttr('disabled');
-
-//			//hide the elements answer part and show the MC and Rarionale part 
-//			$('#mc').show('slow');
-//			$('#elements').hide('slow');
-			
-//			seconds = 01; 
-//			minutes = 4; 
-//			$('#count').text( minutes + ":" + seconds + "time left"); 
-
 		} else{
 
 			logout();
@@ -341,15 +331,21 @@ if ($totalResults != 0){
         return Math.floor(Math.random()*adjustedHigh);
 	}
 
-	function check(){
-		var choice = $("input[name='choice']:checked").val();
-		if (choice != null && choice.length != 0){
-			flag = "true";
-			$('#mc').hide('slow');
-			$('#elements').show('slow');
-		}else{	
-			alert("Please select the correct answer!");
-		}
+	function showMcPart(){
+		flag = "true";
+		$('#elements').hide('slow');
+		$('#mc').show('slow');
+		
+//		var choice = $("input[name='choice']:checked").val();
+//		if (choice != null && choice.length != 0){
+//			flag = "true";
+//			$('#mc').hide('slow');
+//			$('#elements').show('slow');
+//			$('#elements').hide('slow');
+//			$('#mc').show('slow');
+//		}else{	
+//			alert("Please select the correct answer!");
+//		}
 	}
 
 	function nextQuestion(){
@@ -359,18 +355,9 @@ if ($totalResults != 0){
 		$('#middle-center').show();
 		$('#middle-bottom').show();
 
-		//hide the elements answer part and show the MC and Rarionale part 
-		$('#elements').hide('slow');
-		$('#mc').show('slow');
-	
-//		//set the clock for next question
-//		timer_is_On = true;
-//		seconds = 01; 
-//		minutes = 4; 
-//		$('#count').text( minutes + ":" + seconds + "time left"); 
-//		$('#timer').show();
-//		clearTimeout(timer);
-//		countDown(); 
+		//hide the mc part and show the elements part 
+		$('#mc').hide('slow');
+		$('#elements').show('slow');
 	}		
 	
 </script>
@@ -417,23 +404,8 @@ if ($totalResults != 0){
   	</div>
 	<div id="answerSection" >
 		<form id="round1" name="form1" method="post" action="feedback.php">
-			<dl id='mc'>
-				<dt>1.Select the correct answer:</dt>
-				<dd>
-					<?php 
-						foreach ($choicesArray as $choice) {
-					?>
-							<label class="radioButton"><input type="radio" name="choice" value="<?= trim($choice) ?>" /><?= trim($choice) ?></label>
-					<?php		
-						}
-					?>
-				</dd>
-				<dt> 2. Provide a reasoning for the answer that you chose above: </dt>			  	
-				<textarea id="rationale" rows="20" cols="40"></textarea>		  
-			  	<input name="submit" type="button" value="NEXT PAGE" class="btn" onClick="check(); scroll(0,0);" />
-			</dl>
-			<dl id='elements' style='display: none'>
-				<dt>3. Check the corresponding elements that you thought were important in answering the question:</dt>
+			<dl id='elements' >
+				<dt>1. Check the corresponding elements that you thought were important in answering the question:</dt>
 
 			  	<dd>
 			  		<?php 
@@ -463,7 +435,23 @@ if ($totalResults != 0){
 						}
 					?>
 			 	</dd>
-			  	<input name="submit2" type="button" value="SUBMIT" class="btn" onClick="saveQuestion(); scroll(0,0);" />
+			 	<input name="submit" type="button" value="NEXT PAGE" class="btn" onClick="showMcPart(); scroll(0,0);" />
+			</dl>
+			<dl id='mc' style='display: none'>
+				<dt>2.Select the correct answer:</dt>
+				<dd>
+					<?php 
+						foreach ($choicesArray as $choice) {
+					?>
+							<label class="radioButton"><input type="radio" name="choice" value="<?= trim($choice) ?>" /><?= trim($choice) ?></label>
+					<?php		
+						}
+					?>
+				</dd>
+				<dt> 3. Provide a reasoning for the answer that you chose above: </dt>			  	
+				<textarea id="rationale" rows="20" cols="40"></textarea>
+				
+				<input name="submit2" type="button" value="SUBMIT" class="btn" onClick="saveQuestion(); scroll(0,0);" />		  
 			  	
 			</dl>
 		</form>

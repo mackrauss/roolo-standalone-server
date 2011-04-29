@@ -11,7 +11,6 @@ require_once '../CommonFunctions.php';
  * Get params
  */
 $runId = $_REQUEST['runId'];
-$scope = $_REQUEST['scope'];
 $problemName = $_REQUEST['qId'];
 
 
@@ -32,11 +31,11 @@ if (count($problems) != 1){
 $problem = $problems[0];
 
 /*
- * Get all answers (with the right scope) to this problem
+ * Get all answers to this problem
  */
-$scopeCondition = $scope == 'ind' ? '!author:group*' : 'author:group*';
-$solutionsQuery = "type:Solution AND  $scopeCondition AND owneruri:".$rooloClient->escapeUri($problem->uri);
+$solutionsQuery = "type:Solution AND owneruri:".$rooloClient->escapeUri($problem->uri);
 $solutions = $rooloClient->search($solutionsQuery, 'metadata', 'latest');
+$totalNumSolutions = count($solutions);
 
 /*
  * Generate $answerMap (answerLetter => answerCount)
@@ -56,7 +55,8 @@ $correctAnswerLetter = $problem->mcmastersolution;
 <graphml xmlns='http://graphml.graphdrawing.org/xmlns' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd'>
 	<key id='dn0' for='node' attr.name='answer' attr.type='string' />
 	<key id='dn1' for='node' attr.name='frequency' attr.type='int' />
-	<key id='dn2' for='node' attr.name='correct' attr.type='int'/>
+	<key id='dn2' for='node' attr.name='percentage' attr.type='int'/>
+	<key id='dn3' for='node' attr.name='correct' attr.type='int'/>
 		
 	<graph id='G' edgedefault='undirected'>
 
@@ -66,12 +66,14 @@ $letters = array('A', 'B', 'C', 'D', 'E');
 foreach ($letters as $curLetter){
 	$answerCount = isset($answerMap[$curLetter]) ? $answerMap[$curLetter] : 0;
 	$answerIsCorrect = $correctAnswerLetter == $curLetter ? '1' : '0';
+	$answerPercentage = round($answerCount / $totalNumSolutions * 100, 2);
 ?>
 
 	<node id='<?= $loopCount ?>'>
 		<data key='dn0'><?= $curLetter ?></data>
 		<data key='dn1'><?= $answerCount?></data>
-		<data key='dn2'><?= $answerIsCorrect?></data>
+		<data key='dn2'><?= $answerPercentage?></data>
+		<data key='dn3'><?= $answerIsCorrect?></data>
 	</node>
 
 <?php

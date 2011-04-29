@@ -3,7 +3,6 @@ session_start();
 
 header('Content-type: text/xml');
 $runId = $_REQUEST['runId'];
-$scope = $_REQUEST['scope'];
 
 require_once '../RooloClient.php';
 require_once '../Application.php';
@@ -13,6 +12,9 @@ $rooloClient = new RooloClient();
 
 $problemsQuery = "type:Problem AND runid:".$runId;
 $problems = $rooloClient->search($problemsQuery, 'metadata', 'latest');
+
+$runConfig = $rooloClient->search("type:RunConfig AND runid:$runId", 'metadata', 'latest');
+$runConfig = $runConfig[0];
 	
 ?>
 
@@ -24,13 +26,9 @@ $problems = $rooloClient->search($problemsQuery, 'metadata', 'latest');
 	<key id='dn3' for='node' attr.name='tags' attr.type='int' />
 	<key id='dn4' for='node' attr.name='img' attr.type='string' />
 	<key id='de0' for='edge' attr.name='group' attr.type='string' />
-	<key id='de1' for='edge' attr.name='agree' attr.type='int'> 
-
-		<default>0</default>
-	</key>
-	<key id='de2' for='edge' attr.name='disagree' attr.type='int'>
-		<default>0</default>
-	</key>
+	<key id='de1' for='edge' attr.name='agree' attr.type='int'> 		<default>0</default> 	</key>
+	<key id='de2' for='edge' attr.name='disagree' attr.type='int'>		<default>0</default>	</key>
+	
 	<graph id='G' edgedefault='undirected'>
 		<node id='problems'>
 			<data key='dn0'>root</data>
@@ -75,62 +73,51 @@ for ($i=0; $i < sizeof($problems); $i++){
 }
 ?>
 
-<!-- Generating all the edges between problems and their respective elements. Each edge also gets a unique element node-->
+<!-- Generating the answer nodes and their edges to the problem nodes -->
 <?php 
 /*
  * We're going to iterate through all problems in this run, and for each,  
- * get all the solutions within this specified scope (ind | grp) and extract
- * their elements. 
+ * get all the solutions and extract their elements. 
  */
-$problemIdx = 1;
 foreach ($problems as $curProblem){
 	$problemUri = $curProblem->get_uri();
-	if ($scope == 'ind'){
-		$solutionsQuery = "type:Solution AND !author:group* AND runid:$runId AND owneruri:".$rooloClient->escapeSearchTerm($problemUri);
-	}else{
-		$solutionsQuery = "type:Solution AND author:group* AND runid:$runId AND owneruri:".$rooloClient->escapeSearchTerm($problemUri);
-	}
+	$solutionsQuery = "type:Solution AND runid:$runId AND owneruri:".$rooloClient->escapeSearchTerm($problemUri);
 	
 	$solutions = $rooloClient->search($solutionsQuery, 'metadata', 'latest');
+	$totalNumSolutions = count($solutions); 
 	$imageName = basename($curProblem->path);
-	$curProblemNodeId = substr($imageName, 0, strpos($imageName, "."));
+	$curProblemId = substr($imageName, 0, strpos($imageName, "."));
+	$problemNum = substr($curProblemId, 1);
 	
-	$elementsCountMap = array();
+	$choiceCountMap = array();
 	foreach ($solutions as $curSolution){
-		$curElements = explode(",",$curSolution->category);
-		 
-		foreach ($curElements as $curElement){
-			$convertedElementId = convertToId($curElement);
-			
-			if (!isset($elementsCountMap[$convertedElementId])){
-				$elementsCountMap[$convertedElementId] = array('count' => 1, 'name' => trim($curElement));
-			}else{
-				$elementsCountMap[$convertedElementId]['count']++;
-			}
-		}
+		$curChoice = $curSolution->selectedchoice;
+		$choiceCountMap[$curChoice] = isset($choiceCountMap[$curChoice]) ? $choiceCountMap[$curChoice] + 1: 1;		 
 	}
 	
-	foreach ($elementsCountMap as $elementId => $elementData){
-		$elementCount = $elementData['count'];
-		$elementName = $elementData['name'];
-		$elementNodeId = $elementId.$problemIdx;
-		$edgeId = $curProblemNodeId.'-'.$elementNodeId;
+	$allChoices = explode(',',$runConfig->runchoicelimit);
+	foreach ($allChoices as $curChoice){
+		$curChoice = trim($curChoice);
+		$curChoiceCount = $choiceCountMap[$curChoice];
+		
+		$nodeId = $curChoice.$problemNum;
+		$curChoicePercentage = round(($curChoiceCount / $totalNumSolutions)*100, 2);
+		
+		$edgeId = $curProblemId.'-'.$nodeId;
 ?>
-<node id='<?= $elementNodeId ?>'>
-	<data key='dn0'>group</data>
-	<data key='dn1'><?= $elementName ?></data>
-	<data key='dn2'></data>
+<node id='<?= $nodeId ?>'>
+	<data key='dn0'>answer</data>
+	<data key='dn1'><?= $curChoice ?></data>
+	<data key='dn2'><?= $curChoicePercentage ?></data>
 </node>
 
-<edge id='<?= $edgeId?>' source='<?= $curProblemNodeId?>' target='<?= $elementNodeId ?>'>
+<edge id='<?= $edgeId?>' source='<?= $curProblemId?>' target='<?= $nodeId ?>'>
 	<data key='de0'></data>
-	<data key='de1'><?= $elementCount ?></data>
-	<data key='de2'>0</data>
+	<data key='de1'></data>
+	<data key='de2'></data>
 </edge>
 <?php
 	}
-	
-	$problemIdx++;
 }
 ?>
 	</graph>

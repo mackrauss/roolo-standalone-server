@@ -1,4 +1,6 @@
 <?php
+header("Cache-Control: no-cache, must-revalidate");
+
 include_once '../RooloClient.php';
 include_once '../CommonFunctions.php';
 
@@ -6,11 +8,12 @@ include_once '../CommonFunctions.php';
  * Setup variables
  */
 $roolo = new RooloClient();
-
+ 
 /*
  * Empty Roolo
  */
-$roolo->deleteAll();
+$roolo->deleteAll(); 
+
 
 /*
  * Empty /problems

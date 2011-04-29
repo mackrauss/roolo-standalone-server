@@ -6,6 +6,7 @@ require_once '../dataModels/Problem.php';
 
 $runId = $_REQUEST['runId'];
 $correctAnswer = $_REQUEST['mcQuestionAnswer'];
+$bestWrongAnswer = $_REQUEST['mcQuestionBestWrongAnswer'];
 $redirectTo = $_REQUEST['redirectTo'];
 
 $appPath = dirname(__FILE__).'/../../..';
@@ -52,7 +53,8 @@ $problem->set_author($_SESSION['username']);
 $problem->set_runId($runId);
 $problem->path = '/problems/'.$runId.'/mc/'.$newFileName.'.'.$uploadedFileExtension;
 $problem->set_mcmastersolution($correctAnswer);
-$roolo->addElo($problem);
+$problem->bestwrongsolution = $bestWrongAnswer;
+$response = $roolo->addElo($problem);
 
 ?>
 

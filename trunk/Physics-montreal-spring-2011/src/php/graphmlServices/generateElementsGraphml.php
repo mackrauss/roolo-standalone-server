@@ -3,7 +3,6 @@ session_start();
 
 header('Content-type: text/xml');
 $runId = $_REQUEST['runId'];
-$scope = $_REQUEST['scope'];
 $problemName = $_REQUEST['qId'];
 
 require_once '../RooloClient.php';
@@ -27,10 +26,9 @@ if (count($problems) != 1){
 $problem = $problems[0];
 
 /*
- * Get all answers (with the right scope) to this problem
+ * Get all answers to this problem
  */
-$scopeCondition = $scope == 'ind' ? '!author:group*' : 'author:group*';
-$solutionsQuery = "type:Solution AND  $scopeCondition AND owneruri:".$rooloClient->escapeUri($problem->uri);
+$solutionsQuery = "type:Solution AND owneruri:".$rooloClient->escapeUri($problem->uri);
 $solutions = $rooloClient->search($solutionsQuery, 'metadata', 'latest');
 
 /*
@@ -78,6 +76,9 @@ foreach ($solutions as $curSolution){
 <?php
 $loopCount=1;
 foreach ($elementAnswersMap as $elementName => $answerLetterMap){
+	if (trim($elementName) == ''){
+		continue;
+	}
 ?>
 	<node id='<?= $loopCount ?>'>
 		<data key='dn0'><?= $elementName ?></data>
