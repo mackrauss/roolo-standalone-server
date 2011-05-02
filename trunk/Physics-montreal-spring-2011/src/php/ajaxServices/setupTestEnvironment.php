@@ -29,17 +29,8 @@ $savedTpXml = $roolo->addElo($tp);
  */
 /********************* V1_C1 ***********************/
 $runId = createRun("TestRun 1_1", 1, 1, 'C');
-$problemUri = createMcProblem($runId, $testProblemsPath.'/v1_c1/v1c1_q1.png', 'B', 'A', $roolo);
-
-$problem = $roolo->search("uri:".$roolo->escapeUri($problemUri), 'metadata', 'latest');
-$problem = $problem[0];
-
-$updateResult = $roolo->updateElo($problem);
-
-echo $updateResult;
-
-//createMcProblem($runId, $testProblemsPath.'/v1_c1/v1c1_q2.png', 'C', 'B', $roolo);
-
+createMcProblem($runId, $testProblemsPath.'/v1_c1/v1c1_q1.png', 'B', 'A', $roolo);
+createMcProblem($runId, $testProblemsPath.'/v1_c1/v1c1_q2.png', 'C', 'B', $roolo);
 
 //createLongProblem($runId, $testProblemsPath.'/v1_c1/v1c1_longq1.png', $roolo);
 
