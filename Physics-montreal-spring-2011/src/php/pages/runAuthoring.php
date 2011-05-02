@@ -158,16 +158,10 @@ function exportRunData(exportLink){
 }
 
 function publishRun(publishLink){
-	alert('hello');
 	var runId = $(publishLink).attr('runId');
 
 	$.get('/src/php/ajaxServices/publishRun.php', {runId: runId}, function(data){
-		if (data == ''){
-			window.location.reload();
-		}else{
-			console.log(data);
-		}
-		
+		window.location.reload();		
 	});
 }
 
