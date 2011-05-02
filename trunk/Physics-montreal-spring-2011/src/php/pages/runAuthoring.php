@@ -142,7 +142,7 @@ function resetApplication(){
 function setupTestEnvironment(){
 	$('input[type=button]').attr("disabled", true);
 	$.get('/src/php/ajaxServices/setupTestEnvironment.php', {}, function(data){
-		window.location.reload();
+//		window.location.reload();
 	});
 }
 
