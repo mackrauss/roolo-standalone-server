@@ -150,7 +150,7 @@ if ($numUnansweredProblems == 0){
 			);
 	
 			// now we can redirect to the reflection page
-//			window.location.href = '/src/php/pages/reflection.php?problemUri=<?= $mainProblem->uri ?>&selectedChoice=' + selectedChoice;
+			window.location.href = '/src/php/pages/reflection.php?problemUri=<?= $mainProblem->uri ?>&selectedChoice=' + selectedChoice;
 		}
 	</script>
 <?php 	
