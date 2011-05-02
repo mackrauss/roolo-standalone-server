@@ -108,7 +108,7 @@ function createMcProblem($runId, $imagePath, $correctAnswer, $bestWrongAnswer, $
 	$problem->set_mcmastersolution($correctAnswer);
 	$problem->bestwrongsolution = $bestWrongAnswer;
 	
-	$addedProblem = $roolo->addElo($problem);
+	$addedProblem = new Problem($roolo->addElo($problem));
 	
 	return $addedProblem->uri;
 }
