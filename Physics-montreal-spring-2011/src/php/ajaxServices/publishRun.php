@@ -24,6 +24,8 @@ if (count($runs) != 0){
 	
 	$run->runpublished = 1;
 	
+	var_dump($run);
+	
 	$updateResults = $roolo->updateElo($run);
 	
 	echo "updated elo. result: $updateResults";
