@@ -128,10 +128,6 @@ a {
 </style>
 
 <script type="text/javascript">
-function publishRun(element){
-	var runId = $(element).attr('runId');
-}
-
 function resetApplication(){
 	var resetConfirmed = confirm('Are you sure you want to delete the whole contents of the application?');
 	if (resetConfirmed){
