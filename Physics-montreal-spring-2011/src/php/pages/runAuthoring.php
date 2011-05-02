@@ -163,7 +163,7 @@ function publishRun(publishLink){
 
 	$.get('/src/php/ajaxServices/publishRun.php', {runId: runId}, function(data){
 		if (data == ''){
-			window.location.reload();
+			//window.location.reload();
 		}else{
 			console.log(data);
 		}
