@@ -11,8 +11,8 @@ class RooloClient {
 	
 	public function __construct(){
 //		$this->_rooloUrl = "http://iitp.dawsoncollege.qc.ca:8080/roolo-standalone-server/";
-		$this->_rooloUrl = "http://localhost:8080/roolo-standalone-server/";
-//		$this->_rooloUrl = "http://baci.oise.utoronto.ca:8070/roolo-standalone-server/";
+//		$this->_rooloUrl = "http://localhost:8080/roolo-standalone-server/";
+		$this->_rooloUrl = "http://baci.oise.utoronto.ca:8070/roolo-standalone-server/";
 //		$this->_rooloUrl = "http://192.168.1.119:8070/roolo-standalone-server/";
 		
 		$this->populateServiceUrls();
