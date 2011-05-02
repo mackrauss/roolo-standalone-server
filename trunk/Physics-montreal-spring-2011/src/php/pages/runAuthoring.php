@@ -142,7 +142,7 @@ function resetApplication(){
 function setupTestEnvironment(){
 	$('input[type=button]').attr("disabled", true);
 	$.get('/src/php/ajaxServices/setupTestEnvironment.php', {}, function(data){
-//		window.location.reload();
+		window.location.reload();
 	});
 }
 
@@ -163,7 +163,7 @@ function publishRun(publishLink){
 
 	$.get('/src/php/ajaxServices/publishRun.php', {runId: runId}, function(data){
 		if (data == ''){
-			//window.location.reload();
+			window.location.reload();
 		}else{
 			console.log(data);
 		}
