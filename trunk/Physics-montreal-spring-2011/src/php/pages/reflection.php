@@ -294,7 +294,7 @@ function getSolutionRationales ($selectedChoice, $runId, $username, $problemUri,
 		);
 
 		// now we can redirect to the revelation page
-		window.location.href = '/src/php/pages/revelation.php?problemUri=<?= $mainProblem->uri ?>';
+//		window.location.href = '/src/php/pages/revelation.php?problemUri=<?= $mainProblem->uri ?>';
 	}
 </script>
 
