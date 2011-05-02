@@ -17,7 +17,7 @@ $roolo = new RooloClient();
 /*
  * Find the RunConfig with given runId
  */
-$runs = $roolo->search('type:RunConfig AND runid: '.$runId, 'metadata', 'latest');
+$runs = $roolo->search('type:RunConfig AND runid:'.$runId, 'metadata', 'latest');
 
 if (count($runs) != 0){
 	$run= $runs[0];
