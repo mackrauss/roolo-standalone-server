@@ -25,4 +25,6 @@ if (count($runs) != 0){
 	$run->runpublished = 1;
 	
 	$roolo->updateElo($run);
+}else{
+	echo "NO RunConfig found with runId: $runId";
 }
