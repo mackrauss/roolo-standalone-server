@@ -161,7 +161,12 @@ function publishRun(publishLink){
 	var runId = $(publishLink).attr('runId');
 
 	$.get('/src/php/ajaxServices/publishRun.php', {runId: runId}, function(data){
-		window.location.reload();
+		if (data == ''){
+			window.location.reload();
+		}else{
+			console.log(data);
+		}
+		
 	});
 }
 
