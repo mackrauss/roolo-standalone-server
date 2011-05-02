@@ -29,30 +29,37 @@ $savedTpXml = $roolo->addElo($tp);
  */
 /********************* V1_C1 ***********************/
 $runId = createRun("TestRun 1_1", 1, 1, 'C');
-createMcProblem($runId, $testProblemsPath.'/v1_c1/v1c1_q1.png', 'B', 'A', $roolo); 
-createMcProblem($runId, $testProblemsPath.'/v1_c1/v1c1_q2.png', 'C', 'B', $roolo);
-createLongProblem($runId, $testProblemsPath.'/v1_c1/v1c1_longq1.png', $roolo);
+$problemUri = createMcProblem($runId, $testProblemsPath.'/v1_c1/v1c1_q1.png', 'B', 'A', $roolo);
+
+$problem = $roolo->search("uri:".$roolo->escapeUri($problemUri), 'metadata', 'latest');
+
+var_dump($problem);
+
+//createMcProblem($runId, $testProblemsPath.'/v1_c1/v1c1_q2.png', 'C', 'B', $roolo);
+
+
+//createLongProblem($runId, $testProblemsPath.'/v1_c1/v1c1_longq1.png', $roolo);
 
 /********************* V1_C2 ***********************/
-$runId = createRun("TestRun 1_2", 1, 2, 'D');
-createMcProblem($runId, $testProblemsPath.'/v1_c2/v1c2_q1.png', 'D', 'C', $roolo);
-createMcProblem($runId, $testProblemsPath.'/v1_c2/v1c2_q2.png', 'A', 'D', $roolo);
-createLongProblem($runId, $testProblemsPath.'/v1_c2/v1c2_longq1.png', $roolo);
+//$runId = createRun("TestRun 1_2", 1, 2, 'D');
+//createMcProblem($runId, $testProblemsPath.'/v1_c2/v1c2_q1.png', 'D', 'C', $roolo);
+//createMcProblem($runId, $testProblemsPath.'/v1_c2/v1c2_q2.png', 'A', 'D', $roolo);
+//createLongProblem($runId, $testProblemsPath.'/v1_c2/v1c2_longq1.png', $roolo);
 
 /********************* V2_C1 ***********************/
-$runId = createRun("TestRun 2_1", 2, 1, 'E');
-createMcProblem($runId, $testProblemsPath.'/v2_c1/v2_q1.png', 'C', 'B', $roolo);
-createMcProblem($runId, $testProblemsPath.'/v2_c1/v2_q2.png', 'E', 'D', $roolo);
-createMcProblem($runId, $testProblemsPath.'/v2_c1/v2_q3.png', 'B', 'A', $roolo);
-createLongProblem($runId, $testProblemsPath.'/v2_c1/v2_longq1.png', $roolo);
+//$runId = createRun("TestRun 2_1", 2, 1, 'E');
+//createMcProblem($runId, $testProblemsPath.'/v2_c1/v2_q1.png', 'C', 'B', $roolo);
+//createMcProblem($runId, $testProblemsPath.'/v2_c1/v2_q2.png', 'E', 'D', $roolo);
+//createMcProblem($runId, $testProblemsPath.'/v2_c1/v2_q3.png', 'B', 'A', $roolo);
+//createLongProblem($runId, $testProblemsPath.'/v2_c1/v2_longq1.png', $roolo);
 
 /********************* V3_C1 ***********************/
-$runId = createRun("TestRun 3_1", 3, 1, 'F');
-createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q1.png', 'C', 'B', $roolo);
-createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q2.png', 'C', 'B', $roolo);
-createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q3.png', 'C', 'B', $roolo);
-createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q4.png', 'C', 'B', $roolo);
-createLongProblem($runId, $testProblemsPath.'/v3_c1/v3_longq1.png', $roolo);
+//$runId = createRun("TestRun 3_1", 3, 1, 'F');
+//createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q1.png', 'C', 'B', $roolo);
+//createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q2.png', 'C', 'B', $roolo);
+//createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q3.png', 'C', 'B', $roolo);
+//createMcProblem($runId, $testProblemsPath.'/v3_c1/v3_q4.png', 'C', 'B', $roolo);
+//createLongProblem($runId, $testProblemsPath.'/v3_c1/v3_longq1.png', $roolo);
 
 /*
  * Find the current number of files in directory
@@ -101,7 +108,9 @@ function createMcProblem($runId, $imagePath, $correctAnswer, $bestWrongAnswer, $
 	$problem->set_mcmastersolution($correctAnswer);
 	$problem->bestwrongsolution = $bestWrongAnswer;
 	
-	$roolo->addElo($problem);
+	$addedProblem = $roolo->addElo($problem);
+	
+	return $addedProblem->uri;
 }
 
 function createLongProblem($runId, $imagePath, $roolo){
