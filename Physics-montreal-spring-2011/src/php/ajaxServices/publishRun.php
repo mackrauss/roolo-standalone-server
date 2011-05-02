@@ -22,7 +22,7 @@ $runs = $roolo->search('type:RunConfig AND runid: '.$runId, 'metadata', 'latest'
 if (count($runs) != 0){
 	$run= $runs[0];
 	
-	$run->runPublished = 1;
+	$run->runpublished = 1;
 	
 	$roolo->updateElo($run);
 }
