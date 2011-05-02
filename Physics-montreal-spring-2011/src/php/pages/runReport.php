@@ -60,13 +60,13 @@ $runId = $_REQUEST['runId'];
 		</div>
     	<noscript>
 		         <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="1024" height="1024" id="PhysicsVis">
-		             <param name="movie" value="PhysicsVis.swf" />
+		             <param name="movie" value="PhysicsVisDemo.swf" />
 		             <param name="quality" value="high" />
 		             <param name="bgcolor" value="#ffffff" />
 		             <param name="allowScriptAccess" value="sameDomain" />
 		             <param name="allowFullScreen" value="true" />
 		             <!--[if !IE]>-->
-		        <object type="application/x-shockwave-flash" data="PhysicsVis.swf" width="1024" height="1024">
+		        <object type="application/x-shockwave-flash" data="PhysicsVisDemo.swf" width="1024" height="1024">
 		            <param name="quality" value="high" />
 		            <param name="bgcolor" value="#ffffff" />
 		            <param name="allowScriptAccess" value="sameDomain" />
