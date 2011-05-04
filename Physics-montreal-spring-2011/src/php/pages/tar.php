@@ -150,7 +150,9 @@ if ($numUnansweredProblems == 0){
 			);
 	
 			// now we can redirect to the reflection page
-			setTimeout("window.location.href = '/src/php/pages/reflection.php?problemUri=<?= $mainProblem->uri ?>&selectedChoice=' + selectedChoice", 2000);
+			setTimeout(function(){
+				window.location.href = '/src/php/pages/reflection.php?problemUri=<?= $mainProblem->uri ?>&selectedChoice=' + selectedChoice;
+			}, 2000);
 		}
 	</script>
 <?php 	
